@@ -50,7 +50,7 @@ public class UserListController extends HttpServlet {
         request.setAttribute("roles", roles);
 
         int roleId;
-        String gender, status, search;
+        String gender, status, search, sort;
         if (request.getParameter("roleId") == null) {
             roleId = 0;
         } else {
@@ -70,6 +70,11 @@ public class UserListController extends HttpServlet {
             search = "";
         } else {
             search = request.getParameter("search");
+        }
+        if (request.getParameter("sort") == null) {
+            sort = "id";
+        } else {
+            sort = request.getParameter("sort");
         }
 
 //                ArrayList<User> users = userDB.getAllUser();

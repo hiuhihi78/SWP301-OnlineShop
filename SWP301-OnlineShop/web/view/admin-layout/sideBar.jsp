@@ -12,24 +12,14 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="img/26115.jpg" class="img-circle" alt="User Image" />
+                <img src="https://image.shutterstock.com/image-vector/social-media-avatar-user-icon-260nw-1061793911.jpg" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-                <p>Hello, Jane</p>
+                <p>${sessionScope.user.fullname}</p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
-        <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                <span class="input-group-btn">
-                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                </span>
-            </div>
-        </form>
-        <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="active">
@@ -39,19 +29,14 @@
             </li>
             <li>
                 <a href="general.html">
-                    <i class="fa fa-gavel"></i> <span>General</span>
+                    <i class="fa-solid fa-users"></i> <span>User list</span>
+
                 </a>
             </li>
 
             <li>
                 <a href="basic_form.html">
-                    <i class="fa fa-globe"></i> <span>Basic Elements</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="simple.html">
-                    <i class="fa fa-glass"></i> <span>Simple tables</span>
+                    <i class="fa-solid fa-gears"></i> <span>Setting list</span>
                 </a>
             </li>
 

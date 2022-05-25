@@ -9,7 +9,7 @@
 
     <header class="header">
         <a href="index.html" class="logo">
-            Director
+            Online Shop
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
