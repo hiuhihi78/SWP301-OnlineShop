@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.user;
+package controller.common;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("view/admin-template/home.jsp").forward(request, response);     
+        request.getRequestDispatcher("view/public/login.jsp").forward(request, response);     
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -45,10 +46,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("checked") != null) {
-            
-        }
+        
         
         processRequest(request, response);
     }
@@ -64,11 +62,51 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = "", pass = "";
-        email = request.getParameter("txtEmail");
-        pass = request.getParameter("txtPass");
+        HttpSession session = request.getSession();
+        PrintWriter out = response.getWriter();
+        String check = "";       
+        //check = request.getParameter("cboSigned");
+        String name = request.getParameter("txtUserName");
+        String pass = request.getParameter("txtPassword");
+        //NguoiDungDao dao = new NguoiDungDao();
+        //NguoiDung obj = null;
+        //obj = dao.getUserById(name, pass);
         
-        processRequest(request, response);
+        if (name.equals("nepo") && pass.equals("nepo")) {
+            session.setAttribute("check", "ok");
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Logged in successfully!');");
+            out.println("location='homeAdmin';");
+            out.println("</script>");
+        } else {
+            session.setAttribute("check", null);
+        }  
+//        if (obj != null && check.equals("")) {
+//            session.setAttribute("check", "");
+//        }
+//        if (obj != null && obj.isIsAdmin() == false && session.getAttribute("cart") != null) {
+//            session.setAttribute("user", obj);
+//            out.println("<script type=\"text/javascript\">");
+//            out.println("alert('Logged in successfully!');");
+//            out.println("location='order';");
+//            out.println("</script>");
+//        } else if (obj != null && obj.isIsAdmin() == false && !(session.getAttribute("cart") != null)) {
+//            session.setAttribute("user", obj);
+//            out.println("<script type=\"text/javascript\">");
+//            out.println("alert('Logged in successfully!');");
+//            out.println("location='home';");
+//            out.println("</script>");
+//        } else if (obj != null && obj.isIsAdmin() == true) {
+//            session.setAttribute("admin", obj);
+//            out.println("<script type=\"text/javascript\">");
+//            out.println("alert('Logged in successfully!');");
+//            out.println("location='homeAdmin';");
+//            out.println("</script>");
+//        }
+//        else {
+//            request.setAttribute("mess", "Login failed!");
+//            processRequest(request, response);
+//        }
     }
 
     /**

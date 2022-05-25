@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.user;
+package controller.common;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Email;
+import utils.EmailUtils;
 
 /**
  *
@@ -30,18 +33,7 @@ public class ResetPasswordController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ResetPasswordController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ResetPasswordController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,7 +62,42 @@ public class ResetPasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+           String emailAddress = request.getParameter("txtEmail");
+//           String userName = request.getParameter("txtName");
+           
+            //NguoiDungDao dao = new NguoiDungDao();
+            //NguoiDung objNguoiDung = dao.findByUserNameAndEmail(emailAddress);
+//            if (objNguoiDung == null) {
+//                request.setAttribute("error", "Username or email are incorrect");
+//            } else {
+           if (emailAddress != null) {
+               String newPass = generateRandomPassword(6);
+                Email email = new Email();
+                email.setFrom("hieunvhe153769@fpt.edu.vn");
+                email.setFromPassword("Skynet.com");
+                email.setTo(emailAddress);
+                email.setSubject("Forgot Password Function");
+                StringBuilder sb = new StringBuilder();
+                sb.append("Dear hieu").append("<br>");
+                sb.append("You are used the forgot password function. <br> ");
+                sb.append("Your password is <b>").append(newPass).append("</b>");
+                sb.append("regards<br>");
+                sb.append("Administrator");
+                
+                email.setContent(sb.toString());
+                EmailUtils.send(email);
+                
+                request.setAttribute("mess", "Email sent to the email Address. Please check and get your password");
+           }
+                
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+            request.setAttribute("error", e.getMessage());
+        }
+        response.sendRedirect("login");
     }
 
     /**
@@ -82,5 +109,15 @@ public class ResetPasswordController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    public static String generateRandomPassword(int len) {
+		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
+          +"jklmnopqrstuvwxyz!@#$%&";
+		Random rnd = new Random();
+		StringBuilder sb = new StringBuilder(len);
+		for (int i = 0; i < len; i++)
+			sb.append(chars.charAt(rnd.nextInt(chars.length())));
+		return sb.toString();
+	}
 
 }
