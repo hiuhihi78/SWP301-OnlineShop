@@ -22,7 +22,7 @@ import model.User;
 public class UserDBContext extends DBContext{
     public ArrayList<User> getAllUser() {
         ArrayList<User> users = new ArrayList<>();
-        String sql = "SELECT [username]\n"
+        String sql = "SELECT [fullname]\n"
                 + "      ,[password]\n"
                 + "      ,[gender]\n"
                 + "      ,[email]\n"
@@ -62,7 +62,7 @@ public class UserDBContext extends DBContext{
         ArrayList<User> arr = new ArrayList<>();
         for (int i = start; i < end; i++) {
             arr.add(list.get(i));
-        }
+}
         return arr;
     }
 
@@ -71,7 +71,7 @@ public class UserDBContext extends DBContext{
     public ArrayList<User> getListUserFilter(int roleId, String gender, String status, String search) {
         ArrayList<User> users = new ArrayList<>();
         try {
-            String sql = "SELECT [username]\n"
+            String sql = "SELECT [fullname]\n"
                     + "      ,[password]\n"
                     + "      ,[gender]\n"
                     + "      ,[email]\n"
@@ -111,7 +111,7 @@ public class UserDBContext extends DBContext{
             }
 
             if (!search.equals("")) {
-                sql += " and (username like ?\n"
+                sql += " and (fullname like ?\n"
                         + "or email like ?\n"
                         + "or mobile like ?)\n";
                 paramIndex++;
@@ -166,5 +166,27 @@ public class UserDBContext extends DBContext{
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return users;
+    }
+    
+   
+
+    public void changeStatus(int id, boolean status) {
+        try {
+            String sql = "UPDATE [dbo].[User]\n"
+                    + "   SET [status] = ?\n"
+                    + " WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setBoolean(1, status);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+     public static void main(String[] args) {
+        UserDBContext db = new UserDBContext();
+        System.out.println(db.getListUserFilter(0, "all", "all", ""));
     }
 }

@@ -13,7 +13,8 @@ import model.Role;
  *
  * @author Admin
  */
-public class RoleDBContext extends DBContext{
+public class RoleDBContext extends DBContext {
+
     public ArrayList<Role> getAllRole() {
         ArrayList<Role> roles = new ArrayList<>();
         String sql = "SELECT [id]\n"
@@ -22,7 +23,7 @@ public class RoleDBContext extends DBContext{
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Role role = new Role();
                 role.setId(rs.getInt(1));
                 role.setName(rs.getString(2));
@@ -31,5 +32,11 @@ public class RoleDBContext extends DBContext{
         } catch (Exception e) {
         }
         return roles;
+    }
+
+    public static void main(String[] args) {
+        RoleDBContext db = new RoleDBContext();
+        System.out.println(db.getAllRole().size()
+        );
     }
 }

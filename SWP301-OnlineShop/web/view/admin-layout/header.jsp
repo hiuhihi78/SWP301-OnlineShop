@@ -5,8 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+
+
     <header class="header">
         <a href="index.html" class="logo">
             Director
@@ -217,4 +217,3 @@
             </div>
         </nav>
     </header>
-</html>
