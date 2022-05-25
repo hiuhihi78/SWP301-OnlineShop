@@ -19,7 +19,8 @@ import model.User;
  *
  * @author Admin
  */
-public class UserDBContext extends DBContext{
+public class UserDBContext extends DBContext {
+
     public ArrayList<User> getAllUser() {
         ArrayList<User> users = new ArrayList<>();
         String sql = "SELECT [fullname]\n"
@@ -56,17 +57,14 @@ public class UserDBContext extends DBContext{
         }
         return users;
     }
-    
-    
+
     public ArrayList<User> getListByPage(ArrayList<User> list, int start, int end) {
         ArrayList<User> arr = new ArrayList<>();
         for (int i = start; i < end; i++) {
             arr.add(list.get(i));
-}
+        }
         return arr;
     }
-
-    
 
     public ArrayList<User> getListUserFilter(int roleId, String gender, String status, String search) {
         ArrayList<User> users = new ArrayList<>();
@@ -167,8 +165,6 @@ public class UserDBContext extends DBContext{
         }
         return users;
     }
-    
-   
 
     public void changeStatus(int id, boolean status) {
         try {
@@ -183,9 +179,8 @@ public class UserDBContext extends DBContext{
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-     public static void main(String[] args) {
+
+    public static void main(String[] args) {
         UserDBContext db = new UserDBContext();
         System.out.println(db.getListUserFilter(0, "all", "all", ""));
     }
