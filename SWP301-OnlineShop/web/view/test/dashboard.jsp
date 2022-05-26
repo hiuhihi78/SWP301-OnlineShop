@@ -16,7 +16,18 @@
         <h1>Hello - ${sessionScope.user.fullname}</h1>
         <div class="navbar">
             <c:forEach items="${sessionScope.user.role.allowFeatures}" var="s">
+                <c:if test="${s.key.url == '/page1'}">
                     <a href="${pageContext.request.contextPath}${s.key.url}">${s.key.name} ||</a>
+                </c:if>
+                <c:if test="${s.key.url == '/page2'}">
+                    <a href="${pageContext.request.contextPath}${s.key.url}">${s.key.name} ||</a>
+                </c:if>
+                <c:if test="${s.key.url == '/page3'}">
+                    <a href="${pageContext.request.contextPath}${s.key.url}">${s.key.name} ||</a>
+                </c:if>
+                <c:if test="${s.key.url == '/page4'}">
+                    <a href="${pageContext.request.contextPath}${s.key.url}">${s.key.name} ||</a>
+                </c:if>
             </c:forEach>
         </div>
     </body>
