@@ -12,7 +12,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="https://image.shutterstock.com/image-vector/social-media-avatar-user-icon-260nw-1061793911.jpg" class="img-circle" alt="User Image" />
+                <img src="../assets/img/defaultUserAvatar.png" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
                 <p>${sessionScope.user.fullname}</p>
@@ -21,8 +21,8 @@
             </div>
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
-        <ul class="sidebar-menu">
-            <li class="active">
+        <ul class="sidebar-menu" id="nav-element">
+            <li>
                 <a href="index.html">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>

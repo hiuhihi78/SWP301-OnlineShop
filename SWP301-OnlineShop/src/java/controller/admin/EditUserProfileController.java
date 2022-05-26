@@ -4,21 +4,25 @@
  */
 package controller.admin;
 
+import dal.RoleDBContext;
 import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Role;
+import model.User;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "EditStatusUserController", urlPatterns = {"/admin/editUserStatus"})
-public class EditStatusUserController extends HttpServlet {
+@WebServlet(name = "EditUserProfileController", urlPatterns = {"/admin/editUserProfile"})
+public class EditUserProfileController extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -31,20 +35,14 @@ public class EditStatusUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        RoleDBContext roleDB = new RoleDBContext();
         UserDBContext userDB = new UserDBContext();
-        boolean status = request.getParameter("newStatus").equals("active");
         int id = Integer.parseInt(request.getParameter("id"));
-        String xpage = request.getParameter("xpage");
-        userDB.changeStatus(id, status);
-        if (xpage == null) {
-            xpage = "1";
-        } else {
-            xpage = request.getParameter("xpage");
-        }
-//        request.setAttribute("xpage", xpage);
-//        request.setAttribute("alter", "Update status sucess");
-//        request.getRequestDispatcher("userList");
-        response.sendRedirect("userList?xpage=" + xpage + "&alter=Update status sucess!");
+        ArrayList<Role> roles = roleDB.getAllRole();
+        User user = userDB.getUserById(id);
+        request.setAttribute("user", user);
+        request.setAttribute("roles", roles);
+        request.getRequestDispatcher("../view/admin/userProfile.jsp").forward(request, response);
     }
 
     /**
@@ -59,19 +57,15 @@ public class EditStatusUserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserDBContext userDB = new UserDBContext();
-        boolean status = request.getParameter("newStatus").equals("active");
         int id = Integer.parseInt(request.getParameter("id"));
-        String xpage = request.getParameter("xpage");
-        userDB.changeStatus(id, status);
-        if (xpage == null) {
-            xpage = "1";
-        } else {
-            xpage = request.getParameter("page");
-        }
-        request.setAttribute("xpage", xpage);
-        request.setAttribute("alter", "success");
-//        request.getRequestDispatcher("userList").forward(request, response);
-        response.sendRedirect("../admin/userList?xpage="+xpage+"&alter=Update stauts success");
+        boolean status = request.getParameter("status").equals("active");
+        int roleId = Integer.parseInt(request.getParameter("role"));
+        User user = userDB.getUserById(id);
+        userDB.editUserProfile(id, roleId, status);
+        String alter = "Update user's information success";
+        request.setAttribute("alter", alter);
+        request.setAttribute("id", id);
+        response.sendRedirect("userList?search="+ user.getEmail()+"&alter=success");
     }
 
     /**

@@ -50,7 +50,7 @@ public class UserListController extends HttpServlet {
         request.setAttribute("roles", roles);
 
         int roleId;
-        String gender, status, search, sort;
+        String gender, status, search, sort, orderBy;
         if (request.getParameter("roleId") == null) {
             roleId = 0;
         } else {
@@ -76,9 +76,14 @@ public class UserListController extends HttpServlet {
         } else {
             sort = request.getParameter("sort");
         }
+        if (request.getParameter("orderBy") == null) {
+            orderBy = "asc";
+        } else {
+            orderBy = request.getParameter("orderBy");
+        }
 
 //                ArrayList<User> users = userDB.getAllUser();
-        listAllUser = userDB.getListUserFilter(roleId, gender, status, search);
+        listAllUser = userDB.getListUserFilter(roleId, gender, status, search, sort, orderBy);
         int totalRecord = listAllUser.size();
         int page, numberRecordPerPage = 5;
         int totalPage = totalRecord % numberRecordPerPage == 0
@@ -93,14 +98,19 @@ public class UserListController extends HttpServlet {
         int endRecord = Math.min(page * numberRecordPerPage, totalRecord);
         ArrayList<User> listPaging = userDB.getListByPage(listAllUser, startRecord, endRecord);
 
+        
+        // get alter
+        alter = request.getParameter("alter");
+        request.setAttribute("alter", alter);
         request.setAttribute("users", listPaging);
         request.setAttribute("roleId", roleId);
         request.setAttribute("gender", gender);
         request.setAttribute("status", status);
         request.setAttribute("search", search);
+        request.setAttribute("sort", sort);
+        request.setAttribute("orderBy", orderBy);
         request.setAttribute("page", page);
         request.setAttribute("totalPage", totalPage);
-//                request.setAttribute("alter", null);
         request.getRequestDispatcher("../view/admin/userList.jsp").forward(request, response);
     }
 
