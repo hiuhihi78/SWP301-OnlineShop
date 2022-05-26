@@ -180,6 +180,48 @@ public class UserDBContext extends DBContext {
         }
     }
 
+    public User login(String username, String password) {
+        String sql = "SELECT [id]"
+                + "         ,[username] "
+                + "       ,[fullname]\n"
+                + "      ,[password]\n"
+                + "      ,[gender]\n"
+                + "      ,[email]\n"
+                + "      ,[mobile]\n"
+                + "      ,[address]\n"
+                + "      ,[roleId]\n"
+                + "      ,Role.name\n"
+                + "      ,[status]\n"
+                + "      ,[User].id\n"
+                + "  FROM [User] join Role on roleId = Role.id"
+                + "       WHERE username = ? AND password = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setFullname(rs.getString(1));
+                user.setGender(rs.getBoolean(3));
+                user.setEmail(rs.getString(4));
+                user.setMobile(rs.getString(5));
+                user.setAddress(rs.getString(6));
+                Role role = new Role();
+                role.setId(rs.getInt(7));
+                role.setName(rs.getString(8));
+                user.setRole(role);
+                user.setStatus(rs.getBoolean(9));
+                user.setId(rs.getInt(10));
+                user.setUsername(rs.getString("username"));
+                return user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         UserDBContext db = new UserDBContext();
         System.out.println(db.getListUserFilter(0, "all", "all", ""));
