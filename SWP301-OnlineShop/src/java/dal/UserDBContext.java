@@ -193,6 +193,7 @@ public class UserDBContext extends DBContext {
                 + "      ,[user].[status]\n"
                 + "  FROM [User] join Role on roleId = Role.id"
                 + "       WHERE username = ? AND password = ?";
+        
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, username);
@@ -207,9 +208,12 @@ public class UserDBContext extends DBContext {
                 user.setEmail(rs.getString(5));
                 user.setMobile(rs.getString(6));
                 user.setAddress(rs.getString(7));
+                
                 Role role = new Role();
                 role.setId(rs.getInt(8));
                 role.setName(rs.getString(9));
+                role.setAllowFeatures(new RoleDBContext().getAllowFeatures(role.getId()));
+                
                 user.setRole(role);
                 user.setStatus(rs.getBoolean(10));
                 return user;

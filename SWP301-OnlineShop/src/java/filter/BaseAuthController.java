@@ -28,9 +28,6 @@ public abstract class BaseAuthController extends HttpServlet {
             return false;
         else
         {
-            //String url = request.getServletPath();
-            //AccountDBContext db = new AccountDBContext();
-            //int num = db.getNumberOfRoles(account.getUsername(), url);
             return true;
         }
     }

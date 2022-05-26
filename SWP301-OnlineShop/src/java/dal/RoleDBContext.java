@@ -7,6 +7,9 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import model.Feature;
 import model.Role;
 
 /**
@@ -34,9 +37,27 @@ public class RoleDBContext extends DBContext {
         return roles;
     }
 
-    public static void main(String[] args) {
-        RoleDBContext db = new RoleDBContext();
-        System.out.println(db.getAllRole().size()
-        );
+    public HashMap<Feature, Boolean> getAllowFeatures(int role) {
+        String sql = "SELECT [Feature].id, [Feature].url, [Feature].name, [Role_Feature].enable\n"
+                + "from [Role]\n"
+                + "inner join Role_Feature on [Role].id = Role_Feature.roleId\n"
+                + "inner join Feature on [Role_Feature].featureId = [Feature].id\n"
+                + "WHERE Role_Feature.roleId = ?";
+        try {
+            HashMap<Feature, Boolean> features = new HashMap<Feature, Boolean>();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, role);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Feature f = new Feature();
+                f.setId(rs.getInt("id"));
+                f.setName(rs.getString("name"));
+                f.setUrl(rs.getString("url"));
+                features.put(f, rs.getBoolean("enable"));
+            }
+            return features;
+        } catch (Exception e) {
+        }
+        return null;
     }
 }
