@@ -46,7 +46,7 @@
     <div class="fixed float-end">
         <div class="alert alert-success alert-dismissible fade in">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success!</strong>
+            ${requestScope.alter}
         </div>
     </div>
 </c:if>

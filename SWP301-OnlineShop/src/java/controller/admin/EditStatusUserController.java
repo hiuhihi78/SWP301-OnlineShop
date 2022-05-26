@@ -69,7 +69,7 @@ public class EditStatusUserController extends HttpServlet {
             xpage = request.getParameter("page");
         }
         request.setAttribute("xpage", xpage);
-        request.setAttribute("alter", "success");
+        request.setAttribute("alter", "Edit user's profile success!");
 //        request.getRequestDispatcher("userList").forward(request, response);
         response.sendRedirect("../admin/userList?xpage="+xpage+"&alter=Update stauts success");
     }

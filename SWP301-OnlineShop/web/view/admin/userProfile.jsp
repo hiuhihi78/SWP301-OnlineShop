@@ -42,9 +42,9 @@
                     <div id="content" style="width: 80%; margin: 0 9%" >
                         <h3>User details</h3>
                         <div class="row mb-3" style="margin-bottom: 20px">
-<!--                            <c:if test="${requestScope.user.avatar != 'default'}">
-                                <img src="data:image/jpg;base64,${user.avatar}"  class="rounded-circle" alt="Cinque Terre" width="250" height="250"> 
-                            </c:if>-->
+                            <c:if test="${requestScope.user.avatar != 'default'}">
+                                <!--<img src="data:image/jpg;base64,${user.avatar}"  class="rounded-circle" alt="Cinque Terre" width="250" height="250">--> 
+                            </c:if>
                             <c:if test="${requestScope.user.avatar == 'default'}">
                                 <img src="../assets/img/defaultUserAvatar.png"  class="rounded-circle" alt="User image" width="300" height="300"> 
                             </c:if>

@@ -36,7 +36,7 @@ public class UserDBContext extends DBContext {
                 + "      ,[address]\n"
                 + "      ,[roleId]\n"
                 + "      ,Role.name\n"
-                + "      ,[status]\n"
+                + "      ,[User].[status]\n"
                 + "      ,[User].id\n"
                 + "  FROM [User] join Role on roleId = Role.id";
         try {
@@ -82,7 +82,7 @@ public class UserDBContext extends DBContext {
                     + "      ,[address]\n"
                     + "      ,[roleId]\n"
                     + "      ,Role.name\n"
-                    + "      ,[status]\n"
+                    + "      ,[User].[status]\n"
                     + "      ,[User].id\n"
                     + "  FROM [User] join Role on roleId = Role.id\n"
                     + "  WHERE (1=1)\n";
@@ -105,7 +105,7 @@ public class UserDBContext extends DBContext {
                 params.put(paramIndex, param);
             }
             if (!status.equals("all")) {
-                sql += " and status = ?\n";
+                sql += " and [User].[status] = ?\n";
                 paramIndex++;
                 Object[] param = new Object[2];
                 param[0] = Boolean.class.getName();
@@ -198,9 +198,9 @@ public class UserDBContext extends DBContext {
                     + "      ,[address]\n"
                     + "      ,[roleId]\n"
                     + "      ,Role.name\n"
-                    + "      ,[status]\n"
+                    + "      ,[User].[status]\n"
                     + "      ,[User].id\n"
-                    + "  FROM [User] join Role on roleId = Role.id\n"
+                    + "  FROM [User] join [Role] on roleId = [Role].id\n"
                     + "  WHERE (1=1)\n";
             int paramIndex = 0;
             HashMap<Integer, Object[]> params = new HashMap<>();
@@ -221,7 +221,7 @@ public class UserDBContext extends DBContext {
                 params.put(paramIndex, param);
             }
             if (!status.equals("all")) {
-                sql += " and status = ?\n";
+                sql += " and [User].status = ?\n";
                 paramIndex++;
                 Object[] param = new Object[2];
                 param[0] = Boolean.class.getName();
@@ -257,7 +257,7 @@ public class UserDBContext extends DBContext {
                     + "    WHEN @Col_Name = 'email' THEN CAST(email AS SQL_VARIANT)\n"
                     + "    WHEN @Col_Name = 'mobile' THEN CAST(mobile AS SQL_VARIANT)\n"
                     + "    WHEN @Col_Name = 'role' THEN CAST(roleId AS SQL_VARIANT)\n"
-                    + "    WHEN @Col_Name = 'status' THEN CAST(status AS SQL_VARIANT)"
+                    + "    WHEN @Col_Name = 'status' THEN CAST([User].status AS SQL_VARIANT)"
                     + " END " + orderBy;
 
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -299,16 +299,6 @@ public class UserDBContext extends DBContext {
 
     }
 
-    public static void main(String[] args) {
-        UserDBContext db = new UserDBContext();
-//        System.out.println(db.getListUserFilter(0, "all", "all", "", "fullname", "desc"));
-        for (User u : db.getListUserFilter(1, "male", "all", "", "id", "asc")) {
-            System.out.println(u);
-        }
-
-//        
-    }
-
     public User getUserById(int id) throws IOException {
         String sql = "SELECT [fullname]\n"
                 + "	  ,[gender]\n"
@@ -318,7 +308,7 @@ public class UserDBContext extends DBContext {
                 + "      ,[address]\n"
                 + "      ,[roleId]\n"
                 + "	  ,[Role].[name]\n"
-                + "      ,[status]\n"
+                + "      ,[User].[status]\n"
                 + "  FROM [dbo].[User] join  [Role] on [User].roleId  = [Role].id\n"
                 + "  WHERE [User].id = ?";
         try {
@@ -378,6 +368,71 @@ public class UserDBContext extends DBContext {
             ps.setBoolean(1, status);
             ps.setInt(2, roleId);
             ps.setInt(3, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void main(String[] args) {
+        UserDBContext db = new UserDBContext();
+//        for (User u : db.getListUserFilter(1, "male", "all", "", "id", "asc")) {
+//            System.out.println(u);
+//        }
+//        for(User u : db.getAllUser()){
+//            System.out.println(u);
+//        }
+////        
+    }
+
+    public boolean checkEmailOrMobileExisted(String email, String mobile) {String sql = "SELECT *\n"
+                + "FROM [User]\n"
+                + "WHERE email = ? or mobile = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, mobile);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public void inserUser(String name, String password, boolean gender, String email, String mobile, String address, int role, boolean status) {
+        try {
+            String sql = "INSERT INTO [dbo].[User]\n"
+                    + "           ([fullname]\n"
+                    + "           ,[password]\n"
+                    + "           ,[gender]\n"
+                    + "           ,[email]\n"
+                    + "           ,[mobile]\n"
+                    + "           ,[address]\n"
+                    + "           ,[roleId]\n"
+                    + "           ,[status])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, password);
+            ps.setBoolean(3, gender);
+            ps.setString(4, email);
+            ps.setString(5, mobile);
+            ps.setString(6, address);
+            ps.setInt(7, role);
+            ps.setBoolean(8, status);
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);

@@ -21,9 +21,9 @@ public class DBContext {
 
     public DBContext() {
         try {
-            String username = "sa";
-            String password = "sa";
-            String url = "jdbc:sqlserver://DESKTOP-NJQ226K\\HIEU:1433;databaseName=SWP391-OnlineShop";
+            String username = "vailon";
+            String password = "daucatmoi123!";
+            String url = "jdbc:sqlserver://vpn.ripaimcsgo.xyz;databaseName=OnlineShop";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException ex) {
@@ -32,5 +32,8 @@ public class DBContext {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    public static void main(String[] args) {
+        DBContext db = new DBContext();
+        if(db.connection != null) System.out.println("abc");
+    }
 }

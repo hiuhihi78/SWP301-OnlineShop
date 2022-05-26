@@ -26,7 +26,7 @@
         
         <!--active button nav in sidebar-->
         <script>
-            document.getElementById('nav-element').childNodes[3].classList.add('active');
+            document.getElementById('nav-user-list').classList.add('active');
         </script>
 
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
@@ -51,6 +51,8 @@
             <aside class="right-side">
                 <!-- Main content -->
                 <section class="content" style="margin: 0px 20px;">
+                    <!--Alter-->
+                    <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
                     <!--Search, add and filter user-->
                     <div class="row d-flex" style="margin-bottom: 10px">
                         <form action="userList" method="get" style="width: 70%; float: left;" class="form-inline">
@@ -87,7 +89,7 @@
                         </select>
                         <input type="text" id="search" name="search" value="${requestScope.search}" placeholder="Enter part of name, phone or email" style="width: 30rem" class="form-control"/>
                     </form>
-                    <form action="" method="get" style="margin: 0 2%;padding: 0;display: inline-block; float: right">
+                    <form action="addNewUser" method="get" style="margin: 0 2%;padding: 0;display: inline-block; float: right">
                         <input class="btn btn-primary" type="submit" value="Add new user">
                     </form>
                 </div><!--/Search, add and filter user-->
@@ -159,8 +161,7 @@
                     </div> <!--/Pagging-->
                 </section>
 
-                <!--Alter-->
-            <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
+            
         </aside><!-- /.right-side -->
     </div><!-- ./wrapper -->
 

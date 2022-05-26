@@ -21,21 +21,21 @@
             </div>
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
-        <ul class="sidebar-menu" id="nav-element">
-            <li>
-                <a href="index.html">
+        <ul class="sidebar-menu">
+            <li id="nav-dashborad">
+                <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
-            <li>
-                <a href="general.html">
+            <li id="nav-user-list">
+                <a href="userList">
                     <i class="fa-solid fa-users"></i> <span>User list</span>
 
                 </a>
             </li>
 
-            <li>
-                <a href="basic_form.html">
+            <li id="nav-setting-list">
+                <a href="">
                     <i class="fa-solid fa-gears"></i> <span>Setting list</span>
                 </a>
             </li>
