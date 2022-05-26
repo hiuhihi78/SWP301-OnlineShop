@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import model.Feature;
 import model.Role;
 
@@ -37,14 +39,14 @@ public class RoleDBContext extends DBContext {
         return roles;
     }
 
-    public HashMap<Feature, Boolean> getAllowFeatures(int role) {
+    public LinkedHashMap<Feature, Boolean> getAllowFeatures(int role) {
         String sql = "SELECT [Feature].id, [Feature].url, [Feature].name, [Role_Feature].enable\n"
                 + "from [Role]\n"
                 + "inner join Role_Feature on [Role].id = Role_Feature.roleId\n"
                 + "inner join Feature on [Role_Feature].featureId = [Feature].id\n"
                 + "WHERE Role_Feature.roleId = ?";
         try {
-            HashMap<Feature, Boolean> features = new HashMap<Feature, Boolean>();
+            LinkedHashMap<Feature, Boolean> features = new LinkedHashMap<Feature, Boolean>();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, role);
             ResultSet rs = ps.executeQuery();

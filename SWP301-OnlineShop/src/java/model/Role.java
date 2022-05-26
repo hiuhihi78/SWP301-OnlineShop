@@ -5,6 +5,8 @@
 package model;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 /**
  *
@@ -14,7 +16,7 @@ public class Role {
     private int id;
     private String name;
     private boolean active;
-    private HashMap<Feature, Boolean> allowFeatures;
+    private LinkedHashMap<Feature, Boolean> allowFeatures;
 
     public Role(int id, String name) {
         this.id = id;
@@ -52,7 +54,7 @@ public class Role {
         this.active = active;
     }
 
-    public HashMap<Feature, Boolean> getAllowFeatures() {
+    public LinkedHashMap<Feature, Boolean> getAllowFeatures() {
         return allowFeatures;
     }
 
@@ -60,7 +62,7 @@ public class Role {
         this.active = active;
     }
 
-    public void setAllowFeatures(HashMap<Feature, Boolean> allowFeatures) {
+    public void setAllowFeatures(LinkedHashMap<Feature, Boolean> allowFeatures) {
         this.allowFeatures = allowFeatures;
     }
     

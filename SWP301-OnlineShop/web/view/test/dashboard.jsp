@@ -4,14 +4,20 @@
     Author     : hoan
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Simple dashboard</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Hello - ${sessionScope.user.fullname}</h1>
+        <div class="navbar">
+            <c:forEach items="${sessionScope.user.role.allowFeatures}" var="s">
+                    <a href="${pageContext.request.contextPath}${s.key.url}">${s.key.name} ||</a>
+            </c:forEach>
+        </div>
     </body>
 </html>
