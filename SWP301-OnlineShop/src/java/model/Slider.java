@@ -12,7 +12,7 @@ public class Slider {
 
     private int id;
     private String title;
-    private String image;
+    private Image image;
     private String backlink;
     private boolean status;
     private String note;
@@ -37,11 +37,11 @@ public class Slider {
         this.title = title;
     }
 
-    public String getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 

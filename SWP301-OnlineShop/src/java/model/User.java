@@ -13,7 +13,7 @@ public class User {
 
     private String id;
     private String password;
-    private String avatar;
+    private Image avatar;
     private String fullname;
     private boolean gender;
     private String mobile;
@@ -41,11 +41,11 @@ public class User {
         this.password = password;
     }
 
-    public String getAvatar() {
+    public Image getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(Image avatar) {
         this.avatar = avatar;
     }
 

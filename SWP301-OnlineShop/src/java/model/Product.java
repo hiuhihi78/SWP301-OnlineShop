@@ -18,7 +18,7 @@ public class Product {
     private int discount;
     private User user;
     private boolean featured;
-    private String thumbnail;
+    private Image thumbnail;
     private Date date;
     private SubCategory subCategory;
 
@@ -81,11 +81,11 @@ public class Product {
         this.featured = featured;
     }
 
-    public String getThumbnail() {
+    public Image getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(String thumbnail) {
+    public void setThumbnail(Image thumbnail) {
         this.thumbnail = thumbnail;
     }
 
