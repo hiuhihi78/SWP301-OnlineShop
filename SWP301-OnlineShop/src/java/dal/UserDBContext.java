@@ -181,18 +181,16 @@ public class UserDBContext extends DBContext {
     }
 
     public User login(String username, String password) {
-        String sql = "SELECT [id]"
+        String sql = "SELECT [User].id"
                 + "         ,[username] "
                 + "       ,[fullname]\n"
-                + "      ,[password]\n"
                 + "      ,[gender]\n"
                 + "      ,[email]\n"
                 + "      ,[mobile]\n"
                 + "      ,[address]\n"
                 + "      ,[roleId]\n"
                 + "      ,Role.name\n"
-                + "      ,[status]\n"
-                + "      ,[User].id\n"
+                + "      ,[user].[status]\n"
                 + "  FROM [User] join Role on roleId = Role.id"
                 + "       WHERE username = ? AND password = ?";
         try {
@@ -200,30 +198,25 @@ public class UserDBContext extends DBContext {
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 User user = new User();
-                user.setFullname(rs.getString(1));
-                user.setGender(rs.getBoolean(3));
-                user.setEmail(rs.getString(4));
-                user.setMobile(rs.getString(5));
-                user.setAddress(rs.getString(6));
+                user.setId(rs.getInt(1));
+                user.setUsername(rs.getString(2));
+                user.setFullname(rs.getString(3));
+                user.setGender(rs.getBoolean(4));
+                user.setEmail(rs.getString(5));
+                user.setMobile(rs.getString(6));
+                user.setAddress(rs.getString(7));
                 Role role = new Role();
-                role.setId(rs.getInt(7));
-                role.setName(rs.getString(8));
+                role.setId(rs.getInt(8));
+                role.setName(rs.getString(9));
                 user.setRole(role);
-                user.setStatus(rs.getBoolean(9));
-                user.setId(rs.getInt(10));
-                user.setUsername(rs.getString("username"));
+                user.setStatus(rs.getBoolean(10));
                 return user;
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        UserDBContext db = new UserDBContext();
-        System.out.println(db.getListUserFilter(0, "all", "all", ""));
     }
 }

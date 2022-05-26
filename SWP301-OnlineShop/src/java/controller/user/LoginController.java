@@ -5,33 +5,20 @@
  */
 package controller.user;
 
+import dal.UserDBContext;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.User;
 
 /**
  *
  * @author Admin
  */
 public class LoginController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("./view/public/login.jsp").forward(request, response);     
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -45,12 +32,13 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
+        /*HttpSession session = request.getSession();
         if (session.getAttribute("checked") != null) {
-            
-        }
-        
-        processRequest(request, response);
+
+        }*/
+        response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("./view/public/login.jsp").forward(request, response);
+
     }
 
     /**
@@ -64,11 +52,17 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = "", pass = "";
-        email = request.getParameter("txtEmail");
-        pass = request.getParameter("txtPass");
-        
-        processRequest(request, response);
+        String username = "", pass = "";
+        username = request.getParameter("username");
+        pass = request.getParameter("password");
+        UserDBContext userDB = new UserDBContext();
+        User u = userDB.login(username, pass);
+        if (u != null) {
+            request.getSession().setAttribute("user", u);
+            response.getWriter().println("Login success. Hello " + u.getFullname());
+        } else {
+            response.getWriter().println("Login failed");
+        }
     }
 
     /**
