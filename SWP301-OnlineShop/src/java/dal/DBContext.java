@@ -21,17 +21,13 @@ public class DBContext {
 
     public DBContext() {
         try {
-            String user = "tienpm";
-            String pass = "1";
-            String url = "jdbc:sqlserver://localhost\\TIEN:1433;databaseName=SWP391-OnlineShop";
-
+            String user = "vailon";
+            String pass = "daucatmoi123!";
+            String url = "jdbc:sqlserver://vpn.ripaimcsgo.xyz:1433;databaseName=OnlineShop1";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

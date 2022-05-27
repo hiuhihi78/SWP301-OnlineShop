@@ -16,14 +16,10 @@ public class Product {
     private String description;
     private long price;
     private int discount;
+    private long priceDiscount;
     private User user;
     private boolean featured;
-    private Image thumbnail;
-    private Date date;
-    private SubCategory subCategory;
-
-    public Product() {
-    }
+    private String thumbnail;
 
     public int getId() {
         return id;
@@ -81,12 +77,20 @@ public class Product {
         this.featured = featured;
     }
 
-    public Image getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(Image thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public Date getDate() {
@@ -104,4 +108,12 @@ public class Product {
     public void setSubCategory(SubCategory subCategory) {
         this.subCategory = subCategory;
     }
+    private Image image;
+    private Date date;
+    private SubCategory subCategory;
+
+    public Product() {
+    }
+
+    
 }

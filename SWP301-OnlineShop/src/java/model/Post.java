@@ -12,7 +12,7 @@ import java.sql.Date;
  */
 public class Post {
     private int id;
-    private Image thumbnail;
+    private String thumbnail;
     private String title;
     private PostCategory postCategory;
     private String briefInfo;
@@ -33,11 +33,11 @@ public class Post {
         this.id = id;
     }
 
-    public Image getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(Image thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
 

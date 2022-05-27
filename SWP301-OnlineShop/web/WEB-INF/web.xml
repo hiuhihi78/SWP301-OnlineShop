@@ -18,7 +18,15 @@
     </servlet>
     <servlet>
         <servlet-name>BlogListController</servlet-name>
-        <servlet-class>controller.home.BlogListController</servlet-class>
+        <servlet-class>controller.home.PostListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShopController</servlet-name>
+        <servlet-class>controller.home.ShopController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewServlet</servlet-name>
+        <servlet-class>controller.home.NewServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>BlogListController</servlet-name>
         <url-pattern>/bloglist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShopController</servlet-name>
+        <url-pattern>/shop</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewServlet</servlet-name>
+        <url-pattern>/NewServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -11,9 +11,9 @@ package model;
  */
 public class User {
 
-    private String id;
+    private int id;
     private String password;
-    private Image avatar;
+    private String avatar;
     private String fullname;
     private boolean gender;
     private String mobile;
@@ -25,11 +25,11 @@ public class User {
     public User() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -41,11 +41,11 @@ public class User {
         this.password = password;
     }
 
-    public Image getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Image avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

@@ -10,7 +10,7 @@ package model;
  */
 public class Image {
     private int id;
-    private Object image;
+    private String image;
 
     public Image() {
     }
@@ -23,11 +23,11 @@ public class Image {
         this.id = id;
     }
 
-    public Object getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Object image) {
+    public void setImage(String image) {
         this.image = image;
     }
     

@@ -34,10 +34,12 @@ public class HomeController extends HttpServlet {
         ArrayList<Slider> listSliderActive = sliderDB.getSlidersActive();
         ArrayList<Product> listProductFeatured = productDB.getProductsFeatured();
         ArrayList<Post> listHotPost = postDB.getHotPost();
+        ArrayList<Post> listLatestPost = postDB.getLatestPost();
         
         request.setAttribute("listSliderActive", listSliderActive);
         request.setAttribute("listProductFeatured", listProductFeatured);
         request.setAttribute("listHotPost", listHotPost);
+        request.setAttribute("listLatestPost", listLatestPost);
         
         request.getRequestDispatcher("view/public/home.jsp").forward(request, response);
     }
