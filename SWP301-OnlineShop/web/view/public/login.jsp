@@ -18,16 +18,8 @@
     <title>Login</title>
   </head>
   <body>
-    <section class="material-half-bg">
-      <div class="cover"></div>
-    </section>
     <section class="login-content">
-      <div class="logo">
-        <h1>Online Shop</h1>
-      </div>
-        
-        
-        
+
         
       <!-- login-box -->
       <div class="login-box">
@@ -78,9 +70,7 @@
         </form>
       </div>
       <!-- end login-box -->
-      
-      
-      
+
     </section>
                 
                 

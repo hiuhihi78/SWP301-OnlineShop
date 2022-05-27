@@ -18,13 +18,7 @@
         <title>Login</title>
     </head>
     <body>
-        <section class="material-half-bg">
-            <div class="cover"></div>
-        </section>
-        <section class="login-content">
-            <div class="logo">
-                <h1>Online Shop</h1>
-            </div>   
+        <section class="login-content">   
             <div class="tile1">
                 <h3 class="tile-title">Register</h3>
                 <form action="register" method="post">
