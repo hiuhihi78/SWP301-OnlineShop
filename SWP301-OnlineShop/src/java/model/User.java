@@ -20,6 +20,25 @@ public class User {
     private boolean status;
     private Role role;
 
+    public User() {
+    }
+
+    
+    
+    public User(int id, String password, String avatar, String email, String fullname, boolean gender, String mobile, String address, boolean status) {
+        this.id = id;
+        this.password = password;
+        this.avatar = avatar;
+        this.email = email;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.mobile = mobile;
+        this.address = address;
+        this.status = status;
+    }
+
+    
+    
     public int getId() {
         return id;
     }

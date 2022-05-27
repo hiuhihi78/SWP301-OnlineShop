@@ -2,19 +2,23 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>controller.user.LoginController</servlet-class>
+        <servlet-class>controller.common.LoginController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterController</servlet-name>
-        <servlet-class>controller.user.RegisterController</servlet-class>
+        <servlet-class>controller.common.RegisterController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ResetPasswordController</servlet-name>
-        <servlet-class>controller.user.ResetPasswordController</servlet-class>
+        <servlet-class>controller.common.ResetPasswordController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserListController</servlet-name>
         <servlet-class>controller.admin.UserListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>controller.admin.DashboardController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>UserListController</servlet-name>
         <url-pattern>/admin/userList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

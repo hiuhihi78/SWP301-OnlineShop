@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.user;
+package controller.common;
 
+import configs.Security;
+import configs.SendMail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -59,6 +61,14 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String name = "", strGender = "", email = "", mobile = "", address = "";
+        name = request.getParameter("txtName");
+        strGender = request.getParameter("rd");
+        email = request.getParameter("txtEmail");
+        mobile = request.getParameter("txtMobile");
+        address = request.getParameter("txtAddress");
+        SendMail.setContent(name, "dashboard", email);
         processRequest(request, response);
     }
 
