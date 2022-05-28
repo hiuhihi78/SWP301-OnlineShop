@@ -9,6 +9,7 @@ import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,7 @@ public class LoginController extends HttpServlet {
     public static final int MAKETING_ROLL_ID = 2;
     public static final int SALE_ROLL_ID = 3;
     public static final int CUSTOMER_ROLL_ID = 4;
+    public static final int MAXIMUM_AGE = 60*60*24*10;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,18 +54,25 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Object obj = null;
-        obj = session.getAttribute("signed");
-        if (obj != null) {
-            User user = (User) obj;
-            request.setAttribute("email", user.getEmail());
-            request.setAttribute("password", user.getPassword());
-            request.setAttribute("checkbox", "checked");
-        }else {
-            request.setAttribute("checkbox", "");
+          Cookie [] cookies = request.getCookies();
+          String email = null, pass = null;
+          for (Cookie cooky : cookies) {
+            if (cooky.getName().equals("emailCookie")) {
+                email = cooky.getValue();
+            }
+            if (cooky.getName().equals("passCookie")) {
+                pass = cooky.getValue();
+            }
+            
+            if (email != null && pass != null){
+                request.setAttribute("email", email);
+                request.setAttribute("password", pass);
+                request.setAttribute("checkbox", "checked");
+                break;
+            }
         }
-        processRequest(request, response);
+          request.getRequestDispatcher("view/public/login.jsp").forward(request, response);
+        
     }
 
     /**
@@ -77,7 +86,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = "", password = "", check = "";
+        String email = "", password = "", check = null;
         User user = null; 
         UserDBContext userDb = new UserDBContext();
         HttpSession session = request.getSession();
@@ -86,42 +95,44 @@ public class LoginController extends HttpServlet {
         email = request.getParameter("txtEmail");
         password = request.getParameter("txtPassword");
         user = userDb.getUserByEmailAndPassword(email, password);
-        if (check != "" && check != null && user != null) {
-            session.setAttribute("signed", user);           
-        }else {
-            session.setAttribute("signed", null);
-        }
         
-        if (user != null && user.getRole().getId() == ADMIN_ROLL_ID) {
+        if (user != null) {
+            session.setAttribute("user", user);
+            Cookie emailCookie = new Cookie("emailCookie", email);
+            Cookie passCookie = new Cookie("passCookie", password);
+            if (check != null) {
+                emailCookie.setMaxAge(MAXIMUM_AGE);            
+            }else {
+                emailCookie.setMaxAge(0);
+            }
+            response.addCookie(emailCookie);
+            response.addCookie(passCookie);
+            if (user.getRole().getId() == ADMIN_ROLL_ID) {
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Logged in successfully!');");
             out.println("location='dashboard';");
             out.println("</script>");
+            } else if (user.getRole().getId() == MAKETING_ROLL_ID){
+                out.println("<script type=\"text/javascript\">");
+            out.println("alert('Logged in successfully!');");
+            out.println("location='homeMaketing';");
+            out.println("</script>");
+            } else if (user.getRole().getId() == SALE_ROLL_ID){
+                out.println("<script type=\"text/javascript\">");
+            out.println("alert('Logged in successfully!');");
+            out.println("location='homeSale';");
+            out.println("</script>");
+            } else if (user.getRole().getId() == CUSTOMER_ROLL_ID){
+                out.println("<script type=\"text/javascript\">");
+            out.println("alert('Logged in successfully!');");
+            out.println("location='homeCustomer';");
+            out.println("</script>");
+            }
+        }else {
+            request.setAttribute("mess", "Email or password is incorrect. Please try again!");
+            session.setAttribute("user", null);
+            processRequest(request, response);
         }
-
-//        if (obj != null && obj.isIsAdmin() == false && session.getAttribute("cart") != null) {
-//            session.setAttribute("user", obj);
-//            out.println("<script type=\"text/javascript\">");
-//            out.println("alert('Logged in successfully!');");
-//            out.println("location='order';");
-//            out.println("</script>");
-//        } else if (obj != null && obj.isIsAdmin() == false && !(session.getAttribute("cart") != null)) {
-//            session.setAttribute("user", obj);
-//            out.println("<script type=\"text/javascript\">");
-//            out.println("alert('Logged in successfully!');");
-//            out.println("location='home';");
-//            out.println("</script>");
-//        } else if (obj != null && obj.isIsAdmin() == true) {
-//            session.setAttribute("admin", obj);
-//            out.println("<script type=\"text/javascript\">");
-//            out.println("alert('Logged in successfully!');");
-//            out.println("location='homeAdmin';");
-//            out.println("</script>");
-//        }
-//        else {
-//            request.setAttribute("mess", "Login failed!");
-//            processRequest(request, response);
-//        }
     }
 
     /**

@@ -6,7 +6,11 @@ package model;
 
 /**
  *
+<<<<<<< HEAD
  * @author Admin
+=======
+ * @author DELL
+>>>>>>> f4f075f799f029540ea5d1414d5fab636d36beb1
  */
 public class Role {
     private int id;
@@ -21,7 +25,6 @@ public class Role {
         this.name = name;
     }
 
-    
     
     public int getId() {
         return id;
@@ -38,6 +41,5 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
-    
     
 }
