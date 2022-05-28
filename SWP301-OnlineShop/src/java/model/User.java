@@ -18,8 +18,12 @@ public class User {
     private boolean gender;
     private String mobile;
     private String address;
-    private boolean status;
     private Role role;
+    private String email;
+    private boolean status;
+
+    public User() {
+    }
 
     public int getId() {
         return id;
@@ -43,14 +47,6 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFullname() {
@@ -85,14 +81,6 @@ public class User {
         this.address = address;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -101,19 +89,20 @@ public class User {
         this.role = role;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
-    
 
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", password=" + password + ", avatar=" + avatar + ", email=" + email + ", fullname=" + fullname + ", gender=" + gender + ", mobile=" + mobile + ", address=" + address + ", status=" + status + ", role=" + role + '}';
+    public boolean isStatus() {
+        return status;
     }
-    
-    
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
 }
