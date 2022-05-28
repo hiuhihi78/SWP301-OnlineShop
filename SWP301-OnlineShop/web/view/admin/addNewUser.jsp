@@ -37,37 +37,37 @@
                             <form id="basic-form" action="addNewUser" method="post" class="d-flex justify-content-center">
                                 <p>
                                     <label for="fullname">Full name<span class="text-danger">*</span></label>
-                                    <input type="text" id="fullname" name="fullname" required>
+                                    <input type="text" id="fullname" name="fullname" value="${requestScope.fullname}" required>
                                 </p>
                                 <p>
                                     <label for="gender">Gender<span class="text-danger">*</span></label>
-                                    <input type="radio" name="gender" value="male" checked="checked" /> Male
-                                    <input type="radio" name="gender" value="female" />Female
+                                    <input type="radio" name="gender" value="male" checked="checked" ${requestScope.gender == "male" ? "checked='checked'": ""} /> Male
+                                    <input type="radio" name="gender" value="female" ${requestScope.gender == "female" ? "checked='checked'": ""}/>Female
                                 </p>
                                 <p>
                                     <label for="email">Email<span class="text-danger">*</span></label>
-                                    <input id="email" name="email">
+                                    <input id="email" name="email" value="${requestScope.email}">
                                 </p>
                                 <p>
                                     <label for="mobile">Mobile<span class="text-danger">*</span></label>
-                                    <input type="text" id="mobile" name="mobile">
+                                    <input type="text" id="mobile" name="mobile" ${requestScope.mobile}>
                                 </p>
                                 <p>
                                     <label for="role">Role<span class="text-danger">*</span></label>
                                     <select name="role" id="role">
                                     <c:forEach items="${requestScope.roles}" var="r">
-                                        <option value="${r.id}">${r.name}</option>
+                                        <option value="${r.id}"  ${requestScope.roleId == r.id ? "selected='selected'":""}>${r.name}</option>
                                     </c:forEach>
                                 </select>
                             </p>
                             <p>
                                 <label for="address">Address<span class="text-danger">*</span></label>
-                                <input id="address" name="address">
+                                <input id="address" name="address" value="${requestScope.address}">
                             </p>
                             <p>
                                 <label for="status">Status<span class="text-danger">*</span></label>
-                                <input type="radio" name="status" value="active"}>Active
-                                <input type="radio" name="status" value="unactive" checked="checked"}>Unactive
+                                <input type="radio" name="status" value="active" ${requestScope.status == "active" ? "checked='checked'": ""}>Active
+                                <input type="radio" name="status" value="unactive" checked="checked"} ${requestScope.status == "unactive" ? "checked='checked'": ""}>Unactive
                             </p>
 
                             <c:if test="${message != null}">

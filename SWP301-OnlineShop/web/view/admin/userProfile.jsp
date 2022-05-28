@@ -93,11 +93,18 @@
                                 <label for="role" class="col-sm-2 col-form-label">Role</label>
                                 <div class="col-sm-3">
                                     <select name="role" class="form-control" id="role" >
-                                        <c:forEach items="${requestScope.roles}" var="r">
-                                            <option value="${r.id}" ${user.role.id == r.id ? "selected = 'selected'":""}>
-                                                ${r.name}
-                                            </option>
-                                        </c:forEach>
+                                        <c:if  test="${requestScope.user.role.id == 4}">
+                                            <c:forEach items="${requestScope.roles}" var="r">
+                                                <option value="${r.id}" ${user.role.id == r.id ? "selected = 'selected'":""}>${r.name}</option>
+                                            </c:forEach>
+                                        </c:if>
+                                        <c:if  test="${requestScope.user.role.id != 4}">
+                                            <c:forEach items="${requestScope.roles}" var="r">
+                                                <c:if test="${r.id != 4}">
+                                                    <option value="${r.id}" ${user.role.id == r.id ? "selected = 'selected'":""}>${r.name}</option>
+                                                </c:if>
+                                            </c:forEach>
+                                        </c:if>
                                     </select>
                                 </div>
                             </div>

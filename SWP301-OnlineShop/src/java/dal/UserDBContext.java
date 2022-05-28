@@ -385,7 +385,8 @@ public class UserDBContext extends DBContext {
 ////        
     }
 
-    public boolean checkEmailOrMobileExisted(String email, String mobile) {String sql = "SELECT *\n"
+    public boolean checkAccountHaveEmailOrMobileExisted(String email, String mobile) {
+        String sql = "SELECT *\n"
                 + "FROM [User]\n"
                 + "WHERE email = ? or mobile = ?";
         try {
@@ -416,12 +417,12 @@ public class UserDBContext extends DBContext {
                     + "           ,[roleId]\n"
                     + "           ,[status])\n"
                     + "     VALUES\n"
-                    + "           (?\n"
+                    + "           (N'?'\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
-                    + "           ,?\n"
+                    + "           ,N'?'\n"
                     + "           ,?\n"
                     + "           ,?)";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -433,7 +434,7 @@ public class UserDBContext extends DBContext {
             ps.setString(6, address);
             ps.setInt(7, role);
             ps.setBoolean(8, status);
-            ps.executeUpdate();
+//            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
