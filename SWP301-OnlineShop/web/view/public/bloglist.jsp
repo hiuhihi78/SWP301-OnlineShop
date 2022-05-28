@@ -25,14 +25,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-3">
-                        <div class="left-sidebar">
-                            <h2>Category</h2>
+                        <div class="left-side"> <!-- left-sidebar -->
+                            <h2 class="title text-center">Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title"><a id="-1" href="#">All Category</a></h4>
-                                        </div>
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a id="-1" href="#">All Category</a></h4>
                                     </div>
+                                </div>
                                 <c:forEach items="${requestScope.listAllCateogry}" var="i">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
@@ -41,8 +41,30 @@
                                     </div>
                                 </c:forEach>
                             </div><!--/category-products-->
-
-                        </div>
+                            <div class="panel-group category-products" id="accordian">
+                                <h2 class="title text-center">Latest Posts</h2>
+                                <c:if test="${requestScope.listHotPost != null}">
+                                    <c:forEach items="${requestScope.listHotPost}" var="i">
+                                        <div class="panel panel-default">
+                                            <div class="col-sm-12">
+                                                <div class="product-image-wrapper">
+                                                    <div class="single-products">
+                                                        <div class="productinfo text-center">
+                                                            <a href="#">
+                                                                <img src="${i.thumbnail}" alt="" />
+                                                            </a>
+                                                            <h2>${i.title}</h2>
+                                                            <p>${i.briefInfo}</p>
+                                                            <a href="#" class="btn btn-default add-to-cart">Show</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </c:if>
+                            </div>
+                        </div>                     
                     </div>
                     <div class="col-sm-9">
                         <div class="blog-post-area">
@@ -56,13 +78,13 @@
                                             <!--<li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
                                             <li><i class="fa fa-calendar"></i>${i.date}</li>
                                         </ul>
-                                        <span>
+<!--                                        <span>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star-half-o"></i>
-                                        </span>
+                                        </span>-->
                                     </div>
                                     <a href="">
                                         <img src="${i.thumbnail}" alt="">
@@ -71,15 +93,15 @@
                                     <a  class="btn btn-primary" href="">Read More</a>
                                 </div>
                             </c:forEach>
-                            
+
                             <div class="pagination-area">
                                 <c:if test="${requestScope.totalPage >= 2}">
-                                <ul class="pagination">
-                                    <c:forEach var="i" begin="1" end="${requestScope.totalPage}">
-                                        <li><a href="#" class="${(i == 1)? "active":""}">${i}</a></li>
-                                    </c:forEach>
-                                    <li><a id="next-page" href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                                </ul>
+                                    <ul class="pagination">
+                                        <c:forEach var="i" begin="1" end="${requestScope.totalPage}">
+                                            <li><a href="#" class="${(i == 1)? "active":""}">${i}</a></li>
+                                            </c:forEach>
+                                        <li><a id="next-page" href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                                    </ul>
                                 </c:if>
                             </div>
                         </div>
@@ -107,7 +129,7 @@
                 var search = document.querySelector('#search-box').value;
                 if (e.key === 'Enter' || e.keyCode === 13) {
                     var url = "bloglist?search=" + search;
-                    if (searchContentCategory) {
+                    if (searchContentCategory != -1) {
                         url += "&category=" + searchContentCategory;
                     }
                     window.location.href = url;
@@ -129,6 +151,9 @@
                     categories[i].onclick = function (e) {
                         var category = e.target.id;
                         var url = "bloglist?category=" + category;
+                        if (category == -1) {
+                            url = "bloglist";
+                        }
 //                        if (searchContent) {
 //                            url += "&search=" + searchContent;
 //                        }
@@ -147,7 +172,9 @@
 //                        paging[indexNextPage].classList.add("active");
                         var url = "bloglist?page=" + paging[indexNextPage].innerHTML;
                         if (searchContentCategory) {
-                            url += "&category=" + searchContentCategory;
+                            if (searchContentCategory != -1) {
+                                url += "&category=" + searchContentCategory;
+                            }
                         }
                         if (searchContent) {
                             url += "&search=" + searchContent;

@@ -30,28 +30,31 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                            <c:set scope="request" var="count_carousel" value="${-1}"/>
 
                             <ol class="carousel-indicators">
-                                <li data-target="#slider-carousel" data-slide-to="<c:out value = "${request.count_carousel + 1}"/>" class="active ${(request.count_carousel == 0)? "active":""}"></li>
-                                <li data-target="#slider-carousel" data-slide-to="1"></li>
-                                <li data-target="#slider-carousel" data-slide-to="2"></li>
-                            </ol>
+                                <c:forEach begin="0" end="2" step="1" var="i">
+                                    <li data-target="#slider-carousel" data-slide-to="${i}" class="${(i == 0)?"active":""}"></li>
+                                    </c:forEach>
 
+                            </ol>
                             <div class="carousel-inner">
-                                <c:set scope="request" var="count_item" value="${-1}"/>
-                                <div class="item active ${(request.count_item == 0)?"active":""}">
+                                <c:set scope="request" var="count_item" value="-1"/>
+                                <%--<c:forEach begin="0" end="2" step="1" var="i">--%>
+                                <%--<c:set scope="request" var="count_item" value="${1}"/>--%>
+                                <%--</c:forEach>--%>
+                                <div class="item active ${((request.count_item+1) == 0)?"active":""}">
                                     <div class="col-sm-6">
-                                        <h1><span>E</span>-SHOPPER</h1>
+                                        <h1><span>E</span>-SHOPPER<c:out value="${request.count_item}"/></h1>
                                         <h2>super sale at midnight</h2>
                                         <p>Together buy anything you like, let's go.</p>
                                         <button type="button" class="btn btn-default get">Get it now</button>
                                     </div>
                                     <div class="col-sm-6">
-                                        <img src="../../assets/public/images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                        <!--<img src="../../assets/public/images/home/girl1.jpg" class="girl img-responsive" alt="" />-->
+                                        <img src="https://i.pinimg.com/736x/24/6e/db/246edb61d2d251bfa3ac2427d72a82f7--website-slider-fashion-websites.jpg" class="girl img-responsive" alt="" />
                                     </div>
                                 </div>
-                                <div class="item">
+<!--                                <div class="item">
                                     <div class="col-sm-6">
                                         <h1><span>E</span>-SHOPPER</h1>
                                         <h2>Shop for brands with many offers.</h2>
@@ -73,7 +76,7 @@
                                     <div class="col-sm-6">
                                         <img src="../../assets/public/images/home/girl3.jpg" class="girl img-responsive" alt="" />
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                             <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
                                 <i class="fa fa-angle-left"></i>
@@ -136,7 +139,7 @@
                                                         </span>
                                                         <span style="color: red;">
                                                             <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price - (i.price*i.discount/100)}"/>
-                                                       
+
                                                         </span>
                                                     </p>
                                                     <a href="#${i.id}" class="btn btn-default add-to-cart">Show</a>

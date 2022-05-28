@@ -41,16 +41,18 @@ public class PostListController extends HttpServlet {
         int idCategory = Integer.parseInt(idCategory_raw);
         PostDBContext postDB = new PostDBContext();
         int pageIndex = Integer.parseInt(page);
-        int totalPosts = postDB.numberRowListPost();
+        int totalPosts = postDB.numberRowListPost(searchContent, idCategory);
         int pageSize = 3;
         int totalPage = (totalPosts % pageSize == 0) ? (totalPosts / pageSize) : ((totalPosts / pageSize) + 1);
         ArrayList<PostCategory> listAllCateogry = postDB.getAllCategory();
         ArrayList<Post> listPostFiltered = postDB.getListPostFiltered(searchContent, idCategory, pageIndex, pageSize);
+        ArrayList<Post> listHotPost = postDB.getHotPost();
         request.setAttribute("searchContent", searchContent);
         request.setAttribute("category", idCategory);
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("page", page);
         request.setAttribute("listPostFiltered", listPostFiltered);
+        request.setAttribute("listHotPost", listHotPost);
         request.setAttribute("listAllCateogry", listAllCateogry);
         request.getRequestDispatcher("view/public/bloglist.jsp").forward(request, response);
 
