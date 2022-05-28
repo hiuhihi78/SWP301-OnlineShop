@@ -64,6 +64,5 @@ public class Role {
 
     public void setAllowFeatures(LinkedHashMap<Feature, Boolean> allowFeatures) {
         this.allowFeatures = allowFeatures;
-    }
-    
+    } 
 }

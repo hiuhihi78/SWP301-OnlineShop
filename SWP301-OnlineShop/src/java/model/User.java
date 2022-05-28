@@ -19,7 +19,6 @@ public class User {
     private String mobile;
     private String address;
     private Role role;
-    private String email;
     private boolean status;
 
     public User() {
@@ -103,6 +102,14 @@ public class User {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }
