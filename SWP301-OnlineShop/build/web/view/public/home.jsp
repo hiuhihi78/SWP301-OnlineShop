@@ -22,7 +22,7 @@
         <link href="../../assets/public/css/animate.css" rel="stylesheet">
         <link href="../../assets/public/css/main.css" rel="stylesheet">
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
-        
+
         <link href="../../assets/public/css/style.css" rel="stylesheet">
         <title>Home | E-Shopper</title>
     </head>
@@ -59,29 +59,29 @@
                                         <img src="https://i.pinimg.com/736x/24/6e/db/246edb61d2d251bfa3ac2427d72a82f7--website-slider-fashion-websites.jpg" class="girl img-responsive" alt="" />
                                     </div>
                                 </div>
-<!--                                <div class="item">
-                                    <div class="col-sm-6">
-                                        <h1><span>E</span>-SHOPPER</h1>
-                                        <h2>Shop for brands with many offers.</h2>
-                                        <p>Together buy anything you like, let's go. </p>
-                                        <button type="button" class="btn btn-default get">Get it now</button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <img src="../../assets/public/images/home/girl2.jpg" class="girl img-responsive" alt="" />
-                                    </div>
-                                </div>
-
-                                <div class="item">
-                                    <div class="col-sm-6">
-                                        <h1><span>E</span>-SHOPPER</h1>
-                                        <h2>E-Commerce With more chosen</h2>
-                                        <p>Together buy anything you like, let's go. </p>
-                                        <button type="button" class="btn btn-default get">Get it now</button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <img src="../../assets/public/images/home/girl3.jpg" class="girl img-responsive" alt="" />
-                                    </div>
-                                </div>-->
+                                <!--                                <div class="item">
+                                                                    <div class="col-sm-6">
+                                                                        <h1><span>E</span>-SHOPPER</h1>
+                                                                        <h2>Shop for brands with many offers.</h2>
+                                                                        <p>Together buy anything you like, let's go. </p>
+                                                                        <button type="button" class="btn btn-default get">Get it now</button>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <img src="../../assets/public/images/home/girl2.jpg" class="girl img-responsive" alt="" />
+                                                                    </div>
+                                                                </div>
+                                
+                                                                <div class="item">
+                                                                    <div class="col-sm-6">
+                                                                        <h1><span>E</span>-SHOPPER</h1>
+                                                                        <h2>E-Commerce With more chosen</h2>
+                                                                        <p>Together buy anything you like, let's go. </p>
+                                                                        <button type="button" class="btn btn-default get">Get it now</button>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <img src="../../assets/public/images/home/girl3.jpg" class="girl img-responsive" alt="" />
+                                                                    </div>
+                                                                </div>-->
                             </div>
                             <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
                                 <i class="fa fa-angle-left"></i>
@@ -199,20 +199,18 @@
             });
         </script>
     </body>
-    
-    
-               <jsp:include page="login.jsp"/>
-              
-      
+
+    <jsp:include page="login.jsp"/>
+
     <script>
-        document.getElementById('button').addEventListener('click', 
-        function () {
-            document.querySelector('.bg-modal').style.display = 'flex';
-        });
-        
+        document.getElementById('button').addEventListener('click',
+                function () {
+                    document.querySelector('.bg-modal').style.display = 'flex';
+                });
+
         document.querySelector('.close').addEventListener('click',
-        function () {
-            document.querySelector('.bg-modal').style.display = 'none';
-        });
+                function () {
+                    document.querySelector('.bg-modal').style.display = 'none';
+                });
     </script>
 </html>
