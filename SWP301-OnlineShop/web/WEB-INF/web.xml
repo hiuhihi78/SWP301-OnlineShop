@@ -10,7 +10,7 @@
     </servlet>
     <servlet>
         <servlet-name>ResetPasswordController</servlet-name>
-        <servlet-class>controller.common.ResetPasswordController</servlet-class>
+        <servlet-class>controller.common.SendMailController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserListController</servlet-name>
@@ -39,6 +39,10 @@
     <servlet>
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>controller.common.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <servlet-class>controller.common.ChangePasswordController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

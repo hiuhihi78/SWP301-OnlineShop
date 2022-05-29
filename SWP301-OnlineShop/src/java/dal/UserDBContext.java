@@ -4,10 +4,13 @@
  */
 package dal;
 
+import configs.TokenGenerator;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -252,23 +255,45 @@ public class UserDBContext extends DBContext{
         }
         return false;
     }
-
+    
+//    public boolean addBook(Sach e) {
+//        try {
+//            String sql = "insert into Sach(MaSach, TenSach, MoTa, AnhSach, GiaSach, TacGia, NgayTao, MaChuDe, SoLuong)"
+//                    + "values (?,?,?,?,?,?,?,?,?)";
+//            PreparedStatement stm = connection.prepareStatement(sql);
+//            stm.setString(1, e.getMaSach());
+//            stm.setString(2, e.getTenSach());
+//            stm.setString(3, e.getMoTa());
+//            stm.setString(4, e.getAnhSach());
+//            stm.setFloat(5, e.getGiaSach());
+//            stm.setString(6, e.getTacGia());
+//            stm.setDate(7, (Date)e.getNgayTao());
+//            stm.setString(8, e.getChuDe().getMaChuDe());
+//            stm.setInt(9, e.getSoLuong());
+//
+//            return stm.executeUpdate() > 0;
+//        } catch (Exception ex) {
+//            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return false;
+//    }
     
     
     
+    
+ 
     
     
      public static void main(String[] args) {
         UserDBContext db = new UserDBContext();
 //        User u =  db.getUserByEmail("leduchieu2001x@gmail.com");
 //         System.out.println(u.getFullname());
-    User u = new User();
-    u.setId(11);
-    u.setEmail("lbada2001x@gmail.com");
-    u.setPassword("abc");
-    u.setRole(new Role(1, "admin"));
-    db.updateUser(u);
-    
+//    User u = new User();
+//    u.setId(11);
+//    u.setEmail("lbada2001x@gmail.com");
+//    u.setPassword("abc");
+//    u.setRole(new Role(1, "admin"));
+//    db.updateUser(u);
         
     }
 }

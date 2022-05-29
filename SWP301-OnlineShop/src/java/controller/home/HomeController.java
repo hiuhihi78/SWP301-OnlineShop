@@ -42,26 +42,7 @@ public class HomeController extends HttpServlet {
         request.setAttribute("listProductFeatured", listProductFeatured);
         request.setAttribute("listHotPost", listHotPost);
         request.setAttribute("listLatestPost", listLatestPost);
-        
-        //Checkbox form login
-        Cookie [] cookies = request.getCookies();
-          String email = null, pass = null;
-          for (Cookie cooky : cookies) {
-            if (cooky.getName().equals("emailCookie")) {
-                email = cooky.getValue();
-            }
-            if (cooky.getName().equals("passCookie")) {
-                pass = cooky.getValue();
-            }
-            
-            if (email != null && pass != null){
-                request.setAttribute("email", email);
-                request.setAttribute("password", pass);
-                request.setAttribute("checkbox", "checked");
-                break;
-            }
-        }
-        
+                  
         request.getRequestDispatcher("view/public/home.jsp").forward(request, response);
     }
 

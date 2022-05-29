@@ -24,7 +24,6 @@ public class User {
     private Role role;
     private String email;
 
-
     public User() {
     }
 
@@ -122,6 +121,8 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    
 
     @Override
     public String toString() {

@@ -198,7 +198,7 @@
     </body>
     
     
-               <jsp:include page="login.jsp"/>
+          
               
       
     <script>

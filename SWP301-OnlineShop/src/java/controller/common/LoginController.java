@@ -71,7 +71,7 @@ public class LoginController extends HttpServlet {
                 break;
             }
         }
-          request.getRequestDispatcher("view/public/login.jsp").forward(request, response);
+          processRequest(request, response);
         
     }
 
@@ -131,7 +131,10 @@ public class LoginController extends HttpServlet {
         }else {
             request.setAttribute("mess", "Email or password is incorrect. Please try again!");
             session.setAttribute("user", null);
-            processRequest(request, response);
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Email or password is incorrect. Please try again!');");
+            out.println("location='login';");
+            out.println("</script>");
         }
     }
 

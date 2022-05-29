@@ -8,12 +8,9 @@ package controller.common;
 import configs.Security;
 import configs.SendMail;
 import configs.TokenGenerator;
-import static controller.common.SendMailController.MAXIMUM_AGE_TOKEN;
 import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -25,10 +22,10 @@ import model.User;
  *
  * @author Admin
  */
-public class RegisterController extends HttpServlet {
+public class SendMailController extends HttpServlet {
 
-    public static final int MAXIMUM_AGE_TOKEN_REGISTER = 60 * 5;
-
+    public static final int MAXIMUM_AGE_TOKEN = 60*5;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,7 +38,7 @@ public class RegisterController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("view/public/register.jsp").forward(request, response);
+        request.getRequestDispatcher("view/public/resetpassword.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,6 +53,8 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
         processRequest(request, response);
     }
 
@@ -70,45 +69,43 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
         try {
-            String name = "", strGender = "", email = "", mobile = "", address = "", password = "";
+           
             UserDBContext userDb = new UserDBContext();
-            PrintWriter out = response.getWriter();
-            name = request.getParameter("txtName");
-            strGender = request.getParameter("rd");
-            email = request.getParameter("txtEmail");
-            mobile = request.getParameter("txtMobile");
-            address = request.getParameter("txtAddress");
-            password = request.getParameter("txtPassword1");
+            PrintWriter out = response.getWriter();      
+           String emailAddress = request.getParameter("txtEmail").trim();  
+            User user = userDb.getUserByEmail(emailAddress);
             String token = TokenGenerator.uniqueToken();
-            String url = "http://localhost:8080/veryfi?email=" + email
-                    + "&token=" + token;
-            LocalDateTime fiveMinutesLater  = LocalDateTime.now().plusMinutes(5);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-            String formatted = fiveMinutesLater.format(formatter);
-            Cookie tokenCookieRegister = new Cookie("tokenSaveRegister", token);
-            tokenCookieRegister.setMaxAge(MAXIMUM_AGE_TOKEN_REGISTER);
-            response.addCookie(tokenCookieRegister);
-            StringBuilder sb = new StringBuilder();
-            sb.append("Dear ").append(name).append(",<br>");
-            sb.append("Please click the link below to verify your email address. <br> ");
-            sb.append("<b>").append(url).append("</b>");
-            sb.append(" ,regards<br>");
-            sb.append("Administrator");
-
-            SendMail.send(email, "Please verify your email", sb.toString(), Security.USERNAME, Security.PASSWORD);
-
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Email is sent to Email Address. Please check, this verification is valid until "+ formatted+"');");
-            out.println("location='register';");
+            String url = "http://localhost:8080/changePassword?email=" + emailAddress+
+                    "&token=" + token;
+            
+            if (user != null) {
+                //userDb.createTokenForUser(emailAddress, token);
+                Cookie tokenCookie = new Cookie("tokenSave", token);
+                tokenCookie.setMaxAge(MAXIMUM_AGE_TOKEN);
+                response.addCookie(tokenCookie);
+                StringBuilder sb = new StringBuilder();
+                sb.append("Dear ").append(user.getFullname()).append(",<br>");
+                sb.append("Someone has requested a password reset for this account. <br> ");
+                sb.append("Site Name: Online Shop <br>");
+                sb.append(" If this was a mistake, ignore this email and nothing will happen. <br> ");
+                sb.append("To reset your your password, visit the following address: <br> ");
+                sb.append("<b>").append(url).append("</b>");
+                sb.append(" ,regards<br>");
+                sb.append("Administrator");
+                
+                SendMail.send(emailAddress, "Password Reset",  sb.toString() , Security.USERNAME, Security.PASSWORD);
+                
+                out.println("<script type=\"text/javascript\">");
+            out.println("alert('Email sent to the email Address. Please check and get your password!');");
+            out.println("location='login';");
             out.println("</script>");
-
-
+            } else {
+                request.setAttribute("mess", "Username or email are incorrect");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-
+            
             request.setAttribute("error", e.getMessage());
         }
     }
@@ -122,5 +119,7 @@ public class RegisterController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    
 
 }
