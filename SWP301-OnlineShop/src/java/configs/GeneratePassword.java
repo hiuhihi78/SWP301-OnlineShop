@@ -11,16 +11,20 @@ import java.util.Random;
  * @author Admin
  */
 public class GeneratePassword {
+    private static final int PASSWORD_LENGTH = 6;
     
-    public static final int LENGTH_PASSWORD = 6;
-    
-      public static String generateRandomPassword(int len) {
-		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
-          +"jklmnopqrstuvwxyz!@#$%&";
-		Random rnd = new Random();
-		StringBuilder sb = new StringBuilder(len);
-		for (int i = 0; i < len; i++)
-			sb.append(chars.charAt(rnd.nextInt(chars.length())));
-		return sb.toString();
-	}
+    public static String generatePassword() {
+        String capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+        String specialCharacters = "!@#$";
+        String numbers = "1234567890";
+        String combinedChars = capitalCaseLetters + lowerCaseLetters + specialCharacters + numbers;
+        Random random = new Random();
+        char[] password = new char[PASSWORD_LENGTH];
+
+        for (int i = 0; i < PASSWORD_LENGTH; i++) {
+            password[i] = combinedChars.charAt(random.nextInt(combinedChars.length()));
+        }
+        return password.toString();
+    }
 }

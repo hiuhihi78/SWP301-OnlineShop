@@ -23,7 +23,6 @@ import model.User;
  */
 public class UserListController extends HttpServlet {
 
-   
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -50,7 +49,7 @@ public class UserListController extends HttpServlet {
         request.setAttribute("roles", roles);
 
         int roleId;
-        String gender, status, search, sort;
+        String gender, status, search, sort, orderBy;
         if (request.getParameter("roleId") == null) {
             roleId = 0;
         } else {
@@ -76,11 +75,16 @@ public class UserListController extends HttpServlet {
         } else {
             sort = request.getParameter("sort");
         }
+        if (request.getParameter("orderBy") == null) {
+            orderBy = "asc";
+        } else {
+            orderBy = request.getParameter("orderBy");
+        }
 
 //                ArrayList<User> users = userDB.getAllUser();
-        listAllUser = userDB.getListUserFilter(roleId, gender, status, search);
-        int totalRecord = listAllUser.size();
-        int page, numberRecordPerPage = 5;
+//        listAllUser = userDB.getListUserFilter(roleId, gender, status, search, sort, orderBy);
+        int totalRecord = userDB.getListUserFilter(roleId, gender, status, search, sort, orderBy).size();
+        int page, numberRecordPerPage = 2;
         int totalPage = totalRecord % numberRecordPerPage == 0
                 ? totalRecord / numberRecordPerPage : totalRecord / numberRecordPerPage + 1;
         String currentPage = request.getParameter("xpage");
@@ -89,18 +93,25 @@ public class UserListController extends HttpServlet {
         } else {
             page = Integer.parseInt(currentPage);
         }
+//        listAllUser = userDB.getListUserFiltered(roleId, gender, status, search, 
+//                sort, orderBy, page, numberRecordPerPage);
+        listAllUser = userDB.getListUserFilter(roleId, gender, status, search, sort, orderBy);
         int startRecord = (page - 1) * numberRecordPerPage;
         int endRecord = Math.min(page * numberRecordPerPage, totalRecord);
         ArrayList<User> listPaging = userDB.getListByPage(listAllUser, startRecord, endRecord);
 
+        // get alter
+        alter = request.getParameter("alter");
+        request.setAttribute("alter", alter);
         request.setAttribute("users", listPaging);
         request.setAttribute("roleId", roleId);
         request.setAttribute("gender", gender);
         request.setAttribute("status", status);
         request.setAttribute("search", search);
+        request.setAttribute("sort", sort);
+        request.setAttribute("orderBy", orderBy);
         request.setAttribute("page", page);
         request.setAttribute("totalPage", totalPage);
-//                request.setAttribute("alter", null);
         request.getRequestDispatcher("../view/admin/userList.jsp").forward(request, response);
     }
 
