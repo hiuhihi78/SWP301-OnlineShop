@@ -21,6 +21,7 @@
         <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!--<script src="../assets/js/additional-methods.js"></script>-->
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -38,23 +39,24 @@
                                 <p>
                                     <label for="fullname">Full name<span class="text-danger">*</span></label>
                                     <input type="text" id="fullname" name="fullname" value="${requestScope.fullname}" required>
-                                </p>
-                                <p>
-                                    <label for="gender">Gender<span class="text-danger">*</span></label>
-                                    <input type="radio" name="gender" value="male" checked="checked" ${requestScope.gender == "male" ? "checked='checked'": ""} /> Male
-                                    <input type="radio" name="gender" value="female" ${requestScope.gender == "female" ? "checked='checked'": ""}/>Female
-                                </p>
-                                <p>
-                                    <label for="email">Email<span class="text-danger">*</span></label>
-                                    <input id="email" name="email" value="${requestScope.email}">
-                                </p>
-                                <p>
-                                    <label for="mobile">Mobile<span class="text-danger">*</span></label>
-                                    <input type="text" id="mobile" name="mobile" ${requestScope.mobile}>
-                                </p>
-                                <p>
-                                    <label for="role">Role<span class="text-danger">*</span></label>
-                                    <select name="role" id="role">
+                            </p>
+                            <p>
+                                <label for="gender">Gender<span class="text-danger">*</span></label>
+                                <input type="radio" name="gender" value="male" checked="checked" ${requestScope.gender == "male" ? "checked='checked'": ""} /> Male
+                                <input type="radio" name="gender" value="female" ${requestScope.gender == "female" ? "checked='checked'": ""}/>Female
+                            </p>
+                            <p>
+                                <label for="email">Email<span class="text-danger">*</span></label>
+                                <input id="email" name="email" value="${requestScope.email}">
+                            </p>
+                            <p>
+                                <label for="mobile">Mobile<span class="text-danger">*</span></label>
+                                <input type="text" id="mobile" name="mobile" value="${requestScope.mobile}" onchange="validateMobile();">
+                                <span id="mobile-errors" class="error" for="mobile" style="display: none;"></span>
+                            </p>
+                            <p>
+                                <label for="role">Role<span class="text-danger">*</span></label>
+                                <select name="role" id="role">
                                     <c:forEach items="${requestScope.roles}" var="r">
                                         <option value="${r.id}"  ${requestScope.roleId == r.id ? "selected='selected'":""}>${r.name}</option>
                                     </c:forEach>
@@ -75,7 +77,6 @@
                                     ${requestScope.message}
                                 </div>
                             </c:if>
-
                             <input class="submit" type="submit" value="SUBMIT" class="">
                         </form>
                     </div>
@@ -124,7 +125,7 @@
                 font-size: 1rem;
             }
 
-            label.error {
+            label.error ,#mobile-errors{
                 color: red;
                 font-size: 1rem;
                 display: block;
@@ -184,7 +185,10 @@
                             minlength: 3
                         },
                         mobile: {
-                            required: true
+                            required: true,
+                            minlength: 10,
+                            maxlength: 10
+//                            phonenumber:true
                         },
                         email: {
                             required: true,
@@ -203,8 +207,7 @@
                         },
                         mobile: {
                             required: "Please enter your mobile",
-                            phoneUS: "Your mobile must be a number have 10 character"
-//                            max: "Your mobile must be a number have 10 character"
+//                            
                         },
                         email: {
                             email: "The email should be in the format: abc@domain.tld"
@@ -214,7 +217,43 @@
                         }
                     }
                 });
+
+//                jQuery.validator.addMethod('phonenumber', function (value, element) {
+//                    var regex = '^0[0-9]{9}$';
+//                    if (element.value.match(regex)) {
+//                        return true;
+//                    } else {
+//                        return false;
+//                    }
+//                    , 'Invalid phone number';
+//                });
             });
+            
+            function  validateMobile() {
+                var inputTag = document.getElementById('mobile');
+                var value = document.getElementById('mobile').value;
+                const regex = new RegExp('^0[0-9]{9}$');
+                var label = document.getElementById('mobile-error');
+                document.getElementById('mobile').classList.remove("valid");
+                var form = document.getElementById('basic-form' );
+                if (!regex.test(value)) {
+                    document.getElementById('mobile').classList.add('error');
+                    document.getElementById('mobile').setAttribute('aria-invalid', 'true');
+                    document.getElementById('mobile-errors').style.display = 'block';
+                    document.getElementById('mobile-errors').innerHTML = "Phone number invalid!";
+                    $('#basic-form').submit(function(event) {
+                        event.preventDefault();
+                        window.history.back();
+                    });
+                }else{
+                     $('#basic-form').submit(function(event) {
+                        document.getElementById('basic-form').submit();
+                    });
+                    document.getElementById('mobile-errors').style.display = 'none';
+                }
+            }
+
+
         </script>
 
         <!-- jQuery 2.0.2 -->

@@ -82,7 +82,7 @@ public class AddNewUserController extends HttpServlet {
             String password = GeneratePassword.generatePassword();
             String url = "http://localhost:8080/SWP301-OnlineShop/login";
             userDB.inserUser(fullname, password, gender, email, mobile, address, role, status);
-//            SendMail.sendPassword(email, fullname, password, url);
+            SendMail.sendPassword(email, fullname, password, url);
             request.setAttribute("alter", "success");
             request.setAttribute("search", email);
             response.sendRedirect("userList?alter=success&search=" + email);

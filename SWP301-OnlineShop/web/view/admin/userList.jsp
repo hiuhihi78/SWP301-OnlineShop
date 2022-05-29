@@ -41,7 +41,9 @@
     <c:set var="sort" value="${requestScope.sort}"/>
     <c:set var="orderBy" value="${requestScope.orderBy}"/>
     <c:set var="page" value="${requestScope.page}"/>
-
+    <c:set var="gapPage" value="2"/>
+    <c:set var="totalPage" value="${requestScope.totalPage}"/>
+    
     <!-- header logo: style can be found in header.less -->
     <jsp:include page="../admin-layout/header.jsp"></jsp:include>
         <div class="wrapper row-offcanvas row-offcanvas-left">
@@ -57,7 +59,7 @@
                     <div class="row d-flex" style="margin-bottom: 10px">
                         <form action="userList" method="get" style="width: 70%; float: left;" class="form-inline">
                             <input type="hidden" name="action" value="all"/>
-                            <input type="hidden" name="xpage" value="${page}"/>
+                            <input type="hidden" name="xpage" value="1"/>
                         <select name="roleId" id="roleId" class="form-control">
                             <option value="0" ${requestScope.roleId == 0 ? "selected='selected'":""} >All role</option>
                             <c:forEach items="${requestScope.roles}" var="r">
@@ -149,19 +151,53 @@
                         </table>
                     </div><!--Table list of user-->
                 </div> 
-                <!--Pagging-->
-                <div class="row">
-                    <ul class="pagination">
-                        <c:if test="${page > 2}"><li class="page-item"><a class="page-link" href="userList?xpage=${page -1}&gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}">Previous</a></li></c:if>
-                            <c:forEach begin="1" end="${requestScope.totalPage}" var = "i">
-                            <li class="page-item <c:if test="${page == i}"> active </c:if>" ><a class="page-link" href="userList?xpage=${i}&gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}">${i}</a></li>
-                            </c:forEach>
-                            <c:if test="${page < requestScope.totalPage - 1}"><li class="page-link" class="page-item"><a class="page-link" href="userList?xpage=${page+1}&gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}">Next</a></li></c:if>
-                        </ul>
-                    </div> <!--/Pagging-->
-                </section>
+                    <!--Pagging-->
+<!--                    <div class="row">
+                        <ul class="pagination">
+                            <c:if test="${page > 2}"><li class="page-item"><a class="page-link" href="userList?xpage=${page -1}&gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}">Previous</a></li></c:if>
+                                <c:forEach begin="1" end="${requestScope.totalPage}" var = "i">
+                                <li class="page-item <c:if test="${page == i}"> active </c:if>" ><a class="page-link" href="userList?xpage=${i}&gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}">${i}</a></li>
+                                </c:forEach>
+                                <c:if test="${page < requestScope.totalPage - 1}"><li class="page-link" class="page-item"><a class="page-link" href="userList?xpage=${page+1}&gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}">Next</a></li></c:if>
+                            </ul>
+                    </div> -->
+                    <!--/Pagging-->
+                    <div class="row">
+                        <ul class="pagination">
+                            <c:if test="${page - gapPage > 0}">
+                                <li class="page-item"><a href="#" onclick="paggerFistPage();" class="page-link">First</a></li>
+                            </c:if>
 
-            
+                            <c:if test="${page - gapPage < 0}">
+                                <c:forEach var="i" begin="1" end="${page - 1}" step="1">
+                                    <li class="page-item"><a href="#" onclick="paggerPage(${i})" class="page-link">${i}</a></li>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${page - gapPage == 0}">
+                                <c:forEach var="i" begin="1" end="${page - 1}" step="1">
+                                    <li class="page-item"><a href="#" onclick="paggerPage(${i})" class="page-link">${i}</a></li>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${page - gapPage > 0}">
+                                <c:forEach var="i" begin="${page - gapPage}" end="${page - 1}" step="1">
+                                    <li class="page-item"><a href="#" onclick="paggerPage(${i})" class="page-link">${i}</a></li>
+                                </c:forEach>
+                            </c:if>
+
+                            <li class="page-item active"><a class="page-link">${page}</a></li>
+
+                            <c:forEach var="i" begin="${page + 1}" end="${page + gapPage}"  step="1">
+                                <c:if test="${i <= totalPage}">
+                                    <li class="page-item"><a href="#" onclick="paggerPage(${i})" class="page-link">${i}</a></li>
+                                </c:if>
+                            </c:forEach>
+
+                            <c:if test="${page + gapPage < totalPage}">
+                                <li class="page-item"><a href="#" onclick="paggeLastPage();" class="page-link">Last</a></li>
+                            </c:if>
+                        </ul>
+                    </div>
+                </section>
         </aside><!-- /.right-side -->
     </div><!-- ./wrapper -->
 
@@ -219,8 +255,26 @@
             }
     </script>
     <!--/Modal-->
-
-
+    <!--Scrip for pageger-->
+    <script>
+        var content = "gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}";
+        
+        function paggerFistPage(){
+            var href = 'userList?xpage=1&' + content;
+            window.location.href = href;
+        }
+        
+        function paggerPage(page){
+            var href = 'userList?xpage='+ page +'&' + content;
+            window.location.href = href;
+        }
+        
+        function paggeLastPage(){
+            var href = 'userList?xpage=${totalPage}&' + content;
+            window.location.href = href;
+        }
+    </script>
+    <!--/Scrip for pageger-->
 
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

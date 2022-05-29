@@ -23,7 +23,6 @@ import model.User;
  */
 public class UserListController extends HttpServlet {
 
-   
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -83,9 +82,9 @@ public class UserListController extends HttpServlet {
         }
 
 //                ArrayList<User> users = userDB.getAllUser();
-        listAllUser = userDB.getListUserFilter(roleId, gender, status, search, sort, orderBy);
-        int totalRecord = listAllUser.size();
-        int page, numberRecordPerPage = 5;
+//        listAllUser = userDB.getListUserFilter(roleId, gender, status, search, sort, orderBy);
+        int totalRecord = userDB.getListUserFilter(roleId, gender, status, search, sort, orderBy).size();
+        int page, numberRecordPerPage = 2;
         int totalPage = totalRecord % numberRecordPerPage == 0
                 ? totalRecord / numberRecordPerPage : totalRecord / numberRecordPerPage + 1;
         String currentPage = request.getParameter("xpage");
@@ -94,11 +93,13 @@ public class UserListController extends HttpServlet {
         } else {
             page = Integer.parseInt(currentPage);
         }
+//        listAllUser = userDB.getListUserFiltered(roleId, gender, status, search, 
+//                sort, orderBy, page, numberRecordPerPage);
+        listAllUser = userDB.getListUserFilter(roleId, gender, status, search, sort, orderBy);
         int startRecord = (page - 1) * numberRecordPerPage;
         int endRecord = Math.min(page * numberRecordPerPage, totalRecord);
         ArrayList<User> listPaging = userDB.getListByPage(listAllUser, startRecord, endRecord);
 
-        
         // get alter
         alter = request.getParameter("alter");
         request.setAttribute("alter", alter);

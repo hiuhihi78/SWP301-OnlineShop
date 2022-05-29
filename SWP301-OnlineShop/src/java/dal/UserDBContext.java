@@ -275,7 +275,6 @@ public class UserDBContext extends DBContext {
                     ps.setString(index, (String) value[1]);
                 }
             }
-            System.out.println(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -374,17 +373,6 @@ public class UserDBContext extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        UserDBContext db = new UserDBContext();
-//        for (User u : db.getListUserFilter(1, "male", "all", "", "id", "asc")) {
-//            System.out.println(u);
-//        }
-//        for(User u : db.getAllUser()){
-//            System.out.println(u);
-//        }
-////        
-    }
-
     public boolean checkAccountHaveEmailOrMobileExisted(String email, String mobile) {
         String sql = "SELECT *\n"
                 + "FROM [User]\n"
@@ -437,6 +425,492 @@ public class UserDBContext extends DBContext {
 //            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+//    public ArrayList<User> getListUserFiltered(int roleId, String gender,
+//            String status, String search, String sort, String orderBy, int pageindex, int pagesize) {
+//        ArrayList<User> list = new ArrayList<>();
+//        try {
+//            String sql = "DECLARE @Col_Name VARCHAR(128) = " + "'" + sort + "'" + "\n";
+//            sql += "SELECT fullname, [password],[gender],[email],[mobile],[address],[roleId],roleName, status, id\n"
+//                    + "FROM (\n"
+//                    + "	select ROW_NUMBER() over (order by [User].id asc) as  [row_number], \n"
+//                    + "	[fullname],[password] ,[gender],[email] ,[mobile],[address] ,[roleId],Role.name as roleName,[User].[status],[User].id\n"
+//                    + "	from [User] join [Role] on roleId = [Role].id\n"
+//                    + "	Where(1=1)";
+//            int paramIndex = 0;
+//            HashMap<Integer, Object[]> params = new HashMap<>();
+//            if (roleId != 0) {
+//                sql += " and roleId = ?\n";
+//                paramIndex++;
+//                Object[] param = new Object[2];
+//                param[0] = Integer.class.getName();
+//                param[1] = roleId;
+//                params.put(paramIndex, param);
+//            }
+//            if (!gender.equals("all")) {
+//                sql += " and gender = ?\n";
+//                paramIndex++;
+//                Object[] param = new Object[2];
+//                param[0] = Boolean.class.getName();
+//                param[1] = gender.equals("male");
+//                params.put(paramIndex, param);
+//            }
+//            if (!status.equals("all")) {
+//                sql += " and [User].[status] = ?\n";
+//                paramIndex++;
+//                Object[] param = new Object[2];
+//                param[0] = Boolean.class.getName();
+//                param[1] = status.equals("active");
+//                params.put(paramIndex, param);
+//            }
+//
+//            if (!search.equals("")) {
+//                sql += " and (fullname like ?\n"
+//                        + "or email like ?\n"
+//                        + "or mobile like ?)\n";
+//                paramIndex++;
+//                Object[] paramUsername = new Object[2];
+//                paramUsername[0] = String.class.getName();
+//                paramUsername[1] = "%" + search + "%";
+//                params.put(paramIndex, paramUsername);
+//                paramIndex++;
+//                Object[] paramEmail = new Object[2];
+//                paramEmail[0] = String.class.getName();
+//                paramEmail[1] = "%" + search + "%";
+//                params.put(paramIndex, paramEmail);
+//                paramIndex++;
+//                Object[] paramMobile = new Object[2];
+//                paramMobile[0] = String.class.getName();
+//                paramMobile[1] = "%" + search + "%";
+//                params.put(paramIndex, paramMobile);
+//            }
+//
+//            sql += "	) t\n"
+//                    + "Where (1=1)";
+//
+//            if (pageindex != -1 || pagesize != -1) {
+//                sql += "and t.[row_number] >= ((? - 1) * ?) + 1 and t.[row_number] <= ? * ?\n";
+//                paramIndex++;
+//                Object[] paramPageIndexStart = new Object[2];
+//                paramPageIndexStart[0] = Integer.class.getName();
+//                paramPageIndexStart[1] = pageindex;
+//                params.put(paramIndex, paramPageIndexStart);
+//
+//                paramIndex++;
+//                Object[] paramPageSizeStart = new Object[2];
+//                paramPageSizeStart[0] = Integer.class.getName();
+//                paramPageSizeStart[1] = pagesize;
+//                params.put(paramIndex, paramPageSizeStart);
+//                paramIndex++;
+//
+//                Object[] paramPageIndexEnd = new Object[2];
+//                paramPageIndexEnd[0] = Integer.class.getName();
+//                paramPageIndexEnd[1] = pageindex;
+//                params.put(paramIndex, paramPageIndexEnd);
+//
+//                paramIndex++;
+//                Object[] paramPageSizeEnd = new Object[2];
+//                paramPageSizeEnd[0] = Integer.class.getName();
+//                paramPageSizeEnd[1] = pagesize;
+//                params.put(paramIndex, paramPageSizeEnd);
+//            }
+//
+////            if (sort != null) {
+////                sql += "order by ?  ?";
+////                paramIndex++;
+////                Object[] paramSort = new Object[2];
+////                paramSort[0] = String.class.getName();
+////                paramSort[1] = sort;
+////                params.put(paramIndex, paramSort);
+////                paramIndex++;
+////                Object[] paramOrderBy = new Object[2];
+////                paramOrderBy[0] = String.class.getName();
+////                paramOrderBy[1] = orderBy;
+////                params.put(paramIndex, paramOrderBy);
+////            }
+//            
+//            sql += "ORDER BY CASE \n"
+//                    + "    WHEN @Col_Name = 'id' THEN CAST(id AS SQL_VARIANT)\n"
+//                    + "    WHEN @Col_Name = 'fullname' THEN CAST(fullname AS SQL_VARIANT)\n"
+//                    + "    WHEN @Col_Name = 'gender' THEN CAST(gender AS SQL_VARIANT)\n"
+//                    + "    WHEN @Col_Name = 'email' THEN CAST(email AS SQL_VARIANT)\n"
+//                    + "    WHEN @Col_Name = 'mobile' THEN CAST(mobile AS SQL_VARIANT)\n"
+//                    + "    WHEN @Col_Name = 'role' THEN CAST(roleId AS SQL_VARIANT)\n"
+//                    + "    WHEN @Col_Name = 'status' THEN CAST(status AS SQL_VARIANT)"
+//                    + " END " + orderBy;
+//
+//            PreparedStatement ps = connection.prepareStatement(sql);
+//            for (Map.Entry<Integer, Object[]> entry : params.entrySet()) {
+//                Integer index = entry.getKey();
+//                Object[] value = entry.getValue();
+//                String type = value[0].toString();
+//                if (type.equals(Integer.class.getName())) {
+//                    ps.setInt(index, (Integer) value[1]);
+//                }
+//                if (type.equals(Boolean.class.getName())) {
+//                    ps.setBoolean(index, (Boolean) value[1]);
+//                }
+//                if (type.equals(String.class.getName())) {
+//                    ps.setString(index, (String) value[1]);
+//                }
+//            }
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                User user = new User();
+//                user.setFullname(rs.getString(1));
+//                user.setGender(rs.getBoolean(3));
+//                user.setEmail(rs.getString(4));
+//                user.setMobile(rs.getString(5));
+//                user.setAddress(rs.getString(6));
+//                Role role = new Role();
+//                role.setId(rs.getInt(7));
+//                role.setName(rs.getString(8));
+//                user.setRole(role);
+//                user.setStatus(rs.getBoolean(9));
+//                user.setId(rs.getInt(10));
+//                list.add(user);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return list;
+//    }
+    
+    
+//        public ArrayList<User> getListUserFiltered(int roleId, String gender,
+//                String status, String search, String sort, String orderBy, int pageindex, int pagesize) {
+//            ArrayList<User> list = new ArrayList<>();
+//            try {
+//                connection.setAutoCommit(false);
+//            } catch (SQLException ex) {
+//                Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            try {
+//                String sql = "DECLARE @Col_Name VARCHAR(128) = " + "'" + sort + "'" + "\n";
+//                sql += "DECLARE @User_table TABLE (\n"
+//                        + "	[row_number] int,\n"
+//                        + "    [fullname] nvarchar(200) NOT NULL,\n"
+//                        + "	[password] nvarchar(50) NOT NULL,\n"
+//                        + "    [gender] bit,\n"
+//                        + "	[email] nvarchar(200) NOT NULL,\n"
+//                        + "	[mobile] nvarchar(50) NOT NULL,\n"
+//                        + "	[address] nvarchar(300) NOT NULL,\n"
+//                        + "	[roleId] int,\n"
+//                        + "	roleName nvarchar(300) NOT NULL,\n"
+//                        + "	[status] bit,\n"
+//                        + "	id int\n"
+//                        + ");\n";
+//
+//                sql += "INSERT INTO @User_table\n"
+//                        + "SELECT ROW_NUMBER() over (order by [User].id asc) as  [row_number], \n"
+//                        + "	[fullname],[password] ,[gender],[email] ,[mobile],[address] ,[roleId],Role.name as roleName,[User].[status],[User].id\n"
+//                        + "    from [User] join [Role] on roleId = [Role].id\n"
+//                        + "    Where(1=1)";
+//
+//                int paramIndex = 0;
+//                HashMap<Integer, Object[]> params = new HashMap<>();
+//                if (roleId != 0) {
+//                    sql += " and roleId = ?\n";
+//                    paramIndex++;
+//                    Object[] param = new Object[2];
+//                    param[0] = Integer.class.getName();
+//                    param[1] = roleId;
+//                    params.put(paramIndex, param);
+//                }
+//                if (!gender.equals("all")) {
+//                    sql += " and gender = ?\n";
+//                    paramIndex++;
+//                    Object[] param = new Object[2];
+//                    param[0] = Boolean.class.getName();
+//                    param[1] = gender.equals("male");
+//                    params.put(paramIndex, param);
+//                }
+//                if (!status.equals("all")) {
+//                    sql += " and [User].[status] = ?\n";
+//                    paramIndex++;
+//                    Object[] param = new Object[2];
+//                    param[0] = Boolean.class.getName();
+//                    param[1] = status.equals("active");
+//                    params.put(paramIndex, param);
+//                }
+//
+//                if (!search.equals("")) {
+//                    sql += " and (fullname like ?\n"
+//                            + "or email like ?\n"
+//                            + "or mobile like ?)\n";
+//                    paramIndex++;
+//                    Object[] paramUsername = new Object[2];
+//                    paramUsername[0] = String.class.getName();
+//                    paramUsername[1] = "%" + search + "%";
+//                    params.put(paramIndex, paramUsername);
+//                    paramIndex++;
+//                    Object[] paramEmail = new Object[2];
+//                    paramEmail[0] = String.class.getName();
+//                    paramEmail[1] = "%" + search + "%";
+//                    params.put(paramIndex, paramEmail);
+//                    paramIndex++;
+//                    Object[] paramMobile = new Object[2];
+//                    paramMobile[0] = String.class.getName();
+//                    paramMobile[1] = "%" + search + "%";
+//                    params.put(paramIndex, paramMobile);
+//                }
+//
+//                sql += "ORDER BY CASE \n"
+//                        + "    WHEN @Col_Name = 'id' THEN CAST([User].id AS SQL_VARIANT)\n"
+//                        + "    WHEN @Col_Name = 'fullname' THEN CAST(fullname AS SQL_VARIANT)\n"
+//                        + "    WHEN @Col_Name = 'gender' THEN CAST(gender AS SQL_VARIANT)\n"
+//                        + "    WHEN @Col_Name = 'email' THEN CAST(email AS SQL_VARIANT)\n"
+//                        + "    WHEN @Col_Name = 'mobile' THEN CAST(mobile AS SQL_VARIANT)\n"
+//                        + "    WHEN @Col_Name = 'role' THEN CAST(roleId AS SQL_VARIANT)\n"
+//                        + "    WHEN @Col_Name = 'status' THEN CAST([User].status AS SQL_VARIANT)"
+//                        + " END " + orderBy + "\n";
+//
+//                sql += "select fullname, [password],[gender],[email],[mobile],[address],[roleId],roleName, status, id\n"
+//                        + "from @User_table as t\n"
+//                        + "where (1=1)";
+//
+//                if (pageindex != -1 || pagesize != -1) {
+//                    sql += "and t.[row_number] >= ((? - 1) * ?) + 1 and t.[row_number] <= ? * ?\n";
+//                    paramIndex++;
+//                    Object[] paramPageIndexStart = new Object[2];
+//                    paramPageIndexStart[0] = Integer.class.getName();
+//                    paramPageIndexStart[1] = pageindex;
+//                    params.put(paramIndex, paramPageIndexStart);
+//
+//                    paramIndex++;
+//                    Object[] paramPageSizeStart = new Object[2];
+//                    paramPageSizeStart[0] = Integer.class.getName();
+//                    paramPageSizeStart[1] = pagesize;
+//                    params.put(paramIndex, paramPageSizeStart);
+//                    paramIndex++;
+//
+//                    Object[] paramPageIndexEnd = new Object[2];
+//                    paramPageIndexEnd[0] = Integer.class.getName();
+//                    paramPageIndexEnd[1] = pageindex;
+//                    params.put(paramIndex, paramPageIndexEnd);
+//
+//                    paramIndex++;
+//                    Object[] paramPageSizeEnd = new Object[2];
+//                    paramPageSizeEnd[0] = Integer.class.getName();
+//                    paramPageSizeEnd[1] = pagesize;
+//                    params.put(paramIndex, paramPageSizeEnd);
+//                }
+//                System.out.println(sql);
+//                PreparedStatement ps = connection.prepareStatement(sql);
+//                for (Map.Entry<Integer, Object[]> entry : params.entrySet()) {
+//                    Integer index = entry.getKey();
+//                    Object[] value = entry.getValue();
+//                    String type = value[0].toString();
+//                    if (type.equals(Integer.class.getName())) {
+//                        ps.setInt(index, (Integer) value[1]);
+//                    }
+//                    if (type.equals(Boolean.class.getName())) {
+//                        ps.setBoolean(index, (Boolean) value[1]);
+//                    }
+//                    if (type.equals(String.class.getName())) {
+//                        ps.setString(index, (String) value[1]);
+//                    }
+//                }
+//                ResultSet rs = ps.executeQuery();
+//                while (rs.next()) {
+//                    User user = new User();
+//                    user.setFullname(rs.getString(1));
+//                    user.setGender(rs.getBoolean(3));
+//                    user.setEmail(rs.getString(4));
+//                    user.setMobile(rs.getString(5));
+//                    user.setAddress(rs.getString(6));
+//                    Role role = new Role();
+//                    role.setId(rs.getInt(7));
+//                    role.setName(rs.getString(8));
+//                    user.setRole(role);
+//                    user.setStatus(rs.getBoolean(9));
+//                    user.setId(rs.getInt(10));
+//                    list.add(user);
+//                }
+//                connection.commit();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//                try {
+//                    connection.rollback();
+//                } catch (SQLException ex1) {
+//                    Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+//                }
+//            } finally{
+//                try {
+//                    connection.setAutoCommit(true);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            return list;
+//        }
+    public ArrayList<User> getListUserFiltered(int roleId, String gender,
+            String status, String search, String sort, String orderBy, int pageindex, int pagesize) {
+        ArrayList<User> list = new ArrayList<>();
+        try {
+            connection.setAutoCommit(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            String sql_insert = "DECLARE @Col_Name VARCHAR(128) = " + "'" + sort + "'" + "\n";
+            sql_insert += "CREATE TABLE User_sort_table  (\n"
+                    + "	[row_number] int,\n"
+                    + "    [fullname] nvarchar(200) NOT NULL,\n"
+                    + "	[password] nvarchar(50) NOT NULL,\n"
+                    + "    [gender] bit,\n"
+                    + "	[email] nvarchar(200) NOT NULL,\n"
+                    + "	[mobile] nvarchar(50) NOT NULL,\n"
+                    + "	[address] nvarchar(300) NOT NULL,\n"
+                    + "	[roleId] int,\n"
+                    + "	roleName nvarchar(300) NOT NULL,\n"
+                    + "	[status] bit,\n"
+                    + "	id int\n"
+                    + ");\n";
+
+            sql_insert += "INSERT INTO User_sort_table\n"
+                    + "SELECT ROW_NUMBER() over (order by [User].id asc) as  [row_number], \n"
+                    + "	[fullname],[password] ,[gender],[email] ,[mobile],[address] ,[roleId],Role.name as roleName,[User].[status],[User].id\n"
+                    + "    from [User] join [Role] on roleId = [Role].id\n"
+                    + "    Where(1=1)";
+
+            int paramIndex = 0;
+            HashMap<Integer, Object[]> params = new HashMap<>();
+            if (roleId != 0) {
+                sql_insert += " and roleId = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Integer.class.getName();
+                param[1] = roleId;
+                params.put(paramIndex, param);
+            }
+            if (!gender.equals("all")) {
+                sql_insert += " and gender = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Boolean.class.getName();
+                param[1] = gender.equals("male");
+                params.put(paramIndex, param);
+            }
+            if (!status.equals("all")) {
+                sql_insert += " and [User].[status] = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Boolean.class.getName();
+                param[1] = status.equals("active");
+                params.put(paramIndex, param);
+            }
+
+            if (!search.equals("")) {
+                sql_insert += " and (fullname like ?\n"
+                        + "or email like ?\n"
+                        + "or mobile like ?)\n";
+                paramIndex++;
+                Object[] paramUsername = new Object[2];
+                paramUsername[0] = String.class.getName();
+                paramUsername[1] = "%" + search + "%";
+                params.put(paramIndex, paramUsername);
+                paramIndex++;
+                Object[] paramEmail = new Object[2];
+                paramEmail[0] = String.class.getName();
+                paramEmail[1] = "%" + search + "%";
+                params.put(paramIndex, paramEmail);
+                paramIndex++;
+                Object[] paramMobile = new Object[2];
+                paramMobile[0] = String.class.getName();
+                paramMobile[1] = "%" + search + "%";
+                params.put(paramIndex, paramMobile);
+            }
+
+            sql_insert += "ORDER BY CASE \n"
+                    + "    WHEN @Col_Name = 'id' THEN CAST([User].id AS SQL_VARIANT)\n"
+                    + "    WHEN @Col_Name = 'fullname' THEN CAST(fullname AS SQL_VARIANT)\n"
+                    + "    WHEN @Col_Name = 'gender' THEN CAST(gender AS SQL_VARIANT)\n"
+                    + "    WHEN @Col_Name = 'email' THEN CAST(email AS SQL_VARIANT)\n"
+                    + "    WHEN @Col_Name = 'mobile' THEN CAST(mobile AS SQL_VARIANT)\n"
+                    + "    WHEN @Col_Name = 'role' THEN CAST(roleId AS SQL_VARIANT)\n"
+                    + "    WHEN @Col_Name = 'status' THEN CAST([User].status AS SQL_VARIANT)"
+                    + " END " + orderBy + "\n";
+            
+            PreparedStatement ps_insert = connection.prepareStatement(sql_insert);
+            for (Map.Entry<Integer, Object[]> entry : params.entrySet()) {
+                Integer index = entry.getKey();
+                Object[] value = entry.getValue();
+                String type = value[0].toString();
+                if (type.equals(Integer.class.getName())) {
+                    ps_insert.setInt(index, (Integer) value[1]);
+                }
+                if (type.equals(Boolean.class.getName())) {
+                    ps_insert.setBoolean(index, (Boolean) value[1]);
+                }
+                if (type.equals(String.class.getName())) {
+                    ps_insert.setString(index, (String) value[1]);
+                }
+            }
+            ps_insert.execute();
+
+            String sql_select = "select fullname, [password],[gender],[email],[mobile],[address],[roleId],roleName, status, id\n"
+                    + "from User_sort_table as t\n"
+                    + "where (1=1)";
+
+            if (pageindex != -1 || pagesize != -1) {
+                sql_select += "and t.[row_number] >= ((? - 1) * ?) + 1 and t.[row_number] <= ? * ?\n";
+            }
+            
+            PreparedStatement ps = connection.prepareStatement(sql_select);
+            if (pageindex != -1 || pagesize != -1) {
+                ps.setInt(1, pageindex);
+                ps.setInt(2, pagesize);
+                ps.setInt(3, pageindex);
+                ps.setInt(4, pagesize);
+            }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setFullname(rs.getString(1));
+                user.setGender(rs.getBoolean(3));
+                user.setEmail(rs.getString(4));
+                user.setMobile(rs.getString(5));
+                user.setAddress(rs.getString(6));
+                Role role = new Role();
+                role.setId(rs.getInt(7));
+                role.setName(rs.getString(8));
+                user.setRole(role);
+                user.setStatus(rs.getBoolean(9));
+                user.setId(rs.getInt(10));
+                list.add(user);
+            }
+            
+            String sql_drop = "DROP TABLE User_sort_table";
+            PreparedStatement ps_drop = connection.prepareStatement(sql_drop);
+            ps_drop.execute();
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally{
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return list;
+    }
+    
+   
+
+    public static void main(String[] args) {
+        UserDBContext db = new UserDBContext();
+//        System.out.println(db.getListUserFiltered(3, "male", "active", "Le", "id", "asc", 1, 5).size());
+        for (User u : db.getListUserFiltered(3, "male", "active", "Le", "email", "asc", 1, 5)) {
+            System.out.println(u.toString());
         }
     }
 }
