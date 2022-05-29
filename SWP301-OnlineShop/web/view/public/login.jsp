@@ -10,7 +10,7 @@
   <body>
     <!-- login form -->
     <div class="bg-modal">
-        <div class="modal-content">
+        <div class="modal-content" style="margin-top: 150px;z-index: 1024">
           <div class="close">+</div>
         <h3>${mess}</h3>
           <form class="login-form" action="login" method="post">
