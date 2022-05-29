@@ -1,4 +1,5 @@
 /*
+<<<<<<< HEAD
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -14,16 +15,57 @@ public class User {
     private String password;
     private String avatar;
     private String email;
+=======
+<<<<<<< HEAD
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+=======
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+>>>>>>> f4f075f799f029540ea5d1414d5fab636d36beb1
+ */
+package model;
+
+    
+public class User {
+
+    private int id;
+    private String password;
+    private String avatar;
+>>>>>>> 6a0acfc0e8f1f1eed079f6a275b85c5625ff74f8
     private String fullname;
     private boolean gender;
     private String mobile;
     private String address;
+<<<<<<< HEAD
     private Role role;
     private boolean status;
+=======
+    private boolean status;
+    private Role role;
+    private String email;
+
+>>>>>>> 6a0acfc0e8f1f1eed079f6a275b85c5625ff74f8
 
     public User() {
     }
 
+    
+    
+    public User(int id, String password, String avatar, String email, String fullname, boolean gender, String mobile, String address, boolean status) {
+        this.id = id;
+        this.password = password;
+        this.avatar = avatar;
+        this.email = email;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.mobile = mobile;
+        this.address = address;
+        this.status = status;
+    }
+
+    
     public int getId() {
         return id;
     }
@@ -48,6 +90,17 @@ public class User {
         this.avatar = avatar;
     }
 
+<<<<<<< HEAD
+=======
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+>>>>>>> 6a0acfc0e8f1f1eed079f6a275b85c5625ff74f8
     public String getFullname() {
         return fullname;
     }
@@ -80,6 +133,17 @@ public class User {
         this.address = address;
     }
 
+<<<<<<< HEAD
+=======
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+>>>>>>> 6a0acfc0e8f1f1eed079f6a275b85c5625ff74f8
     public Role getRole() {
         return role;
     }
@@ -88,6 +152,7 @@ public class User {
         this.role = role;
     }
 
+<<<<<<< HEAD
     public String getEmail() {
         return email;
     }
@@ -112,4 +177,11 @@ public class User {
         this.username = username;
     }
 
+=======
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", password=" + password + ", avatar=" + avatar + ", email=" + email + ", fullname=" + fullname + ", gender=" + gender + ", mobile=" + mobile + ", address=" + address + ", status=" + status + ", role=" + role + '}';
+    }
+    
+>>>>>>> 6a0acfc0e8f1f1eed079f6a275b85c5625ff74f8
 }

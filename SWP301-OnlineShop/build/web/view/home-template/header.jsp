@@ -21,7 +21,7 @@
                         <ul class="nav navbar-nav">
                                 <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <c:if test="${sessionScope.user == null}">
-                                <li><a href="#"><i class="fa fa-lock"></i> Login</a></li>
+                                <li><a href="#" id="button"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>
                                 
                                 <c:if test="${sessionScope.user != null}">
@@ -39,7 +39,7 @@
                                             <a href="#" style="background: none;text-decoration: none;">Change password</a>
                                         </li>
                                         <li>
-                                            <a href="#" style="background: none;text-decoration: none;">Logout</a>
+                                            <a href="logout" style="background: none;text-decoration: none;">Logout</a>
                                         </li>
                                     </ul>
                                 </li>                   
@@ -86,6 +86,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
     <!--/header-bottom-->
+    
+    
 </header>

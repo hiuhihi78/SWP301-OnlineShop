@@ -11,6 +11,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="../../assets/public/css/bootstrap.min.css" rel="stylesheet">
         <link href="../../assets/public/css/font-awesome.min.css" rel="stylesheet">
@@ -19,6 +22,8 @@
         <link href="../../assets/public/css/animate.css" rel="stylesheet">
         <link href="../../assets/public/css/main.css" rel="stylesheet">
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
+        
+        <link href="../../assets/public/css/style.css" rel="stylesheet">
         <title>Home | E-Shopper</title>
     </head>
     <body>
@@ -194,4 +199,20 @@
             });
         </script>
     </body>
+    
+    
+               <jsp:include page="login.jsp"/>
+              
+      
+    <script>
+        document.getElementById('button').addEventListener('click', 
+        function () {
+            document.querySelector('.bg-modal').style.display = 'flex';
+        });
+        
+        document.querySelector('.close').addEventListener('click',
+        function () {
+            document.querySelector('.bg-modal').style.display = 'none';
+        });
+    </script>
 </html>

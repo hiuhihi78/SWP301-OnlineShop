@@ -179,6 +179,7 @@ public class UserDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+<<<<<<< HEAD
 
     public User login(String username, String password) {
         String sql = "SELECT [User].id"
@@ -222,5 +223,94 @@ public class UserDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+=======
+    
+    public User getUserByEmailAndPassword(String email, String password) {  
+        User user = null;
+        try {
+            String sql = "select u.*, r.name rname from [User] u, [role] r where email = ? and password = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, email);
+            stm.setString(2, password);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                user = new User(rs.getInt("id"),
+                        rs.getString("password"), 
+                        rs.getString("avatar"), 
+                        rs.getString("email"), 
+                        rs.getString("fullname"),
+                        rs.getBoolean("gender"), 
+                        rs.getString("mobile"),
+                        rs.getString("address"),
+                        rs.getBoolean("Status"));
+                
+               user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
+    
+    public User getUserByEmail(String email) {  
+        User user = null;
+        try {
+            String sql = "select u.*, r.name rname from [User] u, [role] r where email = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, email);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                user = new User(rs.getInt("id"),
+                        rs.getString("password"), 
+                        rs.getString("avatar"), 
+                        rs.getString("email"), 
+                        rs.getString("fullname"),
+                        rs.getBoolean("gender"), 
+                        rs.getString("mobile"),
+                        rs.getString("address"),
+                        rs.getBoolean("Status"));
+                
+               user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
+    
+    public boolean updateUser(User user) {
+        try {
+            String sql = "update [User] set password=? where email = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getPassword());
+            stm.setString(2, user.getEmail());
+
+            return stm.executeUpdate() > 0;
+        } catch (Exception ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    
+    
+    
+    
+    
+     public static void main(String[] args) {
+        UserDBContext db = new UserDBContext();
+//        User u =  db.getUserByEmail("leduchieu2001x@gmail.com");
+//         System.out.println(u.getFullname());
+    User u = new User();
+    u.setId(11);
+    u.setEmail("lbada2001x@gmail.com");
+    u.setPassword("abc");
+    u.setRole(new Role(1, "admin"));
+    db.updateUser(u);
+    
+        
+>>>>>>> 6a0acfc0e8f1f1eed079f6a275b85c5625ff74f8
     }
 }

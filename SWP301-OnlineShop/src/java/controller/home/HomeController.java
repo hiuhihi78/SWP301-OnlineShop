@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import model.Slider;
  *
  * @author DELL
  */
+
 public class HomeController extends HttpServlet {
 
     @Override
@@ -40,6 +42,25 @@ public class HomeController extends HttpServlet {
         request.setAttribute("listProductFeatured", listProductFeatured);
         request.setAttribute("listHotPost", listHotPost);
         request.setAttribute("listLatestPost", listLatestPost);
+        
+        //Checkbox form login
+        Cookie [] cookies = request.getCookies();
+          String email = null, pass = null;
+          for (Cookie cooky : cookies) {
+            if (cooky.getName().equals("emailCookie")) {
+                email = cooky.getValue();
+            }
+            if (cooky.getName().equals("passCookie")) {
+                pass = cooky.getValue();
+            }
+            
+            if (email != null && pass != null){
+                request.setAttribute("email", email);
+                request.setAttribute("password", pass);
+                request.setAttribute("checkbox", "checked");
+                break;
+            }
+        }
         
         request.getRequestDispatcher("view/public/home.jsp").forward(request, response);
     }
