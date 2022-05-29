@@ -13,18 +13,18 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="./home"><img src="../../assets/public/images/home/logo.png" alt="" /></a>
+                        <a href="home"><img src="../../assets/public/images/home/logo.png" alt="" /></a>
                     </div>
                 </div>
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <c:if test="${sessionScope.user == null}">
                                 <li><a href="#"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>
-                                
-                                <c:if test="${sessionScope.user != null}">
+
+                            <c:if test="${sessionScope.user != null}">
                                 <li class="dropdown">
                                     <a href="#">
                                         <i class="fa fa-user"></i>
@@ -52,8 +52,8 @@
     </div>
     <!--/header-top-->
 
+    <!--header-bottom-->
     <div class="header-bottom">
-        <!--header-bottom-->
         <div class="container">
             <div class="row">
                 <div class="col-sm-9">
@@ -69,13 +69,7 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="home" class="active">Home</a></li>
-                            <li class="dropdown"><a href="shop">Shop
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="bloglist">Blog
-                                </a>
-                            </li>
+                            <li><a href="bloglist">Blog</a></li>
                         </ul>
                     </div>
                 </div>

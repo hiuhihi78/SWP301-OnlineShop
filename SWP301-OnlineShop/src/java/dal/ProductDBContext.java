@@ -21,13 +21,10 @@ public class ProductDBContext extends DBContext {
     public ArrayList<Product> getProductsFeatured() {
         ArrayList<Product> listProduct = new ArrayList<>();
         try {
-            StringBuilder sql = new StringBuilder("Select top 2 * from Product\n"
+            String sql = "Select top 3 * from Product\n"
                     + "where featured = 1 \n"
-                    + "order by date desc");
-//            String sql = "Select top 2 * from Product\n"
-//                    + "where featured = 1 \n"
-//                    + "order by date desc";
-            PreparedStatement stm = connection.prepareStatement(sql.toString());
+                    + "order by date desc";
+            PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Product product = new Product();

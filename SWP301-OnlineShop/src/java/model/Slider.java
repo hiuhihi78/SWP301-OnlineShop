@@ -21,6 +21,16 @@ public class Slider {
     public Slider() {
     }
 
+    public Slider(int id, String title, String image, String backlink, boolean status, String note, User user) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.backlink = backlink;
+        this.status = status;
+        this.note = note;
+        this.user = user;
+    }
+
     public int getId() {
         return id;
     }
