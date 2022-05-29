@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 /**
@@ -9,16 +5,32 @@ package model;
  * @author Admin
  */
 public class User {
+
     private int id;
     private String password;
     private String avatar;
-    private String email;
     private String fullname;
     private boolean gender;
     private String mobile;
     private String address;
-    private boolean status;
     private Role role;
+    private boolean status;
+    private String email;
+
+    public User() {
+    }
+
+    public User(int id, String password, String avatar, String email, String fullname, boolean gender, String mobile, String address, boolean status) {
+        this.id = id;
+        this.password = password;
+        this.avatar = avatar;
+        this.email = email;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.mobile = mobile;
+        this.address = address;
+        this.status = status;
+    }
 
     public int getId() {
         return id;
@@ -104,6 +116,4 @@ public class User {
     public String toString() {
         return "User{" + "id=" + id + ", password=" + password + ", avatar=" + avatar + ", email=" + email + ", fullname=" + fullname + ", gender=" + gender + ", mobile=" + mobile + ", address=" + address + ", status=" + status + ", role=" + role + '}';
     }
-    
-    
 }
