@@ -31,8 +31,7 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         ProductDBContext productDB = new ProductDBContext();
         SliderDBContext sliderDB = new SliderDBContext();
-        PostDBContext postDB = new PostDBContext();
-        
+        PostDBContext postDB = new PostDBContext();        
         ArrayList<Slider> listSliderActive = sliderDB.getSlidersActive();
         ArrayList<Product> listProductFeatured = productDB.getProductsFeatured();
         ArrayList<Post> listHotPost = postDB.getHotPost();

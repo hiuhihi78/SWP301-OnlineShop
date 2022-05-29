@@ -179,53 +179,8 @@ public class UserDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-<<<<<<< HEAD
 
-    public User login(String username, String password) {
-        String sql = "SELECT [User].id"
-                + "         ,[username] "
-                + "       ,[fullname]\n"
-                + "      ,[gender]\n"
-                + "      ,[email]\n"
-                + "      ,[mobile]\n"
-                + "      ,[address]\n"
-                + "      ,[roleId]\n"
-                + "      ,Role.name\n"
-                + "      ,[user].[status]\n"
-                + "  FROM [User] join Role on roleId = Role.id"
-                + "       WHERE username = ? AND password = ?";
-        
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt(1));
-                user.setUsername(rs.getString(2));
-                user.setFullname(rs.getString(3));
-                user.setGender(rs.getBoolean(4));
-                user.setEmail(rs.getString(5));
-                user.setMobile(rs.getString(6));
-                user.setAddress(rs.getString(7));
-                
-                Role role = new Role();
-                role.setId(rs.getInt(8));
-                role.setName(rs.getString(9));
-                role.setAllowFeatures(new RoleDBContext().getAllowFeatures(role.getId()));
-                
-                user.setRole(role);
-                user.setStatus(rs.getBoolean(10));
-                return user;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-=======
-    
-    public User getUserByEmailAndPassword(String email, String password) {  
+    public User getUserByEmailAndPassword(String email, String password) {
         User user = null;
         try {
             String sql = "select u.*, r.name rname from [User] u, [role] r where email = ? and password = ?";
@@ -236,24 +191,24 @@ public class UserDBContext extends DBContext {
 
             while (rs.next()) {
                 user = new User(rs.getInt("id"),
-                        rs.getString("password"), 
-                        rs.getString("avatar"), 
-                        rs.getString("email"), 
+                        rs.getString("password"),
+                        rs.getString("avatar"),
+                        rs.getString("email"),
                         rs.getString("fullname"),
-                        rs.getBoolean("gender"), 
+                        rs.getBoolean("gender"),
                         rs.getString("mobile"),
                         rs.getString("address"),
                         rs.getBoolean("Status"));
-                
-               user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+
+                user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
             }
         } catch (Exception ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
     }
-    
-    public User getUserByEmail(String email) {  
+
+    public User getUserByEmail(String email) {
         User user = null;
         try {
             String sql = "select u.*, r.name rname from [User] u, [role] r where email = ?";
@@ -263,23 +218,23 @@ public class UserDBContext extends DBContext {
 
             while (rs.next()) {
                 user = new User(rs.getInt("id"),
-                        rs.getString("password"), 
-                        rs.getString("avatar"), 
-                        rs.getString("email"), 
+                        rs.getString("password"),
+                        rs.getString("avatar"),
+                        rs.getString("email"),
                         rs.getString("fullname"),
-                        rs.getBoolean("gender"), 
+                        rs.getBoolean("gender"),
                         rs.getString("mobile"),
                         rs.getString("address"),
                         rs.getBoolean("Status"));
-                
-               user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+
+                user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
             }
         } catch (Exception ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
     }
-    
+
     public boolean updateUser(User user) {
         try {
             String sql = "update [User] set password=? where email = ?";
@@ -294,23 +249,16 @@ public class UserDBContext extends DBContext {
         return false;
     }
 
-    
-    
-    
-    
-    
-     public static void main(String[] args) {
+    public static void main(String[] args) {
         UserDBContext db = new UserDBContext();
 //        User u =  db.getUserByEmail("leduchieu2001x@gmail.com");
 //         System.out.println(u.getFullname());
-    User u = new User();
-    u.setId(11);
-    u.setEmail("lbada2001x@gmail.com");
-    u.setPassword("abc");
-    u.setRole(new Role(1, "admin"));
-    db.updateUser(u);
-    
-        
->>>>>>> 6a0acfc0e8f1f1eed079f6a275b85c5625ff74f8
+        User u = new User();
+        u.setId(11);
+        u.setEmail("lbada2001x@gmail.com");
+        u.setPassword("abc");
+        u.setRole(new Role(1, "admin"));
+        db.updateUser(u);
+
     }
 }

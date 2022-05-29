@@ -8,25 +8,6 @@
 <!DOCTYPE html>
 <html>
   <body>
-<<<<<<< HEAD
-    <section class="material-half-bg">
-      <div class="cover"></div>
-    </section>
-    <section class="login-content">
-      <div class="logo">
-        <h1>Online Shop</h1>
-      </div>
-      <div class="login-box">
-          <form class="login-form" action="login" method="POST">
-          <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
-          <div class="form-group">
-            <label class="control-label">USERNAME</label>
-            <input class="form-control" type="text" placeholder="username" name="username" autofocus>
-          </div>
-          <div class="form-group">
-            <label class="control-label">PASSWORD</label>
-            <input class="form-control" type="password" name="password" placeholder="Password">
-=======
     <!-- login form -->
     <div class="bg-modal">
         <div class="modal-content">
@@ -41,7 +22,6 @@
           <div class="form-group">
             <label class="control-label">PASSWORD</label>
             <input class="form-control" type="password" placeholder="Password" name="txtPassword" value="${password}">
->>>>>>> 6a0acfc0e8f1f1eed079f6a275b85c5625ff74f8
           </div>
           <div class="link-box">
               
