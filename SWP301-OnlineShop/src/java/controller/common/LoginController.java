@@ -54,7 +54,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          Cookie [] cookies = request.getCookies();
+          /*Cookie [] cookies = request.getCookies();
           String email = null, pass = null;
           for (Cookie cooky : cookies) {
             if (cooky.getName().equals("emailCookie")) {
@@ -72,6 +72,8 @@ public class LoginController extends HttpServlet {
             }
         }
           processRequest(request, response);
+        }*/
+          request.getRequestDispatcher("view/public/login.jsp").forward(request, response);
         
     }
 

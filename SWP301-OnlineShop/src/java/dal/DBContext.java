@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 /**
  *
-<<<<<<< HEAD
  * @author Admin
  */
 public class DBContext {

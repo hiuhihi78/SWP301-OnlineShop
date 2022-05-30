@@ -39,11 +39,12 @@ public class EditStatusUserController extends HttpServlet {
         if (xpage == null) {
             xpage = "1";
         } else {
-            xpage = request.getParameter("page");
+            xpage = request.getParameter("xpage");
         }
-        request.setAttribute("xpage", xpage);
-        request.setAttribute("alter", "Update status success");
-        response.sendRedirect("../admin/userList?xpage="+ xpage.toString() + "&alter=Update stauts success");
+//        request.setAttribute("xpage", xpage);
+//        request.setAttribute("alter", "Update status sucess");
+//        request.getRequestDispatcher("userList");
+        response.sendRedirect("userList?xpage=" + xpage + "&alter=Update status sucess!");
     }
 
     /**
@@ -68,7 +69,7 @@ public class EditStatusUserController extends HttpServlet {
             xpage = request.getParameter("page");
         }
         request.setAttribute("xpage", xpage);
-        request.setAttribute("alter", "Update status success");
+        request.setAttribute("alter", "Edit user's profile success!");
 //        request.getRequestDispatcher("userList").forward(request, response);
         response.sendRedirect("../admin/userList?xpage="+xpage+"&alter=Update stauts success");
     }

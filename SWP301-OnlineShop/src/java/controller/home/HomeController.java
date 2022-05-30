@@ -38,7 +38,10 @@ public class HomeController extends HttpServlet {
         ArrayList<Post> listHotPost = postDB.getHotPost();
         ArrayList<Post> listLatestPost = postDB.getLatestPost();
         
+        int numberOfSliders = listSliderActive.size();
+        
         request.setAttribute("listSliderActive", listSliderActive);
+        request.setAttribute("numberOfSliders", numberOfSliders);
         request.setAttribute("listProductFeatured", listProductFeatured);
         request.setAttribute("listHotPost", listHotPost);
         request.setAttribute("listLatestPost", listLatestPost);

@@ -5,6 +5,7 @@
  */
 package controller.common;
 
+import configs.GeneratePassword;
 import configs.Security;
 import configs.SendMail;
 import configs.TokenGenerator;
@@ -70,7 +71,6 @@ public class SendMailController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-           
             UserDBContext userDb = new UserDBContext();
             PrintWriter out = response.getWriter();      
            String emailAddress = request.getParameter("txtEmail").trim();  

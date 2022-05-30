@@ -1,16 +1,9 @@
-/*
-<<<<<<< HEAD
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-=======
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
->>>>>>> f4f075f799f029540ea5d1414d5fab636d36beb1
- */
 package model;
 
-    
+/**
+ *
+ * @author Admin
+ */
 public class User {
 
     private int id;
@@ -20,8 +13,9 @@ public class User {
     private boolean gender;
     private String mobile;
     private String address;
-    private boolean status;
+    private String username;
     private Role role;
+    private boolean status;
     private String email;
 
     public User() {
@@ -39,8 +33,27 @@ public class User {
         this.address = address;
         this.status = status;
     }
+    public User(int id, String password, String avatar, String email, String fullname, boolean gender, String mobile, String username, String address, boolean status) {
+        this.id = id;
+        this.password = password;
+        this.avatar = avatar;
+        this.email = email;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.mobile = mobile;
+        this.username = username;
+        this.address = address;
+        this.status = status;
+    }
 
-    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public int getId() {
         return id;
     }
@@ -127,5 +140,4 @@ public class User {
     public String toString() {
         return "User{" + "id=" + id + ", password=" + password + ", avatar=" + avatar + ", email=" + email + ", fullname=" + fullname + ", gender=" + gender + ", mobile=" + mobile + ", address=" + address + ", status=" + status + ", role=" + role + '}';
     }
-    
 }
