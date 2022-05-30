@@ -197,7 +197,7 @@ public class UserDBContext extends DBContext{
             ResultSet rs = stm.executeQuery();
 
             while (rs.next()) {
-                user = new User(rs.getInt("id"),
+                user = new User(
                         rs.getString("password"), 
                         rs.getString("avatar"), 
                         rs.getString("email"), 
@@ -208,6 +208,7 @@ public class UserDBContext extends DBContext{
                         rs.getBoolean("Status"));
                 
                user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+               user.setId(rs.getInt("id"));
             }
         } catch (Exception ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,7 +225,7 @@ public class UserDBContext extends DBContext{
             ResultSet rs = stm.executeQuery();
 
             while (rs.next()) {
-                user = new User(rs.getInt("id"),
+                user = new User(
                         rs.getString("password"), 
                         rs.getString("avatar"), 
                         rs.getString("email"), 
@@ -235,6 +236,7 @@ public class UserDBContext extends DBContext{
                         rs.getBoolean("Status"));
                 
                user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+               user.setId(rs.getInt("id"));
             }
         } catch (Exception ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -256,27 +258,26 @@ public class UserDBContext extends DBContext{
         return false;
     }
     
-//    public boolean addBook(Sach e) {
-//        try {
-//            String sql = "insert into Sach(MaSach, TenSach, MoTa, AnhSach, GiaSach, TacGia, NgayTao, MaChuDe, SoLuong)"
-//                    + "values (?,?,?,?,?,?,?,?,?)";
-//            PreparedStatement stm = connection.prepareStatement(sql);
-//            stm.setString(1, e.getMaSach());
-//            stm.setString(2, e.getTenSach());
-//            stm.setString(3, e.getMoTa());
-//            stm.setString(4, e.getAnhSach());
-//            stm.setFloat(5, e.getGiaSach());
-//            stm.setString(6, e.getTacGia());
-//            stm.setDate(7, (Date)e.getNgayTao());
-//            stm.setString(8, e.getChuDe().getMaChuDe());
-//            stm.setInt(9, e.getSoLuong());
-//
-//            return stm.executeUpdate() > 0;
-//        } catch (Exception ex) {
-//            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return false;
-//    }
+    public boolean addUser(User user) {
+        try {
+            String sql = "insert into [User]([password], email, fullname, gender, mobile, address, [Status], roleId)"
+                    + "values (?,?,?,?,?,?,?,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getPassword());
+            stm.setString(2, user.getEmail());
+            stm.setString(3, user.getFullname());
+            stm.setBoolean(4, user.isGender());
+            stm.setString(5, user.getMobile());
+            stm.setString(6, user.getAddress());
+            stm.setBoolean(7, user.isStatus());
+            stm.setInt(8, 4);
+
+            return stm.executeUpdate() > 0;
+        } catch (Exception ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
     
     
     
@@ -294,6 +295,16 @@ public class UserDBContext extends DBContext{
 //    u.setPassword("abc");
 //    u.setRole(new Role(1, "admin"));
 //    db.updateUser(u);
+
+User user = new User();
+            user.setPassword("123");
+            user.setFullname("nepo");
+            user.setGender(Boolean.parseBoolean("1"));
+            user.setEmail("hieunvhe153769@fpt.edu.vn");
+            user.setMobile("0956473843");
+            user.setAddress("Quang Ninh");
+            
+            db.addUser(user);
         
     }
 }

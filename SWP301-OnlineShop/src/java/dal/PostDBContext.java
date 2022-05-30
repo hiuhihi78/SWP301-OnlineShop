@@ -31,6 +31,7 @@ public class PostDBContext extends DBContext {
                 post.setId(rs.getInt(1));
                 post.setThumbnail(rs.getString(2));
                 post.setTitle(rs.getString(3));
+//                PostCategory category = new PostCategory();
                 PostCategory category = new PostCategory();
                 category.setId(rs.getInt(4));
                 post.setPostCategory(category);

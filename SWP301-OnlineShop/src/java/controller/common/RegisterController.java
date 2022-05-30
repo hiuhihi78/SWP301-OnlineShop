@@ -71,7 +71,6 @@ public class RegisterController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         try {
             String name = "", strGender = "", email = "", mobile = "", address = "", password = "";
             UserDBContext userDb = new UserDBContext();
@@ -85,6 +84,16 @@ public class RegisterController extends HttpServlet {
             String token = TokenGenerator.uniqueToken();
             String url = "http://localhost:8080/veryfi?email=" + email
                     + "&token=" + token;
+            User user = new User();
+            user.setPassword(password);
+            user.setFullname(name);
+            user.setGender(Boolean.parseBoolean(strGender));
+            user.setEmail(email);
+            user.setMobile(mobile);
+            user.setAddress(address);
+            Cookie userRegister = new Cookie("userRegister", user.toString());
+            userRegister.setMaxAge(MAXIMUM_AGE_TOKEN);
+            response.addCookie(userRegister);
             LocalDateTime fiveMinutesLater  = LocalDateTime.now().plusMinutes(5);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
             String formatted = fiveMinutesLater.format(formatter);

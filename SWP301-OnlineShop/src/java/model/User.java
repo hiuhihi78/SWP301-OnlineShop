@@ -29,8 +29,7 @@ public class User {
 
     
     
-    public User(int id, String password, String avatar, String email, String fullname, boolean gender, String mobile, String address, boolean status) {
-        this.id = id;
+    public User(String password, String avatar, String email, String fullname, boolean gender, String mobile, String address, boolean status) {
         this.password = password;
         this.avatar = avatar;
         this.email = email;
