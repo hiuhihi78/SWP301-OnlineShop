@@ -25,9 +25,6 @@
         
         
         <!--active button nav in sidebar-->
-        <script>
-            document.getElementById('nav-user-list').classList.add('active');
-        </script>
 
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -43,7 +40,7 @@
     <c:set var="page" value="${requestScope.page}"/>
     <c:set var="gapPage" value="2"/>
     <c:set var="totalPage" value="${requestScope.totalPage}"/>
-    
+    <c:set var="content" value="gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}"/>
     <!-- header logo: style can be found in header.less -->
     <jsp:include page="../admin-layout/header.jsp"></jsp:include>
         <div class="wrapper row-offcanvas row-offcanvas-left">
@@ -154,22 +151,22 @@
                     <div class="row">
                         <ul class="pagination">
                             <c:if test="${page - gapPage > 0}">
-                                <li class="page-item"><a href="#" onclick="paggerFistPage(${content});" class="page-link">First</a></li>
+                                <li class="page-item"><a href="#" onclick="paggerFistPage('${content}');" class="page-link">First</a></li>
                             </c:if>
 
                             <c:if test="${page - gapPage < 0}">
                                 <c:forEach var="i" begin="1" end="${page - 1}" step="1">
-                                    <li class="page-item"><a href="#" onclick="paggerPage(${i},${content})" class="page-link">${i}</a></li>
+                                    <li class="page-item"><a href="#" onclick="paggerPage('${i}','${content}')" class="page-link">${i}</a></li>
                                 </c:forEach>
                             </c:if>
                             <c:if test="${page - gapPage == 0}">
                                 <c:forEach var="i" begin="1" end="${page - 1}" step="1">
-                                    <li class="page-item"><a href="#" onclick="paggerPage(${i},${content})" class="page-link">${i}</a></li>
+                                    <li class="page-item"><a href="#" onclick="paggerPage('${i}','${content}')" class="page-link">${i}</a></li>
                                 </c:forEach>
                             </c:if>
                             <c:if test="${page - gapPage > 0}">
                                 <c:forEach var="i" begin="${page - gapPage}" end="${page - 1}" step="1">
-                                    <li class="page-item"><a href="#" onclick="paggerPage(${i},${content})" class="page-link">${i}</a></li>
+                                    <li class="page-item"><a href="#" onclick="paggerPage('${i}','${content}')" class="page-link">${i}</a></li>
                                 </c:forEach>
                             </c:if>
 
@@ -177,12 +174,12 @@
 
                             <c:forEach var="i" begin="${page + 1}" end="${page + gapPage}"  step="1">
                                 <c:if test="${i <= totalPage}">
-                                    <li class="page-item"><a href="#" onclick="paggerPage(${i},${content})" class="page-link">${i}</a></li>
+                                    <li class="page-item"><a href="#" onclick="paggerPage('${i}','${content}')" class="page-link">${i}</a></li>
                                 </c:if>
                             </c:forEach>
 
                             <c:if test="${page + gapPage < totalPage}">
-                                <li class="page-item"><a href="#" onclick="paggeLastPage(${content});" class="page-link">Last</a></li>
+                                <li class="page-item"><a href="#" onclick="paggeLastPage('${totalPage}','${content}');" class="page-link">Last</a></li>
                             </c:if>
                         </ul>
                     </div>

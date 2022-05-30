@@ -48,13 +48,13 @@ function paggerFistPage(content) {
     window.location.href = href;
 }
 
-function paggerPage(page,content) {
+function paggerPage(page, content) {
     var href = 'userList?xpage=' + page + '&' + content;
     window.location.href = href;
 }
 
-function paggeLastPage(content) {
-    var href = 'userList?xpage=${totalPage}&' + content;
+function paggeLastPage(totalPage, content) {
+    var href = 'userList?xpage=' + totalPage + '&' + content;
     window.location.href = href;
 }
 
