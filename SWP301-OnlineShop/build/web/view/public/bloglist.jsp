@@ -90,7 +90,7 @@
                                         <img src="${i.thumbnail}" alt="">
                                     </a>
                                     <p>${i.briefInfo}</p>
-                                    <a  class="btn btn-primary" href="">Read More</a>
+                                    <a  class="btn btn-primary" href="blogDetail?blogId=${i.id}">Read More</a>
                                 </div>
                             </c:forEach>
 

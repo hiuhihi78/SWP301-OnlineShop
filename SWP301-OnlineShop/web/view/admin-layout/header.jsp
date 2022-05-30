@@ -102,17 +102,17 @@
 <!--                            <li class="footer"><a href="#">See All Messages</a></li>-->
                         </ul>
                     </li>
-                    <li class="dropdown tasks-menu">
-<!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+<!--                    <li class="dropdown tasks-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-tasks"></i>
                             <span class="label label-danger">9</span>
-                        </a>-->
+                        </a>
                         <ul class="dropdown-menu">
                             <li class="header">You have 9 tasks</li>
                             <li>
-                                <!-- inner menu: contains the actual data -->
+                                 inner menu: contains the actual data 
                                 <ul class="menu">
-                                    <li><!-- Task item -->
+                                    <li> Task item 
                                         <a href="#">
                                             <h3>
                                                 Design some buttons
@@ -124,8 +124,8 @@
                                                 </div>
                                             </div>
                                         </a>
-                                    </li><!-- end task item -->
-                                    <li><!-- Task item -->
+                                    </li> end task item 
+                                    <li> Task item 
                                         <a href="#">
                                             <h3>
                                                 Create a nice theme
@@ -137,8 +137,8 @@
                                                 </div>
                                             </div>
                                         </a>
-                                    </li><!-- end task item -->
-                                    <li><!-- Task item -->
+                                    </li> end task item 
+                                    <li> Task item 
                                         <a href="#">
                                             <h3>
                                                 Some task I need to do
@@ -150,8 +150,8 @@
                                                 </div>
                                             </div>
                                         </a>
-                                    </li><!-- end task item -->
-                                    <li><!-- Task item -->
+                                    </li> end task item 
+                                    <li> Task item 
                                         <a href="#">
                                             <h3>
                                                 Make beautiful transitions
@@ -163,14 +163,14 @@
                                                 </div>
                                             </div>
                                         </a>
-                                    </li><!-- end task item -->
+                                    </li> end task item 
                                 </ul>
                             </li>
                             <li class="footer">
                                 <a href="#">View all tasks</a>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">

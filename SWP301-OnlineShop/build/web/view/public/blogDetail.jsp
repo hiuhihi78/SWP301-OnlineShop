@@ -20,6 +20,7 @@
         <title>Blog List | E-Shopper</title>
     </head>
     <body>
+        <c:set var="blog" value="${requestScope.blog}"></c:set>
         <jsp:include page="../home-template/header.jsp"/>
         <section>
             <div class="container">
@@ -67,43 +68,32 @@
                         </div>                     
                     </div>
                     <div class="col-sm-9">
-                        <div class="blog-post-area">
-                            <h2 class="title text-center">Blog List</h2>
-                            <c:forEach items="${requestScope.listPostFiltered}" var="i">
-                                <div class="single-blog-post">
-                                    <h3>${i.title}</h3>
-                                    <div class="post-meta">
-                                        <ul>
-                                            <li><i class="fa fa-user"></i>Hieu</li>
-                                            <!--<li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
-                                            <li><i class="fa fa-calendar"></i>${i.date}</li>
-                                        </ul>
-<!--                                        <span>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                        </span>-->
-                                    </div>
-                                    <a href="">
-                                        <img src="${i.thumbnail}" alt="">
-                                    </a>
-                                    <p>${i.briefInfo}</p>
-                                    <a  class="btn btn-primary" href="blogDetail?blogId=${i.id}">Read More</a>
-                                </div>
-                            </c:forEach>
-
-                            <div class="pagination-area">
-                                <c:if test="${requestScope.totalPage >= 2}">
-                                    <ul class="pagination">
-                                        <c:forEach var="i" begin="1" end="${requestScope.totalPage}">
-                                            <li><a href="#" class="${(i == 1)? "active":""}">${i}</a></li>
-                                            </c:forEach>
-                                        <li><a id="next-page" href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                        <div class="blog-post-area" style="margin-bottom: 20px;">
+                            <h2 class="title text-center">Blog Detail</h2>
+                            <div class="single-blog-post">
+                                <h3>${blog.title}</h3>
+                                <div class="post-meta">
+                                    <ul>
+                                        <li><i class="fa fa-user"></i>${blog.user.fullname}</li>
+                                        <li><i class="fa fa-calendar"></i>${blog.date}</li>
+                                        <li><i class="fa-solid fa-ballot"></i>${blog.postCategory.name}</li>
                                     </ul>
-                                </c:if>
+                                    <span>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-o"></i>
+                                    </span>
+                                </div>
+                                <a href="">
+                                    <img src="${blog.thumbnail}" alt="">
+                                </a>
+                                <c:forEach items="${requestScope.content}" var="c">
+                                    <p>${c}</p>
+                                </c:forEach>   
                             </div>
+                        </div>-->
                         </div>
                     </div>
                 </div>
