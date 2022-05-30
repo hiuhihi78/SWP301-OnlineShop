@@ -20,9 +20,9 @@
 
         <!-- Theme style -->
         <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
-        <style type="text/css">
-            
-        </style>    
+        <!--css-->
+        <link href="../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
+        
         
         <!--active button nav in sidebar-->
         <script>
@@ -56,7 +56,7 @@
                     <!--Alter-->
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
                     <!--Search, add and filter user-->
-                    <div class="row d-flex" style="margin-bottom: 10px">
+                    <div class="row d-flex" id="searchfilter">
                         <form action="userList" method="get" style="width: 70%; float: left;" class="form-inline">
                             <input type="hidden" name="action" value="all"/>
                             <input type="hidden" name="xpage" value="1"/>
@@ -91,7 +91,7 @@
                         </select>
                         <input type="text" id="search" name="search" value="${requestScope.search}" placeholder="Enter part of name, phone or email" style="width: 30rem" class="form-control"/>
                     </form>
-                    <form action="addNewUser" method="get" style="margin: 0 2%;padding: 0;display: inline-block; float: right">
+                    <form action="addNewUser" method="get"  id="formAddNewUser">
                         <input class="btn btn-primary" type="submit" value="Add new user">
                     </form>
                 </div><!--/Search, add and filter user-->
@@ -125,7 +125,6 @@
                                         <td>${u.role.name}</td>
                                         <td>
                                             <form action="editUserStatus" id="changeStatus-${u.id}" method="get">
-                                                <!--<input type="hidden" name="action" value="changeStatus">-->
                                                 <input type="hidden" name="xpage" value="${page}">
                                                 <input type="hidden" name="id" value="${u.id}">
                                                 <c:if test="${!u.status}">
@@ -139,7 +138,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <a href="editUserProfile?id=${u.id}" style="text-decoration: none; color:white">
+                                            <a href="editUserProfile?id=${u.id}" class="text-decoration-none text-white">
                                                 <button type="button" class="btn btn-primary">
                                                     <i class="fa-solid fa-user-pen"></i>Edit
                                                 </button>
@@ -152,35 +151,25 @@
                     </div><!--Table list of user-->
                 </div> 
                     <!--Pagging-->
-<!--                    <div class="row">
-                        <ul class="pagination">
-                            <c:if test="${page > 2}"><li class="page-item"><a class="page-link" href="userList?xpage=${page -1}&gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}">Previous</a></li></c:if>
-                                <c:forEach begin="1" end="${requestScope.totalPage}" var = "i">
-                                <li class="page-item <c:if test="${page == i}"> active </c:if>" ><a class="page-link" href="userList?xpage=${i}&gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}">${i}</a></li>
-                                </c:forEach>
-                                <c:if test="${page < requestScope.totalPage - 1}"><li class="page-link" class="page-item"><a class="page-link" href="userList?xpage=${page+1}&gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}">Next</a></li></c:if>
-                            </ul>
-                    </div> -->
-                    <!--/Pagging-->
                     <div class="row">
                         <ul class="pagination">
                             <c:if test="${page - gapPage > 0}">
-                                <li class="page-item"><a href="#" onclick="paggerFistPage();" class="page-link">First</a></li>
+                                <li class="page-item"><a href="#" onclick="paggerFistPage(${content});" class="page-link">First</a></li>
                             </c:if>
 
                             <c:if test="${page - gapPage < 0}">
                                 <c:forEach var="i" begin="1" end="${page - 1}" step="1">
-                                    <li class="page-item"><a href="#" onclick="paggerPage(${i})" class="page-link">${i}</a></li>
+                                    <li class="page-item"><a href="#" onclick="paggerPage(${i},${content})" class="page-link">${i}</a></li>
                                 </c:forEach>
                             </c:if>
                             <c:if test="${page - gapPage == 0}">
                                 <c:forEach var="i" begin="1" end="${page - 1}" step="1">
-                                    <li class="page-item"><a href="#" onclick="paggerPage(${i})" class="page-link">${i}</a></li>
+                                    <li class="page-item"><a href="#" onclick="paggerPage(${i},${content})" class="page-link">${i}</a></li>
                                 </c:forEach>
                             </c:if>
                             <c:if test="${page - gapPage > 0}">
                                 <c:forEach var="i" begin="${page - gapPage}" end="${page - 1}" step="1">
-                                    <li class="page-item"><a href="#" onclick="paggerPage(${i})" class="page-link">${i}</a></li>
+                                    <li class="page-item"><a href="#" onclick="paggerPage(${i},${content})" class="page-link">${i}</a></li>
                                 </c:forEach>
                             </c:if>
 
@@ -188,47 +177,20 @@
 
                             <c:forEach var="i" begin="${page + 1}" end="${page + gapPage}"  step="1">
                                 <c:if test="${i <= totalPage}">
-                                    <li class="page-item"><a href="#" onclick="paggerPage(${i})" class="page-link">${i}</a></li>
+                                    <li class="page-item"><a href="#" onclick="paggerPage(${i},${content})" class="page-link">${i}</a></li>
                                 </c:if>
                             </c:forEach>
 
                             <c:if test="${page + gapPage < totalPage}">
-                                <li class="page-item"><a href="#" onclick="paggeLastPage();" class="page-link">Last</a></li>
+                                <li class="page-item"><a href="#" onclick="paggeLastPage(${content});" class="page-link">Last</a></li>
                             </c:if>
                         </ul>
                     </div>
+                    <!--/Pagging-->
                 </section>
         </aside><!-- /.right-side -->
     </div><!-- ./wrapper -->
-
-
-    <!--Submit form onchange-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#roleId').on('change', function () {
-                this.form.submit();
-            });
-            $('#gender').on('change', function () {
-                this.form.submit();
-            });
-            $('#status').on('change', function () {
-                this.form.submit();
-            });
-            $('#page').on('change', function () {
-                this.form.submit();
-            });
-            $('#search').on('change', function () {
-                this.form.submit();
-            });
-            $('#sort').on('change', function () {
-                this.form.submit();
-            });
-            $('#orderBy').on('change', function () {
-                this.form.submit();
-            });
-        });
-    </script>
-
+    
     <!--Modal-->
     <div class="modal" id="active">
         <div class="modal-dialog">
@@ -245,37 +207,12 @@
             </div>
         </div>
     </div>
-    <script language="JavaScript" type="text/javascript" >
-            function openModal(id) {
-                var button = document.getElementById('clickChangeStatus');
-                button.innerHTML = '';
-                button.setAttribute('class', "btn btn-primary");
-                button.setAttribute('onclick', 'document.getElementById("' + id + '").submit();');
-                button.innerHTML = 'Yes';
-            }
-    </script>
     <!--/Modal-->
-    <!--Scrip for pageger-->
-    <script>
-        var content = "gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}";
-        
-        function paggerFistPage(){
-            var href = 'userList?xpage=1&' + content;
-            window.location.href = href;
-        }
-        
-        function paggerPage(page){
-            var href = 'userList?xpage='+ page +'&' + content;
-            window.location.href = href;
-        }
-        
-        function paggeLastPage(){
-            var href = 'userList?xpage=${totalPage}&' + content;
-            window.location.href = href;
-        }
-    </script>
-    <!--/Scrip for pageger-->
 
+    
+    <!--javascrip-->
+    <script src="../assets/js/admin/userList.js"></script>
+    
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="../js/jquery.min.js" type="text/javascript"></script>

@@ -106,6 +106,9 @@
         <script src="../../assets/public/js/price-range.js"></script>
         <script src="../../assets/public/js/jquery.prettyPhoto.js"></script>
         <script src="../../assets/public/js/main.js"></script>
+        <c:set var="searchContent" value="${requestScope.searchContent}"></c:set>
+        <c:set var="searchContentCategory" value="${requestScope.category}"></c:set>
+        <c:set var="pageIndex" value="${requestScope.page}"></c:set>
         <script>
             var searchContent = `${requestScope.searchContent}`;
             var searchContentCategory = `${requestScope.category}`;
@@ -144,9 +147,6 @@
                         if (category == -1) {
                             url = "bloglist";
                         }
-//                        if (searchContent) {
-//                            url += "&search=" + searchContent;
-//                        }
                         window.location.href = url;
                     };
                 }
@@ -158,8 +158,6 @@
                 for (var i = 0; i < paging.length - 2; i++) {
                     if (paging[i].className.includes("active")) {
                         var indexNextPage = i + 1;
-//                        paging[i].classList.remove("active");
-//                        paging[indexNextPage].classList.add("active");
                         var url = "bloglist?page=" + paging[indexNextPage].innerHTML;
                         if (searchContentCategory) {
                             if (searchContentCategory != -1) {
