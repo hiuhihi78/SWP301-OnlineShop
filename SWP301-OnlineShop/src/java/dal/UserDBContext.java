@@ -174,7 +174,7 @@ public class UserDBContext extends DBContext {
 
     public void changeStatus(int id, boolean status) {
         try {
-            String sql = "UPDATE [dbo].[User]\n"
+            String sql = "UPDATE [User]\n"
                     + "   SET [status] = ?\n"
                     + " WHERE id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -251,6 +251,10 @@ public class UserDBContext extends DBContext {
             return stm.executeUpdate() > 0;
         } catch (Exception ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     public ArrayList<User> getListUserFilter(int roleId, String gender, String status, String search, String sort, String orderBy) {
         ArrayList<User> users = new ArrayList<>();
         try {
@@ -470,12 +474,12 @@ public class UserDBContext extends DBContext {
                     + "           ,[roleId]\n"
                     + "           ,[status])\n"
                     + "     VALUES\n"
-                    + "           (N'?'\n"
+                    + "           (?\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
-                    + "           ,N'?'\n"
+                    + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?)";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -642,8 +646,6 @@ public class UserDBContext extends DBContext {
 //        }
 //        return list;
 //    }
-    
-    
 //        public ArrayList<User> getListUserFiltered(int roleId, String gender,
 //                String status, String search, String sort, String orderBy, int pageindex, int pagesize) {
 //            ArrayList<User> list = new ArrayList<>();
@@ -898,7 +900,7 @@ public class UserDBContext extends DBContext {
                     + "    WHEN @Col_Name = 'role' THEN CAST(roleId AS SQL_VARIANT)\n"
                     + "    WHEN @Col_Name = 'status' THEN CAST([User].status AS SQL_VARIANT)"
                     + " END " + orderBy + "\n";
-            
+
             PreparedStatement ps_insert = connection.prepareStatement(sql_insert);
             for (Map.Entry<Integer, Object[]> entry : params.entrySet()) {
                 Integer index = entry.getKey();
@@ -923,7 +925,7 @@ public class UserDBContext extends DBContext {
             if (pageindex != -1 || pagesize != -1) {
                 sql_select += "and t.[row_number] >= ((? - 1) * ?) + 1 and t.[row_number] <= ? * ?\n";
             }
-            
+
             PreparedStatement ps = connection.prepareStatement(sql_select);
             if (pageindex != -1 || pagesize != -1) {
                 ps.setInt(1, pageindex);
@@ -947,7 +949,7 @@ public class UserDBContext extends DBContext {
                 user.setId(rs.getInt(10));
                 list.add(user);
             }
-            
+
             String sql_drop = "DROP TABLE User_sort_table";
             PreparedStatement ps_drop = connection.prepareStatement(sql_drop);
             ps_drop.execute();
@@ -959,7 +961,7 @@ public class UserDBContext extends DBContext {
             } catch (SQLException ex1) {
                 Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex1);
             }
-        } finally{
+        } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException ex) {
@@ -968,7 +970,7 @@ public class UserDBContext extends DBContext {
         }
         return list;
     }
-    
+
     public static void main(String[] args) {
         UserDBContext db = new UserDBContext();
 //        System.out.println(db.getListUserFiltered(3, "male", "active", "Le", "id", "asc", 1, 5).size());

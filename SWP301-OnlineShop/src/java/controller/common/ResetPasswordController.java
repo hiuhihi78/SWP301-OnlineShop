@@ -6,13 +6,10 @@
 package controller.common;
 
 import configs.GeneratePassword;
-import static configs.GeneratePassword.generateRandomPassword;
 import configs.Security;
 import configs.SendMail;
 import dal.UserDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +68,7 @@ public class ResetPasswordController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String newPassword = GeneratePassword.generateRandomPassword(GeneratePassword.LENGTH_PASSWORD);
+            String newPassword = GeneratePassword.generatePassword();
             UserDBContext userDb = new UserDBContext();
            String emailAddress = request.getParameter("txtEmail").trim();  
             User user = userDb.getUserByEmail(emailAddress);
