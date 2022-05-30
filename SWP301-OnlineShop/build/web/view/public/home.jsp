@@ -46,7 +46,7 @@
                                     <c:forEach items="${requestScope.listSliderActive}" var="i">
                                         <div class="item ${(count_item == 0) ? "active":""}">
                                             <div class="col-sm-6">
-                                                <h1 style="font-size: 35px"><span>${i.title}</span></h1>
+                                                <h1 class="text-size-35"><span>${i.title}</span></h1>
                                                 <!--<h2>super sale at midnight</h2>-->
                                                 <p>${i.note}</p>
                                                 <!--<button type="button" class="btn btn-default get">-->
@@ -116,7 +116,7 @@
                                         <div class="single-products">
                                             <div class="productinfo text-center">
                                                 <a href="#">
-                                                    <img src="${i.thumbnail}" alt="" />
+                                                    <img class="img-height-255" src="${i.thumbnail}" alt="" />
                                                 </a>
                                                 <h2 class="break-down-line">${i.title}</h2>
                                                 <p class="break-down-line" >${i.briefInfo}</p>
@@ -136,14 +136,14 @@
                                         <div class="single-products">
                                             <div class="productinfo text-center">
                                                 <a href="#${i.id}">
-                                                    <img src="${i.thumbnail}" alt="" />
+                                                    <img class="img-height-255" src="${i.thumbnail}" alt="" />
                                                 </a>
                                                 <h2 class="break-down-line">${i.name}</h2>
                                                 <p>
-                                                    <span style="margin-right: 10px; text-decoration: line-through;">
+                                                    <span class="text-line-through">
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price}"/>
                                                     </span>
-                                                    <span style="color: red;">
+                                                    <span class="text-danger">
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price - (i.price*i.discount/100)}"/>
                                                     </span>
                                                 </p>
@@ -167,13 +167,7 @@
         <script src="../../assets/public/js/price-range.js"></script>
         <script src="../../assets/public/js/jquery.prettyPhoto.js"></script>
         <script src="../../assets/public/js/main.js"></script>
-        <script>
-            $("#search-box").on('keyup', function (e) {
-                if (e.key === 'Enter' || e.keyCode === 13) {
-                    window.location.href = "";
-                }
-            });
-        </script>
+        <script src="../../assets/js/home/home.js"></script>
     </body>
 
     <jsp:include page="login.jsp"/>
