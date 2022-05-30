@@ -21,7 +21,7 @@ public class ProductDBContext extends DBContext {
     public ArrayList<Product> getProductsFeatured() {
         ArrayList<Product> listProduct = new ArrayList<>();
         try {
-            String sql = "Select top 2 * from Product\n"
+            String sql = "Select top 3 * from Product\n"
                     + "where featured = 1 \n"
                     + "order by date desc";
             PreparedStatement stm = connection.prepareStatement(sql);

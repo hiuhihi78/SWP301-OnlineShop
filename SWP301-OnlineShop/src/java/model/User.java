@@ -23,6 +23,7 @@ public class User {
     private boolean status;
     private Role role;
     private String email;
+    private String username;
 
     public User() {
     }
@@ -40,7 +41,15 @@ public class User {
         this.status = status;
     }
 
-    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public int getId() {
         return id;
     }

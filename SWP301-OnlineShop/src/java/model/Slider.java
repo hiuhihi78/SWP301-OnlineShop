@@ -12,13 +12,23 @@ public class Slider {
 
     private int id;
     private String title;
-    private Image image;
+    private String image;
     private String backlink;
     private boolean status;
     private String note;
     private User user;
 
     public Slider() {
+    }
+
+    public Slider(int id, String title, String image, String backlink, boolean status, String note, User user) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.backlink = backlink;
+        this.status = status;
+        this.note = note;
+        this.user = user;
     }
 
     public int getId() {
@@ -37,11 +47,11 @@ public class Slider {
         this.title = title;
     }
 
-    public Image getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

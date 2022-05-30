@@ -29,6 +29,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         ProductDBContext productDB = new ProductDBContext();
         SliderDBContext sliderDB = new SliderDBContext();
         PostDBContext postDB = new PostDBContext();
@@ -38,7 +39,10 @@ public class HomeController extends HttpServlet {
         ArrayList<Post> listHotPost = postDB.getHotPost();
         ArrayList<Post> listLatestPost = postDB.getLatestPost();
         
+        int numberOfSliders = listSliderActive.size();
+        
         request.setAttribute("listSliderActive", listSliderActive);
+        request.setAttribute("numberOfSliders", numberOfSliders);
         request.setAttribute("listProductFeatured", listProductFeatured);
         request.setAttribute("listHotPost", listHotPost);
         request.setAttribute("listLatestPost", listLatestPost);

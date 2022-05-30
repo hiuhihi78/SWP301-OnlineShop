@@ -21,7 +21,7 @@ public class PostDBContext extends DBContext {
     public ArrayList<Post> getHotPost() {
         ArrayList<Post> listPost = new ArrayList<>();
         try {
-            String sql = "select top 1 * from Post\n"
+            String sql = "select top 3 * from Post\n"
                     + "where feature = 1 and status = 1\n"
                     + "order by dateUpdated desc";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -53,7 +53,7 @@ public class PostDBContext extends DBContext {
     public ArrayList<Post> getLatestPost() {
         ArrayList<Post> listPost = new ArrayList<>();
         try {
-            String sql = "select top 4 * from Post\n"
+            String sql = "select top 3 * from Post\n"
                     + "where status = 1\n"
                     + "order by dateUpdated desc";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -88,42 +88,42 @@ public class PostDBContext extends DBContext {
                     + "(Select p.* , ROW_NUMBER() over(order by dateUpdated DESC) as row_index\n"
                     + "from Post p join PostCategory c\n"
                     + "on p.categoryId = c.id and p.status = 1\n";
-            if(idCategory != -1) {
-                sql += "and p.categoryId = ? ";
+            if (idCategory != -1) {
+                sql += "and p.categoryId = ? "; 
             }
-            if(!searchContent.isEmpty()) {
-                sql += "and p.title like ?";
+            if (!searchContent.isEmpty()) {
+                sql += "and (p.title like ? or p.briefInfo like ?)"; 
             }
             sql += ") PostPaging\n"
-                    + "where row_index >= (?-1)*?+1 and row_index <= ? * ?";
+                    + "where row_index >= (?-1)*?+1 and row_index <= ? * ?"; 
+
             PreparedStatement stm = connection.prepareStatement(sql);
-            if(idCategory != -1 && searchContent.isEmpty()) {
+            if (idCategory != -1 && searchContent.trim().isEmpty()) {
                 stm.setInt(1, idCategory);
                 stm.setInt(2, pageIndex);
                 stm.setInt(3, pageSize);
                 stm.setInt(4, pageIndex);
                 stm.setInt(5, pageSize);
-            }
-            else if(idCategory == -1 && !searchContent.isEmpty()) {
-                stm.setString(1, "%"+searchContent+"%");
-                stm.setInt(2, pageIndex);
-                stm.setInt(3, pageSize);
-                stm.setInt(4, pageIndex);
-                stm.setInt(5, pageSize);
-            }
-            else if(idCategory == -1 && searchContent.isEmpty()) {
-                stm.setInt(1, pageIndex);
-                stm.setInt(2, pageSize);
-                stm.setInt(3, pageIndex);
-                stm.setInt(4, pageSize);
-            }
-            else {
-                stm.setInt(1, idCategory);
-                stm.setString(2, "%"+searchContent+"%");
+            } else if (idCategory == -1 && !searchContent.trim().isEmpty()) {
+                stm.setString(1, "%" + searchContent + "%");
+                stm.setString(2, "%" + searchContent + "%");
                 stm.setInt(3, pageIndex);
                 stm.setInt(4, pageSize);
                 stm.setInt(5, pageIndex);
                 stm.setInt(6, pageSize);
+            } else if (idCategory == -1 && searchContent.trim().isEmpty()) {
+                stm.setInt(1, pageIndex);
+                stm.setInt(2, pageSize);
+                stm.setInt(3, pageIndex);
+                stm.setInt(4, pageSize);
+            } else {
+                stm.setInt(1, idCategory);
+                stm.setString(2, "%" + searchContent + "%");
+                stm.setString(3, "%" + searchContent + "%");
+                stm.setInt(4, pageIndex);
+                stm.setInt(5, pageSize);
+                stm.setInt(6, pageIndex);
+                stm.setInt(7, pageSize);
             }
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -138,9 +138,12 @@ public class PostDBContext extends DBContext {
                 post.setFeatured(rs.getBoolean(7));
                 post.setDate(rs.getDate(8));
                 post.setStatus(rs.getBoolean(9));
-                User user = new User();
-                user.setId(rs.getInt(10));
-                post.setUser(user);
+                User user = new UserDBContext().getUserById(rs.getInt(10));
+                if(user == null) {
+                    post.setUser(new User());
+                } else {
+                    post.setUser(user);
+                }
                 listPost.add(post);
             }
         } catch (SQLException e) {
@@ -148,10 +151,29 @@ public class PostDBContext extends DBContext {
         return listPost;
     }
 
-    public int numberRowListPost() {
+    public int numberRowListPost(String searchContent, int idCategory) {
         try {
-            String sql = "Select count(*) as numberRow from Post";
+            String sql = "Select count(*) as numberRow from Post\n";
+            if (!searchContent.trim().isEmpty() && idCategory == -1) {
+                sql += "where (title like ? or briefInfo like ?)";
+            } else if (searchContent.trim().isEmpty() && idCategory != -1) {
+                sql += "where categoryId = ?";
+            }else if(!searchContent.trim().isEmpty() && idCategory != -1) {
+                sql += "where (title like ? or briefInfo like ?) and categoryId = ?";
+            }
+
             PreparedStatement stm = connection.prepareStatement(sql);
+
+            if (!searchContent.trim().isEmpty() && idCategory == -1) {
+                stm.setString(1, "%" + searchContent + "%");
+                stm.setString(2, "%" + searchContent + "%");
+            } else if (searchContent.trim().isEmpty() && idCategory != -1) {
+                stm.setInt(1, idCategory);
+            } else if(!searchContent.trim().isEmpty() && idCategory != -1) {
+                stm.setString(1, "%" + searchContent + "%");
+                stm.setString(2, "%" + searchContent + "%");
+                stm.setInt(3, idCategory);
+            }
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);

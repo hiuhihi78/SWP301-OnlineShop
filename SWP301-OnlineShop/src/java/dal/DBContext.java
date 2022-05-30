@@ -42,6 +42,8 @@ public class DBContext {
         try {
             String user = "vailon";
             String pass = "daucatmoi123!";
+//            String user = "se1617-g1";
+//            String pass = "passmon123!@";
             String url = "jdbc:sqlserver://vpn.ripaimcsgo.xyz:1433;databaseName=OnlineShop2";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
