@@ -21,10 +21,16 @@ public class GeneratePassword {
         String combinedChars = capitalCaseLetters + lowerCaseLetters + specialCharacters + numbers;
         Random random = new Random();
         char[] password = new char[PASSWORD_LENGTH];
-
+        int min = 0;
+        int max = combinedChars.length();
         for (int i = 0; i < PASSWORD_LENGTH; i++) {
-            password[i] = combinedChars.charAt(random.nextInt(combinedChars.length()));
+            int random_index = (int)Math.floor(Math.random()*(max-min+1)+min);
+            password[i] = combinedChars.charAt(random_index);
         }
-        return password.toString();
+        return String.valueOf(password);
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(generatePassword());
     }
 }
