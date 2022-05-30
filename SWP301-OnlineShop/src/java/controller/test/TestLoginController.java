@@ -53,7 +53,7 @@ public class TestLoginController extends HttpServlet {
         if(u != null)
         {
             request.getSession().setAttribute("user", u);
-            request.getRequestDispatcher("../view/test/dashboard.jsp").forward(request, response);
+            response.sendRedirect("/dashboard/page1");
         }
         else
         {

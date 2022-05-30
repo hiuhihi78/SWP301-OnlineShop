@@ -17,11 +17,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import model.Feature;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import model.Feature;
 import model.User;
 
 /**
@@ -87,19 +87,27 @@ public class AuthFilter implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
         RoleDBContext roleDB = new RoleDBContext();
-        
+
         HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper((HttpServletRequest) request);
-        HttpServletResponseWrapper wrappedResponse = new HttpServletResponseWrapper((HttpServletResponse) response);
-        
-        User u = (User)wrappedRequest.getSession().getAttribute("user");
-        if(u != null)
-        {
-            String roleName = u.getRole().getName();
-            switch(roleName)
-            {
-                case "admin":
-                    
+        User u = (User) wrappedRequest.getSession().getAttribute("user");
+        if (u != null) {
+            LinkedHashMap<Feature, Boolean> allowedFeatures = u.getRole().getAllowFeatures();
+            String requestPath = wrappedRequest.getServletPath();
+            log(requestPath);
+            for (Feature f : allowedFeatures.keySet()) {
+                boolean isAllowed = allowedFeatures.get(f);
+                if(f.getUrl().contains(requestPath) && isAllowed)
+                {
+                    response.getWriter().println("Access granted for path: " + requestPath);
+                    chain.doFilter(request, response);
+                    return;
+                }
             }
+            response.getWriter().println("Access denied");
+        }
+        else
+        {
+            response.getWriter().println("Not logged in");
         }
     }
 
