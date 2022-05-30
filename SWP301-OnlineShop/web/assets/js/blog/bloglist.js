@@ -1,10 +1,6 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
- */
-var searchContent;
-var searchContentCategory;
-var pageIndex;
+var searchContent = document.querySelector('#search-content').value;
+var searchCategory = document.querySelector('#search-category').value;
+var pageIndex = document.querySelector('#search-page-index').value;
 
 var categories = document.querySelectorAll('.panel.panel-default .panel-heading .panel-title a');
 console.log(categories);
@@ -14,8 +10,8 @@ $("#search-box").on('keyup', function (e) {
     var search = document.querySelector('#search-box').value;
     if (e.key === 'Enter' || e.keyCode === 13) {
         var url = "bloglist?search=" + search;
-        if (searchContentCategory != -1) {
-            url += "&category=" + searchContentCategory;
+        if (searchCategory != -1) {
+            url += "&category=" + searchCategory;
         }
         window.location.href = url;
     }
@@ -51,9 +47,9 @@ $("#next-page").on('click', function () {
         if (paging[i].className.includes("active")) {
             var indexNextPage = i + 1;
             var url = "bloglist?page=" + paging[indexNextPage].innerHTML;
-            if (searchContentCategory) {
-                if (searchContentCategory != -1) {
-                    url += "&category=" + searchContentCategory;
+            if (searchCategory) {
+                if (searchCategory != -1) {
+                    url += "&category=" + searchCategory;
                 }
             }
             if (searchContent) {
@@ -82,8 +78,8 @@ function handlePaging() {
     for (var i = 0; i < paging.length - 1; i++) {
         paging[i].onclick = function (e) {
             var url = "bloglist?page=" + e.target.innerHTML;
-            if (searchContentCategory != -1) {
-                url += "&category=" + searchContentCategory;
+            if (searchCategory != -1) {
+                url += "&category=" + searchCategory;
             }
             if (searchContent) {
                 url += "&search=" + searchContent;
@@ -93,14 +89,10 @@ function handlePaging() {
         };
     }
 }
-function app(page, search, searchCategory) {
-    searchContent = search;
-    searchContentCategory = searchCategory;
-    pageIndex = page;
+function app(page, searchContent) {
     handlePaging();
     setActivePaging(page);
     handleAttributeBoxSearch(searchContent);
     handleCategory();
 }
-
-
+app(pageIndex, searchContent);

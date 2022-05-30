@@ -53,7 +53,7 @@ public class BlogListController extends HttpServlet {
         ArrayList<Post> listTopLatestPost = postDB.getLatestPost();
         
         request.setAttribute("searchContent", searchContent);
-        request.setAttribute("category", idCategory);
+        request.setAttribute("idCategory", idCategory);
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("listPostFiltered", listPostFiltered);
