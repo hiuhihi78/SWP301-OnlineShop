@@ -13,6 +13,7 @@ public class User {
     private boolean gender;
     private String mobile;
     private String address;
+    private String username;
     private Role role;
     private boolean status;
     private String email;
@@ -30,6 +31,26 @@ public class User {
         this.mobile = mobile;
         this.address = address;
         this.status = status;
+    }
+    public User(int id, String password, String avatar, String email, String fullname, boolean gender, String mobile, String username, String address, boolean status) {
+        this.id = id;
+        this.password = password;
+        this.avatar = avatar;
+        this.email = email;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.mobile = mobile;
+        this.username = username;
+        this.address = address;
+        this.status = status;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getId() {

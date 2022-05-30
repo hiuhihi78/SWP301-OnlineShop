@@ -93,13 +93,7 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="home" class="active">Home</a></li>
-                            <li class="dropdown"><a href="shop">Shop
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="bloglist">Blog
-                                </a>
-                            </li>
+                            <li><a href="bloglist">Blog</a></li>
                         </ul>
                     </div>
                 </div>

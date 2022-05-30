@@ -43,8 +43,8 @@
                             </div><!--/category-products-->
                             <div class="panel-group category-products" id="accordian">
                                 <h2 class="title text-center">Latest Posts</h2>
-                                <c:if test="${requestScope.listHotPost != null}">
-                                    <c:forEach items="${requestScope.listHotPost}" var="i">
+                                <c:if test="${requestScope.listTopLatestPost != null}">
+                                    <c:forEach items="${requestScope.listTopLatestPost}" var="i">
                                         <div class="panel panel-default">
                                             <div class="col-sm-12">
                                                 <div class="product-image-wrapper">
@@ -53,9 +53,9 @@
                                                             <a href="#">
                                                                 <img src="${i.thumbnail}" alt="" />
                                                             </a>
-                                                            <h2>${i.title}</h2>
-                                                            <p>${i.briefInfo}</p>
-                                                            <a href="#" class="btn btn-default add-to-cart">Show</a>
+                                                            <h2 class="break-down-line">${i.title}</h2>
+                                                            <p class="break-down-line">${i.briefInfo}</p>
+                                                            <a href="#" class="btn btn-default add-to-cart">Read more</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -68,13 +68,13 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="blog-post-area">
-                            <h2 class="title text-center">Blog List</h2>
+                            <h2 class="title text-center">Post List</h2>
                             <c:forEach items="${requestScope.listPostFiltered}" var="i">
                                 <div class="single-blog-post">
-                                    <h3>${i.title}</h3>
+                                    <h3 class="break-down-line">${i.title}</h3>
                                     <div class="post-meta">
                                         <ul>
-                                            <li><i class="fa fa-user"></i>Hieu</li>
+                                            <li><i class="fa fa-user"></i>${i.user.fullname}</li>
                                             <!--<li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
                                             <li><i class="fa fa-calendar"></i>${i.date}</li>
                                         </ul>
@@ -97,9 +97,9 @@
                             <div class="pagination-area">
                                 <c:if test="${requestScope.totalPage >= 2}">
                                     <ul class="pagination">
-                                        <c:forEach var="i" begin="1" end="${requestScope.totalPage}">
+                                        <c:forEach var="i" begin="1" end="${requestScope.totalPage}" step="1">
                                             <li><a href="#" class="${(i == 1)? "active":""}">${i}</a></li>
-                                            </c:forEach>
+                                        </c:forEach>
                                         <li><a id="next-page" href="#"><i class="fa fa-angle-double-right"></i></a></li>
                                     </ul>
                                 </c:if>
@@ -119,7 +119,7 @@
         <script>
             var searchContent = `${requestScope.searchContent}`;
             var searchContentCategory = `${requestScope.category}`;
-            var pageIndex = ${requestScope.page};
+            var pageIndex = ${requestScope.pageIndex};
 
             var categories = document.querySelectorAll('.panel.panel-default .panel-heading .panel-title a');
             console.log(categories);
@@ -154,9 +154,6 @@
                         if (category == -1) {
                             url = "bloglist";
                         }
-//                        if (searchContent) {
-//                            url += "&search=" + searchContent;
-//                        }
                         window.location.href = url;
                     };
                 }
@@ -168,8 +165,6 @@
                 for (var i = 0; i < paging.length - 2; i++) {
                     if (paging[i].className.includes("active")) {
                         var indexNextPage = i + 1;
-//                        paging[i].classList.remove("active");
-//                        paging[indexNextPage].classList.add("active");
                         var url = "bloglist?page=" + paging[indexNextPage].innerHTML;
                         if (searchContentCategory) {
                             if (searchContentCategory != -1) {
@@ -201,8 +196,6 @@
                 var paging = document.querySelectorAll('.pagination li a');
                 for (var i = 0; i < paging.length - 1; i++) {
                     paging[i].onclick = function (e) {
-//                        document.querySelector('.pagination li a.active').classList.remove('active');
-//                        e.target.classList.add('active');
                         var url = "bloglist?page=" + e.target.innerHTML;
                         if (searchContentCategory) {
                             url += "&category=" + searchContentCategory;
@@ -215,17 +208,13 @@
                     };
                 }
             }
-//            handlePaging();
-//            setActivePaging(${requestScope.page});
-//            handleAttributeBoxSearch(`${requestScope.searchContent}`);
-//            handleCategory();
             function app(page, searchContent) {
                 handlePaging();
                 setActivePaging(page);
                 handleAttributeBoxSearch(searchContent);
                 handleCategory();
             }
-            app(${requestScope.page}, `${requestScope.searchContent}`);
+            app(${requestScope.pageIndex}, `${requestScope.searchContent}`);
         </script>
     </body>
 </html>
