@@ -21,6 +21,8 @@ public class DBContext {
 
     public DBContext() {
         try {
+//            String user = "vailon";
+//            String pass = "daucatmoi123!";
             String user = "se1617-g1";
             String pass = "passmon123!@";
             String url = "jdbc:sqlserver://vpn.ripaimcsgo.xyz:1433;databaseName=OnlineShop2";
