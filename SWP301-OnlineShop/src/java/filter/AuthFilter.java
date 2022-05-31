@@ -91,12 +91,12 @@ public class AuthFilter implements Filter {
         HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper((HttpServletRequest) request);
         String requestPath = wrappedRequest.getServletPath();
         User u = (User) wrappedRequest.getSession().getAttribute("user");
-        if (u != null && !u.getRole().getName().equals("customer") && !requestPath.contains("/assets")) {
+        if (u != null && !u.getRole().getName().equals("customer")) {
             
             LinkedHashMap<Feature, Boolean> allowedFeatures = u.getRole().getAllowFeatures();
             for (Feature f : allowedFeatures.keySet()) {
                 boolean isAllowed = allowedFeatures.get(f);
-                if(f.getUrl().contains(requestPath) && isAllowed)
+                if(f.getUrl().contains(requestPath) && isAllowed || !f.getUrl().contains(requestPath))
                 {
                     response.getWriter().println("Access granted for path: " + requestPath);
                     chain.doFilter(request, response);
