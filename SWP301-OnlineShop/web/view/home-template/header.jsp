@@ -52,18 +52,23 @@
                                 <li class="dropdown">
                                     <a href="#">
                                         <i class="fa fa-user"></i>
-                                        ${sessionScope.user.fullname}Hello
+                                        ${sessionScope.user.fullname}
                                         <i class="fa fa-angle-down"></i>
                                     </a>
                                     <ul role="menu" class="sub-menu">
                                         <li>
-                                            <a href="#" style="background: none;text-decoration: none;">Profile</a>
+                                            <a href="#" class="text-none-underline">Profile</a>
                                         </li>
                                         <li>
-                                            <a href="#" style="background: none;text-decoration: none;">Change password</a>
+                                            <a href="#" class="text-none-underline">Change password</a>
                                         </li>
+                                        <c:if test="${sessionScope.user.role.id == 1}">
+                                            <li>
+                                                <a href="#" class="text-none-underline">Manage</a>
+                                            </li>
+                                        </c:if>
                                         <li>
-                                            <a href="logout" style="background: none;text-decoration: none;">Logout</a>
+                                            <a href="logout" class="text-none-underline">Logout</a>
                                         </li>
                                     </ul>
                                 </li>                   
