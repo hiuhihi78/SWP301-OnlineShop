@@ -8,6 +8,9 @@
 .img-height-500 {
     height: 500px;
 }
+.active-category {
+    color: #fdb45e !important;
+}
 .mb-20 {
     margin-bottom: 20px;
 }

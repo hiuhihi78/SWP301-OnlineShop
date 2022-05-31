@@ -73,8 +73,8 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="home" class="active">Home</a></li>
-                            <li><a href="bloglist">Blog</a></li>
+                            <li><a href="home" ${(requestScope.active == "home")?"class=\"active\"":""}>Home</a></li>
+                            <li><a href="bloglist" ${(requestScope.active == "blog")?"class=\"active\"":""}>Blog</a></li>
                         </ul>
                     </div>
                 </div>

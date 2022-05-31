@@ -29,17 +29,17 @@
                     <div class="col-sm-3">
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center">Category</h2>
-                            <input type="hidden" value="${requestScope.idCategory}" id="search-category"/>
+                            <input type="hidden" value="${requestScope.category}" id="search-category"/>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a id="-1" href="#">All Category</a></h4>
+                                        <h4 class="panel-title"><a ${(requestScope.category == -1)?"class=\"active-category\"":""} id="-1" href="#">All Category ${requestScope.idCategory}</a></h4>
                                     </div>
                                 </div>
                                 <c:forEach items="${requestScope.listAllCateogry}" var="i">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4 class="panel-title"><a id="${i.id}" href="#">${i.name}</a></h4>
+                                            <h4 class="panel-title"><a ${(requestScope.category == i.id)?"class=\"active-category\"":""} id="${i.id}" href="#">${i.name}</a></h4>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -78,7 +78,7 @@
                                     <ul>
                                         <li><i class="fa fa-user"></i>${blog.user.fullname}</li>
                                         <li><i class="fa fa-calendar"></i>${blog.date}</li>
-                                        <li><i class="fa-solid fa-ballot"></i>${blog.postCategory.name}</li>
+                                        <li><i class="fa fa-caret-right"></i>${blog.postCategory.name}</li>
                                     </ul>
                                 </div>
                                 <a href="#">
