@@ -4,6 +4,10 @@
  */
 
 
+// set active button in nav bar
+var element = document.getElementById("nav-user-list");
+element.classList.add("active");
+
 $(document).ready(function () {
     $("#basic-form").validate({
         rules: {
@@ -56,18 +60,21 @@ $(document).ready(function () {
 //                });
 });
 
+
 function  validateMobile() {
-    var inputTag = document.getElementById('mobile');
-    var value = document.getElementById('mobile').value;
-    const regex = new RegExp('^0[0-9]{9}$');
     var label = document.getElementById('mobile-error');
+    var value = document.getElementById('mobile').value;
+    console.log(value);
+    const regex = new RegExp('^0[0-9]{9}$');
     document.getElementById('mobile').classList.remove("valid");
     var form = document.getElementById('basic-form');
     if (!regex.test(value)) {
+        document.getElementById('mobile-errors').innerHTML = "Phone number invalid!";
         document.getElementById('mobile').classList.add('error');
         document.getElementById('mobile').setAttribute('aria-invalid', 'true');
-        document.getElementById('mobile-errors').style.display = 'block';
-        document.getElementById('mobile-errors').innerHTML = "Phone number invalid!";
+        if (document.getElementById('mobile-error').innerHTML == '') {
+            document.getElementById('mobile-errors').style.display = 'block';
+        }
         $('#basic-form').submit(function (event) {
             event.preventDefault();
             window.history.back();
@@ -79,4 +86,6 @@ function  validateMobile() {
         document.getElementById('mobile-errors').style.display = 'none';
     }
 }
+
+
 

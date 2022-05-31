@@ -44,7 +44,7 @@ public class BlogDetailController extends HttpServlet {
         
         int blogId = Integer.parseInt(request.getParameter("blogId"));
         Post blog = postDB.getPostById(blogId);
-        String[] splitContent = blog.getDescription().split("//");
+        String[] splitContent = blog.getDescription().split("\n");
         ArrayList<String> content = new ArrayList<>();
         for(String s : splitContent){
             content.add(s);

@@ -17,3 +17,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     display: inline-block; 
     float: right;
 }
+
+#formFilter{
+    width: 70%; 
+    float: left;
+}
+
+
+

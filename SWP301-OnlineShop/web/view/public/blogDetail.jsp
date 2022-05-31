@@ -17,7 +17,7 @@
         <link href="../../assets/public/css/animate.css" rel="stylesheet">
         <link href="../../assets/public/css/main.css" rel="stylesheet">
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
-        <title>Blog List | E-Shopper</title>
+        <title>Blog Detail</title>
     </head>
     <body>
         <c:set var="blog" value="${requestScope.blog}"></c:set>
@@ -93,7 +93,6 @@
                                     <p>${c}</p>
                                 </c:forEach>   
                             </div>
-                        </div>-->
                         </div>
                     </div>
                 </div>

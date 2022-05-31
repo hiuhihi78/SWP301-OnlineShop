@@ -9,7 +9,7 @@
 <html>
     <head>  
         <meta charset="UTF-8">
-        <title>Director | Dashboard</title>
+        <title>Admin | User List</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -54,7 +54,7 @@
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
                     <!--Search, add and filter user-->
                     <div class="row d-flex" id="searchfilter">
-                        <form action="userList" method="get" style="width: 70%; float: left;" class="form-inline">
+                        <form action="userList" method="get"  class="form-inline" id="formFilter">
                             <input type="hidden" name="action" value="all"/>
                             <input type="hidden" name="xpage" value="1"/>
                         <select name="roleId" id="roleId" class="form-control">
@@ -212,7 +212,7 @@
     
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <script src="../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../js/jquery.min.js" type="text/javascript"></script>
     <!-- jQuery UI 1.10.3 -->
     <script src="../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->

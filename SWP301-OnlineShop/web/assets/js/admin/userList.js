@@ -29,6 +29,9 @@ $(document).ready(function () {
     });
 });
 
+// set active button in nav bar
+var element = document.getElementById("nav-user-list");
+element.classList.add("active");
 
 // js for modal
 function openModal(id) {

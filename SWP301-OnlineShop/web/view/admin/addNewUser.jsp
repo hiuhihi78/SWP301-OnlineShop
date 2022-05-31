@@ -9,7 +9,7 @@
 <html>
     <head>  
         <meta charset="UTF-8">
-        <title>Director | Dashboard</title>
+        <title>Admin | Add new user</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -23,8 +23,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!--css-->
         <link href="../assets/css/admin/addNewUser.css" rel="stylesheet" type="text/css"/>
-        <!--javascrip-->
-        <script src="../assets/js/admin/addNewUser.js"></script>
+        
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -54,7 +53,7 @@
                             </p>
                             <p>
                                 <label for="mobile">Mobile<span class="text-danger">*</span></label>
-                                <input type="text" id="mobile" name="mobile" value="${requestScope.mobile}" onchange="validateMobile();">
+                                <input type="text" id="mobile" name="mobile" value="${requestScope.mobile}" onchange="validateMobile();" required>
                                 <span id="mobile-errors" class="error" for="mobile" style="display: none;"></span>
                             </p>
                             <p>
@@ -67,7 +66,7 @@
                             </p>
                             <p>
                                 <label for="address">Address<span class="text-danger">*</span></label>
-                                <input id="address" name="address" value="${requestScope.address}">
+                                <input id="address" name="address" value="${requestScope.address}" required>
                             </p>
                             <p>
                                 <label for="status">Status<span class="text-danger">*</span></label>
@@ -87,6 +86,8 @@
             </aside>
         </div>
                             
+         <!--javascrip-->
+        <script src="../assets/js/admin/addNewUser.js"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../js/jquery.min.js" type="text/javascript"></script>
