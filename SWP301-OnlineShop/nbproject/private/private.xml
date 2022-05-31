@@ -3,26 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/BlogDetailController.java</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/admin/AddNewUserController.java</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/admin/UserListController.java</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/bloglist.jsp</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/js/admin/userList.js</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/blogDetail.jsp</file>
-=======
-            <file>file:/E:/dev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/bloglist.jsp</file>
->>>>>>> 26976b9e0d69fc0de571974f991e4dca3b99f0c5
-=======
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/web/view/admin/userList.jsp</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/bloglist.jsp</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/css/main.css</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/BlogListController.java</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/LoginController.java</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/web/view/admin/addNewUser.jsp</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/BlogDetailController.java</file>
->>>>>>> 335c677f33569c6ddc19c3d12bfa39f987ec3147
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/VeryfiController.java</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/configs/SendMail.java</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/configs/Security.java</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/configs/TokenGenerator.java</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/ChangePasswordController.java</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/model/User.java</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/DBContext.java</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/LoginController.java</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/RegisterController.java</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/SendMailController.java</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Admin/Desktop/dev-new/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/UserDBContext.java</file>
         </group>
     </open-files>
 </project-private>

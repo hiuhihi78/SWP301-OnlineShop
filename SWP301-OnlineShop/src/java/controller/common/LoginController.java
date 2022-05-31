@@ -5,6 +5,7 @@
  */
 package controller.common;
 
+import configs.Security;
 import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,12 +22,7 @@ import model.User;
  * @author Admin
  */
 public class LoginController extends HttpServlet {
-    
-    public static final int ADMIN_ROLL_ID = 1;
-    public static final int MAKETING_ROLL_ID = 2;
-    public static final int SALE_ROLL_ID = 3;
-    public static final int CUSTOMER_ROLL_ID = 4;
-    public static final int MAXIMUM_AGE = 60*60*24*10;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,7 +35,7 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("view/public/login.jsp").forward(request, response);     
+        request.getRequestDispatcher("view/public/login.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -54,25 +50,27 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          /*Cookie [] cookies = request.getCookies();
-          String email = null, pass = null;
-          for (Cookie cooky : cookies) {
-            if (cooky.getName().equals("emailCookie")) {
-                email = cooky.getValue();
+        Cookie[] cookies = null;
+        cookies = request.getCookies();
+        String email = null, pass = null;
+        if (cookies != null) {
+            for (Cookie cooky : cookies) {
+                if (cooky.getName().equals("emailCookie")) {
+                    email = cooky.getValue();
+                }
+                if (cooky.getName().equals("passCookie")) {
+                    pass = cooky.getValue();
+                }
+
+                if (email != null && pass != null) {
+                    request.setAttribute("email", email);
+                    request.setAttribute("password", pass);
+                    request.setAttribute("checkbox", "checked");
+                    break;
+                }
             }
-            if (cooky.getName().equals("passCookie")) {
-                pass = cooky.getValue();
-            }
-            
-            if (email != null && pass != null){
-                request.setAttribute("email", email);
-                request.setAttribute("password", pass);
-                request.setAttribute("checkbox", "checked");
-                break;
-            }
-        }*/
-          request.getRequestDispatcher("view/public/login.jsp").forward(request, response);
-        
+        }
+        processRequest(request, response);
     }
 
     /**
@@ -86,53 +84,50 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = "", password = "", check = null;
-        User user = null; 
+        String email = "", password = "", check = null, page = "";
+        User user = null;
         UserDBContext userDb = new UserDBContext();
         HttpSession session = request.getSession();
-        PrintWriter out = response.getWriter();        
-        check = request.getParameter("cboSigned");     
+        check = request.getParameter("cboSigned");
         email = request.getParameter("txtEmail");
         password = request.getParameter("txtPassword");
         user = userDb.getUserByEmailAndPassword(email, password);
-        
-        if (user != null) {
+
+        if (user != null && user.isStatus() == true) {
             session.setAttribute("user", user);
             Cookie emailCookie = new Cookie("emailCookie", email);
             Cookie passCookie = new Cookie("passCookie", password);
             if (check != null) {
-                emailCookie.setMaxAge(MAXIMUM_AGE);            
-            }else {
+                emailCookie.setMaxAge(Security.MAXIMUM_AGE);
+            } else {
                 emailCookie.setMaxAge(0);
             }
             response.addCookie(emailCookie);
             response.addCookie(passCookie);
-            if (user.getRole().getId() == ADMIN_ROLL_ID) {
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Logged in successfully!');");
-            out.println("location='home';");
-            out.println("</script>");
-            } else if (user.getRole().getId() == MAKETING_ROLL_ID){
-                out.println("<script type=\"text/javascript\">");
-            out.println("alert('Logged in successfully!');");
-            out.println("location='home';");
-            out.println("</script>");
-            } else if (user.getRole().getId() == SALE_ROLL_ID){
-                out.println("<script type=\"text/javascript\">");
-            out.println("alert('Logged in successfully!');");
-            out.println("location='home';");
-            out.println("</script>");
-            } else if (user.getRole().getId() == CUSTOMER_ROLL_ID){
-                out.println("<script type=\"text/javascript\">");
-            out.println("alert('Logged in successfully!');");
-            out.println("location='home';");
-            out.println("</script>");
+
+            //Sendirect
+            if (user.getRole().getId() == Security.ADMIN_ROLL_ID) {
+                page = "dashboard";
+
+            } else if (user.getRole().getId() == Security.MAKETING_ROLL_ID) {
+                page = "homeMaketing";
+
+            } else if (user.getRole().getId() == Security.SALE_ROLL_ID) {
+                page = "homeSale";
+            } else if (user.getRole().getId() == Security.CUSTOMER_ROLL_ID) {
+                page = "home";
             }
-        }else {
-            request.setAttribute("mess", "Email or password is incorrect. Please try again!");
-            session.setAttribute("user", null);
-            processRequest(request, response);
+            if (page != "") {
+                response.sendRedirect(page);
+            } else {
+                request.setAttribute("messFalse", "Email or password is incorrect. Please try again!");
+                processRequest(request, response);
+            }
+        } else {
+            request.setAttribute("messFalse", "Email or password is incorrect. Please try again!");
+             processRequest(request, response);
         }
+
     }
 
     /**

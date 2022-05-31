@@ -21,8 +21,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String password, String avatar, String email, String fullname, boolean gender, String mobile, String address, boolean status) {
-        this.id = id;
+    public User(String password, String avatar, String email, String fullname, boolean gender, String mobile, String address, boolean status) {
         this.password = password;
         this.avatar = avatar;
         this.email = email;
@@ -32,7 +31,7 @@ public class User {
         this.address = address;
         this.status = status;
     }
-    public User(int id, String password, String avatar, String email, String fullname, boolean gender, String mobile, String username, String address, boolean status) {
+    public User(int id, String password, String avatar, String email, String fullname, boolean gender, String mobile, String address, boolean status) {
         this.id = id;
         this.password = password;
         this.avatar = avatar;
@@ -40,7 +39,6 @@ public class User {
         this.fullname = fullname;
         this.gender = gender;
         this.mobile = mobile;
-        this.username = username;
         this.address = address;
         this.status = status;
     }
