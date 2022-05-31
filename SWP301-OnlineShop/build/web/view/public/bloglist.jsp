@@ -32,13 +32,13 @@
                                 <div class="panel panel-default">
                                     <input type="hidden" value="${requestScope.idCategory}" id="search-category"/>
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a id="-1" href="#">All Category</a></h4>
+                                        <h4 class="panel-title"><a ${(requestScope.idCategory == -1)?"class=\"active-category\"":""}  id="-1" href="#">All Category</a></h4>
                                     </div>
                                 </div>
                                 <c:forEach items="${requestScope.listAllCateogry}" var="i">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4 class="panel-title"><a id="${i.id}" href="#">${i.name}</a></h4>
+                                            <h4 class="panel-title"><a ${(requestScope.idCategory == i.id)?"class=\"active-category\"":""} id="${i.id}" href="#">${i.name}</a></h4>
                                         </div>
                                     </div>
                                 </c:forEach>
