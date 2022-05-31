@@ -417,24 +417,7 @@ public class UserDBContext extends DBContext {
                 u.setFullname(rs.getString(1));
                 u.setGender(rs.getBoolean(2));
                 //setting image
-                String base64Image = null;
-                Blob blob = rs.getBlob(3);
-                if (blob != null) {
-                    InputStream inputStream = blob.getBinaryStream();
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[4096];
-                    int bytesRead = -1;
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-                    byte[] imageBytes = outputStream.toByteArray();
-                    base64Image = Base64.getEncoder().encodeToString(imageBytes);
-                    inputStream.close();
-                    outputStream.close();
-                } else {
-                    base64Image = "default";
-                }
-                u.setAvatar(base64Image);
+                u.setAvatar(rs.getString(3));
                 //
                 u.setEmail(rs.getString(4));
                 u.setMobile(rs.getString(5));
