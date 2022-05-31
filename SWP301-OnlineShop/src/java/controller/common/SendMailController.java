@@ -70,7 +70,7 @@ public class SendMailController extends HttpServlet {
             throws ServletException, IOException {
         try {
             UserDBContext userDb = new UserDBContext();    
-           String emailAddress = request.getParameter("txtEmail").trim();  
+           String emailAddress = request.getParameter("txtEmail").trim().toLowerCase();  
             User user = userDb.getUserByEmail(emailAddress);
             String token = TokenGenerator.uniqueToken();
             LocalDateTime fiveMinutesLater  = LocalDateTime.now().plusMinutes(5);
@@ -89,7 +89,7 @@ public class SendMailController extends HttpServlet {
                 sb.append("Site Name: Online Shop <br>");
                 sb.append(" If this was a mistake, ignore this email and nothing will happen. <br> ");
                 sb.append("To reset your your password, visit the following address: <br> ");
-                sb.append("<b>").append(url).append("</b>");
+                sb.append("<b>").append("<a href=\"").append(url).append("\">Click Here</a></b>");
                 sb.append(" ,regards<br>");
                 sb.append("Administrator");               
                 SendMail.send(emailAddress, "Password Reset",  sb.toString() , Security.USERNAME, Security.PASSWORD);

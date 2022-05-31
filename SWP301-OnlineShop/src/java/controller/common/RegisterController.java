@@ -27,8 +27,6 @@ import model.User;
  */
 public class RegisterController extends HttpServlet {
 
-    public static final int MAXIMUM_AGE_TOKEN_REGISTER = 60 * 5;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -56,7 +54,7 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request,response);
+        processRequest(request, response);
     }
 
     /**
@@ -73,46 +71,53 @@ public class RegisterController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String name = "", strGender = "", email = "", mobile = "", address = "", password = "";
+            User userExist = null;
             UserDBContext userDb = new UserDBContext();
             HttpSession session = request.getSession();
             PrintWriter out = response.getWriter();
-            name = request.getParameter("txtName");
+            name = request.getParameter("txtName").trim();
             strGender = request.getParameter("rd");
-            email = request.getParameter("txtEmail");
-            mobile = request.getParameter("txtMobile");
-            address = request.getParameter("txtAddress");
-            password = request.getParameter("txtPassword1");
-            String token = TokenGenerator.uniqueToken();
-            User user = new User();
-            user.setPassword(password);
-            user.setFullname(name);
-            user.setGender(Boolean.parseBoolean(strGender));
-            user.setEmail(email);
-            user.setMobile(mobile);
-            user.setAddress(address);
-            String url = "http://localhost:8080/verify?token=" + token;
-            session.setAttribute("userRegister", user);
-            
-            LocalDateTime fiveMinutesLater  = LocalDateTime.now().plusMinutes(5);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-            String formatted = fiveMinutesLater.format(formatter);
-            Cookie tokenCookieRegister = new Cookie("tokenSaveRegister", token);
-            tokenCookieRegister.setMaxAge(MAXIMUM_AGE_TOKEN_REGISTER);
-            response.addCookie(tokenCookieRegister);
-            StringBuilder sb = new StringBuilder();
-            sb.append("Dear ").append(name).append(",<br>");
-            sb.append("Please click the link below to verify your email address. <br> ");
-            sb.append("<b>").append(url).append("</b>");
-            sb.append(" ,regards<br>");
-            sb.append("Administrator");
+            email = request.getParameter("txtEmail").trim().toLowerCase();
+            mobile = request.getParameter("txtMobile").trim();
+            address = request.getParameter("txtAddress").trim();
+            password = request.getParameter("txtPassword1").trim();
+            userExist = userDb.getUserByEmail(email);
 
-            SendMail.send(email, "Please verify your email", sb.toString(), Security.USERNAME, Security.PASSWORD);
+            if (userExist != null) {
+                request.setAttribute("messFalse", "Email account " + email +" already exists in the system!");
+                processRequest(request, response);
+            } else {
+                String token = TokenGenerator.uniqueToken();
+                User user = new User();
+                user.setPassword(password);
+                user.setFullname(name);
+                user.setGender(Boolean.parseBoolean(strGender));
+                user.setEmail(email);
+                user.setMobile(mobile);
+                user.setAddress(address);
+                String url = "http://localhost:8080/verify?token=" + token;
+                session.setAttribute("userRegister", user);
 
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Email is sent to Email Address. Please check, this verification is valid until "+ formatted+"');");
-            out.println("location='register';");
-            out.println("</script>");
+                LocalDateTime fiveMinutesLater = LocalDateTime.now().plusMinutes(5);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                String formatted = fiveMinutesLater.format(formatter);
+                Cookie tokenCookieRegister = new Cookie("tokenSaveRegister", token);
+                tokenCookieRegister.setMaxAge(Security.MAXIMUM_AGE_TOKEN_REGISTER);
+                response.addCookie(tokenCookieRegister);
+                StringBuilder sb = new StringBuilder();
+                sb.append("Dear ").append(name).append(",<br>");
+                sb.append("Please click the link below to verify your email address. <br> ");
+                sb.append("<b>").append("<a href=\"").append(url).append("\">VERIFY</a></b>");
+                sb.append(" ,regards<br>");
+                sb.append("Administrator");
 
+                SendMail.send(email, "Please verify your email", sb.toString(), Security.USERNAME, Security.PASSWORD);
+
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Email is sent to Email Address. Please check, this verification is valid until " + formatted + "');");
+                out.println("location='register';");
+                out.println("</script>");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

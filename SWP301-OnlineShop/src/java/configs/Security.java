@@ -23,4 +23,5 @@ public class Security {
     public static final boolean DEFAULT_STATUS = true;
     public static final boolean ACTIVE_STATUS = true;
     public static final boolean DEACTIVE_STATUS = false;
+    public static final int MAXIMUM_AGE_TOKEN_REGISTER = 60 * 5;
 }

@@ -1036,11 +1036,13 @@ public class UserDBContext extends DBContext {
 //            System.out.println(u.toString());
 //        }
 //        db.inserUser("hie", "123", true, "daw@daw", "012", "dqaw", 1, true);
-        try {
-            System.out.println(db.getUserById(5));
-        } catch (Exception e) {
-
-        }
+//        try {
+//            System.out.println(db.getUserById(5));
+//        } catch (Exception e) {
+//
+//        }
+        User user = db.getUserByEmail("Nguyenhieuskynett@gmail.com");
+        System.out.println(user.getEmail());
 
     }
 }
