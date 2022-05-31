@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author hoan
  */
-@WebServlet(name = "page2Controler", urlPatterns = {"/page2"})
+@WebServlet(name = "page2Controler", urlPatterns = {"/admin/page2"})
 public class page2Controler extends BaseAuthController {
 
     /**

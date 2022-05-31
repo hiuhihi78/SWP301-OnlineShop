@@ -4,9 +4,7 @@
  */
 package model;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 /**
  *
@@ -18,7 +16,7 @@ public class Role {
     private int id;
     private String name;
     private boolean active;
-    private LinkedHashMap<Feature, Boolean> allowFeatures;
+    private LinkedHashMap<Feature, Boolean> allowFeatures = null;
 
     public Role(int id, String name) {
         this.id = id;

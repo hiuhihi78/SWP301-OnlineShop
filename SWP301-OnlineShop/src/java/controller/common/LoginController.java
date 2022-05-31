@@ -91,7 +91,8 @@ public class LoginController extends HttpServlet {
         check = request.getParameter("cboSigned");
         email = request.getParameter("txtEmail");
         password = request.getParameter("txtPassword");
-        user = userDb.getUserByEmailAndPassword(email, password);
+        //user = userDb.getUserByEmailAndPassword(email, password);
+        user = userDb.login(email, password);
 
         if (user != null && user.isStatus() == true) {
             session.setAttribute("user", user);

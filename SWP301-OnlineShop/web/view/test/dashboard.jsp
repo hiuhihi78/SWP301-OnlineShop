@@ -16,6 +16,7 @@
         <h1>Hello - ${sessionScope.user.fullname}</h1>
         <div class="navbar">
             <c:forEach items="${sessionScope.user.role.allowFeatures}" var="s">
+                 <a href="${pageContext.request.contextPath}${s.key.url}">${s.key.url} - ${s.key.name} ||</a>
                 <c:if test="${s.key.url == '/page1'}">
                     <a href="${pageContext.request.contextPath}${s.key.url}">${s.key.name} ||</a>
                 </c:if>
