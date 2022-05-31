@@ -21,8 +21,8 @@
         <!-- Theme style -->
         <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
         <!--css-->
-        <link href="../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
-        
+        <link href="../../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/css/admin/main.css" rel="stylesheet" type="text/css"/>
         
         <!--active button nav in sidebar-->
 
@@ -41,6 +41,8 @@
     <c:set var="gapPage" value="2"/>
     <c:set var="totalPage" value="${requestScope.totalPage}"/>
     <c:set var="content" value="gender=${gender}&status=${status}&roleId=${roleId}&search=${search}&sort=${sort}&orderBy=${orderBy}"/>
+    
+    
     <!-- header logo: style can be found in header.less -->
     <jsp:include page="../admin-layout/header.jsp"></jsp:include>
         <div class="wrapper row-offcanvas row-offcanvas-left">
@@ -49,7 +51,7 @@
             <!-- Right side. contains main content -->
             <aside class="right-side">
                 <!-- Main content -->
-                <section class="content" style="margin: 0px 20px;">
+                <section class="content ">
                     <!--Alter-->
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
                     <!--Search, add and filter user-->
@@ -71,7 +73,7 @@
                         <select name="status" id="status" class="form-control">
                             <option value="all" ${requestScope.status == "all" ? "selected='selected'":""}>All status</option>
                             <option value="active" ${requestScope.status == "active" ? "selected='selected'":""}>Active</option>
-                            <option value="unactive" ${requestScope.status == "unactive" ? "selected='selected'":""}>Unactive</option>
+                            <option value="unactive" ${requestScope.status == "unactive" ? "selected='selected'":""}>Deactive</option>
                         </select>
                         <span>Sort by</span>
                         <select name="sort" id="sort" class="form-control">
@@ -208,16 +210,16 @@
 
     
     <!--javascrip-->
-    <script src="../assets/js/admin/userList.js"></script>
-    
+    <script src="../../assets/js/admin/userList.js"></script>
+    <script src="../../assets/js/admin/main.js" type="text/javascript"></script>
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="../../js/jquery.min.js" type="text/javascript"></script>
     <!-- jQuery UI 1.10.3 -->
-    <script src="../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+    <script src="../../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
-    <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- Director App -->
-    <script src="../assets/js/Director/app.js" type="text/javascript"></script>
+    <script src="../../assets/js/Director/app.js" type="text/javascript"></script>
 </body>
 </html>

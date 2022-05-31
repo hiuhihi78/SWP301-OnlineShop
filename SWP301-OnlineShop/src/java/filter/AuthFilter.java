@@ -17,34 +17,38 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import model.Feature;
+import model.User;
 
 /**
  *
  * @author hoan
  */
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"/dashboard/*"})
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"/*"})
 public class AuthFilter implements Filter {
-    
+
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
+
     public AuthFilter() {
-    }    
-    
+    }
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
             log("AuthFilter:DoBeforeProcessing");
         }
 
-       
-    }    
-    
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -83,8 +87,28 @@ public class AuthFilter implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
         RoleDBContext roleDB = new RoleDBContext();
-        
-        LinkedHashMap<Feature, Boolean> allowFeatures = roleDB.getAllowFeatures(0);
+
+        HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper((HttpServletRequest) request);
+        String requestPath = wrappedRequest.getServletPath();
+        User u = (User) wrappedRequest.getSession().getAttribute("user");
+        if (u != null && !u.getRole().getName().equals("customer")) {
+            
+            LinkedHashMap<Feature, Boolean> allowedFeatures = u.getRole().getAllowFeatures();
+            for (Feature f : allowedFeatures.keySet()) {
+                boolean isAllowed = allowedFeatures.get(f);
+                if(f.getUrl().contains(requestPath) && isAllowed || !f.getUrl().contains(requestPath))
+                {
+                    log(requestPath);
+                    chain.doFilter(request, response);
+                    return;
+                }
+            }
+            response.getWriter().println("Access denied");
+        }
+        else
+        {
+            chain.doFilter(request, response);
+        }
     }
 
     /**
@@ -106,16 +130,16 @@ public class AuthFilter implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (debug) {
                 log("AuthFilter:Initializing filter");
             }
         }
@@ -134,20 +158,20 @@ public class AuthFilter implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -164,7 +188,7 @@ public class AuthFilter implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -178,9 +202,9 @@ public class AuthFilter implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
+
 }

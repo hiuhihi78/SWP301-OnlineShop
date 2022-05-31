@@ -7,6 +7,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Admin
 */
 
+.filter-select{
+    width: 20px;
+}
+
+.content{
+    margin:  0px 20px;
+}
+
 #searchfilter{
     margin-bottom: 10px;
 }

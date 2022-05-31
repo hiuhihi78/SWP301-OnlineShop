@@ -91,7 +91,8 @@ public class LoginController extends HttpServlet {
         check = request.getParameter("cboSigned");
         email = request.getParameter("txtEmail").toLowerCase();
         password = request.getParameter("txtPassword");
-        user = userDb.getUserByEmailAndPassword(email, password);
+        //user = userDb.getUserByEmailAndPassword(email, password);
+        user = userDb.login(email, password);
 
         if (user != null && user.isStatus() == true) {
             session.setAttribute("user", user);
@@ -107,13 +108,13 @@ public class LoginController extends HttpServlet {
 
             //Sendirect
             if (user.getRole().getId() == Security.ADMIN_ROLL_ID) {
-                page = "dashboard";
+                page = "home";
 
             } else if (user.getRole().getId() == Security.MAKETING_ROLL_ID) {
-                page = "homeMaketing";
+                page = "home";
 
             } else if (user.getRole().getId() == Security.SALE_ROLL_ID) {
-                page = "homeSale";
+                page = "home";
             } else if (user.getRole().getId() == Security.CUSTOMER_ROLL_ID) {
                 page = "home";
             }

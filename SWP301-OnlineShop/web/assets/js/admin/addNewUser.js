@@ -86,6 +86,9 @@ function  validateMobile() {
         document.getElementById('mobile-errors').style.display = 'none';
     }
 }
-
-
+// remove message element
+setTimeout(function () {
+    const element = document.getElementById('message');
+    element.remove();
+}, 3000);
 
