@@ -5,9 +5,18 @@
 /*@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
 @import url(http://fonts.googleapis.com/css?family=Abel);*/
+.img-height-500 {
+    height: 500px;
+}
+.mb-20 {
+    margin-bottom: 20px;
+}
+.slider-height-400{
+    height: 400px;
+}
 .text-none-underline {
-    background: none;
-    text-decoration: none;
+    background: none !important;
+    text-decoration: none !important;
 }
 
 .text-size-35 {

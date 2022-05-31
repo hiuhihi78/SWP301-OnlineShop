@@ -59,13 +59,13 @@ public class BlogDetailController extends HttpServlet {
         int totalPage = (totalPosts % pageSize == 0) ? (totalPosts / pageSize) : ((totalPosts / pageSize) + 1);
         ArrayList<PostCategory> listAllCateogry = postDB.getAllCategory();
         ArrayList<Post> listPostFiltered = postDB.getListPostFiltered(searchContent, idCategory, pageIndex, pageSize);
-        ArrayList<Post> listHotPost = postDB.getHotPost();
+        ArrayList<Post> listLatestPost = postDB.getLatestPost();
         request.setAttribute("searchContent", searchContent);
         request.setAttribute("category", idCategory);
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("page", page);
         request.setAttribute("listPostFiltered", listPostFiltered);
-        request.setAttribute("listHotPost", listHotPost);
+        request.setAttribute("listLatestPost", listLatestPost);
         request.setAttribute("listAllCateogry", listAllCateogry);
         request.getRequestDispatcher("view/public/blogDetail.jsp").forward(request, response);
 
