@@ -138,7 +138,7 @@ public class PostDBContext extends DBContext {
                 post.setFeatured(rs.getBoolean(7));
                 post.setDate(rs.getDate(8));
                 post.setStatus(rs.getBoolean(9));
-                User user = new UserDBContext().getUserById(rs.getInt(10));
+                User user = new UserDBContext().findUserById(rs.getInt(10));
                 if(user == null) {
                     post.setUser(new User());
                 } else {

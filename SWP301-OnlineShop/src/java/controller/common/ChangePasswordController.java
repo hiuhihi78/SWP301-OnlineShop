@@ -51,15 +51,15 @@ public class ChangePasswordController extends HttpServlet {
         tokenSend = request.getParameter("token");
         email = request.getParameter("email").trim();  
         Cookie [] cookies = request.getCookies();
-          for (Cookie cooky : cookies) {
+        if (cookies != null) {
+            for (Cookie cooky : cookies) {
             if (cooky.getName().equals("tokenSave")) {
                 tokenSave = cooky.getValue().toString();
                 break;
             }
           }
-          
+        }
         if (tokenSave != null && tokenSave != "" && tokenSave.equals(tokenSend)) {
-       
                 request.setAttribute("email", email);
                 processRequest(request, response);
             

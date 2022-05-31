@@ -13,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.User;
 
 /**
@@ -48,26 +49,41 @@ public class VeryfiController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        String tokenSave = "", tokenSend = "";
+        tokenSend = request.getParameter("token");
         Cookie [] cookies = request.getCookies();
         UserDBContext userDb = new UserDBContext();
         boolean result = false;
         User user = null;
         Object obj = null;
-          for (Cookie cooky : cookies) {
-            if (cooky.getName().equals("userRegister")) {
-                obj = (Object) cooky.getValue();
+        if (cookies != null) {
+            for (Cookie cooky : cookies) {
+            if (cooky.getName().equals("tokenSaveRegister")) {
+                tokenSave = cooky.getValue();
                 break;
             }
         }
+        }
+          
+        obj = session.getAttribute("userRegister");
         user = (User) obj;
         if (user != null) {
             result = userDb.addUser(user);
         }
+        
         if (result) {
-            request.setAttribute("messTrue", "Verify Successfully!");
-            response.sendRedirect("login");
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Verify Successfully!');");
+            out.println("location='login';");
+            out.println("</script>");
         }else {
-          response.sendRedirect("register");  
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Verification failed. Please try again!');");
+            out.println("location='register';");
+            out.println("</script>"); 
         }
         
     }

@@ -8,7 +8,6 @@ package controller.common;
 import configs.Security;
 import configs.SendMail;
 import configs.TokenGenerator;
-import static controller.common.SendMailController.MAXIMUM_AGE_TOKEN;
 import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,6 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.User;
 
 /**
@@ -41,7 +41,7 @@ public class RegisterController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("view/public/register.jsp").forward(request, response);
+        request.getRequestDispatcher("view/public/register1.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +56,7 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request,response);
     }
 
     /**
@@ -74,6 +74,7 @@ public class RegisterController extends HttpServlet {
         try {
             String name = "", strGender = "", email = "", mobile = "", address = "", password = "";
             UserDBContext userDb = new UserDBContext();
+            HttpSession session = request.getSession();
             PrintWriter out = response.getWriter();
             name = request.getParameter("txtName");
             strGender = request.getParameter("rd");
@@ -82,8 +83,6 @@ public class RegisterController extends HttpServlet {
             address = request.getParameter("txtAddress");
             password = request.getParameter("txtPassword1");
             String token = TokenGenerator.uniqueToken();
-            String url = "http://localhost:8080/veryfi?email=" + email
-                    + "&token=" + token;
             User user = new User();
             user.setPassword(password);
             user.setFullname(name);
@@ -91,9 +90,9 @@ public class RegisterController extends HttpServlet {
             user.setEmail(email);
             user.setMobile(mobile);
             user.setAddress(address);
-            Cookie userRegister = new Cookie("userRegister", user.toString());
-            userRegister.setMaxAge(MAXIMUM_AGE_TOKEN);
-            response.addCookie(userRegister);
+            String url = "http://localhost:8080/verify?token=" + token;
+            session.setAttribute("userRegister", user);
+            
             LocalDateTime fiveMinutesLater  = LocalDateTime.now().plusMinutes(5);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
             String formatted = fiveMinutesLater.format(formatter);

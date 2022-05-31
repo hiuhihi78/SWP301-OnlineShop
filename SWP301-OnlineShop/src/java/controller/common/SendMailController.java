@@ -5,12 +5,15 @@
  */
 package controller.common;
 
+
 import configs.Security;
 import configs.SendMail;
 import configs.TokenGenerator;
 import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -23,9 +26,6 @@ import model.User;
  * @author Admin
  */
 public class SendMailController extends HttpServlet {
-
-    public static final int MAXIMUM_AGE_TOKEN = 60*5;
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -70,19 +70,19 @@ public class SendMailController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-           
-            UserDBContext userDb = new UserDBContext();
-            PrintWriter out = response.getWriter();      
+            UserDBContext userDb = new UserDBContext();    
            String emailAddress = request.getParameter("txtEmail").trim();  
             User user = userDb.getUserByEmail(emailAddress);
             String token = TokenGenerator.uniqueToken();
+            LocalDateTime fiveMinutesLater  = LocalDateTime.now().plusMinutes(5);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            String formatted = fiveMinutesLater.format(formatter);
             String url = "http://localhost:8080/changePassword?email=" + emailAddress+
                     "&token=" + token;
             
             if (user != null) {
-                //userDb.createTokenForUser(emailAddress, token);
                 Cookie tokenCookie = new Cookie("tokenSave", token);
-                tokenCookie.setMaxAge(MAXIMUM_AGE_TOKEN);
+                tokenCookie.setMaxAge(Security.MAXIMUM_AGE_TOKEN);
                 response.addCookie(tokenCookie);
                 StringBuilder sb = new StringBuilder();
                 sb.append("Dear ").append(user.getFullname()).append(",<br>");
@@ -92,22 +92,21 @@ public class SendMailController extends HttpServlet {
                 sb.append("To reset your your password, visit the following address: <br> ");
                 sb.append("<b>").append(url).append("</b>");
                 sb.append(" ,regards<br>");
-                sb.append("Administrator");
-                
+                sb.append("Administrator");               
                 SendMail.send(emailAddress, "Password Reset",  sb.toString() , Security.USERNAME, Security.PASSWORD);
+                request.setAttribute("messTrue", "Email sent successfully, please check!");
+                request.setAttribute("time", formatted);
                 
-                out.println("<script type=\"text/javascript\">");
-            out.println("alert('Email sent to the email Address. Please check and get your password!');");
-            out.println("location='login';");
-            out.println("</script>");
             } else {
-                request.setAttribute("mess", "Username or email are incorrect");
+                request.setAttribute("messFalse", "This email does not exist in the system!");
             }
         } catch (Exception e) {
             e.printStackTrace();
             
             request.setAttribute("error", e.getMessage());
         }
+        request.getRequestDispatcher("view/public/login.jsp").forward(request, response);
+        
     }
 
     /**
