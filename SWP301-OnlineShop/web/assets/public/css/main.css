@@ -9,16 +9,20 @@
     background: none;
     text-decoration: none;
 }
+
 .text-size-35 {
     font-size: 35px;
 }
+
 .text-line-through {
     margin-right: 10px;
     text-decoration: line-through;
 }
+
 .img-height-255 {
     height: 255.5px;
 }
+
 .break-down-line {
     display:-webkit-box;
     -webkit-line-clamp:1;
@@ -209,7 +213,6 @@ a#scrollUp i{
 
 
 .shop-menu ul li {
-    /*display:inline-block;*/
     display:block;
     padding-left: 15px;
     padding-right: 15px;

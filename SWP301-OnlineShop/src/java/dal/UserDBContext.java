@@ -203,7 +203,7 @@ public class UserDBContext extends DBContext {
 
     public void changeStatus(int id, boolean status) {
         try {
-            String sql = "UPDATE [dbo].[User]\n"
+            String sql = "UPDATE [User]\n"
                     + "   SET [status] = ?\n"
                     + " WHERE id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -416,26 +416,27 @@ public class UserDBContext extends DBContext {
                 User u = new User();
                 u.setFullname(rs.getString(1));
                 u.setGender(rs.getBoolean(2));
-                //setting image
-                String base64Image = null;
-                Blob blob = rs.getBlob(3);
-                if (blob != null) {
-                    InputStream inputStream = blob.getBinaryStream();
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[4096];
-                    int bytesRead = -1;
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-                    byte[] imageBytes = outputStream.toByteArray();
-                    base64Image = Base64.getEncoder().encodeToString(imageBytes);
-                    inputStream.close();
-                    outputStream.close();
-                } else {
-                    base64Image = "default";
-                }
-                u.setAvatar(base64Image);
+//                //setting image
+//                String base64Image = null;
+//                Blob blob = rs.getBlob(3);
+//                if (blob != null) {
+//                    InputStream inputStream = blob.getBinaryStream();
+//                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                    byte[] buffer = new byte[4096];
+//                    int bytesRead = -1;
+//                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                        outputStream.write(buffer, 0, bytesRead);
+//                    }
+//                    byte[] imageBytes = outputStream.toByteArray();
+//                    base64Image = Base64.getEncoder().encodeToString(imageBytes);
+//                    inputStream.close();
+//                    outputStream.close();
+//                } else {
+//                    base64Image = "default";
+//                }
+//                u.setAvatar(base64Image);
                 //
+                u.setAvatar(rs.getString(3));
                 u.setEmail(rs.getString(4));
                 u.setMobile(rs.getString(5));
                 u.setAddress(rs.getString(6));
@@ -503,12 +504,12 @@ public class UserDBContext extends DBContext {
                     + "           ,[roleId]\n"
                     + "           ,[status])\n"
                     + "     VALUES\n"
-                    + "           (N'?'\n"
+                    + "           (?\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
-                    + "           ,N'?'\n"
+                    + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?)";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -520,7 +521,7 @@ public class UserDBContext extends DBContext {
             ps.setString(6, address);
             ps.setInt(7, role);
             ps.setBoolean(8, status);
-//            ps.executeUpdate();
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1044,8 +1045,15 @@ public class UserDBContext extends DBContext {
     public static void main(String[] args) {
         UserDBContext db = new UserDBContext();
 //        System.out.println(db.getListUserFiltered(3, "male", "active", "Le", "id", "asc", 1, 5).size());
-        for (User u : db.getListUserFiltered(3, "male", "active", "Le", "email", "asc", 1, 5)) {
-            System.out.println(u.toString());
+//        for (User u : db.getListUserFiltered(3, "male", "active", "Le", "email", "asc", 1, 5)) {
+//            System.out.println(u.toString());
+//        }
+//        db.inserUser("hie", "123", true, "daw@daw", "012", "dqaw", 1, true);
+        try {
+            System.out.println(db.getUserById(5));
+        } catch (Exception e) {
+
         }
+
     }
 }

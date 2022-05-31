@@ -80,7 +80,7 @@
                                             <!--<li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
                                             <li><i class="fa fa-calendar"></i>${i.date}</li>
                                         </ul>
-                                        <!--                                        <span>
+<!--                                                                                <span>
                                                                                     <i class="fa fa-star"></i>
                                                                                     <i class="fa fa-star"></i>
                                                                                     <i class="fa fa-star"></i>
@@ -92,7 +92,7 @@
                                         <img src="${i.thumbnail}" alt="">
                                     </a>
                                     <p class="break-down-line">${i.briefInfo}</p>
-                                    <a  class="btn btn-default add-to-cart" href="">Read More</a>
+                                    <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}">Read More</a>
                                 </div>
                             </c:forEach>
 

@@ -1,0 +1,99 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 30, 2022, 2:11:24 PM
+    Author     : Admin
+*/
+/*form{
+    width: 60%;
+    margin-top: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 0 auto;
+    box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+}
+p {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+p.note {
+    font-size: 1rem;
+    color: red;
+}
+
+input, textarea {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 4px;
+    font-family: 'Lato';
+    width: 30vw;
+    margin-top: 10px;
+}
+
+label {
+    width: 5vw;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 20px;
+    margin-right: 1vw;
+}
+
+label span {
+    font-size: 1rem;
+}
+
+label.error ,#mobile-errors{
+    color: red;
+    font-size: 1rem;
+    display: block;
+    margin-top: 5px;
+    width: 30vw;
+    margin-left: 6.5vw;
+}
+
+input.error, textarea.error {
+    border: 1px dashed red;
+    font-weight: 300;
+    color: red;
+}
+
+input[type="radio"]{
+    border-radius: 0px;
+    border: 1px solid #ccc;
+    padding: 0px;
+    font-family: 'Lato';
+    width: 10%;
+}
+
+select{
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 4px;
+    font-family: 'Lato';
+    width: 10vw;
+    margin-top: 10px;
+}
+[type="submit"]{
+    width: 20%;
+    margin-left: 40%;
+    margin-bottom: 20px;
+    background-color: green;
+    color: white;
+}
+[type="submit"]:hover{
+    background-color: white;
+    border-color: green;
+    color: green;
+}
+.alter{
+    position: relative;
+    border-radius: 2px;
+    border: none;
+    width: 80%;
+    margin-left: 9%;
+}
+*/

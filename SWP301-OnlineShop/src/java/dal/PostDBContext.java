@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Post;
 import model.PostCategory;
 import model.User;
@@ -199,4 +201,55 @@ public class PostDBContext extends DBContext {
         return listCategory;
     }
 
+    public Post getPostById(int id) {
+        String sql = "SELECT Post.id\n"
+                + "	  ,[thumbnail]\n"
+                + "      ,[title]\n"
+                + "      ,[briefInfo]\n"
+                + "      ,[description]\n"
+                + "      ,[feature]\n"
+                + "      ,[dateUpdated]\n"
+                + "      ,Post.[status]\n"
+                + "      ,[UserId]\n"
+                + "	  ,[User].fullname\n"
+                + "	  ,PostCategory.id\n"
+                + "	  ,PostCategory.name\n"
+                + "  FROM [dbo].[Post] join PostCategory on Post.categoryId = PostCategory.id\n"
+                + "					join [User] on Post.UserId = [User].id\n"
+                + "  WHERE Post.id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                Post post = new Post();
+                User user = new User();
+                PostCategory postCategory = new PostCategory();
+                post.setId(rs.getInt(1));
+                post.setThumbnail(rs.getString(2));
+                post.setTitle(rs.getString(3));
+                post.setBriefInfo(rs.getString(4));
+                post.setDescription(rs.getString(5));
+                post.setFeatured(rs.getBoolean(6));
+                post.setDate(rs.getDate(7));
+                post.setStatus(rs.getBoolean(8));
+                user.setId(rs.getInt(9));
+                user.setFullname(rs.getString(10));
+                post.setUser(user);
+                postCategory.setId(rs.getInt(11));
+                postCategory.setName(rs.getString(12));
+                post.setPostCategory(postCategory);
+                        
+                return post;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public static void main(String[] args) {
+        PostDBContext db =new PostDBContext();
+        System.out.println(db.getPostById(2));
+    }
 }

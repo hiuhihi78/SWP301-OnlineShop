@@ -6,16 +6,25 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <aside class="left-side sidebar-offcanvas">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- Sidebar user panel -->
         <div class="user-panel">
-            <div class="pull-left image">
-                <img src="../assets/img/defaultUserAvatar.png" class="img-circle" alt="User Image" />
-            </div>
-            <div class="pull-left info">
+
+            <c:if test="${sessionScope.user.avatar != null}">
+                <div class="pull-left image">
+                    <img src="${sessionScope.user.avatar}" class="img-circle" alt="User Image" />
+                </div>
+            </c:if>
+            <c:if test="${sessionScope.user.avatar == null}">
+                <div class="pull-left image">
+                    <img src="../assets/img/defaultUserAvatar.png" class="img-circle" alt="User Image" />
+                </div>
+            </c:if>
+            <div class="pull-left info" style="width: 60%">
                 <p>${sessionScope.user.fullname}</p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>

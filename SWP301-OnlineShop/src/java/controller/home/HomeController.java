@@ -45,29 +45,25 @@ public class HomeController extends HttpServlet {
         request.setAttribute("listProductFeatured", listProductFeatured);
         request.setAttribute("listHotPost", listHotPost);
         request.setAttribute("listLatestPost", listLatestPost);
-        
-<<<<<<< HEAD
-//        //Checkbox form login
-=======
         //Checkbox form login
->>>>>>> 26976b9e0d69fc0de571974f991e4dca3b99f0c5
-//        Cookie [] cookies = request.getCookies();
-//          String email = null, pass = null;
-//          for (Cookie cooky : cookies) {
-//            if (cooky.getName().equals("emailCookie")) {
-//                email = cooky.getValue();
-//            }
-//            if (cooky.getName().equals("passCookie")) {
-//                pass = cooky.getValue();
-//            }
-//            
-//            if (email != null && pass != null){
-//                request.setAttribute("email", email);
-//                request.setAttribute("password", pass);
-//                request.setAttribute("checkbox", "checked");
-//                break;
-//            }
-//        }
+
+       Cookie [] cookies = request.getCookies();
+         String email = null, pass = null;
+         for (Cookie cooky : cookies) {
+           if (cooky.getName().equals("emailCookie")) {
+               email = cooky.getValue();
+           }
+           if (cooky.getName().equals("passCookie")) {
+               pass = cooky.getValue();
+           }
+           
+           if (email != null && pass != null){
+               request.setAttribute("email", email);
+               request.setAttribute("password", pass);
+               request.setAttribute("checkbox", "checked");
+               break;
+           }
+       }
         
         request.getRequestDispatcher("view/public/home.jsp").forward(request, response);
     }

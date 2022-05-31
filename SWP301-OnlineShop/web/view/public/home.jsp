@@ -169,18 +169,4 @@
         <script src="../../assets/public/js/main.js"></script>
         <script src="../../assets/js/home/home.js"></script>
     </body>
-
-    <jsp:include page="login.jsp"/>
-
-    <script>
-        document.getElementById('button').addEventListener('click',
-                function () {
-                    document.querySelector('.bg-modal').style.display = 'flex';
-                });
-
-        document.querySelector('.close').addEventListener('click',
-                function () {
-                    document.querySelector('.bg-modal').style.display = 'none';
-                });
-    </script>
 </html>

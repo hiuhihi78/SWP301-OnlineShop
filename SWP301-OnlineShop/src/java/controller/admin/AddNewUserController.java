@@ -80,7 +80,7 @@ public class AddNewUserController extends HttpServlet {
             request.getRequestDispatcher("../view/admin/addNewUser.jsp").forward(request, response);
         } else {
             String password = GeneratePassword.generatePassword();
-            String url = "http://localhost:8080/SWP301-OnlineShop/login";
+            String url = "http://localhost:8080/login";
             userDB.inserUser(fullname, password, gender, email, mobile, address, role, status);
             SendMail.sendPassword(email, fullname, password, url);
             request.setAttribute("alter", "success");

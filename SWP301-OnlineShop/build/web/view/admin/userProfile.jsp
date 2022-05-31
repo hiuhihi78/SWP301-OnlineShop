@@ -10,7 +10,7 @@
 <html>
     <head>  
         <meta charset="UTF-8">
-        <title>Director | Dashboard</title>
+        <title>Admin | User Profile</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -23,11 +23,10 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         
-        <style type="text/css">
-            .row{
-                margin: 10px 0;
-            }
-        </style> 
+        <!--css-->
+        <link href="../assets/css/admin/userProfile.css" rel="stylesheet" type="text/css"/>
+        <!--javascrip-->
+        <script src="../assets/js/admin/addNewUser.js"></script>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -38,15 +37,15 @@
             <!-- Right side. contains main content -->
             <aside class="right-side">
                 <!-- Main content -->
-                <section class="content" style="margin: 0px 20px;">
-                    <div id="content" style="width: 80%; margin: 0 9%" >
+                <section class="content m-0-20">
+                    <div id="content">
                         <h3>User details</h3>
-                        <div class="row mb-3" style="margin-bottom: 20px">
-                            <c:if test="${requestScope.user.avatar != 'default'}">
-                                <!--<img src="data:image/jpg;base64,${user.avatar}"  class="rounded-circle" alt="Cinque Terre" width="250" height="250">--> 
+                        <div class="row mb-5">
+                            <c:if test="${requestScope.user.avatar != null}">
+                                <img src="${user.avatar}"  class="img-circle user-img" alt="User img"> 
                             </c:if>
-                            <c:if test="${requestScope.user.avatar == 'default'}">
-                                <img src="../assets/img/defaultUserAvatar.png"  class="rounded-circle" alt="User image" width="300" height="300"> 
+                            <c:if test="${requestScope.user.avatar == null}">
+                                <img src="../assets/img/defaultUserAvatar.png"  class="img-circle user-img" alt="User image"> 
                             </c:if>
                         </div>
                         <div class="row mb-3">

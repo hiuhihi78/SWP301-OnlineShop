@@ -66,7 +66,7 @@ public class EditUserProfileController extends HttpServlet {
         String alter = "Update user's information success";
         request.setAttribute("alter", alter);
         request.setAttribute("id", id);
-        response.sendRedirect("userList?search="+ user.getEmail()+"&alter=success");
+        response.sendRedirect("userList?search="+ user.getEmail()+"&alter=" + alter);
     }
 
     /**

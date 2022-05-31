@@ -110,22 +110,22 @@ public class LoginController extends HttpServlet {
             if (user.getRole().getId() == ADMIN_ROLL_ID) {
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Logged in successfully!');");
-            out.println("location='dashboard';");
+            out.println("location='home';");
             out.println("</script>");
             } else if (user.getRole().getId() == MAKETING_ROLL_ID){
                 out.println("<script type=\"text/javascript\">");
             out.println("alert('Logged in successfully!');");
-            out.println("location='homeMaketing';");
+            out.println("location='home';");
             out.println("</script>");
             } else if (user.getRole().getId() == SALE_ROLL_ID){
                 out.println("<script type=\"text/javascript\">");
             out.println("alert('Logged in successfully!');");
-            out.println("location='homeSale';");
+            out.println("location='home';");
             out.println("</script>");
             } else if (user.getRole().getId() == CUSTOMER_ROLL_ID){
                 out.println("<script type=\"text/javascript\">");
             out.println("alert('Logged in successfully!');");
-            out.println("location='homeCustomer';");
+            out.println("location='home';");
             out.println("</script>");
             }
         }else {
