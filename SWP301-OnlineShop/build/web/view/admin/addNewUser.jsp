@@ -14,16 +14,15 @@
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
-        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
-        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="../../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
-        <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="../../assets/css/style.css" rel="stylesheet" type="text/css" />
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!--css-->
-        <link href="../assets/css/admin/addNewUser.css" rel="stylesheet" type="text/css"/>
-        
+        <link href="../../assets/css/admin/addNewUser.css" rel="stylesheet" type="text/css"/>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -34,10 +33,10 @@
                 <!-- Right side. contains main content -->
                 <aside class="right-side">
                     <!-- Main content -->
-                    <section class="content" style="margin: 0px 20px;">
-                        <div id="content" style="width: 100%;">
-                            <h2 style="text-align: center; margin-bottom: 20px;">Add new user</h2>
-                            <form id="basic-form" action="addNewUser" method="post" class="d-flex justify-content-center" style="margin-top: 20px; padding-top: 20px;">
+                    <section class="content">
+                        <div id="content">
+                            <h2 class="text-center">Add new user</h2>
+                            <form id="basic-form" action="addNewUser" method="post" class="d-flex justify-content-center" >
                                 <p>
                                     <label for="fullname">Full name<span class="text-danger">*</span></label>
                                     <input type="text" id="fullname" name="fullname" value="${requestScope.fullname}" required>
@@ -75,7 +74,7 @@
                             </p>
 
                             <c:if test="${message != null}">
-                                <div class="alert alert-danger fade in" style="width: 80%; margin-left: 9%;">
+                                <div class="alert alert-danger fade in" id="message">
                                     ${requestScope.message}
                                 </div>
                             </c:if>
@@ -85,18 +84,20 @@
                 </section>
             </aside>
         </div>
-                            
-         <!--javascrip-->
-        <script src="../assets/js/admin/addNewUser.js"></script>
+
+        <!--javascrip-->
+        <script src="../../assets/js/admin/addNewUser.js"></script>
+        <script src="../../assets/js/admin/addNewUser.js"></script>
+        <script src="../../assets/js/admin/main.js" type="text/javascript"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="../js/jquery.min.js" type="text/javascript"></script>
+        <script src="../../js/jquery.min.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
         <!-- jQuery UI 1.10.3 -->
-        <script src="../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+        <script src="../../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->
-        <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Director App -->
-        <script src="../assets/js/Director/app.js" type="text/javascript"></script>
+        <script src="../../assets/js/Director/app.js" type="text/javascript"></script>
     </body>
 </html>

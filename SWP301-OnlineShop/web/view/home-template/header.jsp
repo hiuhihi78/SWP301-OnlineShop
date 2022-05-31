@@ -21,7 +21,7 @@
                         <ul class="nav navbar-nav">
                             <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <c:if test="${sessionScope.user == null}">
-                                <li><a href="#" id="button"><i class="fa fa-lock"></i> Login</a></li>
+                                <li><a href="login" id="button"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>
 
                             <c:if test="${sessionScope.user != null}">
@@ -40,7 +40,7 @@
                                         </li>
                                         <c:if test="${sessionScope.user.role.id == 1}">
                                             <li>
-                                                <a href="#" class="text-none-underline">Manage</a>
+                                                <a href="admin/userList" class="text-none-underline">Manage</a>
                                             </li>
                                         </c:if>
                                         <li>
