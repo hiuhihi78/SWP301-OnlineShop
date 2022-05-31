@@ -235,10 +235,18 @@ public class UserDBContext extends DBContext {
             ResultSet rs = stm.executeQuery();
 
             while (rs.next()) {
+<<<<<<< HEAD
                 user = new User(rs.getInt("id"),
                         rs.getString("password"),
                         rs.getString("avatar"),
                         rs.getString("email"),
+=======
+                user = new User(
+                        rs.getString("password"), 
+                        rs.getString("avatar"), 
+                        rs.getString("email"), 
+
+>>>>>>> 8d344b51a2e271be07a8c621979d2556ba2fff7d
                         rs.getString("fullname"),
                         rs.getBoolean("gender"),
                         rs.getString("mobile"),
@@ -247,8 +255,11 @@ public class UserDBContext extends DBContext {
                 
                user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
                user.setId(rs.getInt("id"));
+<<<<<<< HEAD
 
                 user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+=======
+>>>>>>> 8d344b51a2e271be07a8c621979d2556ba2fff7d
             }
         } catch (Exception ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -265,10 +276,17 @@ public class UserDBContext extends DBContext {
             ResultSet rs = stm.executeQuery();
 
             while (rs.next()) {
+<<<<<<< HEAD
                 user = new User(rs.getInt("id"),
                         rs.getString("password"),
                         rs.getString("avatar"),
                         rs.getString("email"),
+=======
+                user = new User(
+                        rs.getString("password"), 
+                        rs.getString("avatar"), 
+                        rs.getString("email"), 
+>>>>>>> 8d344b51a2e271be07a8c621979d2556ba2fff7d
                         rs.getString("fullname"),
                         rs.getBoolean("gender"),
                         rs.getString("mobile"),
@@ -277,8 +295,11 @@ public class UserDBContext extends DBContext {
                 
                user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
                user.setId(rs.getInt("id"));
+<<<<<<< HEAD
 
                 user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+=======
+>>>>>>> 8d344b51a2e271be07a8c621979d2556ba2fff7d
             }
         } catch (Exception ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -328,6 +349,7 @@ public class UserDBContext extends DBContext {
  
     
     
+<<<<<<< HEAD
 //     public static void main(String[] args) {
 //        UserDBContext db = new UserDBContext();
 ////        User u =  db.getUserByEmail("leduchieu2001x@gmail.com");
@@ -348,6 +370,28 @@ public class UserDBContext extends DBContext {
 //            user.setAddress("Quang Ninh");
 //            
 //            db.addUser(user);
+=======
+     public static void main(String[] args) {
+        UserDBContext db = new UserDBContext();
+//        User u =  db.getUserByEmail("leduchieu2001x@gmail.com");
+//         System.out.println(u.getFullname());
+//    User u = new User();
+//    u.setId(11);
+//    u.setEmail("lbada2001x@gmail.com");
+//    u.setPassword("abc");
+//    u.setRole(new Role(1, "admin"));
+//    db.updateUser(u);
+
+User user = new User();
+            user.setPassword("123");
+            user.setFullname("nepo");
+            user.setGender(Boolean.parseBoolean("1"));
+            user.setEmail("hieunvhe153769@fpt.edu.vn");
+            user.setMobile("0956473843");
+            user.setAddress("Quang Ninh");
+            
+            db.addUser(user);
+>>>>>>> 8d344b51a2e271be07a8c621979d2556ba2fff7d
         
     public ArrayList<User> getListUserFilter(int roleId, String gender, String status, String search, String sort, String orderBy) {
         ArrayList<User> users = new ArrayList<>();

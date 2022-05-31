@@ -5,7 +5,6 @@
  */
 package controller.common;
 
-
 import configs.Security;
 import configs.SendMail;
 import configs.TokenGenerator;
