@@ -41,7 +41,7 @@
                                         <li data-target="#slider-carousel" data-slide-to="${i}" class="${(i == 0)?"active":""}"></li>
                                     </c:forEach>
                                 </ol>
-                                <div class="carousel-inner">
+                                <div class="carousel-inner slider-height-400">
                                     <c:set scope="request" var="count_item" value="0"/>
                                     <c:forEach items="${requestScope.listSliderActive}" var="i">
                                         <div class="item ${(count_item == 0) ? "active":""}">
@@ -49,7 +49,6 @@
                                                 <h1 class="text-size-35"><span>${i.title}</span></h1>
                                                 <!--<h2>super sale at midnight</h2>-->
                                                 <p>${i.note}</p>
-                                                <!--<button type="button" class="btn btn-default get">-->
                                                 <a href="#${i.backlink}" class="btn btn-default get">Get it now</a>
                                                 <!--</button>-->
                                             </div>
@@ -88,12 +87,12 @@
                                                 <div class="product-image-wrapper">
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
-                                                            <a href="#">
+                                                            <a href="blogDetail?blogId=${i.id}">
                                                                 <img src="${i.thumbnail}" alt="" />
                                                             </a>
                                                             <h2 class="break-down-line">${i.title}</h2>
                                                             <p class="break-down-line">${i.briefInfo}</p>
-                                                            <a href="#" class="btn btn-default add-to-cart">Read more</a>
+                                                            <a href="blogDetail?blogId=${i.id}" class="btn btn-default add-to-cart">Read more</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -115,12 +114,12 @@
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <a href="#">
+                                                <a href="blogDetail?blogId=${i.id}">
                                                     <img class="img-height-255" src="${i.thumbnail}" alt="" />
                                                 </a>
                                                 <h2 class="break-down-line">${i.title}</h2>
                                                 <p class="break-down-line" >${i.briefInfo}</p>
-                                                <a  href="#" class="btn btn-default add-to-cart">Read more</a>
+                                                <a  href="blogDetail?blogId=${i.id}" class="btn btn-default add-to-cart">Read more</a>
                                             </div>
                                         </div>
                                     </div>

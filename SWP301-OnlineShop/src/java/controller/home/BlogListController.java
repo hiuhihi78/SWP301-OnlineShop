@@ -59,6 +59,7 @@ public class BlogListController extends HttpServlet {
         request.setAttribute("listPostFiltered", listPostFiltered);
         request.setAttribute("listTopLatestPost", listTopLatestPost);
         request.setAttribute("listAllCateogry", listAllCateogry);
+        request.setAttribute("active", "blog");
         request.getRequestDispatcher("view/public/bloglist.jsp").forward(request, response);
 
     }

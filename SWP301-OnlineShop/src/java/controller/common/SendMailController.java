@@ -5,12 +5,16 @@
  */
 package controller.common;
 
-import configs.GeneratePassword;
 import configs.Security;
 import configs.SendMail;
+import configs.TokenGenerator;
 import dal.UserDBContext;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +24,7 @@ import model.User;
  *
  * @author Admin
  */
-public class ResetPasswordController extends HttpServlet {
-
-    
-    
+public class SendMailController extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,7 +37,7 @@ public class ResetPasswordController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-    
+        request.getRequestDispatcher("view/public/resetpassword.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,32 +69,43 @@ public class ResetPasswordController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String newPassword = GeneratePassword.generatePassword();
-            UserDBContext userDb = new UserDBContext();
+            UserDBContext userDb = new UserDBContext();    
            String emailAddress = request.getParameter("txtEmail").trim();  
             User user = userDb.getUserByEmail(emailAddress);
+            String token = TokenGenerator.uniqueToken();
+            LocalDateTime fiveMinutesLater  = LocalDateTime.now().plusMinutes(5);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            String formatted = fiveMinutesLater.format(formatter);
+            String url = "http://localhost:8080/changePassword?email=" + emailAddress+
+                    "&token=" + token;
+            
             if (user != null) {
+                Cookie tokenCookie = new Cookie("tokenSave", token);
+                tokenCookie.setMaxAge(Security.MAXIMUM_AGE_TOKEN);
+                response.addCookie(tokenCookie);
                 StringBuilder sb = new StringBuilder();
-                sb.append("Dear ").append(user.getFullname()).append("<br>");
-                sb.append("You are used the forgot password function. <br> ");
-                sb.append("Your password is <b>").append(newPassword).append("</b>");
-                sb.append(" regards<br>");
-                sb.append("Administrator");
-                user.setPassword(newPassword);
-                userDb.updateUser(user);
+                sb.append("Dear ").append(user.getFullname()).append(",<br>");
+                sb.append("Someone has requested a password reset for this account. <br> ");
+                sb.append("Site Name: Online Shop <br>");
+                sb.append(" If this was a mistake, ignore this email and nothing will happen. <br> ");
+                sb.append("To reset your your password, visit the following address: <br> ");
+                sb.append("<b>").append(url).append("</b>");
+                sb.append(" ,regards<br>");
+                sb.append("Administrator");               
+                SendMail.send(emailAddress, "Password Reset",  sb.toString() , Security.USERNAME, Security.PASSWORD);
+                request.setAttribute("messTrue", "Email sent successfully, please check!");
+                request.setAttribute("time", formatted);
                 
-                SendMail.send(emailAddress, "Reset Password",  sb.toString() , Security.USERNAME, Security.PASSWORD);
-                
-                request.setAttribute("mess", "Email sent to the email Address. Please check and get your password");
             } else {
-                request.setAttribute("error", "Username or email are incorrect");
+                request.setAttribute("messFalse", "This email does not exist in the system!");
             }
         } catch (Exception e) {
             e.printStackTrace();
             
             request.setAttribute("error", e.getMessage());
         }
-        response.sendRedirect("login");
+        request.getRequestDispatcher("view/public/login.jsp").forward(request, response);
+        
     }
 
     /**

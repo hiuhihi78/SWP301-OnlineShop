@@ -1,12 +1,35 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
+
+/*@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
+@import url(http://fonts.googleapis.com/css?family=Abel);*/
 /* 
-    Created on : May 30, 2022, 2:11:24 PM
+    Created on : May 31, 2022, 9:27:58 PM
     Author     : Admin
 */
-/*form{
+
+#basic-form{
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+@keyframes fadeOut{
+    form{
+        opacity : 0;
+    }
+    to{
+        opacity: 0;
+    }
+}
+
+#message{
+    animation: fadeOut 3s forwards;
+    animation-delay: 3s;
+    width: 80%; 
+    margin-left: 9%;
+    border-radius: 10px;
+}
+
+form{
     width: 60%;
     margin-top: 20px;
     border: 1px solid black;
@@ -96,4 +119,8 @@ select{
     width: 80%;
     margin-left: 9%;
 }
-*/
+
+
+.content{
+    margin: 0 20px;
+}

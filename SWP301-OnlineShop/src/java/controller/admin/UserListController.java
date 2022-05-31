@@ -84,7 +84,7 @@ public class UserListController extends HttpServlet {
 //                ArrayList<User> users = userDB.getAllUser();
 //        listAllUser = userDB.getListUserFilter(roleId, gender, status, search, sort, orderBy);
         int totalRecord = userDB.getListUserFilter(roleId, gender, status, search, sort, orderBy).size();
-        int page, numberRecordPerPage = 2;
+        int page, numberRecordPerPage = 5;
         int totalPage = totalRecord % numberRecordPerPage == 0
                 ? totalRecord / numberRecordPerPage : totalRecord / numberRecordPerPage + 1;
         String currentPage = request.getParameter("xpage");

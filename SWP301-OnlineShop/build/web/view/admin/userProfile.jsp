@@ -37,10 +37,10 @@
             <!-- Right side. contains main content -->
             <aside class="right-side">
                 <!-- Main content -->
-                <section class="content m-0-20">
+                <section class="content">
                     <div id="content">
                         <h3>User details</h3>
-                        <div class="row mb-5">
+                        <div class="row">
                             <c:if test="${requestScope.user.avatar != null}">
                                 <img src="${user.avatar}"  class="img-circle user-img" alt="User img"> 
                             </c:if>
@@ -114,7 +114,7 @@
                                     <input type="radio" name="status"  id="status" value="active" ${requestScope.user.status?"checked='checked'":""} /> Active
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="radio"  name="status"  id="status" value="unactive" ${!requestScope.user.status?"checked='checked'":""}/> Unactive
+                                    <input type="radio"  name="status"  id="status" value="unactive" ${!requestScope.user.status?"checked='checked'":""}/> Deactive
                                </div>
                             </div> 
                             <div class="row mb-3">
@@ -148,7 +148,7 @@
         </div>
                                
                                
-                               
+         <script src="../../assets/js/admin/main.js" type="text/javascript"></script>                      
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../js/jquery.min.js" type="text/javascript"></script>

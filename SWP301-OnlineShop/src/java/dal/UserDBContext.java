@@ -4,6 +4,7 @@
  */
 package dal;
 
+import configs.Security;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -218,24 +219,26 @@ public class UserDBContext extends DBContext {
     public User getUserByEmailAndPassword(String email, String password) {
         User user = null;
         try {
-            String sql = "select u.*, r.name rname from [User] u, [role] r where email = ? and password = ?";
+            String sql = "select u.*, r.name rname from [User] u, [role] r where email = ? and password = ? "
+                    + "and u.roleId = r.id";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
 
             while (rs.next()) {
-                user = new User(rs.getInt("id"),
-                        rs.getString("password"),
-                        rs.getString("avatar"),
-                        rs.getString("email"),
+                user = new User(
+                        rs.getString("password"), 
+                        rs.getString("avatar"), 
+                        rs.getString("email"), 
                         rs.getString("fullname"),
                         rs.getBoolean("gender"),
                         rs.getString("mobile"),
                         rs.getString("address"),
-                        rs.getBoolean("Status"));
-
-                user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+                        rs.getBoolean("status"));
+                
+               user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+               user.setId(rs.getInt("id"));
             }
         } catch (Exception ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -252,17 +255,20 @@ public class UserDBContext extends DBContext {
             ResultSet rs = stm.executeQuery();
 
             while (rs.next()) {
-                user = new User(rs.getInt("id"),
-                        rs.getString("password"),
-                        rs.getString("avatar"),
-                        rs.getString("email"),
+
+                user = new User(
+                        rs.getString("password"), 
+                        rs.getString("avatar"), 
+                        rs.getString("email"), 
                         rs.getString("fullname"),
                         rs.getBoolean("gender"),
                         rs.getString("mobile"),
                         rs.getString("address"),
                         rs.getBoolean("Status"));
+                
+               user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+               user.setId(rs.getInt("id"));
 
-                user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
             }
         } catch (Exception ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -276,6 +282,28 @@ public class UserDBContext extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, user.getPassword());
             stm.setString(2, user.getEmail());
+
+            return stm.executeUpdate() > 0;
+        } catch (Exception ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean addUser(User user) {
+        try {
+            String sql = "insert into [User]([password], email, fullname, gender, mobile, address, [Status], roleId, avatar)"
+                    + "values (?,?,?,?,?,?,?,?,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getPassword());
+            stm.setString(2, user.getEmail());
+            stm.setString(3, user.getFullname());
+            stm.setBoolean(4, user.isGender());
+            stm.setString(5, user.getMobile());
+            stm.setString(6, user.getAddress());
+            stm.setBoolean(7, Security.DEFAULT_STATUS);
+            stm.setInt(8, 4);
+            stm.setString(9, Security.EMAGE_DEFAULT);
 
             return stm.executeUpdate() > 0;
         } catch (Exception ex) {

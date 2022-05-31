@@ -22,41 +22,43 @@
     <body>
         <c:set var="blog" value="${requestScope.blog}"></c:set>
         <jsp:include page="../home-template/header.jsp"/>
+        <input type="hidden" value="${requestScope.searchContent}" id="search-content"/>
         <section>
             <div class="container">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center">Category</h2>
+                            <input type="hidden" value="${requestScope.category}" id="search-category"/>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a id="-1" href="#">All Category</a></h4>
+                                        <h4 class="panel-title"><a ${(requestScope.category == -1)?"class=\"active-category\"":""} id="-1" href="#">All Category ${requestScope.idCategory}</a></h4>
                                     </div>
                                 </div>
                                 <c:forEach items="${requestScope.listAllCateogry}" var="i">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4 class="panel-title"><a id="${i.id}" href="#">${i.name}</a></h4>
+                                            <h4 class="panel-title"><a ${(requestScope.category == i.id)?"class=\"active-category\"":""} id="${i.id}" href="#">${i.name}</a></h4>
                                         </div>
                                     </div>
                                 </c:forEach>
                             </div><!--/category-products-->
                             <div class="panel-group category-products" id="accordian">
                                 <h2 class="title text-center">Latest Posts</h2>
-                                <c:if test="${requestScope.listHotPost != null}">
-                                    <c:forEach items="${requestScope.listHotPost}" var="i">
+                                <c:if test="${requestScope.listLatestPost != null}">
+                                    <c:forEach items="${requestScope.listLatestPost}" var="i">
                                         <div class="panel panel-default">
                                             <div class="col-sm-12">
                                                 <div class="product-image-wrapper">
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
-                                                            <a href="#">
+                                                            <a href="blogDetail?blogId=${i.id}">
                                                                 <img src="${i.thumbnail}" alt="" />
                                                             </a>
-                                                            <h2>${i.title}</h2>
-                                                            <p>${i.briefInfo}</p>
-                                                            <a href="#" class="btn btn-default add-to-cart">Show</a>
+                                                                <h2 class="break-down-line">${i.title}</h2>
+                                                            <p class="break-down-line">${i.briefInfo}</p>
+                                                            <a href="blogDetail?blogId=${i.id}" class="btn btn-default add-to-cart">Read more</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -68,7 +70,7 @@
                         </div>                     
                     </div>
                     <div class="col-sm-9">
-                        <div class="blog-post-area" style="margin-bottom: 20px;">
+                        <div class="blog-post-area mb-20" ">
                             <h2 class="title text-center">Blog Detail</h2>
                             <div class="single-blog-post">
                                 <h3>${blog.title}</h3>
@@ -76,18 +78,11 @@
                                     <ul>
                                         <li><i class="fa fa-user"></i>${blog.user.fullname}</li>
                                         <li><i class="fa fa-calendar"></i>${blog.date}</li>
-                                        <li><i class="fa-solid fa-ballot"></i>${blog.postCategory.name}</li>
+                                        <li><i class="fa fa-caret-right"></i>${blog.postCategory.name}</li>
                                     </ul>
-                                    <span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </span>
                                 </div>
-                                <a href="">
-                                    <img src="${blog.thumbnail}" alt="">
+                                <a href="#">
+                                    <img class="img-height-500" src="${blog.thumbnail}" alt="">
                                 </a>
                                 <c:forEach items="${requestScope.content}" var="c">
                                     <p>${c}</p>
@@ -98,6 +93,7 @@
                 </div>
             </div>
         </section>
+        <input type="hidden" value="${requestScope.pageIndex}" id="search-page-index"/>
         <jsp:include page="../home-template/footer.jsp"/>
         <script src="../../assets/public/js/jquery.js"></script>
         <script src="../../assets/public/js/bootstrap.min.js"></script>

@@ -86,7 +86,7 @@ public class PostDBContext extends DBContext {
         ArrayList<Post> listPost = new ArrayList<>();
         try {
             String sql = "Select * from\n"
-                    + "(Select p.* , ROW_NUMBER() over(order by dateUpdated DESC) as row_index\n"
+                    + "(Select p.*, c.name , ROW_NUMBER() over(order by dateUpdated DESC) as row_index\n"
                     + "from Post p join PostCategory c\n"
                     + "on p.categoryId = c.id and p.status = 1\n";
             if (idCategory != -1) {
@@ -140,6 +140,8 @@ public class PostDBContext extends DBContext {
                 post.setDate(rs.getDate(8));
                 post.setStatus(rs.getBoolean(9));
                 User user = new UserDBContext().findUserById(rs.getInt(10));
+                category.setName(rs.getString(11));
+                post.setPostCategory(category);
                 if(user == null) {
                     post.setUser(new User());
                 } else {

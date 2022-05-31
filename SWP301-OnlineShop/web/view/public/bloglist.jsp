@@ -32,13 +32,13 @@
                                 <div class="panel panel-default">
                                     <input type="hidden" value="${requestScope.idCategory}" id="search-category"/>
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a id="-1" href="#">All Category</a></h4>
+                                        <h4 class="panel-title"><a ${(requestScope.idCategory == -1)?"class=\"active-category\"":""} id="-1" href="#">All Category</a></h4>
                                     </div>
                                 </div>
                                 <c:forEach items="${requestScope.listAllCateogry}" var="i">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4 class="panel-title"><a id="${i.id}" href="#">${i.name}</a></h4>
+                                            <h4 class="panel-title"><a ${(requestScope.idCategory == i.id)?"class=\"active-category\"":""} id="${i.id}" href="#">${i.name}</a></h4>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -52,12 +52,12 @@
                                                 <div class="product-image-wrapper">
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
-                                                            <a href="#">
+                                                            <a href="blogDetail?blogId=${i.id}">
                                                                 <img src="${i.thumbnail}" alt="" />
                                                             </a>
                                                             <h2 class="break-down-line">${i.title}</h2>
                                                             <p class="break-down-line">${i.briefInfo}</p>
-                                                            <a href="#" class="btn btn-default add-to-cart">Read more</a>
+                                                            <a href="blogDetail?blogId=${i.id}" class="btn btn-default add-to-cart">Read more</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -77,22 +77,20 @@
                                     <div class="post-meta">
                                         <ul>
                                             <li><i class="fa fa-user"></i>${i.user.fullname}</li>
-                                            <!--<li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
                                             <li><i class="fa fa-calendar"></i>${i.date}</li>
+                                            <li><i class="fa fa-caret-right"></i>${i.postCategory.name}</li>
                                         </ul>
-<!--                                                                                <span>
-                                                                                    <i class="fa fa-star"></i>
-                                                                                    <i class="fa fa-star"></i>
-                                                                                    <i class="fa fa-star"></i>
-                                                                                    <i class="fa fa-star"></i>
-                                                                                    <i class="fa fa-star-half-o"></i>
-                                                                                </span>-->
                                     </div>
-                                    <a href="">
-                                        <img src="${i.thumbnail}" alt="">
+                                    <a href="blogDetail?blogId=${i.id}">
+                                        <img class="img-height-500" src="${i.thumbnail}" alt="">
                                     </a>
                                     <p class="break-down-line">${i.briefInfo}</p>
-                                    <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}">Read More</a>
+                                    <c:if test="${requestScope.idCategory == -1}">
+                                        <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}">Read More</a>
+                                    </c:if>
+                                   <c:if test="${requestScope.idCategory != -1}">
+                                        <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}&category=${requestScope.idCategory}">Read More</a>
+                                    </c:if>
                                 </div>
                             </c:forEach>
 

@@ -9,10 +9,6 @@
         <servlet-class>controller.common.RegisterController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ResetPasswordController</servlet-name>
-        <servlet-class>controller.common.ResetPasswordController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UserListController</servlet-name>
         <servlet-class>controller.admin.UserListController</servlet-class>
     </servlet>
@@ -48,6 +44,18 @@
         <servlet-name>TestLoginController</servlet-name>
         <servlet-class>controller.test.TestLoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SendMailController</servlet-name>
+        <servlet-class>controller.common.SendMailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <servlet-class>controller.common.ChangePasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VeryfiController</servlet-name>
+        <servlet-class>controller.common.VeryfiController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -55,10 +63,6 @@
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ResetPasswordController</servlet-name>
-        <url-pattern>/reset</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserListController</servlet-name>
@@ -95,6 +99,18 @@
     <servlet-mapping>
         <servlet-name>TestLoginController</servlet-name>
         <url-pattern>/test/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendMailController</servlet-name>
+        <url-pattern>/send</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VeryfiController</servlet-name>
+        <url-pattern>/verify</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

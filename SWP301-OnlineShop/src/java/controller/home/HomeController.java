@@ -45,6 +45,8 @@ public class HomeController extends HttpServlet {
         request.setAttribute("listProductFeatured", listProductFeatured);
         request.setAttribute("listHotPost", listHotPost);
         request.setAttribute("listLatestPost", listLatestPost);
+        request.setAttribute("active", "home");
+        
         //Checkbox form login
 
        Cookie [] cookies = request.getCookies();

@@ -6,7 +6,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="userLogined" value="false"></c:set>
 <header id="header">
     <div class="header-top">
         <!--header-top-->
@@ -19,36 +18,13 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
-                        <ul class="nav navbar-nav" style="height: 100px;">
+                        <ul class="nav navbar-nav">
                             <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <c:if test="${sessionScope.user == null}">
-                                <li><a href="#" id="button"><i class="fa fa-lock"></i> Login</a></li>
+                                <li><a href="login" id="button"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>
 
-                            <c:if test="${sessionScope.user.role.id == 1}">
-                                <c:set var="userLogined" value="true"></c:set>
-                                <li class="dropdown">
-                                    <a href="#">
-                                        <i class="fa fa-user"></i>
-                                        ${sessionScope.user.fullname}
-                                        <i class="fa fa-angle-down"></i>
-                                    </a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li>
-                                            <a href="#" style="background: none;text-decoration: none;">Profile</a>
-                                        </li>
-                                       
-                                        <li>
-                                            <a href="admin/userList" style="background: none;text-decoration: none;">Manage</a>
-                                        </li>
-                                        <li>
-                                            <a href="logout" style="background: none;text-decoration: none;">Logout</a>
-                                        </li>
-                                    </ul>
-                                </li>                   
-                            </c:if>
-
-                            <c:if test="${sessionScope.user != null && userLogined == 'false'}">
+                            <c:if test="${sessionScope.user != null}">
                                 <li class="dropdown">
                                     <a href="#">
                                         <i class="fa fa-user"></i>
@@ -64,7 +40,7 @@
                                         </li>
                                         <c:if test="${sessionScope.user.role.id == 1}">
                                             <li>
-                                                <a href="#" class="text-none-underline">Manage</a>
+                                                <a href="admin/userList" class="text-none-underline">Manage</a>
                                             </li>
                                         </c:if>
                                         <li>
@@ -97,8 +73,8 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="home" class="active">Home</a></li>
-                            <li><a href="bloglist">Blog</a></li>
+                            <li><a href="home" ${(requestScope.active == "home")?"class=\"active\"":""}>Home</a></li>
+                            <li><a href="bloglist" ${(requestScope.active == "blog")?"class=\"active\"":""}>Blog</a></li>
                         </ul>
                     </div>
                 </div>
@@ -111,6 +87,4 @@
         </div>
     </div>  
     <!--/header-bottom-->
-
-
 </header>
