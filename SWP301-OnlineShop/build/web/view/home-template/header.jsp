@@ -19,27 +19,32 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <c:if test="${sessionScope.user == null}">
                                 <li><a href="#" id="button"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>
-                                
-                                <c:if test="${sessionScope.user != null}">
+
+                            <c:if test="${sessionScope.user != null}">
                                 <li class="dropdown">
                                     <a href="#">
                                         <i class="fa fa-user"></i>
-                                        ${sessionScope.user.fullname}Hello
+                                        ${sessionScope.user.fullname}
                                         <i class="fa fa-angle-down"></i>
                                     </a>
                                     <ul role="menu" class="sub-menu">
                                         <li>
-                                            <a href="#" style="background: none;text-decoration: none;">Profile</a>
+                                            <a href="#" class="text-none-underline">Profile</a>
                                         </li>
                                         <li>
-                                            <a href="#" style="background: none;text-decoration: none;">Change password</a>
+                                            <a href="#" class="text-none-underline">Change password</a>
                                         </li>
+                                        <c:if test="${sessionScope.user.role.id == 1}">
+                                            <li>
+                                                <a href="#" class="text-none-underline">Manage</a>
+                                            </li>
+                                        </c:if>
                                         <li>
-                                            <a href="logout" style="background: none;text-decoration: none;">Logout</a>
+                                            <a href="logout" class="text-none-underline">Logout</a>
                                         </li>
                                     </ul>
                                 </li>                   
@@ -69,13 +74,7 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="home" class="active">Home</a></li>
-                            <li class="dropdown"><a href="shop">Shop
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="bloglist">Blog
-                                </a>
-                            </li>
+                            <li><a href="bloglist">Blog</a></li>
                         </ul>
                     </div>
                 </div>
@@ -88,6 +87,4 @@
         </div>
     </div>  
     <!--/header-bottom-->
-    
-    
 </header>
