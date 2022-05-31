@@ -62,4 +62,24 @@ public class RoleDBContext extends DBContext {
         }
         return null;
     }
+
+    public ArrayList<Feature> getPublicFeature() {
+        String sql = "SELECT id, [name], [url] FROM Feature\n"
+                + "WHERE isPublic = 1";
+        try {
+            ArrayList<Feature> publicFeatures = new ArrayList<>();
+            PreparedStatement ps = connection.prepareStatement(sql);;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Feature f = new Feature();
+                f.setId(rs.getInt("id"));
+                f.setName(rs.getString("name"));
+                f.setUrl(rs.getString("url"));
+                publicFeatures.add(f);
+            }
+            return publicFeatures;
+        } catch (Exception e) {
+        }
+        return null;
+    }
 }
