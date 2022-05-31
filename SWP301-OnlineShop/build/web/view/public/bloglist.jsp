@@ -80,11 +80,7 @@
                                             <!--<li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
                                             <li><i class="fa fa-calendar"></i>${i.date}</li>
                                         </ul>
-<<<<<<< HEAD
 <!--                                                                                <span>
-=======
-                                        <!--                                        <span>
->>>>>>> 26976b9e0d69fc0de571974f991e4dca3b99f0c5
                                                                                     <i class="fa fa-star"></i>
                                                                                     <i class="fa fa-star"></i>
                                                                                     <i class="fa fa-star"></i>

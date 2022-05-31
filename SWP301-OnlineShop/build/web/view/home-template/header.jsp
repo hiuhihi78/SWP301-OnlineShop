@@ -19,17 +19,12 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
-<<<<<<< HEAD
                         <ul class="nav navbar-nav" style="height: 100px;">
-=======
-                        <ul class="nav navbar-nav">
->>>>>>> 26976b9e0d69fc0de571974f991e4dca3b99f0c5
                             <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <c:if test="${sessionScope.user == null}">
                                 <li><a href="#" id="button"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>
 
-<<<<<<< HEAD
                             <c:if test="${sessionScope.user.role.id == 1}">
                                 <c:set var="userLogined" value="true"></c:set>
                                 <li class="dropdown">
@@ -54,9 +49,6 @@
                             </c:if>
 
                             <c:if test="${sessionScope.user != null && userLogined == 'false'}">
-=======
-                            <c:if test="${sessionScope.user != null}">
->>>>>>> 26976b9e0d69fc0de571974f991e4dca3b99f0c5
                                 <li class="dropdown">
                                     <a href="#">
                                         <i class="fa fa-user"></i>
@@ -119,9 +111,6 @@
         </div>
     </div>  
     <!--/header-bottom-->
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 26976b9e0d69fc0de571974f991e4dca3b99f0c5
 </header>

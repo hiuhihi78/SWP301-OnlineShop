@@ -9,32 +9,20 @@
     background: none;
     text-decoration: none;
 }
-<<<<<<< HEAD
 
 .text-size-35 {
     font-size: 35px;
 }
 
-=======
-.text-size-35 {
-    font-size: 35px;
-}
->>>>>>> 26976b9e0d69fc0de571974f991e4dca3b99f0c5
 .text-line-through {
     margin-right: 10px;
     text-decoration: line-through;
 }
-<<<<<<< HEAD
 
 .img-height-255 {
     height: 255.5px;
 }
 
-=======
-.img-height-255 {
-    height: 255.5px;
-}
->>>>>>> 26976b9e0d69fc0de571974f991e4dca3b99f0c5
 .break-down-line {
     display:-webkit-box;
     -webkit-line-clamp:1;
@@ -225,10 +213,6 @@ a#scrollUp i{
 
 
 .shop-menu ul li {
-<<<<<<< HEAD
-=======
-    /*display:inline-block;*/
->>>>>>> 26976b9e0d69fc0de571974f991e4dca3b99f0c5
     display:block;
     padding-left: 15px;
     padding-right: 15px;
