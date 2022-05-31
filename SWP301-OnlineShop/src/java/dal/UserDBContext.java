@@ -1028,6 +1028,80 @@ public class UserDBContext extends DBContext {
         }
         return list;
     }
+    public User getUserByIDLogin(int id) {
+        String sql = "SELECT [fullname]\n"
+                + "                     ,[password]\n"
+                + "                      ,[gender]\n"
+                + "                      ,[email]\n"
+                + "                      ,[mobile]\n"
+                + "                      ,[address]\n"
+                + "                      ,[roleId]\n"
+                + "                      ,Role.name\n"
+                + "                      ,[User].[status]\n"
+                + "                      ,[User].id\n"
+                + "                FROM [User] join Role on roleId = Role.id\n"
+                + "				WHERE [User].id = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setFullname(rs.getString(1));
+                user.setGender(rs.getBoolean(3));
+                user.setEmail(rs.getString(4));
+                user.setMobile(rs.getString(5));
+                user.setAddress(rs.getString(6));
+                Role role = new Role();
+                role.setId(rs.getInt(7));
+                role.setName(rs.getString(8));
+                user.setRole(role);
+                user.setStatus(rs.getBoolean(9));
+                user.setId(rs.getInt(10));
+                return user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void editUserProfile(User user) {
+        String sql = "UPDATE [dbo].[User] \n"
+                + "SET [fullname] = ?\n"
+                + "      ,[gender] = ?\n"
+                + "      ,[mobile] = ?\n"
+                + "      ,[address] = ?\n"
+                + " WHERE id = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getFullname());
+            stm.setBoolean(2, user.isGender());
+            stm.setString(3, user.getMobile());
+            stm.setString(4, user.getAddress());
+            stm.setInt(5, user.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
 
     public static void main(String[] args) {
         UserDBContext db = new UserDBContext();
