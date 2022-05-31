@@ -5,6 +5,7 @@
 package controller.admin;
 
 import dal.UserDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Admin
  */
 @WebServlet(name = "EditStatusUserController", urlPatterns = {"/admin/editUserStatus"})
-public class EditStatusUserController extends HttpServlet {
+public class EditStatusUserController extends BaseAuthController {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -29,7 +30,7 @@ public class EditStatusUserController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserDBContext userDB = new UserDBContext();
         boolean status = request.getParameter("newStatus").equals("active");
@@ -56,7 +57,7 @@ public class EditStatusUserController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserDBContext userDB = new UserDBContext();
         boolean status = request.getParameter("newStatus").equals("active");

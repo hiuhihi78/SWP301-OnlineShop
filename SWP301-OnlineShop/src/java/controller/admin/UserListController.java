@@ -6,6 +6,7 @@ package controller.admin;
 
 import dal.RoleDBContext;
 import dal.UserDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import model.User;
  *
  * @author Admin
  */
-public class UserListController extends HttpServlet {
+public class UserListController extends BaseAuthController {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -32,7 +33,7 @@ public class UserListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -124,7 +125,7 @@ public class UserListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 

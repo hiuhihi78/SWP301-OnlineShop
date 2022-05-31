@@ -8,6 +8,7 @@ import configs.GeneratePassword;
 import configs.SendMail;
 import dal.RoleDBContext;
 import dal.UserDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import model.Role;
  * @author Admin
  */
 @WebServlet(name = "AddNewUserController", urlPatterns = {"/admin/addNewUser"})
-public class AddNewUserController extends HttpServlet {
+public class AddNewUserController extends BaseAuthController {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -34,7 +35,7 @@ public class AddNewUserController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RoleDBContext roleDB = new RoleDBContext();
         ArrayList<Role> roles = roleDB.getAllRole();
@@ -51,7 +52,7 @@ public class AddNewUserController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");

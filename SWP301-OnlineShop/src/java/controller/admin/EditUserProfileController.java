@@ -6,6 +6,7 @@ package controller.admin;
 
 import dal.RoleDBContext;
 import dal.UserDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import model.User;
  * @author Admin
  */
 @WebServlet(name = "EditUserProfileController", urlPatterns = {"/admin/editUserProfile"})
-public class EditUserProfileController extends HttpServlet {
+public class EditUserProfileController extends BaseAuthController {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -34,7 +35,7 @@ public class EditUserProfileController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RoleDBContext roleDB = new RoleDBContext();
         UserDBContext userDB = new UserDBContext();
@@ -55,7 +56,7 @@ public class EditUserProfileController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserDBContext userDB = new UserDBContext();
         int id = Integer.parseInt(request.getParameter("id"));

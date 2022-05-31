@@ -98,7 +98,7 @@ public class AuthFilter implements Filter {
                 boolean isAllowed = allowedFeatures.get(f);
                 if(f.getUrl().contains(requestPath) && isAllowed || !f.getUrl().contains(requestPath))
                 {
-                    response.getWriter().println("Access granted for path: " + requestPath);
+                    log(requestPath);
                     chain.doFilter(request, response);
                     return;
                 }
