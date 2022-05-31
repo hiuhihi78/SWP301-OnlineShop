@@ -33,7 +33,7 @@
                                     </a>
                                     <ul role="menu" class="sub-menu">
                                         <li>
-                                            <a href="#" class="text-none-underline">Profile</a>
+                                            <a href="user/profile" class="text-none-underline">Profile</a>
                                         </li>
                                         <li>
                                             <a href="#" class="text-none-underline">Change password</a>

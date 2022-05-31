@@ -3,35 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
 <<<<<<< HEAD
-        <group>
-            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/common/LoginController.java</file>
-            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/filter/AuthFilter.java</file>
-            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/dal/RoleDBContext.java</file>
-            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/admin/DashboardController.java</file>
-            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/test/TestLoginController.java</file>
-            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin/addNewUser.jsp</file>
-            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin-layout/demo.jsp</file>
-            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin-layout/sideBar.jsp</file>
-            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin/dashboard.jsp</file>
-            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/dal/UserDBContext.java</file>
-            <file>file:/E:/dev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/bloglist.jsp</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/BlogDetailController.java</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/admin/AddNewUserController.java</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/admin/UserListController.java</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/bloglist.jsp</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/js/admin/userList.js</file>
-            <file>file:/F:/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/blogDetail.jsp</file>
-            <file>file:/E:/dev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/bloglist.jsp</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/web/view/admin/userList.jsp</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/bloglist.jsp</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/css/main.css</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/BlogListController.java</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/LoginController.java</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/web/view/admin/addNewUser.jsp</file>
-            <file>file:/F:/Tset/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/BlogDetailController.java</file>
-        </group>
-=======
         <group/>
->>>>>>> origin/dev
+=======
+        <group>
+            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/CustomerDBContext.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/user/EditUserProfileControler.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/userProfile.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/img/defaultUserAvatar.png</file>
+            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/addCustomer.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/user/UserProfileControler.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/customerList.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/customerDetails.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/CustomerListControler.java</file>
+        </group>
+>>>>>>> 9971c94c45ddf7ebce5560747b4b98d655c9392a
     </open-files>
 </project-private>
