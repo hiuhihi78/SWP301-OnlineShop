@@ -22,12 +22,14 @@
     <body>
         <c:set var="blog" value="${requestScope.blog}"></c:set>
         <jsp:include page="../home-template/header.jsp"/>
+        <input type="hidden" value="${requestScope.searchContent}" id="search-content"/>
         <section>
             <div class="container">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center">Category</h2>
+                            <input type="hidden" value="${requestScope.idCategory}" id="search-category"/>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -44,19 +46,19 @@
                             </div><!--/category-products-->
                             <div class="panel-group category-products" id="accordian">
                                 <h2 class="title text-center">Latest Posts</h2>
-                                <c:if test="${requestScope.listHotPost != null}">
-                                    <c:forEach items="${requestScope.listHotPost}" var="i">
+                                <c:if test="${requestScope.listLatestPost != null}">
+                                    <c:forEach items="${requestScope.listLatestPost}" var="i">
                                         <div class="panel panel-default">
                                             <div class="col-sm-12">
                                                 <div class="product-image-wrapper">
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
-                                                            <a href="#">
+                                                            <a href="blogDetail?blogId=${i.id}">
                                                                 <img src="${i.thumbnail}" alt="" />
                                                             </a>
-                                                            <h2>${i.title}</h2>
-                                                            <p>${i.briefInfo}</p>
-                                                            <a href="#" class="btn btn-default add-to-cart">Show</a>
+                                                                <h2 class="break-down-line">${i.title}</h2>
+                                                            <p class="break-down-line">${i.briefInfo}</p>
+                                                            <a href="blogDetail?blogId=${i.id}" class="btn btn-default add-to-cart">Read more</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -68,7 +70,7 @@
                         </div>                     
                     </div>
                     <div class="col-sm-9">
-                        <div class="blog-post-area" style="margin-bottom: 20px;">
+                        <div class="blog-post-area mb-20" ">
                             <h2 class="title text-center">Blog Detail</h2>
                             <div class="single-blog-post">
                                 <h3>${blog.title}</h3>
@@ -78,16 +80,9 @@
                                         <li><i class="fa fa-calendar"></i>${blog.date}</li>
                                         <li><i class="fa-solid fa-ballot"></i>${blog.postCategory.name}</li>
                                     </ul>
-                                    <span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </span>
                                 </div>
-                                <a href="">
-                                    <img src="${blog.thumbnail}" alt="">
+                                <a href="#">
+                                    <img class="img-height-500" src="${blog.thumbnail}" alt="">
                                 </a>
                                 <c:forEach items="${requestScope.content}" var="c">
                                     <p>${c}</p>
@@ -98,6 +93,7 @@
                 </div>
             </div>
         </section>
+        <input type="hidden" value="${requestScope.pageIndex}" id="search-page-index"/>
         <jsp:include page="../home-template/footer.jsp"/>
         <script src="../../assets/public/js/jquery.js"></script>
         <script src="../../assets/public/js/bootstrap.min.js"></script>
@@ -108,111 +104,6 @@
         <c:set var="searchContent" value="${requestScope.searchContent}"></c:set>
         <c:set var="searchContentCategory" value="${requestScope.category}"></c:set>
         <c:set var="pageIndex" value="${requestScope.page}"></c:set>
-        <script>
-            var searchContent = `${requestScope.searchContent}`;
-            var searchContentCategory = `${requestScope.category}`;
-            var pageIndex = ${requestScope.page};
-
-            var categories = document.querySelectorAll('.panel.panel-default .panel-heading .panel-title a');
-            console.log(categories);
-
-            // search box
-            $("#search-box").on('keyup', function (e) {
-                var search = document.querySelector('#search-box').value;
-                if (e.key === 'Enter' || e.keyCode === 13) {
-                    var url = "bloglist?search=" + search;
-                    if (searchContentCategory != -1) {
-                        url += "&category=" + searchContentCategory;
-                    }
-                    window.location.href = url;
-                }
-            });
-
-            // handle box search
-            function handleAttributeBoxSearch(content) {
-                if (content) {
-                    document.querySelector('#search-box').setAttribute('value', content);
-                } else {
-                    document.querySelector('#search-box').setAttribute('placeholder', 'Search post');
-                }
-            }
-
-            //handle category
-            function handleCategory() {
-                for (var i = 0; i < categories.length; i++) {
-                    categories[i].onclick = function (e) {
-                        var category = e.target.id;
-                        var url = "bloglist?category=" + category;
-                        if (category == -1) {
-                            url = "bloglist";
-                        }
-                        window.location.href = url;
-                    };
-                }
-            }
-
-
-            $("#next-page").on('click', function () {
-                var paging = document.querySelectorAll('.pagination li a');
-                for (var i = 0; i < paging.length - 2; i++) {
-                    if (paging[i].className.includes("active")) {
-                        var indexNextPage = i + 1;
-                        var url = "bloglist?page=" + paging[indexNextPage].innerHTML;
-                        if (searchContentCategory) {
-                            if (searchContentCategory != -1) {
-                                url += "&category=" + searchContentCategory;
-                            }
-                        }
-                        if (searchContent) {
-                            url += "&search=" + searchContent;
-                        }
-
-                        window.location.href = url;
-                        break;
-                    }
-                }
-            });
-
-            function setActivePaging(page) {
-                var paging = document.querySelectorAll('.pagination li a');
-                for (var i = 0; i < paging.length - 2; i++) {
-                    if (paging[i].className.includes("active")) {
-                        paging[i].classList.remove("active");
-                        paging[page - 1].classList.add("active");
-                        break;
-                    }
-                }
-            }
-
-            function handlePaging() {
-                var paging = document.querySelectorAll('.pagination li a');
-                for (var i = 0; i < paging.length - 1; i++) {
-                    paging[i].onclick = function (e) {
-//                        document.querySelector('.pagination li a.active').classList.remove('active');
-//                        e.target.classList.add('active');
-                        var url = "bloglist?page=" + e.target.innerHTML;
-                        if (searchContentCategory) {
-                            url += "&category=" + searchContentCategory;
-                        }
-                        if (searchContent) {
-                            url += "&search=" + searchContent;
-                        }
-
-                        window.location.href = url;
-                    };
-                }
-            }
-//            handlePaging();
-//            setActivePaging(${requestScope.page});
-//            handleAttributeBoxSearch(`${requestScope.searchContent}`);
-//            handleCategory();
-            function app(page, searchContent) {
-                handlePaging();
-                setActivePaging(page);
-                handleAttributeBoxSearch(searchContent);
-                handleCategory();
-            }
-            app(${requestScope.page}, `${requestScope.searchContent}`);
-        </script>
+        <script src="../../assets/js/blog/bloglist.js"></script>
     </body>
 </html>

@@ -52,12 +52,12 @@
                                                 <div class="product-image-wrapper">
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
-                                                            <a href="#">
+                                                            <a href="blogDetail?blogId=${i.id}">
                                                                 <img src="${i.thumbnail}" alt="" />
                                                             </a>
                                                             <h2 class="break-down-line">${i.title}</h2>
                                                             <p class="break-down-line">${i.briefInfo}</p>
-                                                            <a href="#" class="btn btn-default add-to-cart">Read more</a>
+                                                            <a href="blogDetail?blogId=${i.id}" class="btn btn-default add-to-cart">Read more</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -77,18 +77,10 @@
                                     <div class="post-meta">
                                         <ul>
                                             <li><i class="fa fa-user"></i>${i.user.fullname}</li>
-                                            <!--<li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
                                             <li><i class="fa fa-calendar"></i>${i.date}</li>
                                         </ul>
-<!--                                                                                <span>
-                                                                                    <i class="fa fa-star"></i>
-                                                                                    <i class="fa fa-star"></i>
-                                                                                    <i class="fa fa-star"></i>
-                                                                                    <i class="fa fa-star"></i>
-                                                                                    <i class="fa fa-star-half-o"></i>
-                                                                                </span>-->
                                     </div>
-                                    <a href="">
+                                    <a href="blogDetail?blogId=${i.id}">
                                         <img src="${i.thumbnail}" alt="">
                                     </a>
                                     <p class="break-down-line">${i.briefInfo}</p>
