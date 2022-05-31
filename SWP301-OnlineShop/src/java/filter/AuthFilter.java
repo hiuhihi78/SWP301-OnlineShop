@@ -28,7 +28,7 @@ import model.User;
  *
  * @author hoan
  */
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"/dashboard/*"})
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"/*"})
 public class AuthFilter implements Filter {
 
     private static final boolean debug = true;
@@ -89,11 +89,11 @@ public class AuthFilter implements Filter {
         RoleDBContext roleDB = new RoleDBContext();
 
         HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper((HttpServletRequest) request);
+        String requestPath = wrappedRequest.getServletPath();
         User u = (User) wrappedRequest.getSession().getAttribute("user");
-        if (u != null) {
+        if (u != null && !u.getRole().getName().equals("customer") && !requestPath.contains("/assets")) {
+            
             LinkedHashMap<Feature, Boolean> allowedFeatures = u.getRole().getAllowFeatures();
-            String requestPath = wrappedRequest.getServletPath();
-            log(requestPath);
             for (Feature f : allowedFeatures.keySet()) {
                 boolean isAllowed = allowedFeatures.get(f);
                 if(f.getUrl().contains(requestPath) && isAllowed)
@@ -107,7 +107,7 @@ public class AuthFilter implements Filter {
         }
         else
         {
-            response.getWriter().println("Not logged in");
+            chain.doFilter(request, response);
         }
     }
 

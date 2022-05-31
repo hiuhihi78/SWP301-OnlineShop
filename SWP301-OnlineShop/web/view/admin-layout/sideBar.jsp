@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <aside class="left-side sidebar-offcanvas">
@@ -20,26 +21,25 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
-        <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-            <li id="nav-dashborad">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                </a>
-            </li>
-            <li id="nav-user-list">
-                <a href="userList">
-                    <i class="fa-solid fa-users"></i> <span>User list</span>
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <c:forEach items="${sessionScope.user.role.allowFeatures}" var="s">
+                <c:if test="${s.key.url == '/admin/dashboard' && s.value == true}">
+                    <li id="nav-dashboard">
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> <span>${s.key.name}</span>
+                        </a>
+                    </li>
+                </c:if>
+                <c:if test="${s.key.url == '/admin/userList' && s.value == true}">
+                    <li id="nav-user-list">
+                        <a href="userList">
+                            <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
 
-                </a>
-            </li>
-
-            <li id="nav-setting-list">
-                <a href="">
-                    <i class="fa-solid fa-gears"></i> <span>Setting list</span>
-                </a>
-            </li>
-
+                        </a>
+                    </li>
+                </c:if>
+            </c:forEach>
         </ul>
     </section>
     <!-- /.sidebar -->
