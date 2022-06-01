@@ -2,20 +2,21 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/CustomerDBContext.java</file>
-            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/user/EditUserProfileControler.java</file>
-            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/userProfile.jsp</file>
-            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/img/defaultUserAvatar.png</file>
-            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/addCustomer.jsp</file>
-            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/user/UserProfileControler.java</file>
-            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/customerList.jsp</file>
-            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/customerDetails.jsp</file>
-            <file>file:/C:/Users/Administrator/Desktop/gitDev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/CustomerListControler.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/dal/ProductDBContext.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/marketing/CustomerListControler.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/admin/AddRoleController.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin/addRole.jsp</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/marketing/EditCustomerControler.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin/userList.jsp</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin-layout/sideBar.jsp</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/common/LoginController.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/WEB-INF/web.xml</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/marketing/CustomerDetailsControler.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/filter/AuthFilter.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/dal/RoleDBContext.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/home/BlogListController.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/marketing/AddCustomerControler.java</file>
         </group>
->>>>>>> 9971c94c45ddf7ebce5560747b4b98d655c9392a
     </open-files>
 </project-private>

@@ -48,14 +48,13 @@
                         </a>
                     </li>
                 </c:if>
-            </c:forEach>
-            <li id="nav-add-feature-group">
-                <a href="addFeatureGroup">
-                    <i class="fa-solid fa-users"></i> <span>Create feature group</span>
-
-                </a>
-            </li>
-        </ul>
-    </section>
-    <!-- /.sidebar -->
+        </c:forEach>
+        <li id="nav-add-feature-group">
+            <a href="addRole">
+                <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- /.sidebar -->
 </aside>

@@ -6,6 +6,7 @@ package dal;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -81,5 +82,76 @@ public class RoleDBContext extends DBContext {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public ArrayList<Feature> getFeatureByGroup(String groupName) {
+        String sql = "SELECT [Feature].[id]\n"
+                + "      ,[Feature].[name]\n"
+                + "      ,[url]\n"
+                + "      ,[isPublic]\n"
+                + "	  ,[Feature_Group].[name]\n"
+                + "  FROM [dbo].[Feature] inner join [Feature_Group] on [Feature].groupID = [Feature_Group].id\n"
+                + "  WHERE Feature_Group.[name] = ?";
+        try {
+            ArrayList<Feature> features = new ArrayList<>();
+            PreparedStatement ps = connection.prepareStatement(sql);;
+            ps.setString(1, groupName);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Feature f = new Feature();
+                f.setId(rs.getInt("id"));
+                f.setName(rs.getString("name"));
+                f.setUrl(rs.getString("url"));
+                features.add(f);
+            }
+            return features;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public void insertNewRole(String[] permissionID, String roleName) throws SQLException {    
+        try {
+            connection.setAutoCommit(false);
+            String sql = "INSERT INTO [dbo].[Role]\n"
+                    + "           ([status]\n"
+                    + "           ,[name])\n"
+                    + "     VALUES\n"
+                    + "           (1, ?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, roleName);
+            ps.executeUpdate();
+            String sql1 = "Select @@IDENTITY as roleId";
+            PreparedStatement ps1 = connection.prepareStatement(sql1);
+            ResultSet r = ps1.executeQuery();
+            int roleID = -1;
+            if(r.next())
+            {
+               roleID = r.getInt("roleId");
+            }
+            String sql2 = "INSERT INTO [dbo].[Role_Feature]\n"
+                    + "           ([roleId]\n"
+                    + "           ,[enable]\n"
+                    + "           ,[featureId])\n"
+                    + "     VALUES\n"
+                    + "           (?, 1, ?)";
+            PreparedStatement ps2 = connection.prepareStatement(sql2);
+            System.out.println(sql2);
+            for(String permission : permissionID)
+            {
+                System.out.println(permission);
+                ps2.setInt(1, roleID);
+                ps2.setInt(2, Integer.parseInt(permission));
+                ps2.executeUpdate();
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            connection.rollback();
+        }
+        finally{
+            connection.setAutoCommit(true);
+            connection.close();
+        }
     }
 }

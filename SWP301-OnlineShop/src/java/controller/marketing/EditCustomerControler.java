@@ -5,6 +5,7 @@
 package controller.marketing;
 
 import dal.CustomerDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,10 +17,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hoang Quang
  */
-public class EditCustomerControler extends HttpServlet {
+public class EditCustomerControler extends BaseAuthController {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //get status, and user id
         String raw_Status = request.getParameter("status");
@@ -38,7 +39,7 @@ public class EditCustomerControler extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 
