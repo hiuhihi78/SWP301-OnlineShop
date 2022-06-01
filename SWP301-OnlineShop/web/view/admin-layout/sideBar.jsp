@@ -48,13 +48,14 @@
                         </a>
                     </li>
                 </c:if>
-        </c:forEach>
-        <li id="nav-add-feature-group">
-            <a href="addRole">
-                <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
-            </a>
-        </li>
-    </ul>
-</section>
-<!-- /.sidebar -->
+                <c:if test="${s.key.url == '/admin/addRole' && s.value == true}">
+                    <li id="nav-add-feature-group">
+                        <a href="addRole">
+                            <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
+                        </a>
+                    </li>
+                </c:if>
+            </c:forEach>
+    </section>
+    <!-- /.sidebar -->
 </aside>

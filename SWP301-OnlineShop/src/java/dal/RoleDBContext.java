@@ -110,7 +110,7 @@ public class RoleDBContext extends DBContext {
         return null;
     }
 
-    public void insertNewRole(String[] permissionID, String roleName) throws SQLException {    
+    public void insertNewRole(String[] permissionID, String roleName) throws SQLException {
         try {
             connection.setAutoCommit(false);
             String sql = "INSERT INTO [dbo].[Role]\n"
@@ -125,9 +125,8 @@ public class RoleDBContext extends DBContext {
             PreparedStatement ps1 = connection.prepareStatement(sql1);
             ResultSet r = ps1.executeQuery();
             int roleID = -1;
-            if(r.next())
-            {
-               roleID = r.getInt("roleId");
+            if (r.next()) {
+                roleID = r.getInt("roleId");
             }
             String sql2 = "INSERT INTO [dbo].[Role_Feature]\n"
                     + "           ([roleId]\n"
@@ -136,10 +135,7 @@ public class RoleDBContext extends DBContext {
                     + "     VALUES\n"
                     + "           (?, 1, ?)";
             PreparedStatement ps2 = connection.prepareStatement(sql2);
-            System.out.println(sql2);
-            for(String permission : permissionID)
-            {
-                System.out.println(permission);
+            for (String permission : permissionID) {
                 ps2.setInt(1, roleID);
                 ps2.setInt(2, Integer.parseInt(permission));
                 ps2.executeUpdate();
@@ -148,10 +144,66 @@ public class RoleDBContext extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
             connection.rollback();
-        }
-        finally{
+        } finally {
             connection.setAutoCommit(true);
             connection.close();
         }
+    }
+
+    public void updateRole(int roleID, String[] permissionID) throws SQLException {
+        try {
+            connection.setAutoCommit(false);
+            String sql = "UPDATE dbo.[Role_Feature]\n"
+                    + "   SET [enable] = 0\n"
+                    + " WHERE roleId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.executeUpdate();
+
+            String sql2 = "UPDATE dbo.[Role_Feature]\n"
+                    + "   SET [enable] = 1\n"
+                    + " WHERE roleId = ? and featureId=?";
+            PreparedStatement stm2 = connection.prepareStatement(sql2);
+            for (String permission : permissionID) {
+                stm2.setInt(1, roleID);
+                stm2.setInt(2, Integer.parseInt(permission));
+                stm2.executeUpdate();
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            connection.rollback();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+    }
+
+    public ArrayList<Feature> getEnabledFeature(int roleID, String groupName) {
+        String sql = "        ,[Feature].[name]\n"
+                + "        ,[url]\n"
+                + "        ,[isPublic]\n"
+                + "        ,[Feature_Group].[name]\n"
+                + "		,[Role_Feature].[enable]\n"
+                + "        FROM [dbo].[Feature] inner join [Feature_Group] on [Feature].groupID = [Feature_Group].id\n"
+                + "		inner join [Role_Feature] on [Feature].id = [Role_Feature].featureId\n"
+                + "        WHERE [Role_Feature].roleId = ? and [Feature_Group].[name] = ?";
+        try {
+            ArrayList<Feature> features = new ArrayList<>();
+            PreparedStatement ps = connection.prepareStatement(sql);;
+            ps.setInt(1, roleID);
+            ps.setString(2, groupName);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Feature f = new Feature();
+                f.setId(rs.getInt("id"));
+                f.setName(rs.getString("name"));
+                f.setUrl(rs.getString("url"));
+                f.setEnabled(rs.getBoolean("enable"));
+                features.add(f);
+            }
+            return features;
+        } catch (Exception e) {
+        }
+        return null;
     }
 }

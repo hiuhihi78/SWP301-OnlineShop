@@ -12,6 +12,7 @@ public class Feature {
     private int id;
     private String url;
     private String name;
+    private boolean enabled;
 
     public int getId() {
         return id;
@@ -35,6 +36,14 @@ public class Feature {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
     
 }
