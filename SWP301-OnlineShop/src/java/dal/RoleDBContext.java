@@ -179,14 +179,11 @@ public class RoleDBContext extends DBContext {
     }
 
     public ArrayList<Feature> getEnabledFeature(int roleID, String groupName) {
-        String sql = "        ,[Feature].[name]\n"
-                + "        ,[url]\n"
-                + "        ,[isPublic]\n"
-                + "        ,[Feature_Group].[name]\n"
-                + "		,[Role_Feature].[enable]\n"
-                + "        FROM [dbo].[Feature] inner join [Feature_Group] on [Feature].groupID = [Feature_Group].id\n"
-                + "		inner join [Role_Feature] on [Feature].id = [Role_Feature].featureId\n"
-                + "        WHERE [Role_Feature].roleId = ? and [Feature_Group].[name] = ?";
+        String sql = "select * \n"
+                + "from Role_Feature inner join Feature on Role_Feature.featureId = Feature.id\n"
+                + "inner join Feature_Group on Feature_Group.id = Feature.groupID\n"
+                + "where\n"
+                + "Role_Feature.roleId = ? and Feature_Group.name = ?";
         try {
             ArrayList<Feature> features = new ArrayList<>();
             PreparedStatement ps = connection.prepareStatement(sql);;
