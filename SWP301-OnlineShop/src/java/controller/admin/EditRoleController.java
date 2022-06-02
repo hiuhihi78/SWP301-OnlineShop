@@ -36,11 +36,9 @@ public class EditRoleController extends BaseAuthController {
         response.setContentType("text/html;charset=UTF-8");
         RoleDBContext roleDB = new RoleDBContext();
         int roleId = Integer.parseInt(request.getParameter("roleID"));
-        ArrayList<Feature> adminFeatures = roleDB.getEnabledFeature(roleId, "Admin");
-        ArrayList<Feature> marketingFeatures = roleDB.getEnabledFeature(roleId, "Marketing");
         
-        request.setAttribute("adminFeatures", adminFeatures);
-        request.setAttribute("marketingFeatures", marketingFeatures);
+//        request.setAttribute("adminFeatures", adminFeatures);
+//        request.setAttribute("marketingFeatures", marketingFeatures);
         request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
     }
 

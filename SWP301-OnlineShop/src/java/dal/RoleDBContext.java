@@ -8,10 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
 import model.Feature;
 import model.Role;
 
@@ -110,7 +108,7 @@ public class RoleDBContext extends DBContext {
         return null;
     }
 
-    public void insertNewRole(String[] permissionID, String roleName) throws SQLException {
+    public void insertNewRole(String[] permissionsID, String roleName) throws SQLException {
         try {
             connection.setAutoCommit(false);
             String sql = "INSERT INTO [dbo].[Role]\n"
@@ -128,18 +126,37 @@ public class RoleDBContext extends DBContext {
             if (r.next()) {
                 roleID = r.getInt("roleId");
             }
-            String sql2 = "INSERT INTO [dbo].[Role_Feature]\n"
+
+            String sql2 = "SELECT id as featureID FROM Feature";
+            PreparedStatement ps2 = connection.prepareStatement(sql2);
+            ResultSet rs2 = ps2.executeQuery();
+            ArrayList<String> listFeatureID = new ArrayList<>();
+            while (rs2.next()) {
+                listFeatureID.add(rs2.getString("featureID"));
+            }
+            String sql3 = "INSERT INTO [dbo].[Role_Feature]\n"
                     + "           ([roleId]\n"
                     + "           ,[enable]\n"
                     + "           ,[featureId])\n"
                     + "     VALUES\n"
-                    + "           (?, 1, ?)";
-            PreparedStatement ps2 = connection.prepareStatement(sql2);
-            for (String permission : permissionID) {
-                ps2.setInt(1, roleID);
-                ps2.setInt(2, Integer.parseInt(permission));
-                ps2.executeUpdate();
-            }
+                    + "           (?, ?, ?)";
+            PreparedStatement ps3 = connection.prepareStatement(sql3);
+                for (String featureID : listFeatureID) {
+                        if(Arrays.asList(permissionsID).contains(featureID))
+                        {
+                            ps3.setInt(1, roleID);
+                            ps3.setBoolean(2, true);
+                            ps3.setInt(3, Integer.parseInt(featureID));
+                            ps3.executeUpdate();
+                        }
+                        else
+                        {
+                            ps3.setInt(1, roleID);
+                            ps3.setBoolean(2, false);
+                            ps3.setInt(3, Integer.parseInt(featureID)); 
+                            ps3.executeUpdate();
+                        }
+                }
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -178,7 +195,7 @@ public class RoleDBContext extends DBContext {
         }
     }
 
-    public ArrayList<Feature> getEnabledFeature(int roleID, String groupName) {
+    public ArrayList<Feature> getEnabledFeature(int roleID) {
         String sql = "select * \n"
                 + "from Role_Feature inner join Feature on Role_Feature.featureId = Feature.id\n"
                 + "inner join Feature_Group on Feature_Group.id = Feature.groupID\n"
@@ -188,7 +205,6 @@ public class RoleDBContext extends DBContext {
             ArrayList<Feature> features = new ArrayList<>();
             PreparedStatement ps = connection.prepareStatement(sql);;
             ps.setInt(1, roleID);
-            ps.setString(2, groupName);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Feature f = new Feature();
