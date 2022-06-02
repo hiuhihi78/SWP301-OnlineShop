@@ -5,6 +5,7 @@
 package controller.marketing;
 
 import dal.CustomerDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ import model.User;
  *
  * @author Hoang Quang
  */
-public class CustomerListControler extends HttpServlet {
+public class CustomerListControler extends BaseAuthController {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -63,7 +64,7 @@ public class CustomerListControler extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
     /**

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -83,6 +84,7 @@ public class AuthFilter implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
@@ -91,22 +93,14 @@ public class AuthFilter implements Filter {
         HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper((HttpServletRequest) request);
         String requestPath = wrappedRequest.getServletPath();
         User u = (User) wrappedRequest.getSession().getAttribute("user");
-        if (u != null && !u.getRole().getName().equals("customer")) {
-            
-            LinkedHashMap<Feature, Boolean> allowedFeatures = u.getRole().getAllowFeatures();
-            for (Feature f : allowedFeatures.keySet()) {
-                boolean isAllowed = allowedFeatures.get(f);
-                if(f.getUrl().contains(requestPath) && isAllowed || !f.getUrl().contains(requestPath))
-                {
-                    log(requestPath);
-                    chain.doFilter(request, response);
-                    return;
-                }
+        //if user logged in
+        if (u != null) {
+            if (checkUserPermission(requestPath, u)) {
+                chain.doFilter(request, response);
+            } else {
+                response.getWriter().println("Access denied");
             }
-            response.getWriter().println("Access denied");
-        }
-        else
-        {
+        } else {
             chain.doFilter(request, response);
         }
     }
@@ -207,4 +201,40 @@ public class AuthFilter implements Filter {
         filterConfig.getServletContext().log(msg);
     }
 
+    public boolean checkUserPermission(String requestPath, User u) {
+        RoleDBContext roleDB = new RoleDBContext();
+        try {
+            ArrayList<Feature> publicFeatures = roleDB.getPublicFeature();
+
+            LinkedHashMap<Feature, Boolean> allowedFeatures = u.getRole().getAllowFeatures();
+            if (checkNonPublicPath(requestPath, allowedFeatures) || checkPublicPath(requestPath, publicFeatures)) {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    public boolean checkPublicPath(String requestPath, ArrayList<Feature> allowFeatures) {
+        for (Feature f : allowFeatures) {
+            log("checkPublicPath: " + requestPath + " " + f.getUrl().indexOf(requestPath));
+            if (requestPath.indexOf(f.getUrl()) != -1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkNonPublicPath(String requestPath, LinkedHashMap<Feature, Boolean> allowedFeatures) {
+
+        for (Feature f : allowedFeatures.keySet()) {
+            boolean isAllowed = allowedFeatures.get(f);
+            log("checkNonPublicPath: " + requestPath + " " + f.getUrl().indexOf(requestPath));
+            if (requestPath.indexOf(f.getUrl()) != -1 && isAllowed) {
+
+                return true;
+            }
+        }
+        return false;
+    }
 }

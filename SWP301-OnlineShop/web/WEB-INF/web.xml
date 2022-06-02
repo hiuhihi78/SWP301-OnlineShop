@@ -80,6 +80,14 @@
         <servlet-name>CustomerDetailsControler</servlet-name>
         <servlet-class>controller.marketing.CustomerDetailsControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddRoleController</servlet-name>
+        <servlet-class>controller.admin.AddRoleController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditRoleController</servlet-name>
+        <servlet-class>controller.admin.EditRoleController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -159,6 +167,14 @@
     <servlet-mapping>
         <servlet-name>CustomerDetailsControler</servlet-name>
         <url-pattern>/customer/details</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddRoleController</servlet-name>
+        <url-pattern>/admin/addRole</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditRoleController</servlet-name>
+        <url-pattern>/admin/editRole</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

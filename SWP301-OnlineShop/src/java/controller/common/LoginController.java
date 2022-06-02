@@ -8,7 +8,6 @@ package controller.common;
 import configs.Security;
 import dal.UserDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
