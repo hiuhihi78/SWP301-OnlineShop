@@ -39,7 +39,7 @@
                                 <ol class="carousel-indicators">
                                     <c:forEach begin="0" end="${requestScope.numberOfSliders - 1}" step="1" var="i">
                                         <li data-target="#slider-carousel" data-slide-to="${i}" class="${(i == 0)?"active":""}"></li>
-                                    </c:forEach>
+                                        </c:forEach>
                                 </ol>
                                 <div class="carousel-inner slider-height-400">
                                     <c:set scope="request" var="count_item" value="0"/>
@@ -76,7 +76,7 @@
         <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 pd-top-shadow" >
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center">Latest Posts</h2>
                             <div class="panel-group category-products" id="accordian">
@@ -105,7 +105,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-9 padding-right"> <!-- right-sidebar -->
+                    <div class="col-sm-9 padding-right pd-top-15"> <!-- right-sidebar -->
                         <div class="features_items">
                             <h2 class="title text-center">Hot Posts</h2>
 
@@ -159,13 +159,13 @@
             </div>
         </div>
     </section>
-        <jsp:include page="../home-template/footer.jsp"/>
-        <script src="../../assets/public/js/jquery.js"></script>
-        <script src="../../assets/public/js/bootstrap.min.js"></script>
-        <script src="../../assets/public/js/jquery.scrollUp.min.js"></script>
-        <script src="../../assets/public/js/price-range.js"></script>
-        <script src="../../assets/public/js/jquery.prettyPhoto.js"></script>
-        <script src="../../assets/public/js/main.js"></script>
-        <script src="../../assets/js/home/home.js"></script>
-    </body>
+    <jsp:include page="../home-template/footer.jsp"/>
+    <script src="../../assets/public/js/jquery.js"></script>
+    <script src="../../assets/public/js/bootstrap.min.js"></script>
+    <script src="../../assets/public/js/jquery.scrollUp.min.js"></script>
+    <script src="../../assets/public/js/price-range.js"></script>
+    <script src="../../assets/public/js/jquery.prettyPhoto.js"></script>
+    <script src="../../assets/public/js/main.js"></script>
+    <script src="../../assets/js/home/home.js"></script>
+</body>
 </html>

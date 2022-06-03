@@ -8,11 +8,21 @@ package model;
  *
  * @author DELL
  */
-public class PostCategory {
+public class SubCategoryPost {
+
     private int id;
     private String name;
+    private CategoryPost category;
 
-    public PostCategory() {
+    public SubCategoryPost() {
+    }
+
+    public CategoryPost getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryPost category) {
+        this.category = category;
     }
 
     public int getId() {
@@ -30,5 +40,4 @@ public class PostCategory {
     public void setName(String name) {
         this.name = name;
     }
-    
 }

@@ -14,7 +14,7 @@ public class Post {
     private int id;
     private String thumbnail;
     private String title;
-    private PostCategory postCategory;
+    private SubCategoryPost postCategory;
     private String briefInfo;
     private String description;
     private boolean featured;
@@ -49,11 +49,11 @@ public class Post {
         this.title = title;
     }
 
-    public PostCategory getPostCategory() {
+    public SubCategoryPost getPostCategory() {
         return postCategory;
     }
 
-    public void setPostCategory(PostCategory postCategory) {
+    public void setPostCategory(SubCategoryPost postCategory) {
         this.postCategory = postCategory;
     }
 
