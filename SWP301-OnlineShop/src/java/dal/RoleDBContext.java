@@ -8,10 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
 import model.Feature;
 import model.Role;
 
@@ -25,7 +23,8 @@ public class RoleDBContext extends DBContext {
         ArrayList<Role> roles = new ArrayList<>();
         String sql = "SELECT [id]\n"
                 + "      ,[name]\n"
-                + "  FROM [dbo].[Role]";
+                + "  FROM [dbo].[Role]\n"
+                + "WHERE isSuperAdmin = 0";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -110,14 +109,15 @@ public class RoleDBContext extends DBContext {
         return null;
     }
 
-    public void insertNewRole(String[] permissionID, String roleName) throws SQLException {
+    public void insertNewRole(String[] permissionsID, String roleName) throws SQLException {
         try {
             connection.setAutoCommit(false);
             String sql = "INSERT INTO [dbo].[Role]\n"
                     + "           ([status]\n"
-                    + "           ,[name])\n"
+                    + "           ,[name]\n"
+                    + "           ,[isSuperAdmin])\n"
                     + "     VALUES\n"
-                    + "           (1, ?)";
+                    + "           (1, ?, 0)";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, roleName);
             ps.executeUpdate();
@@ -128,18 +128,37 @@ public class RoleDBContext extends DBContext {
             if (r.next()) {
                 roleID = r.getInt("roleId");
             }
-            String sql2 = "INSERT INTO [dbo].[Role_Feature]\n"
+
+            String sql2 = "SELECT id as featureID FROM Feature WHERE isPublic = 0";
+            PreparedStatement ps2 = connection.prepareStatement(sql2);
+            ResultSet rs2 = ps2.executeQuery();
+            ArrayList<String> listFeatureID = new ArrayList<>();
+            while (rs2.next()) {
+                listFeatureID.add(rs2.getString("featureID"));
+            }
+            String sql3 = "INSERT INTO [dbo].[Role_Feature]\n"
                     + "           ([roleId]\n"
                     + "           ,[enable]\n"
                     + "           ,[featureId])\n"
                     + "     VALUES\n"
-                    + "           (?, 1, ?)";
-            PreparedStatement ps2 = connection.prepareStatement(sql2);
-            for (String permission : permissionID) {
-                ps2.setInt(1, roleID);
-                ps2.setInt(2, Integer.parseInt(permission));
-                ps2.executeUpdate();
-            }
+                    + "           (?, ?, ?)";
+            PreparedStatement ps3 = connection.prepareStatement(sql3);
+                for (String featureID : listFeatureID) {
+                        if(Arrays.asList(permissionsID).contains(featureID))
+                        {
+                            ps3.setInt(1, roleID);
+                            ps3.setBoolean(2, true);
+                            ps3.setInt(3, Integer.parseInt(featureID));
+                            ps3.executeUpdate();
+                        }
+                        else
+                        {
+                            ps3.setInt(1, roleID);
+                            ps3.setBoolean(2, false);
+                            ps3.setInt(3, Integer.parseInt(featureID)); 
+                            ps3.executeUpdate();
+                        }
+                }
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -157,6 +176,7 @@ public class RoleDBContext extends DBContext {
                     + "   SET [enable] = 0\n"
                     + " WHERE roleId = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, roleID);
             stm.executeUpdate();
 
             String sql2 = "UPDATE dbo.[Role_Feature]\n"
