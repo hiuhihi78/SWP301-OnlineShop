@@ -91,6 +91,7 @@ public class AuthFilter implements Filter {
         RoleDBContext roleDB = new RoleDBContext();
 
         HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper((HttpServletRequest) request);
+        HttpServletResponseWrapper wrappedResponse = new HttpServletResponseWrapper((HttpServletResponse) response);
         String requestPath = wrappedRequest.getServletPath();
         User u = (User) wrappedRequest.getSession().getAttribute("user");
         //if user logged in
@@ -98,7 +99,7 @@ public class AuthFilter implements Filter {
             if (checkUserPermission(requestPath, u)) {
                 chain.doFilter(request, response);
             } else {
-                response.getWriter().println("Access denied");
+                wrappedResponse.sendRedirect("/401.html");
             }
         } else {
             chain.doFilter(request, response);

@@ -24,7 +24,6 @@ import model.Feature;
  */
 public class AddRoleController extends BaseAuthController {
 
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -39,12 +38,11 @@ public class AddRoleController extends BaseAuthController {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         RoleDBContext roleDB = new RoleDBContext();
-        
+
         ArrayList<Feature> adminFeatures = roleDB.getFeatureByGroup("Admin");
         ArrayList<Feature> marketingFeatures = roleDB.getFeatureByGroup("Marketing");
-        
-        if(adminFeatures != null || marketingFeatures != null)
-        {
+
+        if (adminFeatures != null || marketingFeatures != null) {
             request.setAttribute("adminFeatures", adminFeatures);
             request.setAttribute("marketingFeatures", marketingFeatures);
             request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
@@ -64,14 +62,18 @@ public class AddRoleController extends BaseAuthController {
             throws ServletException, IOException {
         String[] roles = request.getParameterValues("roleID");
         String roleName = request.getParameter("roleName");
-        try
-        {
+        try {
             RoleDBContext roleDB = new RoleDBContext();
             roleDB.insertNewRole(roles, roleName);
             request.setAttribute("ater", "Add new role successfully");
             response.sendRedirect("/admin/addRole");
+            request.setAttribute("message", "Add user's role success!");
+            request.setAttribute("error", false);
+            request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
         } catch (SQLException ex) {
-            response.getWriter().println("Add new role failed");
+            request.setAttribute("message", "Add user's role failed!");
+            request.setAttribute("error", true);
+            request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
         }
     }
 

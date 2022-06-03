@@ -23,7 +23,8 @@ public class RoleDBContext extends DBContext {
         ArrayList<Role> roles = new ArrayList<>();
         String sql = "SELECT [id]\n"
                 + "      ,[name]\n"
-                + "  FROM [dbo].[Role]";
+                + "  FROM [dbo].[Role]\n"
+                + "WHERE isSuperAdmin = 0";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -113,9 +114,10 @@ public class RoleDBContext extends DBContext {
             connection.setAutoCommit(false);
             String sql = "INSERT INTO [dbo].[Role]\n"
                     + "           ([status]\n"
-                    + "           ,[name])\n"
+                    + "           ,[name]\n"
+                    + "           ,[isSuperAdmin])\n"
                     + "     VALUES\n"
-                    + "           (1, ?)";
+                    + "           (1, ?, 0)";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, roleName);
             ps.executeUpdate();
@@ -127,7 +129,7 @@ public class RoleDBContext extends DBContext {
                 roleID = r.getInt("roleId");
             }
 
-            String sql2 = "SELECT id as featureID FROM Feature";
+            String sql2 = "SELECT id as featureID FROM Feature WHERE isPublic = 0";
             PreparedStatement ps2 = connection.prepareStatement(sql2);
             ResultSet rs2 = ps2.executeQuery();
             ArrayList<String> listFeatureID = new ArrayList<>();
@@ -174,6 +176,7 @@ public class RoleDBContext extends DBContext {
                     + "   SET [enable] = 0\n"
                     + " WHERE roleId = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, roleID);
             stm.executeUpdate();
 
             String sql2 = "UPDATE dbo.[Role_Feature]\n"
@@ -195,7 +198,7 @@ public class RoleDBContext extends DBContext {
         }
     }
 
-    public ArrayList<Feature> getEnabledFeature(int roleID) {
+    public ArrayList<Feature> getEnabledFeature(int roleID, String groupName) {
         String sql = "select * \n"
                 + "from Role_Feature inner join Feature on Role_Feature.featureId = Feature.id\n"
                 + "inner join Feature_Group on Feature_Group.id = Feature.groupID\n"
@@ -205,6 +208,7 @@ public class RoleDBContext extends DBContext {
             ArrayList<Feature> features = new ArrayList<>();
             PreparedStatement ps = connection.prepareStatement(sql);;
             ps.setInt(1, roleID);
+            ps.setString(2, groupName);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Feature f = new Feature();

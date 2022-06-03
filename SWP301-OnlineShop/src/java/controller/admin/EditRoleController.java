@@ -7,19 +7,21 @@ package controller.admin;
 import dal.RoleDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Feature;
+import model.Role;
 
 /**
  *
  * @author hoan
  */
 public class EditRoleController extends BaseAuthController {
+
+    private static int rawid = 0;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -35,11 +37,19 @@ public class EditRoleController extends BaseAuthController {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         RoleDBContext roleDB = new RoleDBContext();
-        int roleId = Integer.parseInt(request.getParameter("roleID"));
-        
-//        request.setAttribute("adminFeatures", adminFeatures);
-//        request.setAttribute("marketingFeatures", marketingFeatures);
-        request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
+        ArrayList<Role> roles = roleDB.getAllRole();
+        request.setAttribute("roles", roles);
+        try {
+            rawid = Integer.parseInt(request.getParameter("id"));
+            ArrayList<Feature> AdminFeatures = roleDB.getEnabledFeature(rawid, "admin");
+            ArrayList<Feature> MarketingFeatures = roleDB.getEnabledFeature(rawid, "marketing");
+            request.setAttribute("AdminFeatures", AdminFeatures);
+            request.setAttribute("MarketingFeatures", MarketingFeatures);
+            request.setAttribute("rawid", rawid);
+            request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -53,6 +63,20 @@ public class EditRoleController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int roleid = Integer.parseInt(request.getParameter("roleId"));
+        String[] selectedFeature = request.getParameterValues("fid");
+
+        RoleDBContext roledb = new RoleDBContext();
+        try {
+            roledb.updateRole(roleid, selectedFeature);
+            request.setAttribute("message", "Edit user's role success!");
+            request.setAttribute("error", false);
+            request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            request.setAttribute("message", "Edit user's role failed!");
+            request.setAttribute("error", true);
+            request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
+        }
 
     }
 

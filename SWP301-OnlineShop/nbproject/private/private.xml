@@ -3,8 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/code/NetbeansProject/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/admin/EditRoleController.java</file>
-            <file>file:/E:/code/NetbeansProject/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/RoleDBContext.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/filter/BaseAuthController.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/dal/DBContext.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/admin/AddRoleController.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin/addRole.jsp</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/dal/RoleDBContext.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/assets/js/admin/addNewUser.js</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/admin/EditRoleController.java</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin/editRole.jsp</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/assets/js/admin/main.js</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/assets/js/admin/userList.js</file>
+            <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/assets/js/admin/editRole.js</file>
         </group>
     </open-files>
 </project-private>
