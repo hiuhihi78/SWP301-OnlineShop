@@ -75,15 +75,12 @@ public class VeryfiController extends HttpServlet {
         }
         
         if (result) {
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Verify Successfully!');");
-            out.println("location='login';");
-            out.println("</script>");
+            request.setAttribute("messTrue", "Verification successful, you can login now!");
+            request.getRequestDispatcher("view/public/login.jsp").forward(request, response);
         }else {
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Verification failed. Please try again!');");
-            out.println("location='register';");
-            out.println("</script>"); 
+            
+            request.setAttribute("messFalse", "Verification failed. Please try again!");
+            request.getRequestDispatcher("view/public/register.jsp").forward(request, response);
         }
         
     }

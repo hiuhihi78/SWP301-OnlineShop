@@ -113,10 +113,9 @@ public class RegisterController extends HttpServlet {
 
                 SendMail.send(email, "Please verify your email", sb.toString(), Security.USERNAME, Security.PASSWORD);
 
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Email is sent to Email Address. Please check, this verification is valid until " + formatted + "');");
-                out.println("location='register';");
-                out.println("</script>");
+                request.setAttribute("messTrue", "Email is sent to Email Address. Please check, this verification is valid until");
+                request.setAttribute("time", formatted);
+                processRequest(request, response);
             }
 
         } catch (Exception e) {

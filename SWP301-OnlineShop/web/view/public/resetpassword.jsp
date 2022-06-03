@@ -11,73 +11,73 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="../../assets/public/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../assets/public/css/font-awesome.min.css" rel="stylesheet">
-        <link href="../../assets/public/css/prettyPhoto.css" rel="stylesheet">
-        <link href="../../assets/public/css/price-range.css" rel="stylesheet">
-        <link href="../../assets/public/css/animate.css" rel="stylesheet">
-        <link href="../../assets/public/css/main.css" rel="stylesheet">
-        <link href="../../assets/public/css/responsive.css" rel="stylesheet">
-        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="assets/css/login/main.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/login/style.css">
+        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="assets/js/login/jquery-3.2.1.min.js"></script>
+        <script src="assets/js/login/popper.min.js"></script>
+        <script src="assets/js/login/bootstrap.min.js"></script>
+        <script src="assets/js/login/main.js"></script>
+        <script src="assets/js/login/pace.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js" type="text/javascript"></script>
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
         <script src="../../assets/js/login/validation.js" type="text/javascript"></script>
         <title>Reset Password</title>
     </head>
     <body>
-        <jsp:include page="../home-template/header.jsp"/>
-        <c:if test="${messTrue != null}">
-            <div class="alert alert-success" role="alert" style="text-align: center">
-                ${messTrue}
-            </div>
-        </c:if>
-        <c:if test="${messFalse != null}">
-            <div class="alert alert-danger" role="alert" style="text-align: center">
-                ${messFalse}
-            </div>
-        </c:if>
-        <div class="container" style="margin: 40px auto">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1  style="text-align: center">Change Password</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
+        <section class="material-half-bg">
+            <div class="cover"></div>
+        </section>
+           
 
-                    <form method="post" id="passwordForm" method="post" action="changePassword">
-                        <h3>New Password</h3>
-                        <input type="hidden" name="hdEmail" value="${email}"/>
-                        <input type="password" class="input-lg form-control" name="txtPassword1" id="password1" placeholder="New Password" autocomplete="off" required
-                               >
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <span id="8char" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> 8 Characters Long<br>
-                                <span id="ucase" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> One Uppercase Letter
-                            </div>
-                            <div class="col-sm-6">
-                                <span id="lcase" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> One Lowercase Letter<br>
-                                <span id="num" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> One Number
-                            </div>
+        <section class="login-content">
+               <c:if test="${messTrue != null}">
+                    <div class="alert alert-success" role="alert" style="text-align: center">
+                        ${messTrue}
+                    </div>
+                </c:if>
+                <c:if test="${messFalse != null}">
+                    <div class="alert alert-danger" role="alert" style="text-align: center">
+                        ${messFalse}
+                    </div>
+                </c:if>
+            <div class="logo">
+                <h1>Online Shop</h1>
+            </div>
+            <div class="container" style="width: 600px; background-color: white">
+   
+                <form method="post" id="passwordForm" method="post" action="changePassword">
+                    <h2 style="padding: 15px 185px">Reset Password</h2>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">New Password</label>
+                        <div class="col-sm-12">
+                            <input type="hidden" name="hdEmail" value="${email}"/>
+                            <input type="password" class="input-lg form-control" name="txtPassword1" id="password1" placeholder="New Password" autocomplete="off" required>
                         </div>
-                        <h3>Confirm Password</h3>
-                        <input type="password" class="input-lg form-control" name="txtPassword2" id="password2" placeholder="Repeat Password" autocomplete="off" required>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <span id="pwmatch" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Passwords Match
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Confirm Password</label>
+                        <div class="col-sm-12">
+                            <input type="password" class="input-lg form-control" name="txtPassword2" id="password2" placeholder="Repeat Password" autocomplete="off" required>
                         </div>
-                        <input type="submit" class="col-xs-12 btn btn-primary btn-load btn-lg" data-loading-text="Changing Password..." value="Change Password">
-                    </form>
-                </div><!--/col-sm-6-->
-            </div><!--/row-->
-        </div>
+                    </div>
 
-        <jsp:include page="../home-template/footer.jsp"/>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-primary btn-block">Change Password</button>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <p class="semibold-text mb-0"><a href="login"><i class="fa fa-angle-left fa-fw"></i> Back to Login</a></p>
+                    </div>
+
+
+                </form>
+            </div>
+        </section>
     </body>
+    <script src="assets/js/login/scripts.js"></script>
 </html>
