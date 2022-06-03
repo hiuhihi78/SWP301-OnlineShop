@@ -25,23 +25,48 @@
         <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 pd-top-shadow">
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center">Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <div class="panel panel-default">
                                     <input type="hidden" value="${requestScope.idCategory}" id="search-category"/>
+                                    <input type="hidden" value="${requestScope.idSubCategory}" id="search-subcategory"/>
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a ${(requestScope.idCategory == -1)?"class=\"active-category\"":""} id="-1" href="#">All Category</a></h4>
+                                        <h4 class="panel-title"><a ${(requestScope.idCategory == -1)?"class=\"active-category\"":""} id="all-category" href="#">All Category</a></h4>
                                     </div>
                                 </div>
                                 <c:forEach items="${requestScope.listAllCateogry}" var="i">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4 class="panel-title"><a ${(requestScope.idCategory == i.id)?"class=\"active-category\"":""} id="${i.id}" href="#">${i.name}</a></h4>
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordian" href="#${i.id}" ${(requestScope.idCategory == i.id)?"":"class=\"collapsed\""}>
+                                                    <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                                    ${i.name}
+                                                </a>
+                                            </h4>
                                         </div>
+                                        <c:if test="${i.listSubPost != null}">
+                                            <div id="${i.id}" class="panel-collapse ${(requestScope.idCategory == i.id)?"in height-auto":"collapse"}">
+                                                <div class="panel-body">
+                                                    <ul>
+                                                        <c:forEach items="${i.listSubPost}" var="s">
+                                                            <li><a href="bloglist?category=${i.id}&subcategory=${s.id}" ${(requestScope.idSubCategory == s.id)?"class=\"active-category\"":""}>${s.name}</a></li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </c:if>
                                     </div>
                                 </c:forEach>
+
+                                <%--<c:forEach items="${requestScope.listAllCateogry}" var="i">--%>
+                                <!--<div class="panel panel-default">-->
+                                <!--<div class="panel-heading">-->
+                                    <!--<h4 class="panel-title"><a ${(requestScope.idCategory == i.id)?"class=\"active-category\"":""} id="${i.id}" href="#">${i.name}</a></h4>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <%--</c:forEach>--%>
                             </div><!--/category-products-->
                             <div class="panel-group category-products" id="accordian">
                                 <h2 class="title text-center">Latest Posts</h2>
@@ -68,7 +93,7 @@
                             </div>
                         </div>                     
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9 pd-top-15">
                         <div class="blog-post-area">
                             <h2 class="title text-center">Post List</h2>
                             <c:forEach items="${requestScope.listPostFiltered}" var="i">
@@ -88,8 +113,8 @@
                                     <c:if test="${requestScope.idCategory == -1}">
                                         <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}">Read More</a>
                                     </c:if>
-                                   <c:if test="${requestScope.idCategory != -1}">
-                                        <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}&category=${requestScope.idCategory}">Read More</a>
+                                    <c:if test="${requestScope.idCategory != -1}">
+                                        <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}&category=${requestScope.idCategory}&subcategory=${requestScope.idSubCategory}">Read More</a>
                                     </c:if>
                                 </div>
                             </c:forEach>

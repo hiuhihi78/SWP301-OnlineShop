@@ -34,6 +34,6 @@ public class DBContext {
     }
     public static void main(String[] args) {
         DBContext db = new DBContext();
-        if(db.connection != null) System.out.println("abc");
+        if(db.connection != null) System.out.println("success");
     }
 }

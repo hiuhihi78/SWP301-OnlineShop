@@ -1,9 +1,13 @@
 var searchContent = document.querySelector('#search-content').value;
 var searchCategory = document.querySelector('#search-category').value;
+var searchSubCategory = document.querySelector('#search-subcategory').value;
 var pageIndex = document.querySelector('#search-page-index').value;
 
 var categories = document.querySelectorAll('.panel.panel-default .panel-heading .panel-title a');
 console.log(categories);
+
+var active_category = document.querySelector("#all-category");
+active_category.addEventListener('click', () => window.location.href = "bloglist");
 
 // search box
 $("#search-box").on('keyup', function (e) {
@@ -12,6 +16,9 @@ $("#search-box").on('keyup', function (e) {
         var url = "bloglist?search=" + search;
         if (searchCategory != -1) {
             url += "&category=" + searchCategory;
+        }
+        if(searchSubCategory != -1) {
+            url += "&subcategory=" + searchSubCategory;
         }
         window.location.href = url;
     }
@@ -28,16 +35,16 @@ function handleAttributeBoxSearch(content) {
 
 //handle category
 function handleCategory() {
-    for (var i = 0; i < categories.length; i++) {
-        categories[i].onclick = function (e) {
-            var category = e.target.id;
-            var url = "bloglist?category=" + category;
-            if (category == -1) {
-                url = "bloglist";
-            }
-            window.location.href = url;
-        };
-    }
+//    for (var i = 0; i < categories.length; i++) {
+//        categories[i].onclick = function (e) {
+//            var category = e.target.id;
+//            var url = "bloglist?category=" + category;
+//            if (category == -1) {
+//                url = "bloglist";
+//            }
+//            window.location.href = url;
+//        };
+//    }
 }
 
 
@@ -50,6 +57,11 @@ $("#next-page").on('click', function () {
             if (searchCategory) {
                 if (searchCategory != -1) {
                     url += "&category=" + searchCategory;
+                }
+            }
+            if (searchCategory) {
+                if (searchSubCategory != -1) {
+                    url += "&subcategory=" + searchSubCategory;
                 }
             }
             if (searchContent) {
@@ -81,6 +93,9 @@ function handlePaging() {
             if (searchCategory != -1) {
                 url += "&category=" + searchCategory;
             }
+            if (searchSubCategory != -1) {
+                url += "&subcategory=" + searchSubCategory;
+            }
             if (searchContent) {
                 url += "&search=" + searchContent;
             }
@@ -93,6 +108,6 @@ function app(page, searchContent) {
     handlePaging();
     setActivePaging(page);
     handleAttributeBoxSearch(searchContent);
-    handleCategory();
+//    handleCategory();
 }
 app(pageIndex, searchContent);
