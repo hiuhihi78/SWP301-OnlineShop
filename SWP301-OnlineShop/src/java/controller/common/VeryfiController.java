@@ -75,6 +75,7 @@ public class VeryfiController extends HttpServlet {
         }
         
         if (result) {
+            session.setAttribute("userRegister", null);
             request.setAttribute("messTrue", "Verification successful, you can login now!");
             request.getRequestDispatcher("view/public/login.jsp").forward(request, response);
         }else {
