@@ -5,12 +5,24 @@
 /*@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
 @import url(http://fonts.googleapis.com/css?family=Abel);*/
+.pd-buttom-25 {
+    padding-bottom: 25px;
+}
+.height-fit-content {
+    height: fit-content;
+}
+.border-radius-20 {
+    border-radius: 20px;
+}
+.flex-justify {
+    display: flex;
+    justify-content: space-between;
+}
 .pd-top-15 {
     padding-top: 15px;
 }
-.pd-top-shadow{
+.box-shadow{
     box-shadow: 0px 0px 10px 2px #ccc7c7;
-    padding-top: 15px;
 }
 .height-auto {
     height: auto;

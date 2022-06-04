@@ -75,8 +75,8 @@
         <!--content-->
         <section>
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-3 pd-top-shadow" >
+                <div class="row flex-justify">
+                    <div class="col-sm-3 pd-top-15 box-shadow height-fit-content border-radius-20" >
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center">Latest Posts</h2>
                             <div class="panel-group category-products" id="accordian">
@@ -105,7 +105,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-9 padding-right pd-top-15"> <!-- right-sidebar -->
+                    <div class="col-sm-8 padding-right pd-top-15 box-shadow  border-radius-20 height-fit-content"> <!-- right-sidebar -->
                         <div class="features_items">
                             <h2 class="title text-center">Hot Posts</h2>
 

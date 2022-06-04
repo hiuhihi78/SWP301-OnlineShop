@@ -24,8 +24,8 @@
         <input type="hidden" value="${requestScope.searchContent}" id="search-content"/>
         <section>
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-3 pd-top-shadow">
+                <div class="row flex-justify">
+                    <div class="col-sm-3 pd-top-15 box-shadow height-fit-content border-radius-20">
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center">Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
@@ -93,7 +93,7 @@
                             </div>
                         </div>                     
                     </div>
-                    <div class="col-sm-9 pd-top-15">
+                    <div class="col-sm-8 pd-top-15 box-shadow border-radius-20 height-fit-content">
                         <div class="blog-post-area">
                             <h2 class="title text-center">Post List</h2>
                             <c:forEach items="${requestScope.listPostFiltered}" var="i">
