@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/userProfile.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/HomeController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/customerDetails.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/CustomerListControler.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/CustomerDBContext.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/customerList.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/addCustomer.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/DBContext.java</file>
+        </group>
+>>>>>>> 7624511f513744ab73febc2470bb1e255afe5cbc
     </open-files>
 </project-private>

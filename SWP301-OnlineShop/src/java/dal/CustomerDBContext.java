@@ -282,4 +282,70 @@ public class CustomerDBContext extends DBContext {
         }
         return listCustomer2;
     }
+
+    
+
+    public int count(int userRole) {
+        try {
+            String sql = "SELECT count(*) as Total FROM [User] WHERE [User].RoleId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userRole);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public ArrayList<User> getCustomerByPage(int userRole, String searchBy, String statusBy, int pageindex, int pagesize) {
+        ArrayList<User> listCustomer = new ArrayList<>();
+        String sql1 = "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (ORDER BY [User].id desc) as row_index FROM [User]) userList\n"
+                + "                    WHERE row_index >= (? - 1)* ? +1 AND row_index <= ? * ?\n"
+                + "					AND roleId = ?\n"
+                + "                AND  \n"
+                + "               (fullname like ?\n"
+                + "                OR email LIKE ?\n"
+                + "                OR mobile LIKE ?)";
+        //check status is empty or not
+        if (!statusBy.isEmpty()) {
+            sql1 += "AND status = ?";
+        }
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql1);
+            //check status is empty or not
+            ps.setInt(1, pageindex);
+            ps.setInt(2, pagesize);
+            ps.setInt(3, pageindex);
+            ps.setInt(4, pagesize);
+            ps.setInt(5, userRole);
+            ps.setString(6, "%" + searchBy + "%");
+            ps.setString(7, "%" + searchBy + "%");
+            ps.setString(8, "%" + searchBy + "%");
+            if (!statusBy.isEmpty()) {
+                ps.setString(9, statusBy);
+
+            }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setFullname(rs.getString("fullname"));
+                user.setGender(rs.getBoolean("gender"));
+                user.setEmail(rs.getString("email"));
+                user.setMobile(rs.getString("mobile"));
+                user.setAddress(rs.getString("address"));
+                Role role = new Role();
+                role.setId(rs.getInt("roleId"));
+                user.setRole(role);
+                user.setStatus(rs.getBoolean("status"));
+                user.setId(rs.getInt("id"));
+                listCustomer.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listCustomer;
+    }
 }

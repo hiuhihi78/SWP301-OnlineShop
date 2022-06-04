@@ -26,23 +26,48 @@
         <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 pd-top-shadow">
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center">Category</h2>
-                            <input type="hidden" value="${requestScope.category}" id="search-category"/>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <div class="panel panel-default">
+                                    <input type="hidden" value="${requestScope.category}" id="search-category"/>
+                                    <input type="hidden" value="${requestScope.subCategory}" id="search-subcategory"/>
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a ${(requestScope.category == -1)?"class=\"active-category\"":""} id="-1" href="#">All Category ${requestScope.idCategory}</a></h4>
+                                        <h4 class="panel-title"><a ${(requestScope.category == -1)?"class=\"active-category\"":""} id="all-category" href="#">All Category</a></h4>
                                     </div>
                                 </div>
                                 <c:forEach items="${requestScope.listAllCateogry}" var="i">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4 class="panel-title"><a ${(requestScope.category == i.id)?"class=\"active-category\"":""} id="${i.id}" href="#">${i.name}</a></h4>
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordian" href="#${i.id}" ${(requestScope.category == i.id)?"":"class=\"collapsed\""}>
+                                                    <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                                    ${i.name}
+                                                </a>
+                                            </h4>
                                         </div>
+                                        <c:if test="${i.listSubPost != null}">
+                                            <div id="${i.id}" class="panel-collapse ${(requestScope.category == i.id)?"in height-auto":"collapse"}">
+                                                <div class="panel-body">
+                                                    <ul>
+                                                        <c:forEach items="${i.listSubPost}" var="s">
+                                                            <li><a href="bloglist?category=${i.id}&subcategory=${s.id}" ${(requestScope.subCategory == s.id)?"class=\"active-category\"":""}>${s.name}</a></li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </c:if>
                                     </div>
                                 </c:forEach>
+
+                                <%--<c:forEach items="${requestScope.listAllCateogry}" var="i">--%>
+                                <!--<div class="panel panel-default">-->
+                                <!--<div class="panel-heading">-->
+                                    <!--<h4 class="panel-title"><a ${(requestScope.category == i.id)?"class=\"active-category\"":""} id="${i.id}" href="#">${i.name}</a></h4>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <%--</c:forEach>--%>
                             </div><!--/category-products-->
                             <div class="panel-group category-products" id="accordian">
                                 <h2 class="title text-center">Latest Posts</h2>
@@ -69,7 +94,7 @@
                             </div>
                         </div>                     
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9 pd-top-15">
                         <div class="blog-post-area mb-20" ">
                             <h2 class="title text-center">Blog Detail</h2>
                             <div class="single-blog-post">

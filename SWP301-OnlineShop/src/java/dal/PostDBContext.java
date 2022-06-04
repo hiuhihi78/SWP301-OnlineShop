@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Post;
-import model.PostCategory;
+import model.CategoryPost;
+import model.SubCategoryPost;
 import model.User;
 
 /**
@@ -33,7 +34,7 @@ public class PostDBContext extends DBContext {
                 post.setId(rs.getInt(1));
                 post.setThumbnail(rs.getString(2));
                 post.setTitle(rs.getString(3));
-                PostCategory category = new PostCategory();
+                SubCategoryPost category = new SubCategoryPost();
                 category.setId(rs.getInt(4));
                 post.setPostCategory(category);
                 post.setBriefInfo(rs.getString(5));
@@ -64,7 +65,7 @@ public class PostDBContext extends DBContext {
                 post.setId(rs.getInt(1));
                 post.setThumbnail(rs.getString(2));
                 post.setTitle(rs.getString(3));
-                PostCategory category = new PostCategory();
+                SubCategoryPost category = new SubCategoryPost();
                 category.setId(rs.getInt(4));
                 post.setPostCategory(category);
                 post.setBriefInfo(rs.getString(5));
@@ -82,14 +83,14 @@ public class PostDBContext extends DBContext {
         return listPost;
     }
 
-    public ArrayList<Post> getListPostFiltered(String searchContent, int idCategory, int pageIndex, int pageSize) {
+    public ArrayList<Post> getListPostFiltered(String searchContent, int idSubCategory, int pageIndex, int pageSize) {
         ArrayList<Post> listPost = new ArrayList<>();
         try {
             String sql = "Select * from\n"
-                    + "(Select p.*, c.name , ROW_NUMBER() over(order by dateUpdated DESC) as row_index\n"
-                    + "from Post p join PostCategory c\n"
+                    + "(Select p.*, c.name, c.idcategory , ROW_NUMBER() over(order by dateUpdated DESC) as row_index\n"
+                    + "from Post p join SubCategoryPost c\n"
                     + "on p.categoryId = c.id and p.status = 1\n";
-            if (idCategory != -1) {
+            if (idSubCategory != -1) {
                 sql += "and p.categoryId = ? "; 
             }
             if (!searchContent.isEmpty()) {
@@ -99,26 +100,26 @@ public class PostDBContext extends DBContext {
                     + "where row_index >= (?-1)*?+1 and row_index <= ? * ?"; 
 
             PreparedStatement stm = connection.prepareStatement(sql);
-            if (idCategory != -1 && searchContent.trim().isEmpty()) {
-                stm.setInt(1, idCategory);
+            if (idSubCategory != -1 && searchContent.trim().isEmpty()) {
+                stm.setInt(1, idSubCategory);
                 stm.setInt(2, pageIndex);
                 stm.setInt(3, pageSize);
                 stm.setInt(4, pageIndex);
                 stm.setInt(5, pageSize);
-            } else if (idCategory == -1 && !searchContent.trim().isEmpty()) {
+            } else if (idSubCategory == -1 && !searchContent.trim().isEmpty()) {
                 stm.setString(1, "%" + searchContent + "%");
                 stm.setString(2, "%" + searchContent + "%");
                 stm.setInt(3, pageIndex);
                 stm.setInt(4, pageSize);
                 stm.setInt(5, pageIndex);
                 stm.setInt(6, pageSize);
-            } else if (idCategory == -1 && searchContent.trim().isEmpty()) {
+            } else if (idSubCategory == -1 && searchContent.trim().isEmpty()) {
                 stm.setInt(1, pageIndex);
                 stm.setInt(2, pageSize);
                 stm.setInt(3, pageIndex);
                 stm.setInt(4, pageSize);
             } else {
-                stm.setInt(1, idCategory);
+                stm.setInt(1, idSubCategory);
                 stm.setString(2, "%" + searchContent + "%");
                 stm.setString(3, "%" + searchContent + "%");
                 stm.setInt(4, pageIndex);
@@ -132,16 +133,19 @@ public class PostDBContext extends DBContext {
                 post.setId(rs.getInt(1));
                 post.setThumbnail(rs.getString(2));
                 post.setTitle(rs.getString(3));
-                PostCategory category = new PostCategory();
-                category.setId(rs.getInt(4));
+                SubCategoryPost subCategory = new SubCategoryPost();
+                subCategory.setId(rs.getInt(4));
                 post.setBriefInfo(rs.getString(5));
                 post.setDescription(rs.getString(6));
                 post.setFeatured(rs.getBoolean(7));
                 post.setDate(rs.getDate(8));
                 post.setStatus(rs.getBoolean(9));
                 User user = new UserDBContext().findUserById(rs.getInt(10));
-                category.setName(rs.getString(11));
-                post.setPostCategory(category);
+                subCategory.setName(rs.getString(11));
+                CategoryPost categoryPost = new CategoryPost();
+                categoryPost.setId(rs.getInt(12));
+                subCategory.setCategory(categoryPost);
+                post.setPostCategory(subCategory);
                 if(user == null) {
                     post.setUser(new User());
                 } else {
@@ -186,17 +190,36 @@ public class PostDBContext extends DBContext {
         return 0;
     }
 
-    public ArrayList<PostCategory> getAllCategory() {
-        ArrayList<PostCategory> listCategory = new ArrayList<>();
+    public ArrayList<CategoryPost> getAllCategory() {
+        ArrayList<CategoryPost> listCategory = new ArrayList<>();
         try {
-            String sql = "Select id, name from PostCategory";
+            String sql = "Select id, name from CategoryPost";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                PostCategory category = new PostCategory();
-                category.setId(rs.getInt("id"));
-                category.setName(rs.getString("name"));
+                CategoryPost category = new CategoryPost();
+                category.setId(rs.getInt(1));
+                category.setName(rs.getString(2));
+                ArrayList<SubCategoryPost> listSubPost = getListSubPostById(rs.getInt(1));
+                category.setListSubPost(listSubPost);
                 listCategory.add(category);
+            }
+        } catch (SQLException e) {
+        }
+        return listCategory;
+    }
+    public ArrayList<SubCategoryPost> getListSubPostById(int idCategory) {
+        ArrayList<SubCategoryPost> listCategory = new ArrayList<>();
+        try {
+            String sql = "Select * from SubCategoryPost Where idCategory = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, idCategory);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                SubCategoryPost subCategory = new SubCategoryPost();
+                subCategory.setId(rs.getInt(1));
+                subCategory.setName(rs.getString(2));
+                listCategory.add(subCategory);
             }
         } catch (SQLException e) {
         }
@@ -214,9 +237,9 @@ public class PostDBContext extends DBContext {
                 + "      ,Post.[status]\n"
                 + "      ,[UserId]\n"
                 + "	  ,[User].fullname\n"
-                + "	  ,PostCategory.id\n"
-                + "	  ,PostCategory.name\n"
-                + "  FROM [dbo].[Post] join PostCategory on Post.categoryId = PostCategory.id\n"
+                + "	  ,SubCategoryPost.id\n"
+                + "	  ,SubCategoryPost.name\n"
+                + "  FROM [dbo].[Post] join SubCategoryPost on Post.categoryId = SubCategoryPost.id\n"
                 + "					join [User] on Post.UserId = [User].id\n"
                 + "  WHERE Post.id = ?";
         try {
@@ -226,7 +249,7 @@ public class PostDBContext extends DBContext {
             if(rs.next()){
                 Post post = new Post();
                 User user = new User();
-                PostCategory postCategory = new PostCategory();
+                SubCategoryPost postCategory = new SubCategoryPost();
                 post.setId(rs.getInt(1));
                 post.setThumbnail(rs.getString(2));
                 post.setTitle(rs.getString(3));

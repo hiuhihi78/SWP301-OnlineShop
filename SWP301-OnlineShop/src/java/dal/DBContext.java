@@ -35,19 +35,15 @@ public class DBContext {
     
     public DBContext() {
         try {
-            String username = "sa";
-            String password = "sa";
+            String username = "dev";
+            String password = "123123";
             String url = "jdbc:sqlserver://localhost:1433;databaseName=OnlineShop2";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    public static void main(String[] args) {
-        DBContext db = new DBContext();
-        if(db.connection != null) System.out.println("abc");
     }
 }
