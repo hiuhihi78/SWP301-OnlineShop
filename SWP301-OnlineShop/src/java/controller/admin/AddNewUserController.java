@@ -4,7 +4,7 @@
  */
 package controller.admin;
 
-import configs.GeneratePassword;
+import configs.HandleGenerate;
 import configs.SendMail;
 import dal.RoleDBContext;
 import dal.UserDBContext;
@@ -80,7 +80,7 @@ public class AddNewUserController extends BaseAuthController {
             request.setAttribute("message", message);
             request.getRequestDispatcher("../view/admin/addNewUser.jsp").forward(request, response);
         } else {
-            String password = GeneratePassword.generatePassword();
+            String password = HandleGenerate.generatePassword();
             String url = "http://localhost:8080/login";
             userDB.inserUser(fullname, password, gender, email, mobile, address, role, status);
             SendMail.sendPassword(email, fullname, password, url);
