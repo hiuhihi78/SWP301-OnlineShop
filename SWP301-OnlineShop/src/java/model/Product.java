@@ -18,8 +18,34 @@ public class Product {
     private int discount;
     private long priceDiscount;
     private User user;
+    private boolean status;
+    private long quantity;
     private boolean featured;
     private String thumbnail;
+
+    public long getPriceDiscount() {
+        return price - ((price*discount)/100);
+    }
+
+    public void setPriceDiscount(long priceDiscount) {
+        this.priceDiscount = priceDiscount;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public int getId() {
         return id;

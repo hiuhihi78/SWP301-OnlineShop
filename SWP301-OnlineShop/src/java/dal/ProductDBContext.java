@@ -22,7 +22,7 @@ public class ProductDBContext extends DBContext {
         ArrayList<Product> listProduct = new ArrayList<>();
         try {
             String sql = "Select top 6 * from Product\n"
-                    + "where featured = 1 \n"
+                    + "where featured = 1 and status = 1 and quantity > 0 \n"
                     + "order by date desc";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
@@ -42,6 +42,8 @@ public class ProductDBContext extends DBContext {
                 SubCategory subCategory = new SubCategory();
                 subCategory.setId(rs.getInt(10));
                 product.setSubCategory(subCategory);
+                product.setQuantity(rs.getInt(11));
+                product.setStatus(rs.getBoolean(12));
                 listProduct.add(product);
             }
         } catch (SQLException e) {
