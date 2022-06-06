@@ -4,12 +4,15 @@
  */
 package controller.marketing;
 
+import dal.CustomerDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 
 /**
  *
@@ -17,47 +20,65 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CustomerListControler extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            request.getRequestDispatcher("/view/marketing/customerList.jsp").forward(request, response);
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        int userRole = 4;
+        CustomerDBContext customerDBContext = new CustomerDBContext();
+        //check search and sort by
+        String searchBy = request.getParameter("searchBy");
+        String statusBy = request.getParameter("statusBy");
+        String sortBy = request.getParameter("sortBy");
+        String page = request.getParameter("page");
+        if (page == null || page.trim().length() == 0) {
+            page = "1";
+        }
+        int pagesize = 10;
+        int pageindex = Integer.parseInt(page);
+        //ceheck if user dont choice to search anything
+        if (searchBy == null || searchBy.length() == 0 ||  searchBy.equals("-1")) {
+            searchBy = "";
+        }
+        request.setAttribute("searchBy", searchBy);
+        //status user choice
+        if (statusBy == null || statusBy.length() == 0 || statusBy.equals("-1")) {
+            statusBy = "";
+        }
+        request.setAttribute("statusBy", statusBy);
+        //check sortBy
+        if (sortBy == null || sortBy.length() == 0 || sortBy.equals("-1")) {
+            sortBy = "";
+        }
+        request.setAttribute("sortBy", sortBy);
+
+        ArrayList<User> listCustomerPage = customerDBContext.getCustomerByPage(userRole, searchBy, statusBy, pageindex, pagesize);
+        int numofrecords = customerDBContext.count(userRole);
+        int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
+                : (numofrecords / pagesize) + 1;
+        //search by..., status by
+        //check choice to sort or not
+        if (sortBy.isEmpty()) {
+            //get list of customer
+//            ArrayList<User> listCustomer = customerDBContext.getListCustomer(userRole, searchBy, statusBy);
+            request.setAttribute("listCustomer", listCustomerPage);
+        } else {
+            //get list of customer
+//            ArrayList<User> listCustomer2 = customerDBContext.getListCustomer(userRole, searchBy, statusBy);
+            ArrayList<User> listCustomerSortBy = customerDBContext.getListCustomerSortBy(listCustomerPage, sortBy);
+            request.setAttribute("listCustomer", listCustomerSortBy);
+        }
+        //pass to jsp
+        request.setAttribute("pagesize", pagesize);
+        request.setAttribute("pageindex", pageindex);
+        request.setAttribute("totalpage", totalpage);
+        request.getRequestDispatcher("/view/marketing/customerList.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

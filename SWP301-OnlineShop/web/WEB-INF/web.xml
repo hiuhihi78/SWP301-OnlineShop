@@ -2,15 +2,91 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>controller.user.LoginController</servlet-class>
+        <servlet-class>controller.common.LoginController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterController</servlet-name>
-        <servlet-class>controller.user.RegisterController</servlet-class>
+        <servlet-class>controller.common.RegisterController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ResetPasswordController</servlet-name>
-        <servlet-class>controller.user.ResetPasswordController</servlet-class>
+        <servlet-name>UserListController</servlet-name>
+        <servlet-class>controller.admin.UserListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>controller.admin.DashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeController</servlet-name>
+        <servlet-class>controller.home.HomeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogListController</servlet-name>
+        <servlet-class>controller.home.BlogListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShopController</servlet-name>
+        <servlet-class>controller.home.ShopController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewServlet</servlet-name>
+        <servlet-class>controller.home.NewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>controller.common.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogDetailController</servlet-name>
+        <servlet-class>controller.home.BlogDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TestLoginController</servlet-name>
+        <servlet-class>controller.test.TestLoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendMailController</servlet-name>
+        <servlet-class>controller.common.SendMailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <servlet-class>controller.common.ChangePasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VeryfiController</servlet-name>
+        <servlet-class>controller.common.VeryfiController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserProfileControler</servlet-name>
+        <servlet-class>controller.user.UserProfileControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditUserProfileControler</servlet-name>
+        <servlet-class>controller.user.EditUserProfileControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCustomerControler</servlet-name>
+        <servlet-class>controller.marketing.AddCustomerControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditCustomerControler</servlet-name>
+        <servlet-class>controller.marketing.EditCustomerControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerListControler</servlet-name>
+        <servlet-class>controller.marketing.CustomerListControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerDetailsControler</servlet-name>
+        <servlet-class>controller.marketing.CustomerDetailsControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddRoleController</servlet-name>
+        <servlet-class>controller.admin.AddRoleController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditRoleController</servlet-name>
+        <servlet-class>controller.admin.EditRoleController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CustomerListControler</servlet-name>
@@ -33,8 +109,84 @@
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ResetPasswordController</servlet-name>
-        <url-pattern>/reset</url-pattern>
+        <servlet-name>UserListController</servlet-name>
+        <url-pattern>/admin/userList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/admin/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeController</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogListController</servlet-name>
+        <url-pattern>/bloglist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShopController</servlet-name>
+        <url-pattern>/shop</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewServlet</servlet-name>
+        <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogDetailController</servlet-name>
+        <url-pattern>/blogDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestLoginController</servlet-name>
+        <url-pattern>/test/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendMailController</servlet-name>
+        <url-pattern>/send</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VeryfiController</servlet-name>
+        <url-pattern>/verify</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserProfileControler</servlet-name>
+        <url-pattern>/user/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditUserProfileControler</servlet-name>
+        <url-pattern>/user/editProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCustomerControler</servlet-name>
+        <url-pattern>/customer/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditCustomerControler</servlet-name>
+        <url-pattern>/customer/editStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerListControler</servlet-name>
+        <url-pattern>/customer/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerDetailsControler</servlet-name>
+        <url-pattern>/customer/details</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddRoleController</servlet-name>
+        <url-pattern>/admin/addRole</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditRoleController</servlet-name>
+        <url-pattern>/admin/editRole</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CustomerListControler</servlet-name>
