@@ -36,13 +36,9 @@ public class DBContext {
     
     public DBContext() {
         try {
-//            String username = "vailon";
-//            String password = "daucatmoi123!";
-//            String url = "jdbc:sqlserver://10.0.2.25:1433;databaseName=OnlineShop2";
-            String username = "tienpm";
-            String password = "1";
+            String username = "sa";
+            String password = "sa";
             String url = "jdbc:sqlserver://localhost:1433;databaseName=OnlineShop2";
-//            String url = "jdbc:sqlserver://10.0.2.25:1433;databaseName=OnlineShop2";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException ex) {
