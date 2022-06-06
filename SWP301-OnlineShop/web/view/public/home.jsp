@@ -105,7 +105,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-8 padding-right pd-top-15 box-shadow  border-radius-20 height-fit-content"> <!-- right-sidebar -->
+                    <div class="col-sm-8 padding-right pd-top-15 box-shadow  border-radius-20 height-fit-content pd-left-0"> <!-- right-sidebar -->
                         <div class="features_items">
                             <h2 class="title text-center">Hot Posts</h2>
 

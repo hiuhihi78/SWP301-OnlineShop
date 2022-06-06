@@ -5,6 +5,9 @@
 /*@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
 @import url(http://fonts.googleapis.com/css?family=Abel);*/
+.pd-left-0 {
+    padding-left: 0px;
+}
 .pd-buttom-25 {
     padding-bottom: 25px;
 }
@@ -714,7 +717,7 @@ ul.sub-menu {
 }
 
 .category-products {
-    border: 1px solid #F7F7F0;
+    /*border: 1px solid #F7F7F0;*/
     margin-bottom: 35px;
     padding-bottom: 20px;
     /*padding-top: 15px;*/
