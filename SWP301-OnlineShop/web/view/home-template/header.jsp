@@ -43,6 +43,11 @@
                                                 <a href="admin/userList" class="text-none-underline">Manage</a>
                                             </li>
                                         </c:if>
+                                        <c:if test="${sessionScope.user.role.id == 2}">
+                                            <li>
+                                                <a href="marketing/productlist" class="text-none-underline">Maketing manage</a>
+                                            </li>
+                                        </c:if>
                                         <li>
                                             <a href="logout" class="text-none-underline">Logout</a>
                                         </li>

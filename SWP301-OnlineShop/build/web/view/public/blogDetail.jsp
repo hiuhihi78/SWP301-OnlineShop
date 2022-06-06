@@ -25,8 +25,8 @@
         <input type="hidden" value="${requestScope.searchContent}" id="search-content"/>
         <section>
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-3 pd-top-shadow">
+                <div class="row flex-justify">
+                    <div class="col-sm-3 pd-top-15 border-radius-20 box-shadow ">
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center">Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
@@ -94,7 +94,7 @@
                             </div>
                         </div>                     
                     </div>
-                    <div class="col-sm-9 pd-top-15">
+                    <div class="col-sm-8 pd-top-15 border-radius-20 box-shadow height-fit-content pd-buttom-25">
                         <div class="blog-post-area mb-20" ">
                             <h2 class="title text-center">Blog Detail</h2>
                             <div class="single-blog-post">

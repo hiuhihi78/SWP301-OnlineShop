@@ -6,6 +6,58 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : May 31, 2022, 9:01:17 PM
     Author     : Admin
 */
+.mr-5percent{
+    margin-right: 5%;
+}
+
+.ml-2percent{
+    margin-left: 2%;
+}
+
+.display-flex{
+    display: flex;
+}
+
+.display-inline{
+    display: inline;
+}
+.mb-10{
+    margin-bottom: 10px;
+}
+
+.foat-l{
+    float: left;
+}
+
+.w-70-percent{
+    width: 70%;
+}
+
+.w-50-percent{
+    width: 50%;
+}
+
+.m-0-2percent{
+    margin: 0 2%;
+}
+
+.display-inline-block{
+    display: inline-block; 
+}
+.float-r{
+    float: right;
+}
+
+.padding-0{
+    padding: 0;
+}
+
+#formAddNewUser{
+    margin: 0 2%;
+    padding: 0;
+    display: inline-block; 
+    float: right;
+}
 
 .content{
     margin:  0px 20px;
@@ -33,6 +85,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     z-index: 1024;
 }
 
+.filter-select{
+    width: 20px;
+}
+
+.content{
+    margin:  0px 20px;
+}
+
+#searchfilter{
+    margin-bottom: 10px;
+}
+
+
+
+#formFilter{
+    width: 70%; 
+    float: left;
+}
 
 
 
