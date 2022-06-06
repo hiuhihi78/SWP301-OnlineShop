@@ -1,0 +1,65 @@
+@charset "UTF-8";
+/*!
+ * Vali Admin
+ * Author: Pratik Borsadiya
+ * ================================*/
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,400i,700);
+@import url(https://fonts.googleapis.com/css?family=Niconne);
+/*!
+ * Bootstrap v4.1.1 (https://getbootstrap.com/)
+ * Copyright 2011-2018 The Bootstrap Authors
+ * Copyright 2011-2018 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+
+.toggle.lg input[type="checkbox"] + .button-indecator:before {
+  font-size: 30px;
+}
+
+.toggle input[type="checkbox"] {
+  display: none;
+}
+
+.toggle input[type="checkbox"] + .button-indecator {
+  cursor: pointer;
+  display: block;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.toggle input[type="checkbox"] + .button-indecator:before {
+  content: "";
+  font-family: "FontAwesome";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 25px;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: -2px;
+}
+
+.toggle input[type="checkbox"]:checked + .button-indecator:before {
+  content: "";
+  color: #009688;
+  -webkit-animation: toggleBtn 0.3s ease-in-out;
+          animation: toggleBtn 0.3s ease-in-out;
+}
+
+.toggle input[type="checkbox"]:disabled + .button-indecator {
+  cursor: not-allowed !important;
+}
+
+.toggle input[type="checkbox"]:disabled + .button-indecator:before {
+  color: #ccc;
+}
+
+
+
