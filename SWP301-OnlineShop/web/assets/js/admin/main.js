@@ -9,3 +9,12 @@ setTimeout(function () {
     element.remove();
 }, 3000);
 
+
+setTimeout(function () {
+    const element = document.getElementById('showAlterSuccess');
+    element.remove();
+}, 3000);
+setTimeout(function () {
+    const element = document.getElementById('showAlterFail');
+    element.remove();
+}, 3000);

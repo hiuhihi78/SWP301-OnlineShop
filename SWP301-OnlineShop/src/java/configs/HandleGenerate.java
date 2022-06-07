@@ -11,8 +11,9 @@ import java.util.Random;
  * @author Admin
  */
 public class HandleGenerate {
+
     private static final int PASSWORD_LENGTH = 6;
-    
+
     public static String generatePassword() {
         String capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
@@ -22,14 +23,14 @@ public class HandleGenerate {
         Random random = new Random();
         char[] password = new char[PASSWORD_LENGTH];
         int min = 0;
-        int max = combinedChars.length();
+        int max = combinedChars.length() - 1;
         for (int i = 0; i < PASSWORD_LENGTH; i++) {
-            int random_index = (int)Math.floor(Math.random()*(max-min+1)+min);
+            int random_index = (int) Math.floor(Math.random() * (max - min + 1) + min);
             password[i] = combinedChars.charAt(random_index);
         }
         return String.valueOf(password);
     }
-    
+
     public static String generateSubNameFile() {
         String capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
@@ -38,14 +39,14 @@ public class HandleGenerate {
         Random random = new Random();
         char[] password = new char[PASSWORD_LENGTH];
         int min = 0;
-        int max = combinedChars.length();
+        int max = combinedChars.length() - 1;
         for (int i = 0; i < PASSWORD_LENGTH; i++) {
-            int random_index = (int)Math.floor(Math.random()*(max-min+1)+min);
+            int random_index = (int) Math.floor(Math.random() * (max - min + 1) + min);
             password[i] = combinedChars.charAt(random_index);
         }
         return String.valueOf(password);
     }
-    
+
     public static void main(String[] args) {
         System.out.println(generatePassword());
     }
