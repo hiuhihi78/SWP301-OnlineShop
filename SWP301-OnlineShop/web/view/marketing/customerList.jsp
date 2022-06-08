@@ -42,16 +42,16 @@
                                 <!-- Search and add-->
                                 <div class="row" style="margin-bottom: 10px;">
                                     <div class="col-md-6">
-                                        <form  action="../customer/list" method="get"> 
+                                        <form  class="form-inline" action="../customer/list" method="get"> 
 
-                                            <input type="text" name="searchBy" placeholder="Enter part of Name, Email, Mobile">
+                                            <input class="form-control" style="width: 20rem;" type="text" name="searchBy" value="${requestScope.searchBy}" placeholder="Search">
 
-                                            <select name="statusBy">
-                                                <option value="-1"  ${requestScope.statusBy == "" ? "selected='selected'":""}>Status</option>
+                                        <select class="form-control" name="statusBy">
+                                            <option value="-1"  ${requestScope.statusBy == "" ? "selected='selected'":""}>Status By</option>
                                             <option value="1" ${requestScope.statusBy == "1" ? "selected='selected'":""} >Active</option>
                                             <option value="0" ${requestScope.statusBy == "0" ? "selected='selected'":""}>Deactive</option>
                                         </select>
-                                        <select name="sortBy" onchange="submitForm()">
+                                        <select class="form-control" name="sortBy" onchange="submitForm()">
                                             <option value="-1" ${requestScope.sortBy == "" ? "selected='selected'":""}>SortBy</option>
                                             <option value="fullname" ${requestScope.sortBy == "fullname" ? "selected='selected'":""}>Full Name</option>
                                             <option value="email" ${requestScope.sortBy == "email" ? "selected='selected'":""}>Email</option>
@@ -126,7 +126,25 @@
                                     </div>
                             </div>
                             <!--Pagging -->
-                            <div class="pull-right" id="pagger"> </div>
+                            <!--<div class="pull-right" id="pagger"> </div>-->
+
+                            <div class="pagging">
+                                <ul class="pagination pull-right">
+
+                                    <li><a href="list?page=1&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Frist</a></li>
+                                    
+                                    <li><a href="list?page=${page-1}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Previous</a></li>
+                                    
+                                        <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
+                                        <li class="${pageindex == page ? "active =" : ""}" ><a href="list?page=${page}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">${page}</a></li>    
+                                        </c:forEach>
+
+                                    <li><a href="list?page=${page+1}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Next</a></li>
+
+                                    <li><a href="list?page=${requestScope.totalpage}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Last</a></li>
+                                </ul>
+                            </div>
+
                         </div>
                     </section>
                 </section>
@@ -166,6 +184,13 @@
                 document.getElementById("searchForm").submit();
             }
         </script>
+
+
+
+        <script src="../../assets/js/customer/customerList.js" type="text/javascript"></script>
+
+
+
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../../assets/js/jquery.min.js" type="text/javascript"></script>

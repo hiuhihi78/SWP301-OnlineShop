@@ -5,11 +5,10 @@
 package controller.marketing;
 
 import dal.CustomerDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.User;
@@ -18,10 +17,10 @@ import model.User;
  *
  * @author Hoang Quang
  */
-public class CustomerListControler extends HttpServlet {
+public class CustomerListControler extends BaseAuthController {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -37,8 +36,8 @@ public class CustomerListControler extends HttpServlet {
         }
         int pagesize = 10;
         int pageindex = Integer.parseInt(page);
-        //ceheck if user dont choice to search anything
-        if (searchBy == null || searchBy.length() == 0 ||  searchBy.equals("-1")) {
+        //check search
+        if (searchBy == null || searchBy.length() == 0 || searchBy.equals("-1")) {
             searchBy = "";
         }
         request.setAttribute("searchBy", searchBy);
@@ -52,21 +51,15 @@ public class CustomerListControler extends HttpServlet {
             sortBy = "";
         }
         request.setAttribute("sortBy", sortBy);
-
-        ArrayList<User> listCustomerPage = customerDBContext.getCustomerByPage(userRole, searchBy, statusBy, pageindex, pagesize);
-        int numofrecords = customerDBContext.count(userRole);
+        int numofrecords = customerDBContext.count(userRole, searchBy, statusBy);
         int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
                 : (numofrecords / pagesize) + 1;
-        //search by..., status by
-        //check choice to sort or not
+        ArrayList<User> listCustomerPage = customerDBContext.getCustomerByPage(userRole, searchBy, statusBy, pageindex, pagesize);
+
         if (sortBy.isEmpty()) {
-            //get list of customer
-//            ArrayList<User> listCustomer = customerDBContext.getListCustomer(userRole, searchBy, statusBy);
             request.setAttribute("listCustomer", listCustomerPage);
         } else {
-            //get list of customer
-//            ArrayList<User> listCustomer2 = customerDBContext.getListCustomer(userRole, searchBy, statusBy);
-            ArrayList<User> listCustomerSortBy = customerDBContext.getListCustomerSortBy(listCustomerPage, sortBy);
+            ArrayList<User> listCustomerSortBy = customerDBContext.getListCustomerSortBy(userRole, searchBy, statusBy, pageindex, pagesize, sortBy);
             request.setAttribute("listCustomer", listCustomerSortBy);
         }
         //pass to jsp
@@ -77,7 +70,7 @@ public class CustomerListControler extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 
