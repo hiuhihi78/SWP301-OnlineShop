@@ -106,18 +106,14 @@
                 <div class="modal-body">
                     <div class="row">
                         <!-- Success alert -->
-                        <c:if test="${requestScope.isSuccess == 1}">
-                            <div class="alert alert-success">
-                                <strong>Success!</strong> ${requestScope.msg}
-                            </div>
-                        </c:if>
+                        <div class="alert alert-success" id="alertSuccess">
+                            <strong>Success!</strong> ${requestScope.msg}
+                        </div>
+
                         <!-- Failed alert -->
-                        <c:if test="${requestScope.isSuccess == 0}">
-                            <div class="alert alert-danger">
-                                <strong>Danger!</strong> ${requestScope.msg}
-                            </div>
-                        </c:if>
-                        <form method="POST" action="/user/changePassword">
+                        <div class="alert alert-danger" id="alertDanger">
+                            <strong>Danger!</strong> ${requestScope.msg}
+                        </div>
                             <div class="form-group">
                                 <label for="oldPassword">Old Password</label>
                                 <input type="password" class="form-control" id="oldPassword" placeholder="Enter old password" name="oldPassword">
@@ -131,8 +127,7 @@
                                 <input type="password" class="form-control" id="reEnterNewPassword" placeholder="Re-enter new password">
                             </div>
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="saveNewPassword">Save changes</button>
-                        </form>
+                            <button type="button" class="btn btn-primary" id="saveNewPassword">Save changes</button>
                     </div>
                 </div>
             </div>

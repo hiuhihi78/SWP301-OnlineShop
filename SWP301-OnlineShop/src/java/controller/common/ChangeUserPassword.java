@@ -60,22 +60,24 @@ public class ChangeUserPassword extends BaseAuthController {
             UserDBContext userDB = new UserDBContext();
             User u = (User) request.getSession().getAttribute("user");
             String userOldPass = userDB.getUserPassword(u.getId());
-            if(oldPass.equals(userOldPass))
-            {
-                request.setAttribute("msg", "Your password has been changed");
-                request.setAttribute("isSuccess", 1);
+            JsonObject json = new JsonObject();
+            if (oldPass.equals(userOldPass)) {
+                json.addProperty("Code", 200);
+                json.addProperty("Msg", "Your password has been changed successfully!");
+                userDB.updateUserPassword(u.getId(), newPass);
+                response.setStatus(200);
+                response.getWriter().println(new GsonBuilder().setPrettyPrinting().create().toJson(json).toString());
+            } else {
+                json.addProperty("Code", 500);
+                json.addProperty("Msg", "Old password you entered does not match with your current password!");
+                response.setStatus(500);
+                response.getWriter().println(new GsonBuilder().setPrettyPrinting().create().toJson(json).toString());
             }
-            else
-            {
-                request.setAttribute("msg", "Your old password not correct");
-                request.setAttribute("isSuccess", 0);
-            }
-
         } catch (Exception e) {
             e.printStackTrace();
             JsonObject json = new JsonObject();
             json.addProperty("Code", 500);
-            json.addProperty("Msg", e.getMessage());
+            json.addProperty("Msg", "An error has occured!" + e.getMessage());
             response.setStatus(500);
             response.getWriter().println(new GsonBuilder().setPrettyPrinting().create().toJson(json).toString());
         }

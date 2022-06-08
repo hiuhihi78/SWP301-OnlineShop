@@ -1163,6 +1163,24 @@ public class UserDBContext extends DBContext {
         return null;
     }
 
+    public void updateUserPassword(int uid, String password) throws SQLException {
+        connection.setAutoCommit(false);
+        String sql = "UPDATE [dbo].[User]\n"
+                + "   SET [password] = ?\n"
+                + " WHERE id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, password);
+            ps.setInt(2, uid);       
+            ps.executeUpdate();
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            connection.rollback();
+            connection.close();
+        }
+    }
+
     public static void main(String[] args) {
         UserDBContext db = new UserDBContext();
 //        System.out.println(db.getListUserFiltered(3, "male", "active", "Le", "id", "asc", 1, 5).size());
