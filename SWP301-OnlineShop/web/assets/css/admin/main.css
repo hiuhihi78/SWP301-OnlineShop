@@ -43,6 +43,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     display: none;
 }
 
+.close-btn-not-hide{
+    font-size: 20px;
+    color: red;
+    margin-left: 90%;
+    position: absolute;
+}
+
+
 .close-btn:hover{
     color: orange;
 }
@@ -189,11 +197,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
-
+/*
 #formFilter{
     width: 70%;
     float: left;
-}
+}*/
 
 
 
