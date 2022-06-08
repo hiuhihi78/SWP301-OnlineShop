@@ -27,4 +27,17 @@ $(document).ready(function(){
 	        zIndex: 2147483647 // Z-Index for the overlay
 		});
 	});
+//        $("#saveNewPassword").click(function() {
+//            //get value from inputs
+//            var oldPass = $('#oldPassword').val();
+//            var newPass = $('#newPassword').val();
+//            var url = '/user/changePassword'; 
+//            $.post(url, 
+//            {
+//                oldPassword: oldpass,
+//                newPassword: newPass
+//            }, function(){
+//                
+//            })
+//        })
 });

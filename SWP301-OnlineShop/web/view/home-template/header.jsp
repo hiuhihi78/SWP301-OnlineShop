@@ -94,6 +94,7 @@
         </div>
     </div>  
     <!--/header-bottom-->
+
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -104,20 +105,34 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="form-group">
-                            <label for="oldPassword">Old Password</label>
-                            <input type="password" class="form-control" id="oldPassword" placeholder="Enter old password">
-                        </div>
-                        <div class="form-group">
-                            <label for="newPassword">New Password</label>
-                            <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
-                        </div>
-                        <div class="form-group">
-                            <label for="reEnterNewPassword">Re-enter new password</label>
-                            <input type="password" class="form-control" id="reEnterNewPassword" placeholder="Re-enter new password">
-                        </div>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <!-- Success alert -->
+                        <c:if test="${requestScope.isSuccess == 1}">
+                            <div class="alert alert-success">
+                                <strong>Success!</strong> ${requestScope.msg}
+                            </div>
+                        </c:if>
+                        <!-- Failed alert -->
+                        <c:if test="${requestScope.isSuccess == 0}">
+                            <div class="alert alert-danger">
+                                <strong>Danger!</strong> ${requestScope.msg}
+                            </div>
+                        </c:if>
+                        <form method="POST" action="/user/changePassword">
+                            <div class="form-group">
+                                <label for="oldPassword">Old Password</label>
+                                <input type="password" class="form-control" id="oldPassword" placeholder="Enter old password" name="oldPassword">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" class="form-control" id="newPassword" placeholder="Enter new password" name="newPassword">
+                            </div>
+                            <div class="form-group">
+                                <label for="reEnterNewPassword">Re-enter new password</label>
+                                <input type="password" class="form-control" id="reEnterNewPassword" placeholder="Re-enter new password">
+                            </div>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="saveNewPassword">Save changes</button>
+                        </form>
                     </div>
                 </div>
             </div>

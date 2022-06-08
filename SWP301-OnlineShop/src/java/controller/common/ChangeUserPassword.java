@@ -7,13 +7,16 @@ package controller.common;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import dal.UserDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 
 /**
  *
@@ -51,6 +54,31 @@ public class ChangeUserPassword extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            String oldPass = request.getParameter("oldPassword");
+            String newPass = request.getParameter("newPassword");
+            UserDBContext userDB = new UserDBContext();
+            User u = (User) request.getSession().getAttribute("user");
+            String userOldPass = userDB.getUserPassword(u.getId());
+            if(oldPass.equals(userOldPass))
+            {
+                request.setAttribute("msg", "Your password has been changed");
+                request.setAttribute("isSuccess", 1);
+            }
+            else
+            {
+                request.setAttribute("msg", "Your old password not correct");
+                request.setAttribute("isSuccess", 0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JsonObject json = new JsonObject();
+            json.addProperty("Code", 500);
+            json.addProperty("Msg", e.getMessage());
+            response.setStatus(500);
+            response.getWriter().println(new GsonBuilder().setPrettyPrinting().create().toJson(json).toString());
+        }
     }
 
     /**
