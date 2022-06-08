@@ -19,7 +19,7 @@ $(document).ready(function () {
     $('#status').on('change', function () {
         this.form.submit();
     });
-    
+
     $('#orderBy').on('change', function () {
         this.form.submit();
     });
@@ -35,7 +35,7 @@ $(document).ready(function () {
 });
 
 
-function submitForm(id){
+function submitForm(id) {
     document.getElementById(id).submit();
 }
 
@@ -51,4 +51,11 @@ function handleShowSubCategory() {
             document.getElementById('subCategoryId').innerHTML = data;
         }
     });
+}
+
+
+
+function paggerPageIndex(page, content) {
+    var href = 'productlist?xpage=' + page + '&' + content;
+    window.location.href = href;
 }

@@ -44,7 +44,7 @@ public class ProductListController extends HttpServlet {
         String tempOrderBy = request.getParameter("orderBy");
         String tempSort = request.getParameter("sort");
         int categoryId, subCategoryId;
-        String status, featured , search, orderBy, sort;
+        String status, featured, search, orderBy, sort;
         if (tempCategoryId == null) {
             categoryId = 0;
         } else {
@@ -62,7 +62,7 @@ public class ProductListController extends HttpServlet {
         } else {
             featured = request.getParameter("featured");
         }
-        
+
         if (tempFeatured == null) {
             status = "all";
         } else {
@@ -86,7 +86,6 @@ public class ProductListController extends HttpServlet {
         } else {
             sort = request.getParameter("sort");
         }
-        
 
         CategoryDBContext categoryDB = new CategoryDBContext();
         ArrayList<Category> categorys = categoryDB.getAllCategory();
@@ -97,9 +96,11 @@ public class ProductListController extends HttpServlet {
             subCategorys = categoryDB.getSubCatgory(categoryId);
         }
         ProductDBContext productDB = new ProductDBContext();
-        
-        int totalRecord = productDB.getTotalRecord();
-        int page, numberRecordPerPage = 5;
+
+        ArrayList<Product> listAllProductFilter = productDB.getListProductFilter(categoryId, subCategoryId, status, featured, search, orderBy, sort);
+//        int totalRecord = productDB.getTotalRecord();
+        int totalRecord = listAllProductFilter.size();
+        int page, numberRecordPerPage = 2;
         int totalPage = totalRecord % numberRecordPerPage == 0
                 ? totalRecord / numberRecordPerPage : totalRecord / numberRecordPerPage + 1;
         String currentPage = request.getParameter("xpage");
@@ -108,12 +109,10 @@ public class ProductListController extends HttpServlet {
         } else {
             page = Integer.parseInt(currentPage);
         }
-        ArrayList<Product> listAllProductFilter = productDB.getListProductFilter(categoryId,subCategoryId,status,featured,search,orderBy, sort);
         int startRecord = (page - 1) * numberRecordPerPage;
         int endRecord = Math.min(page * numberRecordPerPage, totalRecord);
         ArrayList<Product> listPaging = productDB.getListProductByPage(listAllProductFilter, startRecord, endRecord);
 
-        
         request.setAttribute("categorys", categorys);
         request.setAttribute("subCategorys", subCategorys);
         request.setAttribute("categoryId", categoryId);

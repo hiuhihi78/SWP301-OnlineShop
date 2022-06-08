@@ -37,9 +37,9 @@
         <c:set var="search" value="${requestScope.search}"></c:set>
         <c:set var="orderBy" value="${requestScope.orderBy}"></c:set>
         <c:set var="sort" value="${requestScope.sort}"></c:set>
-        <c:set var="gapPage" value="2"></c:set>
+        <c:set var="gapPage" value="1"></c:set>
         <c:set var="totalPage" value="${requestScope.totalPage}"></c:set>
-        <c:set var="content" value="categoryI=${categoryId}&subCategoryId=${subCategoryId}&status=${status}&search=${search}&orderBy=${orderBy}&sort=${sort}"></c:set>
+        <c:set var="content" value="categoryId=${categoryId}&subCategoryId=${subCategoryId}&featured=${featured}&status=${status}&search=${search}&orderBy=${orderBy}&sort=${sort}"></c:set>
         
         
         <!-- header logo: style can be found in header.less -->
@@ -56,7 +56,7 @@
                     <!--Alter-->
                         <!--Search, add and filter product-->
                         <div class="row d-flex" id="searchfilter">
-                            <form action="userList" method="get"  class="form-inline" id="formFilter">
+                            <form action="productlist" method="get"  class="form-inline" id="formFilter">
                                 <input type="hidden" name="action" value="all"/>
                                 <input type="hidden" name="xpage" value="1"/>
                                 
@@ -194,7 +194,39 @@
 
                     <!--Pagging-->
                     <div class="row">
+                        <ul class="pagination">
+                            <c:if test="${page - gapPage > 0}">
+                                <li class="page-item"><a href="#" onclick="paggerPageIndex('${page - 1}','${content}');" class="page-link">Previous</a></li>
+                            </c:if>
 
+                            <c:if test="${page - gapPage < 0}">
+                                <c:forEach var="i" begin="1" end="${page - 1}" step="1">
+                                    <li class="page-item"><a href="#" onclick="paggerPageIndex('${i}','${content}')" class="page-link">${i}</a></li>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${page - gapPage == 0}">
+                                <c:forEach var="i" begin="1" end="${page - 1}" step="1">
+                                    <li class="page-item"><a href="#" onclick="paggerPageIndex('${i}','${content}')" class="page-link">${i}</a></li>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${page - gapPage > 0}">
+                                <c:forEach var="i" begin="${page - gapPage}" end="${page - 1}" step="1">
+                                    <li class="page-item"><a href="#" onclick="paggerPageIndex('${i}','${content}')" class="page-link">${i}</a></li>
+                                </c:forEach>
+                            </c:if>
+
+                            <li class="page-item active"><a class="page-link">${page}</a></li>
+
+                            <c:forEach var="i" begin="${page + 1}" end="${page + gapPage}"  step="1">
+                                <c:if test="${i <= totalPage}">
+                                    <li class="page-item"><a href="#" onclick="paggerPageIndex('${i}','${content}')" class="page-link">${i}</a></li>
+                                </c:if>
+                            </c:forEach>
+
+                            <c:if test="${page + gapPage <= totalPage}">
+                                <li class="page-item"><a href="#" onclick="paggerPageIndex('${page + 1}','${content}');" class="page-link">Next</a></li>
+                            </c:if>
+                        </ul>
                     </div> <!-- / Pagging-->
 
                 </section> <!--/ Main content -->

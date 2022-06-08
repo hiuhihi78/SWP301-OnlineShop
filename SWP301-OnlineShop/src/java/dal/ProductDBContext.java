@@ -264,7 +264,7 @@ public class ProductDBContext extends DBContext {
                 paramIndex++;
                 Object[] param = new Object[2];
                 param[0] = Boolean.class.getName();
-                param[1] = status.equals("active");
+                param[1] = featured.equals("active");
                 params.put(paramIndex, param);
             }
 
@@ -334,6 +334,11 @@ public class ProductDBContext extends DBContext {
 
     public ArrayList<Product> getListProductByPage(ArrayList<Product> list, int start, int end) {
         ArrayList<Product> arr = new ArrayList<>();
+        int totalRecord = list.size();
+        if(totalRecord < end){
+            arr.addAll(list);
+            return arr;
+        }
         for (int i = start; i < end; i++) {
             arr.add(list.get(i));
         }

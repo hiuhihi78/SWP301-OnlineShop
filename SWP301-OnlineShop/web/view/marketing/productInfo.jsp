@@ -54,45 +54,6 @@
                     <jsp:include page="../marketing-template/alter.jsp"></jsp:include>
                         <!--/alter-->
                     <div class="mb-10" >
-<!--                        <form action="editProductInfo" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="id" value="${requestScope.product.id}"/>
-                        
-                            Thumbnail
-                            <div class="form-group w-70-percent">
-                                <label for="thumbnail">Thumbnail</label>
-                                <div  class="w-35percent image-input-layout display-flex" style="position: relative">
-                                    <div id="closeBtn-thumbnailBoxImg" class="close-btn-not-hide" onclick="closeImgage('thumbnailBoxImg','closeBtn-thumbnailBoxImg','thumbnail');"> <i class="fa-solid fa-xmark close-btn"></i></div>
-                                    <img id="thumbnailBoxImg" src="${requestScope.product.thumbnail}" alt="your image" style="height:100%; width:100%;" class="boder-radius  image-thumbnail"/>
-                                </div>
-                                <input type="file" name="thumbnail" id="thumbnail" onchange="showThumbnail()" />
-                            </div>
-                            /Thumbnail
-                            
-                             Attached image
-                            <div class="form-group w-70-percent">
-                                <label >Attached image</label>
-                                <div class="display-flex">
-                                    <div>
-                                        <div  class="w-100percent image-input-layout display-flex" style="position: relative">
-                                            <div id="closeBtn-attachedBoxImg-1" class="close-btn-not-hide" onclick="closeImgage('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1');"> <i class="fa-solid fa-xmark close-btn"></i></div>
-                                            <img id="attachedBoxImg-1" src="<%= attchedImg.get(0).getImage() %>" alt="your image" style="height:100%; width:100%;" class="boder-radius image-thumbnail"/>
-                                        </div>
-                                        <input type="file" name="attachedImg1" id="attachedImg1" onchange="showAttachedImg('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1')"/>
-                                    </div>
-                                    <div>
-                                        <div  class="w-100percent image-input-layout ml-2percent" style="position: relative">
-                                            <div id="closeBtn-attachedBoxImg-2" class="close-btn-not-hide" onclick="closeImgage('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2');"> <i class="fa-solid fa-xmark close-btn"></i></div>
-                                            <img id="attachedBoxImg-2" src="<%= attchedImg.get(1).getImage() %>" alt="your image" style="height:100%; width:100%;" class="boder-radius image-thumbnail"/>
-                                        </div>
-                                        <input type="file" name="attachedImg2" id="attachedImg2" onchange="showAttachedImg('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2')"/>
-                                    </div>
-                                </div>
-                            </div>
-                            /Attacked image
-                            
-                            
-                            <input type="submit" value="Save" onclick="checkInput();">
-                        </form>-->
                         
                         <form action="editProductInfo" method="POST" enctype="multipart/form-data" onsubmit="return mySubmitFunction()" >
                             
@@ -215,10 +176,10 @@
                                 <label class="form-check-label" for="featureActivate">Feattured</label>
                                 <div class="display-flex">
                                     <div class="form-check form-check-inline mr-5percent">
-                                        <input class="form-check-input" type="radio" name="featured" id="featureActivate"  value="activate" <c:if test="${requestScope.product.featured == 'activate'}">checked="checked"</c:if> > Active
+                                        <input class="form-check-input" type="radio" name="featured" id="featureActivate"  value="activate" <c:if test="${requestScope.product.featured == true}">checked="checked"</c:if> > Active
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="featured" id="featureDeactivate"  value="deactivate" <c:if test="${requestScope.product.featured == 'deactivate'}">checked="checked"</c:if>> Deactivate
+                                        <input class="form-check-input" type="radio" name="featured" id="featureDeactivate"  value="deactivate" <c:if test="${requestScope.product.featured == false}">checked="checked"</c:if>> Deactivate
                                     </div>
                                 </div>
                             </div>
@@ -229,10 +190,10 @@
                                 <label class="form-check-label" for="statusActivate">Status</label>
                                 <div class="display-flex">
                                     <div class="form-check form-check-inline mr-5percent">
-                                        <input class="form-check-input" type="radio" name="status" id="statusActivate"  value="activate" <c:if test="${requestScope.product.status == 'activate'}">checked="checked"</c:if>> Active
+                                        <input class="form-check-input" type="radio" name="status" id="statusActivate"  value="activate" <c:if test="${requestScope.product.status == true}">checked="checked"</c:if>> Active
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="status" id="statusDeactivate"  value="deactivate" <c:if test="${requestScope.product.status == 'deactivate'}">checked="checked"</c:if>> Deactivate
+                                        <input class="form-check-input" type="radio" name="status" id="statusDeactivate"  value="deactivate" <c:if test="${requestScope.product.status == false}">checked="checked"</c:if>> Deactivate
                                     </div>
                                 </div>
                            </div>
