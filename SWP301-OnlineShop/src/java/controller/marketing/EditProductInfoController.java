@@ -28,7 +28,7 @@ import model.SubCategory;
  * @author Admin
  */
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxFileSize = 1024 * 1024 * 30, // 10MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
 @WebServlet(name = "EditProductInfoController", urlPatterns = {"/marketing/editProductInfo"})
 public class EditProductInfoController extends HttpServlet {
@@ -54,8 +54,10 @@ public class EditProductInfoController extends HttpServlet {
         int subCategoryId = product.getSubCategory().getId();
 
         ArrayList<SubCategory> subCatgorys = categoryDB.getSubCatgory(categoryId);
+        
+        String alter = request.getParameter("alter");
+        request.setAttribute("alter", alter);
         request.setAttribute("product", product);
-        System.out.println(product);
         request.setAttribute("categorys", categorys);
         request.setAttribute("subCategorys", subCatgorys);
         request.setAttribute("categoryId", categoryId);
@@ -95,7 +97,7 @@ public class EditProductInfoController extends HttpServlet {
         productDB.updateProduct(id, name, description, sellerId, subCategoryId, price, discount, quantity, featured, status);
         // save file
         saveFile(request, id);
-        response.sendRedirect("productlist");
+        response.sendRedirect("productlist?alter=Eidt product info success!&search=" + id);
 
     }
 
@@ -130,7 +132,7 @@ public class EditProductInfoController extends HttpServlet {
             if (fileNameThumbnail != null && fileNameThumbnail.length() > 0) {
                 String fileUrl = "/assets/img/" + fileNameThumbnail;
                 // delete old thubnail
-                DeleteFile.handleDeleteFile(product.getThumbnail());
+                DeleteFile.handleDeleteFile(product.getThumbnail(), request);
                 // update thubnail
                 productDB.updateThumbnailProduct(productId, fileUrl);
 
@@ -147,7 +149,8 @@ public class EditProductInfoController extends HttpServlet {
             if (fileAttachedImg1 != null && fileAttachedImg1.length() > 0) {
                 String fileUrl = "/assets/img/" + fileAttachedImg1;
                 // delete old attached image 1
-                DeleteFile.handleDeleteFile(product.getThumbnail());
+                String linkImg = product.getImage().get(0).getImage();
+                DeleteFile.handleDeleteFile(linkImg, request);
                 // update attached image 1
                 int attchedImg1Id = product.getImage().get(0).getId();
                 productDB.updateImage(attchedImg1Id, fileUrl);
@@ -155,7 +158,7 @@ public class EditProductInfoController extends HttpServlet {
                 String filePath = fullSavePath + File.separator + fileAttachedImg1;
                 // Ghi vào file.
                 partAttachedImg1.write(filePath);
-                new ProductDBContext().addAttachedImageProduct(productId, fileUrl);
+                new ProductDBContext().updateImage(attchedImg1Id, fileUrl);
             }
         }
 
@@ -166,7 +169,8 @@ public class EditProductInfoController extends HttpServlet {
                 String fileUrl = "/assets/img/" + fileAttachedImg2;
 
                 // delete old attached image 2
-                DeleteFile.handleDeleteFile(product.getThumbnail());
+                String linkImg = product.getImage().get(1).getImage();
+                DeleteFile.handleDeleteFile(linkImg,request);
                 // update attached image 2
                 int attchedImg1Id = product.getImage().get(1).getId();
                 productDB.updateImage(attchedImg1Id, fileUrl);
@@ -175,7 +179,7 @@ public class EditProductInfoController extends HttpServlet {
                 System.out.println("Write attachment to file: " + filePath);
                 // Ghi vào file.
                 partAttachedImg2.write(filePath);
-                new ProductDBContext().addAttachedImageProduct(productId, fileUrl);
+                new ProductDBContext().updateImage(attchedImg1Id, fileUrl);
             }
         }
     }

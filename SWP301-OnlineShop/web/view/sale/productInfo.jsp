@@ -42,10 +42,10 @@
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
-        <jsp:include page="../marketing-template/header.jsp"></jsp:include>
+        <jsp:include page="../sale-template/header.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
-            <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
+            <jsp:include page="../sale-template/sideBar.jsp"></jsp:include>
                 <!-- Right side. contains main content -->
                 <aside class="right-side">
                     <!-- Main content -->
@@ -55,7 +55,7 @@
                         <!--/alter-->
                     <div class="mb-10" >
                         
-                        <form action="editProductInfo" method="POST" enctype="multipart/form-data" onsubmit="return mySubmitFunction()">
+                        <form action="editProductInfo" method="POST" enctype="multipart/form-data" class="">
                             
                             <input type="hidden" name="id" value="${requestScope.product.id}"/>
                             
@@ -106,17 +106,6 @@
                             </div>
                             <!--/Description-->
 
-                            <!--Seller-->
-                            <div class="form-group w-70-percent">
-                                <label for="seller">Seller</label>
-                                <div class="display-flex" >
-                                    <input type="text" class="form-control" value="${requestScope.product.user.email}" name="seller" id="seller"  placeholder="Enter seller email " required=""/>
-                                    <button type="button" onclick="handleSearchSeller()" class="btn btn-primary ml-2percent ">Search</button>
-                                </div>
-                                <div id="rowShowSeller"></div>
-                            </div>
-                            <!--/Seller-->
-                            
                             <!--Category-->
                             <div class="form-group w-70-percent">
                                 <label for="category">Category</label>
@@ -198,7 +187,7 @@
                                 </div>
                            </div>
                             <!-- / Status-->
-                            <input type="submit" class="btn btn-success"  value="Save" />
+                            <input type="submit" class="btn btn-success" value="Save"/>
                         </form>
                     </div>
                 </section> <!--/ Main content -->
@@ -264,9 +253,9 @@
         </script>
 
          <!--javascrip-->
-        <script src="../../assets/js/marketing/productList.js"></script>
-        <script src="../../assets/js/marketing/addNewProduct.js"></script>
-        <script src="../../assets/js/marketing/editProduct.js"></script>
+        <script src="../../assets/js/sale/productList.js"></script>
+        <script src="../../assets/js/sale/addNewProduct.js"></script>
+        <script src="../../assets/js/sale/editProduct.js"></script>
         <!--javascrip-->
         <script src="../../assets/js/admin/main.js" type="text/javascript"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

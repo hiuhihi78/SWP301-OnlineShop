@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.marketing;
+package controller.sale;
 
 import dal.ProductDBContext;
 import java.io.IOException;
@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-@WebServlet(name = "EditFeaturedProductController", urlPatterns = {"/marketing/editFeaturedProduct"})
+@WebServlet(name = "SaleEditFeaturedProductController", urlPatterns = {"/sale/editFeaturedProduct"})
 public class EditFeaturedProductController extends HttpServlet {
 
+  
     
 
     /**
@@ -57,7 +58,6 @@ public class EditFeaturedProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
     }
 
     /**

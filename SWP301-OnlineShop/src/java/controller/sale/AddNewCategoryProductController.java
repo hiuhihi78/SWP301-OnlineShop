@@ -2,26 +2,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.marketing;
+package controller.sale;
 
-import dal.ProductDBContext;
+import dal.CategoryDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Category;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "EditFeaturedProductController", urlPatterns = {"/marketing/editFeaturedProduct"})
-public class EditFeaturedProductController extends HttpServlet {
+@WebServlet(name = "SaleAddNewCategoryProductController", urlPatterns = {"/sale/addCategoryProduct"})
+public class AddNewCategoryProductController extends HttpServlet {
 
-    
 
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -33,17 +36,6 @@ public class EditFeaturedProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDBContext productDB = new ProductDBContext();
-        boolean featured = request.getParameter("newFeatured").equals("active");
-        int id = Integer.parseInt(request.getParameter("id"));
-        String xpage = request.getParameter("xpage");
-        productDB.changeFeatured(id, featured);
-        if (xpage == null) {
-            xpage = "1";
-        } else {
-            xpage = request.getParameter("xpage");
-        }
-        response.sendRedirect("productlist?xpage=" + xpage + "&alter=Update featured sucess!");
     }
 
     /**
@@ -57,7 +49,26 @@ public class EditFeaturedProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        String newCategory = request.getParameter("newCategory");
+        CategoryDBContext categoryDB = new CategoryDBContext();
+        ArrayList<Category> allCategory = categoryDB.getAllCategory();
+        boolean isExisted = false;
+        for (Category category : allCategory) {
+            if (category.getName().equalsIgnoreCase(newCategory)) {
+                isExisted = true;
+            }
+        }
         
+        if (isExisted == true) {
+            response.sendRedirect("");
+        } else {
+            Category c = categoryDB.addCategory(newCategory);
+            out.println("<option value=\""+ c.getId() +"\"\n"
+                    + " <c:if test=\"${category == "+ c.getId() +"}\">\n"
+                    + " "+ c.getName() +"\n"
+                    + "</option>\n");
+        }
     }
 
     /**

@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.marketing;
+package controller.sale;
 
+import configs.DeleteFile;
 import configs.HandleGenerate;
 import dal.CategoryDBContext;
 import dal.ProductDBContext;
-import filter.BaseAuthController;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,20 +18,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.Category;
 import model.Product;
 import model.SubCategory;
+import model.User;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "AddNewProductController", urlPatterns = {"/marketing/addproduct"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 30, // 10MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
-public class AddNewProductController extends BaseAuthController {
+@WebServlet(name = "SaleEditProductInfoController", urlPatterns = {"/sale/editProductInfo"})
+public class EditProductInfoController extends HttpServlet {
+
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -42,49 +45,25 @@ public class AddNewProductController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String name = request.getParameter("name") == null ? "" : request.getParameter("name");
-        String description = request.getParameter("description") == null ? "" : request.getParameter("description");
-        String seller = request.getParameter("seller") == null ? "" : request.getParameter("seller");
-        String category = request.getParameter("category") == null ? "" : request.getParameter("category");
-        String subCategory = request.getParameter("subCategory") == null ? "" : request.getParameter("subCategory");
-        String price = request.getParameter("price") == null ? "" : request.getParameter("price");
-        String discount = request.getParameter("discount") == null ? "" : request.getParameter("discount");
-        String quantity = request.getParameter("quantity") == null ? "" : request.getParameter("quantity");
-        String featured = request.getParameter("featured") == null ? "deactivate" : request.getParameter("featured");
-        String status = request.getParameter("status") == null ? "deactivate" : request.getParameter("status");
-
-        request.setAttribute("name", name);
-        request.setAttribute("description", description);
-        request.setAttribute("seller", seller);
-        request.setAttribute("category", category);
-        request.setAttribute("subCategory", subCategory);
-        request.setAttribute("price", price);
-        request.setAttribute("discount", discount);
-        request.setAttribute("quantity", quantity);
-        request.setAttribute("featured", featured);
-        request.setAttribute("status", status);
-
-        String alterFail = request.getParameter("alterFail");
-        String alterSuccess = request.getParameter("alterSuccess");
-        request.setAttribute("alterFail", alterFail);
-        request.setAttribute("alterSuccess", alterSuccess);
+        int productId = Integer.parseInt(request.getParameter("id"));
+        ProductDBContext productDB = new ProductDBContext();
+        Product product = productDB.getProductById(productId);
 
         CategoryDBContext categoryDB = new CategoryDBContext();
         ArrayList<Category> categorys = categoryDB.getAllCategory();
-        String tempCategoryId = request.getParameter("categoryId");
-        int categoryId;
-        if (tempCategoryId == null) {
-            categoryId = categorys.get(0).getId();
-        } else {
-            categoryId = Integer.parseInt(tempCategoryId);
-        }
+        int categoryId = product.getSubCategory().getCategory().getId();
+        int subCategoryId = product.getSubCategory().getId();
+
         ArrayList<SubCategory> subCatgorys = categoryDB.getSubCatgory(categoryId);
+        request.setAttribute("product", product);
+        System.out.println(product);
         request.setAttribute("categorys", categorys);
         request.setAttribute("subCategorys", subCatgorys);
-        request.getRequestDispatcher("../view/marketing/addNewProduct.jsp").forward(request, response);
+        request.setAttribute("categoryId", categoryId);
+        request.setAttribute("subCategoryId", subCategoryId);
+        request.getRequestDispatcher("../view/sale/productInfo.jsp").forward(request, response);
     }
 
     /**
@@ -96,12 +75,16 @@ public class AddNewProductController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        
+        int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String description = request.getParameter("description");
-        int sellerId = Integer.parseInt(request.getParameter("sellerId"));
-        int categoryId = Integer.parseInt(request.getParameter("category"));
+        int sellerId = user.getId();
+//        int sellerId = 1;
         int subCategoryId = Integer.parseInt(request.getParameter("subCategory"));
         long price = Long.parseLong(request.getParameter("price"));
         int discount = Integer.parseInt(request.getParameter("discount"));
@@ -110,12 +93,12 @@ public class AddNewProductController extends BaseAuthController {
         boolean status = request.getParameter("status").equals("activate");
 
         ProductDBContext productDB = new ProductDBContext();
-        Product product = productDB.addProduct(name, description, sellerId, subCategoryId, price, discount, quantity, featured, status);
+        productDB.updateProduct(id, name, description, sellerId, subCategoryId, price, discount, quantity, featured, status);
         // save file
-        saveFile(request, product.getId());
-        response.sendRedirect("productlist?alter=All new product success!&search=" + product.getId());
+        saveFile(request, id);
+        response.sendRedirect("productlist?alter=Eidt product info success!&search=" + id);
     }
-
+    
     private static final long serialVersionUID = 1L;
     public static final String SAVE_DIRECTORY = "img";
 
@@ -138,38 +121,64 @@ public class AddNewProductController extends BaseAuthController {
         if (!fileSaveDir.exists()) {
             fileSaveDir.mkdir();
         }
+        ProductDBContext productDB = new ProductDBContext();
+        Product product = productDB.getProductById(productId);
 
         Part partThumbnail = request.getPart("thumbnail");
-        String fileNameThumbnail = extractFileName(partThumbnail, fullSavePath);
-        if (fileNameThumbnail != null && fileNameThumbnail.length() > 0) {
-            String filePath = fullSavePath + File.separator + fileNameThumbnail;
-            System.out.println("Write attachment to file: " + filePath);
-            // Ghi vào file.
-            partThumbnail.write(filePath);
-            String fileUrl = "/assets/img/" + fileNameThumbnail;
-            new ProductDBContext().updateThumbnailProduct(productId, fileUrl);
+        if (partThumbnail.getSize() > 0) {
+            String fileNameThumbnail = extractFileName(partThumbnail, fullSavePath);
+            if (fileNameThumbnail != null && fileNameThumbnail.length() > 0) {
+                String fileUrl = "/assets/img/" + fileNameThumbnail;
+                // delete old thubnail
+                DeleteFile.handleDeleteFile(product.getThumbnail(),request);
+                // update thubnail
+                productDB.updateThumbnailProduct(productId, fileUrl);
+
+                String filePath = fullSavePath + File.separator + fileNameThumbnail;
+                // Ghi vào file.
+                partThumbnail.write(filePath);
+                new ProductDBContext().updateThumbnailProduct(productId, fileUrl);
+            }
         }
 
         Part partAttachedImg1 = request.getPart("attachedImg1");
-        String fileAttachedImg1 = extractFileName(partAttachedImg1, fullSavePath);
-        if (fileAttachedImg1 != null && fileAttachedImg1.length() > 0) {
-            String filePath = fullSavePath + File.separator + fileAttachedImg1;
-            System.out.println("Write attachment to file: " + filePath);
-            // Ghi vào file.
-            partAttachedImg1.write(filePath);
-            String fileUrl = "/assets/img/" + fileAttachedImg1;
-            new ProductDBContext().addAttachedImageProduct(productId, fileUrl);
+        if (partAttachedImg1.getSize() > 0) {
+            String fileAttachedImg1 = extractFileName(partAttachedImg1, fullSavePath);
+            if (fileAttachedImg1 != null && fileAttachedImg1.length() > 0) {
+                String fileUrl = "/assets/img/" + fileAttachedImg1;
+                // delete old attached image 1
+                String linkImg = product.getImage().get(0).getImage();
+                DeleteFile.handleDeleteFile(linkImg,request);
+                // update attached image 1
+                int attchedImg1Id = product.getImage().get(0).getId();
+                productDB.updateImage(attchedImg1Id, fileUrl);
+
+                String filePath = fullSavePath + File.separator + fileAttachedImg1;
+                // Ghi vào file.
+                partAttachedImg1.write(filePath);
+                new ProductDBContext().updateImage(attchedImg1Id, fileUrl);
+            }
         }
 
         Part partAttachedImg2 = request.getPart("attachedImg2");
-        String fileAttachedImg2 = extractFileName(partAttachedImg2, fullSavePath);
-        if (fileAttachedImg2 != null && fileAttachedImg2.length() > 0) {
-            String filePath = fullSavePath + File.separator + fileAttachedImg2;
-            System.out.println("Write attachment to file: " + filePath);
-            // Ghi vào file.
-            partAttachedImg2.write(filePath);
-            String fileUrl = "/assets/img/" + fileAttachedImg2;
-            new ProductDBContext().addAttachedImageProduct(productId, fileUrl);
+        if (partAttachedImg2.getSize() > 0) {
+            String fileAttachedImg2 = extractFileName(partAttachedImg2, fullSavePath);
+            if (fileAttachedImg2 != null && fileAttachedImg2.length() > 0) {
+                String fileUrl = "/assets/img/" + fileAttachedImg2;
+
+                // delete old attached image 2
+                String linkImg = product.getImage().get(1).getImage();
+                DeleteFile.handleDeleteFile(linkImg,request);
+                // update attached image 2
+                int attchedImg2Id = product.getImage().get(1).getId();
+                productDB.updateImage(attchedImg2Id, fileUrl);
+
+                String filePath = fullSavePath + File.separator + fileAttachedImg2;
+                System.out.println("Write attachment to file: " + filePath);
+                // Ghi vào file.
+                partAttachedImg2.write(filePath);
+                new ProductDBContext().updateImage(attchedImg2Id, fileUrl);
+            }
         }
     }
 

@@ -2,12 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.marketing;
+package controller.sale;
 
 import configs.HandleGenerate;
 import dal.CategoryDBContext;
 import dal.ProductDBContext;
-import filter.BaseAuthController;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,11 +26,11 @@ import model.SubCategory;
  *
  * @author Admin
  */
-@WebServlet(name = "AddNewProductController", urlPatterns = {"/marketing/addproduct"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 30, // 10MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
-public class AddNewProductController extends BaseAuthController {
+@WebServlet(name = "SaleAddNewProductController", urlPatterns = {"/sale/addproduct"})
+public class AddNewProductController extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -42,36 +41,8 @@ public class AddNewProductController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String name = request.getParameter("name") == null ? "" : request.getParameter("name");
-        String description = request.getParameter("description") == null ? "" : request.getParameter("description");
-        String seller = request.getParameter("seller") == null ? "" : request.getParameter("seller");
-        String category = request.getParameter("category") == null ? "" : request.getParameter("category");
-        String subCategory = request.getParameter("subCategory") == null ? "" : request.getParameter("subCategory");
-        String price = request.getParameter("price") == null ? "" : request.getParameter("price");
-        String discount = request.getParameter("discount") == null ? "" : request.getParameter("discount");
-        String quantity = request.getParameter("quantity") == null ? "" : request.getParameter("quantity");
-        String featured = request.getParameter("featured") == null ? "deactivate" : request.getParameter("featured");
-        String status = request.getParameter("status") == null ? "deactivate" : request.getParameter("status");
-
-        request.setAttribute("name", name);
-        request.setAttribute("description", description);
-        request.setAttribute("seller", seller);
-        request.setAttribute("category", category);
-        request.setAttribute("subCategory", subCategory);
-        request.setAttribute("price", price);
-        request.setAttribute("discount", discount);
-        request.setAttribute("quantity", quantity);
-        request.setAttribute("featured", featured);
-        request.setAttribute("status", status);
-
-        String alterFail = request.getParameter("alterFail");
-        String alterSuccess = request.getParameter("alterSuccess");
-        request.setAttribute("alterFail", alterFail);
-        request.setAttribute("alterSuccess", alterSuccess);
-
         CategoryDBContext categoryDB = new CategoryDBContext();
         ArrayList<Category> categorys = categoryDB.getAllCategory();
         String tempCategoryId = request.getParameter("categoryId");
@@ -84,7 +55,7 @@ public class AddNewProductController extends BaseAuthController {
         ArrayList<SubCategory> subCatgorys = categoryDB.getSubCatgory(categoryId);
         request.setAttribute("categorys", categorys);
         request.setAttribute("subCategorys", subCatgorys);
-        request.getRequestDispatcher("../view/marketing/addNewProduct.jsp").forward(request, response);
+        request.getRequestDispatcher("../view/sale/addNewProduct.jsp").forward(request, response);
     }
 
     /**
@@ -96,17 +67,17 @@ public class AddNewProductController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int sellerId = Integer.parseInt(request.getParameter("sellerId"));
         String name = request.getParameter("name");
         String description = request.getParameter("description");
-        int sellerId = Integer.parseInt(request.getParameter("sellerId"));
         int categoryId = Integer.parseInt(request.getParameter("category"));
         int subCategoryId = Integer.parseInt(request.getParameter("subCategory"));
         long price = Long.parseLong(request.getParameter("price"));
         int discount = Integer.parseInt(request.getParameter("discount"));
         long quantity = Long.parseLong(request.getParameter("quantity"));
-        boolean featured = request.getParameter("featured").equals("activate");
+        boolean featured = false;
         boolean status = request.getParameter("status").equals("activate");
 
         ProductDBContext productDB = new ProductDBContext();
@@ -115,7 +86,8 @@ public class AddNewProductController extends BaseAuthController {
         saveFile(request, product.getId());
         response.sendRedirect("productlist?alter=All new product success!&search=" + product.getId());
     }
-
+    
+    
     private static final long serialVersionUID = 1L;
     public static final String SAVE_DIRECTORY = "img";
 
@@ -203,7 +175,6 @@ public class AddNewProductController extends BaseAuthController {
         }
         return null;
     }
-
     /**
      * Returns a short description of the servlet.
      *

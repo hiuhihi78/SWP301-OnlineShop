@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.marketing;
+package controller.sale;
 
 import dal.ProductDBContext;
 import java.io.IOException;
@@ -17,10 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-@WebServlet(name = "EditFeaturedProductController", urlPatterns = {"/marketing/editFeaturedProduct"})
-public class EditFeaturedProductController extends HttpServlet {
-
-    
+@WebServlet(name = "SaleEditStatusProductController", urlPatterns = {"/sale/editStatusProduct"})
+public class EditStatusProductController extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -34,16 +32,19 @@ public class EditFeaturedProductController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDBContext productDB = new ProductDBContext();
-        boolean featured = request.getParameter("newFeatured").equals("active");
+        boolean status = request.getParameter("newStatus").equals("active");
         int id = Integer.parseInt(request.getParameter("id"));
         String xpage = request.getParameter("xpage");
-        productDB.changeFeatured(id, featured);
+        productDB.changeStatus(id, status);
         if (xpage == null) {
             xpage = "1";
         } else {
             xpage = request.getParameter("xpage");
         }
-        response.sendRedirect("productlist?xpage=" + xpage + "&alter=Update featured sucess!");
+//        request.setAttribute("xpage", xpage);
+//        request.setAttribute("alter", "Update status sucess");
+//        request.getRequestDispatcher("userList");
+        response.sendRedirect("productlist?xpage=" + xpage + "&alter=Update status sucess!");;
     }
 
     /**
@@ -57,7 +58,6 @@ public class EditFeaturedProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
     }
 
     /**

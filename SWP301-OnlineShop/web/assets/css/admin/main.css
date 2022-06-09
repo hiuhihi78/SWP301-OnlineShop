@@ -7,6 +7,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Admin
 */
 
+
+.edit-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .ml-1percent{
     margin-left: 1%;
 }
