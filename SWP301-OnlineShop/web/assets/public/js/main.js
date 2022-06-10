@@ -72,8 +72,7 @@ $(document).ready(function () {
         rules: {
 
             "oldPassword": {
-                required: true,
-                validatePassword: true
+                required: true
             },
             "newPassword": {
                 required: true,
