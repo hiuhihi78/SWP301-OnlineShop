@@ -4,12 +4,17 @@
  */
 package controller.user;
 
+import dal.ProductCategoryDBContext;
+import dal.ProductListDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Category;
+import model.Product;
 
 /**
  *
@@ -29,6 +34,16 @@ public class UserOrdersController extends BaseAuthController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
+        ProductListDBContext productListDBContext = new ProductListDBContext();
+        //get list subcategory
+        ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
+        //get least post
+        ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
+
+        System.out.println(leastProduct.size());
+        request.setAttribute("listCategorys", listCategorys);
+        request.setAttribute("leastProduct", leastProduct);
         request.getRequestDispatcher("./view/public/myorders.jsp").forward(request, response);
     }
 
