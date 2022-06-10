@@ -36,9 +36,10 @@
                                             <a href="user/profile" class="text-none-underline">Profile</a>
                                         </li>
                                         <li>
-                                            <a type="button" class="btn btn-primary text-none-underline" data-toggle="modal" data-target="#myModal">
+<!--                                            <a type="button" class="btn btn-primary text-none-underline" data-toggle="modal" data-target="#myModal">
                                                 Change password
-                                            </a>
+                                            </a>-->
+                                            <a href="#" class="text-none-underline" data-toggle="modal" data-target="#myModal">Change password</a>
                                         </li>
                                         <c:if test="${sessionScope.user.role.id == 1}">
                                             <li>
@@ -87,6 +88,7 @@
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="home" ${(requestScope.active == "home")?"class=\"active\"":""}>Home</a></li>
                             <li><a href="bloglist" ${(requestScope.active == "blog")?"class=\"active\"":""}>Blog</a></li>
+                            <li><a href="productlist" ${(requestScope.active == "productList")?"class=\"active\"":""}>Product List</a></li>
                         </ul>
                     </div>
                 </div>
