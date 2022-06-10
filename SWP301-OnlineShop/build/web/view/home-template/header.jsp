@@ -114,6 +114,7 @@
                         <div class="alert alert-danger" id="alertDanger">
                             <strong>Danger!</strong> ${requestScope.msg}
                         </div>
+                        <form id ="changePassForm">
                             <div class="form-group">
                                 <label for="oldPassword">Old Password</label>
                                 <input type="password" class="form-control" id="oldPassword" placeholder="Enter old password" name="oldPassword">
@@ -124,10 +125,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="reEnterNewPassword">Re-enter new password</label>
-                                <input type="password" class="form-control" id="reEnterNewPassword" placeholder="Re-enter new password">
+                                <input type="password" class="form-control" id="reEnterNewPassword" placeholder="Re-enter new password" name="reEnterPass">
                             </div>
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary" id="saveNewPassword">Save changes</button>
+                        </form>
                     </div>
                 </div>
             </div>

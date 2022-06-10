@@ -11,6 +11,11 @@
 $(document).ready(function () {
     $('#alertSuccess').hide();
     $('#alertDanger').hide();
+
+    $.validator.addMethod("validatePassword", function (value, element) {
+        return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/i.test(value);
+    }, "Password from 8 - 16 characters including uppercase, lowercase and at least one number");
+
     $(function () {
         $.scrollUp({
             scrollName: 'scrollUp', // Element ID
@@ -30,31 +35,54 @@ $(document).ready(function () {
         });
     });
     $("#saveNewPassword").click(function () {
-        //get value from inputs
-        var oldPass = $('#oldPassword').val();
-        var newPass = $('#newPassword').val();
-        var url = '/user/changePassword';
-        $.post(url,
-                {
-                    oldPassword: oldPass,
-                    newPassword: newPass
-                }, function (res) {
-            var data = jQuery.parseJSON(res);
-            $('#alertDanger').hide();
-            $('#alertSuccess').show();
-            $('#alertSuccess').html(data.Msg);
-            
-            //reset form
-            $('#oldPassword').val("");
-            $('#newPassword').val("");
-            $('#reEnterNewPassword').val("");
-        })
-                .fail(function (res)
-                {
-                    var data = jQuery.parseJSON(res.responseText);
-                    $('#alertSuccess').hide();
-                    $('#alertDanger').show();
-                    $('#alertDanger').html(data.Msg);
-                });
+        var isFormValid = $("#changePassForm").valid();
+
+        if (isFormValid)
+        {
+            //get value from inputs
+            var oldPass = $('#oldPassword').val();
+            var newPass = $('#newPassword').val();
+            var url = '/user/changePassword';
+            $.post(url,
+                    {
+                        oldPassword: oldPass,
+                        newPassword: newPass
+                    }, function (res) {
+                var data = jQuery.parseJSON(res);
+                $('#alertDanger').hide();
+                $('#alertSuccess').show();
+                $('#alertSuccess').html(data.Msg);
+
+                //reset form
+                $('#oldPassword').val("");
+                $('#newPassword').val("");
+                $('#reEnterNewPassword').val("");
+            })
+                    .fail(function (res)
+                    {
+                        var data = jQuery.parseJSON(res.responseText);
+                        $('#alertSuccess').hide();
+                        $('#alertDanger').show();
+                        $('#alertDanger').html(data.Msg);
+                    });
+        }
+    });
+
+    $("#changePassForm").validate({
+        rules: {
+
+            "oldPassword": {
+                required: true,
+                validatePassword: true
+            },
+            "newPassword": {
+                required: true,
+                validatePassword: true,
+            },
+            "reEnterPass": {
+                equalTo: "#newPassword"
+            }
+        }
     });
 });
+
