@@ -149,7 +149,6 @@
                                                 <a href="#${i.id}" class="btn btn-default add-to-cart">Show</a>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </c:forEach>

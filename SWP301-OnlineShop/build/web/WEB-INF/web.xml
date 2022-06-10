@@ -92,6 +92,10 @@
         <servlet-name>SliderListController</servlet-name>
         <servlet-class>controller.marketing.SliderListController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProductListPublicController</servlet-name>
+        <servlet-class>controller.home.ProductListPublicController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -183,6 +187,10 @@
     <servlet-mapping>
         <servlet-name>SliderListController</servlet-name>
         <url-pattern>/sliderList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductListPublicController</servlet-name>
+        <url-pattern>/productlist</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
