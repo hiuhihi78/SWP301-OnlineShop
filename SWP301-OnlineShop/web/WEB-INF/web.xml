@@ -93,17 +93,17 @@
         <servlet-class>controller.marketing.SliderListController</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< HEAD
         <servlet-name>ProductListPublicController</servlet-name>
         <servlet-class>controller.home.ProductListPublicController</servlet-class>
-=======
+    </servlet>
+    <servlet>
+        
         <servlet-name>ChangeUserPassword</servlet-name>
         <servlet-class>controller.common.ChangeUserPassword</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserOrdersController</servlet-name>
         <servlet-class>controller.user.UserOrdersController</servlet-class>
->>>>>>> 778aa7c2b288d7b04b9e16ac8302aa6c5dedf4f2
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -198,17 +198,16 @@
         <url-pattern>/sliderList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< HEAD
         <servlet-name>ProductListPublicController</servlet-name>
         <url-pattern>/productlist</url-pattern>
-=======
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ChangeUserPassword</servlet-name>
         <url-pattern>/user/changePassword</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserOrdersController</servlet-name>
         <url-pattern>/myorders</url-pattern>
->>>>>>> 778aa7c2b288d7b04b9e16ac8302aa6c5dedf4f2
     </servlet-mapping>
     <session-config>
         <session-timeout>
