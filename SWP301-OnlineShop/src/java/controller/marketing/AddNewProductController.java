@@ -29,7 +29,7 @@ import model.SubCategory;
  */
 @WebServlet(name = "AddNewProductController", urlPatterns = {"/marketing/addproduct"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxFileSize = 1024 * 1024 * 30, // 10MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class AddNewProductController extends BaseAuthController {
 
@@ -113,8 +113,7 @@ public class AddNewProductController extends BaseAuthController {
         Product product = productDB.addProduct(name, description, sellerId, subCategoryId, price, discount, quantity, featured, status);
         // save file
         saveFile(request, product.getId());
-        response.sendRedirect("productlist");
-
+        response.sendRedirect("productlist?alter=All new product success!&search=" + product.getId());
     }
 
     private static final long serialVersionUID = 1L;
@@ -147,7 +146,7 @@ public class AddNewProductController extends BaseAuthController {
             System.out.println("Write attachment to file: " + filePath);
             // Ghi vào file.
             partThumbnail.write(filePath);
-            String fileUrl = "/assets/" + fileNameThumbnail;
+            String fileUrl = "/assets/img/" + fileNameThumbnail;
             new ProductDBContext().updateThumbnailProduct(productId, fileUrl);
         }
 
@@ -158,7 +157,7 @@ public class AddNewProductController extends BaseAuthController {
             System.out.println("Write attachment to file: " + filePath);
             // Ghi vào file.
             partAttachedImg1.write(filePath);
-            String fileUrl = "/assets/" + fileAttachedImg1;
+            String fileUrl = "/assets/img/" + fileAttachedImg1;
             new ProductDBContext().addAttachedImageProduct(productId, fileUrl);
         }
 
@@ -169,7 +168,7 @@ public class AddNewProductController extends BaseAuthController {
             System.out.println("Write attachment to file: " + filePath);
             // Ghi vào file.
             partAttachedImg2.write(filePath);
-            String fileUrl = "/assets/" + fileAttachedImg2;
+            String fileUrl = "/assets/img/" + fileAttachedImg2;
             new ProductDBContext().addAttachedImageProduct(productId, fileUrl);
         }
     }

@@ -32,16 +32,24 @@
         <ul class="sidebar-menu">
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <c:forEach items="${sessionScope.user.role.allowFeatures}" var="s">
-                <c:if test="${s.key.url == '/marketing/dashboard' && s.value == true}">
+                <c:if test="${s.key.url == '/sale/dashboard' && s.value == true}">
                     <li id="nav-dashboard">
                         <a href="#">
                             <i class="fa fa-dashboard"></i> <span>${s.key.name}</span>
                         </a>
                     </li>
                 </c:if>
-                <c:if test="${s.key.url == '/marketing/productlist' && s.value == true}">
+                <c:if test="${s.key.url == '/sale/productlist' && s.value == true}">
                     <li id="nav-user-list">
                         <a href="productlist">
+                            <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
+
+                        </a>
+                    </li>
+                </c:if>
+                <c:if test="${s.key.url == '/marketing/postList' && s.value == true}">
+                    <li id="nav-user-list">
+                        <a href="./postList">
                             <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
 
                         </a>

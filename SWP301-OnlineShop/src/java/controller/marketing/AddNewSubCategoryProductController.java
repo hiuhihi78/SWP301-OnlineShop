@@ -43,6 +43,7 @@ public class AddNewSubCategoryProductController extends HttpServlet {
             out.println("<option value=\""+ s.getId() +"\" >\n" +
                         ""+ s.getName() +"\n" +
                         "</option>");
+            //out.println("<option  value=\""+s.getId()+"\" ${requestScope.categoryId == "+ s.getId() +" ? \"selected='selected'\":\"\"}>"+ s.getName() +"</option>");
         }
     }
 

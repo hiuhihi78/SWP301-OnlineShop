@@ -17,7 +17,7 @@
         <link href="../../assets/public/css/animate.css" rel="stylesheet">
         <link href="../../assets/public/css/main.css" rel="stylesheet">
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
-        <title>Blog List | E-Shopper</title>
+        <title>Blog list | E-Shopper</title>
     </head>
     <body>
         <jsp:include page="../home-template/header.jsp"/>

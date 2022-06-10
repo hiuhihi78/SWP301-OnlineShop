@@ -5,12 +5,14 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
  * @author DELL
  */
 public class Product {
+
     private int id;
     private String name;
     private String description;
@@ -22,9 +24,12 @@ public class Product {
     private long quantity;
     private boolean featured;
     private String thumbnail;
+    private ArrayList<Image> image = new ArrayList<>();
+    private Date date;
+    private SubCategory subCategory;
 
     public long getPriceDiscount() {
-        return price - ((price*discount)/100);
+        return price - ((price * discount) / 100);
     }
 
     public void setPriceDiscount(long priceDiscount) {
@@ -111,11 +116,11 @@ public class Product {
         this.thumbnail = thumbnail;
     }
 
-    public Image getImage() {
+    public ArrayList<Image> getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(ArrayList<Image> image) {
         this.image = image;
     }
 
@@ -134,12 +139,15 @@ public class Product {
     public void setSubCategory(SubCategory subCategory) {
         this.subCategory = subCategory;
     }
-    private Image image;
-    private Date date;
-    private SubCategory subCategory;
 
     public Product() {
     }
 
+    @Override
+    public String toString() {
+        return "Product{" + "id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", discount=" + discount + ", priceDiscount=" + priceDiscount + ", user=" + user + ", status=" + status + ", quantity=" + quantity + ", featured=" + featured + ", thumbnail=" + thumbnail + ", image=" + image.get(0).getImage() + ", date=" + date + ", subCategory=" + subCategory + '}';
+    }
     
+    
+
 }
