@@ -104,3 +104,7 @@ function paggeLastPage1(totalPage, content) {
     window.location.href = href;
 }
 
+setTimeout(function () {
+    const element = document.getElementById('showAlter');
+    element.remove();
+}, 3000);

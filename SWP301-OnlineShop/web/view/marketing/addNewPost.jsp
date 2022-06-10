@@ -52,15 +52,15 @@
                                         <button onclick="btnClosePreviewImage()" type="button" class="close" style="font-size: 30px; position: absolute; z-index: 1024; right: 5px;">&times;</button>
                                     </div>
                                     <label for="thumbnail">Thumbnail</label>
-                                    <input type="file" class="form-control" name="file" id="file" required="" onchange="checkFileInput(this)" accept="image/*">
+                                    <input type="file" class="form-control" name="file" id="file" required="" onchange="checkFileInput(this)" accept="image/*"/>
                                 </div>
                                 <div class="form-group w-70-percent">
                                     <label for="title">Title</label>
-                                    <input type="text" class="form-control" name="title" id="title" placeholder="Enter title of post" required="">
+                                    <input type="text" class="form-control" name="title" id="title" placeholder="Enter title of post" required=""/>
                                 </div>
                                 <div class="form-group w-70-percent">
                                     <label for="bief">Brief</label>
-                                    <input type="text" class="form-control" name="brief" id="brief" required="" placeholder="Enter biref of post">
+                                    <input type="text" class="form-control" name="brief" id="brief" required="" placeholder="Enter biref of post"/>
                                 </div>
                                 <div class="form-group w-70-percent">
                                     <label for="description">Description</label>
@@ -95,10 +95,10 @@
                                 <label class="form-check-label" for="featureActivate">Featured</label>
                                 <div class="display-flex form-group w-70-percent">
                                     <div class="form-check form-check-inline mr-5percent">
-                                        <input class="form-check-input" type="radio" name="featured" id="featureActivate"  value="on"> On
+                                        <input class="form-check-input" type="radio" name="featured" id="featureActivate"  value="on"/> On
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="featured" id="featureDeactivate"  value="Off" checked="checked"> Off
+                                        <input class="form-check-input" type="radio" name="featured" id="featureDeactivate"  value="Off" checked="checked"/> Off
                                     </div>
                                 </div>
                             </div>
@@ -109,15 +109,15 @@
                                 <label class="form-check-label" for="statusActivate">Status</label>
                                 <div class="display-flex form-group w-70-percent">
                                     <div class="form-check form-check-inline mr-5percent">
-                                        <input class="form-check-input" type="radio" name="status" id="statusActivate"  value="show"> Show
+                                        <input class="form-check-input" type="radio" name="status" id="statusActivate"  value="show"/> Show
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="status" id="statusDeactivate"  value="hide" checked="checked"> Hide
+                                        <input class="form-check-input" type="radio" name="status" id="statusDeactivate"  value="hide" checked="checked"/> Hide
                                     </div>
                                 </div>
                             </div>
                             <!-- / Status-->
-                            <input class="btn btn-primary active"type="submit" value="Save">
+                            <input class="btn btn-primary active"type="submit" value="Save"/>
                         </form>
                     </div>
                 </section> <!--/ Main content -->
@@ -136,11 +136,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="newCategory">New Category</label>
-                            <input type="text" class="form-control" name="newCategory" id="newCategory1" placeholder="Enter new category name" required=""> 
+                            <input type="text" class="form-control" name="newCategory" id="newCategory1" placeholder="Enter new category name" required=""/> 
                         </div>
                         <div class="form-group">
                             <label for="newCategory">New SubCategory</label>
-                            <input type="text" class="form-control" name="newCategory" id="newSubCategory1" placeholder="Enter new subcategory name" required=""> 
+                            <input type="text" class="form-control" name="newCategory" id="newSubCategory1" placeholder="Enter new subcategory name" required=""/> 
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -172,7 +172,7 @@
                         </div>
                         <div class="form-group">
                             <label for="newSubcategory">New subcategory</label>
-                            <input type="text" class="form-control" name="newSubcategory2" id="newSubcategory2" placeholder="Enter new Subcategory name" required=""> 
+                            <input type="text" class="form-control" name="newSubcategory2" id="newSubcategory2" placeholder="Enter new Subcategory name" required=""/> 
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -185,7 +185,7 @@
             </div>
         </div>
         <!--javascrip-->
-        <script src="../../assets/js/marketing/productList.js"></script>
+        <!--<script src="../../assets/js/marketing/productList.js"></script>-->
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../../js/jquery.min.js" type="text/javascript"></script>

@@ -7,6 +7,7 @@ package controller.marketing;
 import dal.CategoryPostDBContext;
 import dal.PostDBContext;
 import dal.UserDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ import model.User;
  * @author DELL
  */
 @WebServlet(name = "PostListController", urlPatterns = {"/marketing/postlist"})
-public class PostListController extends HttpServlet {
+public class PostListController extends BaseAuthController {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         String idCategoryStr = request.getParameter("category");
@@ -37,9 +38,12 @@ public class PostListController extends HttpServlet {
         String orderBy = request.getParameter("orderBy");
         String searchBy = request.getParameter("search");
         String pageStr = request.getParameter("page");
-        
+        String alert = request.getParameter("alert");
         if(idCategoryStr == null || idCategoryStr.trim().length() == 0) {
             idCategoryStr = "-1";
+        }
+        if(alert == null || alert.trim().length() == 0) {
+            alert = "";
         }
 //        if(idAuthorStr == null || idAuthorStr.trim().length() == 0) {
 //            idAuthorStr = "-1";
@@ -80,6 +84,17 @@ public class PostListController extends HttpServlet {
         int end = Math.min(page * numbersRowPerPage, listPosts.size());
         ArrayList<Post> listPagingFiltered = postDB.listPostPaging(listPosts,start, end);
 
+        if(!alert.equalsIgnoreCase("")) {
+            if(alert.equalsIgnoreCase("success")) {
+                request.setAttribute("success", "Add New Post Successfully!");
+            } else if(alert.equalsIgnoreCase("success2")) {
+                request.setAttribute("success", "Edit Post Successfully!");
+            } else if(alert.equalsIgnoreCase("failed")) {
+                request.setAttribute("failed", "Add New Post Failed!");
+            } else {
+                request.setAttribute("failed", "Edit Post Failed!");
+            }
+        }
         request.setAttribute("idCategory", idCategory);
 //        request.setAttribute("idAuthor", idAuthor);
         request.setAttribute("idStatus", idStatus);
@@ -95,7 +110,7 @@ public class PostListController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
     @Override
