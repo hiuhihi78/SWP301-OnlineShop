@@ -6,7 +6,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : May 31, 2022, 9:01:17 PM
     Author     : Admin
 */
-
+.dflex-column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .edit-form{
     display: flex;
