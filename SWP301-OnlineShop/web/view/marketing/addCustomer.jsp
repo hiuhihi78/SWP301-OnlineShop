@@ -48,20 +48,21 @@
                                 <div class="form-group">
                                     <label for="inputName" class="col-lg-3 col-sm-2 control-label">Name: </label>
                                     <div class="col-md-8">
-                                        <input type="text" id="fullname" class="form-control" name="fullname" required>
+                                        <input type="text" id="fullname" class="form-control" name="fullname" pattern="^[a-z A-Z 0-9]+$" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail" class="col-lg-3 col-sm-2 control-label">Email:</label>
                                     <div class="col-md-8">
-                                        <input type="text" id="email" class="form-control" name="email" required>
+                                        <input type="email" id="email" class="form-control" name="email" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputMobile"
                                            class="col-lg-3 col-sm-2 control-label">Mobile: </label>
                                     <div class="col-md-8">
-                                        <input type="text" id="mobile" class="form-control" name="mobile" onchange="validateMobile();" required>
+                                        <input type="text" id="mobile" class="form-control" name="mobile" pattern="^[0-9]+$"  required
+                                               title="Your phone must be number">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -87,10 +88,10 @@
                                     <label for="inputGender" class="col-lg-3 col-sm-2 control-label">Gender:</label>
                                     <div class="col-md-8">                                       
                                         <label class="checkbox-inline">
-                                            <input type="radio" name="gender" value="male" > Male
+                                            <input type="radio" name="gender" value="male" required> Male
                                         </label>
                                         <label class="checkbox-inline">
-                                            <input type="radio" name="gender" value="female"> Female
+                                            <input type="radio" name="gender" value="female" required> Female
                                         </label>
                                     </div>
                                 </div>
@@ -98,10 +99,10 @@
                                     <label for="inputStatus" class="col-lg-3 col-sm-2 control-label">Status:</label>
                                     <div class="col-md-8">                                       
                                         <label class="checkbox-inline">
-                                            <input type="radio" name="status" value="active" > Active
+                                            <input type="radio" name="status" value="active" required> Active
                                         </label>
                                         <label class="checkbox-inline">
-                                            <input type="radio" name="status" value="deactive"> Deactive
+                                            <input type="radio" name="status" value="deactive" required> Deactive
                                         </label>
                                     </div>
                                 </div>

@@ -45,6 +45,11 @@
                                                 <a href="admin/userList" class="text-none-underline">Manage</a>
                                             </li>
                                         </c:if>
+                                        <c:if test="${sessionScope.user.role.id == 1 || sessionScope.user.role.id == 2 || sessionScope.user.role.id == 3}">
+                                            <li>
+                                                <a href="sale/productlist" class="text-none-underline">My store</a>
+                                            </li>
+                                        </c:if>    
                                         <c:if test="${sessionScope.user.role.id == 2}">
                                             <li>
                                                 <a href="marketing/productlist" class="text-none-underline">Maketing manage</a>

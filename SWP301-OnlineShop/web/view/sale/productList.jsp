@@ -51,6 +51,7 @@
             <aside class="right-side">
                 <!-- Main content -->
                 <section class="content ">
+                    <h1>${requestScope.alter}</h1>
                     <!--Alter-->
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
                     <!--Alter-->

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.marketing;
+package controller.sale;
 
 import dal.CategoryDBContext;
 import dal.ProductDBContext;
@@ -14,17 +14,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Category;
 import model.Product;
 import model.SubCategory;
+import model.User;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ProductListController", urlPatterns = {"/marketing/productlist"})
+@WebServlet(name = "SaleProductListController", urlPatterns = {"/sale/productlist"})
 public class ProductListController extends HttpServlet {
 
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -36,6 +39,11 @@ public class ProductListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+//        int sellerId = 1;
+        int sellerId = user.getId();
+        
         String tempCategoryId = request.getParameter("categoryId");
         String tempSubCategoryId = request.getParameter("subCategoryId");
         String tempStatus = request.getParameter("status");
@@ -100,7 +108,7 @@ public class ProductListController extends HttpServlet {
         }
         ProductDBContext productDB = new ProductDBContext();
 
-        ArrayList<Product> listAllProductFilter = productDB.getListProductFilter(categoryId, subCategoryId, status, featured, search, orderBy, sort);
+        ArrayList<Product> listAllProductFilter = productDB.getListProductFilterBySaleId(categoryId, subCategoryId, status, featured, search, orderBy, sort,sellerId);
 //        int totalRecord = productDB.getTotalRecord();
         int totalRecord = listAllProductFilter.size();
         int page, numberRecordPerPage = 2;
@@ -143,6 +151,7 @@ public class ProductListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
     }
 
     /**

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.marketing;
+package controller.sale;
 
 import dal.CategoryDBContext;
 import java.io.IOException;
@@ -13,17 +13,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Category;
 import model.SubCategory;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "AddNewSubCategoryProductController", urlPatterns = {"/marketing/addSubCategoryProduct"})
+@WebServlet(name = "SaleAddNewSubCategoryProductController", urlPatterns = {"/sale/addSubCategoryProduct"})
 public class AddNewSubCategoryProductController extends HttpServlet {
 
+   
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

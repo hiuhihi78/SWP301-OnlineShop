@@ -7,6 +7,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Admin
 */
 
+
+.edit-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ml-1percent{
+    margin-left: 1%;
+}
+
 .image-input-layout{
     height: 200px;
     margin-bottom: 10px;
@@ -15,8 +26,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: #9e9e9e;
 }
 
-
-
+.mr-5{
+    margin-right: 5px;
+}
+.mt-10{
+    margin-top: 10px;
+}
 
 .background-color-9e9e9e{
     background-color: #9e9e9e;
@@ -42,6 +57,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     position: absolute;
     display: none;
 }
+
+.close-btn-not-hide{
+    font-size: 20px;
+    color: red;
+    margin-left: 90%;
+    position: absolute;
+}
+
 
 .close-btn:hover{
     color: orange;
@@ -189,11 +212,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
-
+/*
 #formFilter{
     width: 70%;
     float: left;
-}
+}*/
 
 
 

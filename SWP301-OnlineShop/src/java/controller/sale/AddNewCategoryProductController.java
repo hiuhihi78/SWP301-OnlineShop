@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.marketing;
+package controller.sale;
 
 import dal.CategoryDBContext;
 import java.io.IOException;
@@ -14,16 +14,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Category;
-import model.SubCategory;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "AddNewSubCategoryProductController", urlPatterns = {"/marketing/addSubCategoryProduct"})
-public class AddNewSubCategoryProductController extends HttpServlet {
+@WebServlet(name = "SaleAddNewCategoryProductController", urlPatterns = {"/sale/addCategoryProduct"})
+public class AddNewCategoryProductController extends HttpServlet {
 
 
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -35,16 +36,6 @@ public class AddNewSubCategoryProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-        CategoryDBContext categoryDB = new CategoryDBContext();
-        ArrayList<SubCategory> subCatgorys = categoryDB.getSubCatgory(categoryId);
-        for(SubCategory s : subCatgorys){
-            out.println("<option value=\""+ s.getId() +"\" >\n" +
-                        ""+ s.getName() +"\n" +
-                        "</option>");
-            //out.println("<option  value=\""+s.getId()+"\" ${requestScope.categoryId == "+ s.getId() +" ? \"selected='selected'\":\"\"}>"+ s.getName() +"</option>");
-        }
     }
 
     /**
@@ -59,13 +50,12 @@ public class AddNewSubCategoryProductController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-        String subcategory = request.getParameter("subCategory");
+        String newCategory = request.getParameter("newCategory");
         CategoryDBContext categoryDB = new CategoryDBContext();
-        ArrayList<SubCategory> subCategorys = categoryDB.getSubCatgory(categoryId);
+        ArrayList<Category> allCategory = categoryDB.getAllCategory();
         boolean isExisted = false;
-        for (SubCategory subCategory : subCategorys) {
-            if (subCategory.getName().equalsIgnoreCase(subcategory)) {
+        for (Category category : allCategory) {
+            if (category.getName().equalsIgnoreCase(newCategory)) {
                 isExisted = true;
             }
         }
@@ -73,7 +63,7 @@ public class AddNewSubCategoryProductController extends HttpServlet {
         if (isExisted == true) {
             response.sendRedirect("");
         } else {
-            SubCategory c = categoryDB.addSubcategory(categoryId,subcategory);
+            Category c = categoryDB.addCategory(newCategory);
             out.println("<option value=\""+ c.getId() +"\"\n"
                     + " <c:if test=\"${category == "+ c.getId() +"}\">\n"
                     + " "+ c.getName() +"\n"
