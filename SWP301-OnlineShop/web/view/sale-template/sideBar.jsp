@@ -42,7 +42,7 @@
                 <c:if test="${s.key.url == '/sale/productlist' && s.value == true}">
                     <li id="nav-user-list">
                         <a href="productlist">
-                            <i class="fa-solid fa-users"></i> <span>Product List</span>
+                            <i class="fa-solid fa-box-open"></i> <span>Product List</span>
 
                         </a>
                     </li>
