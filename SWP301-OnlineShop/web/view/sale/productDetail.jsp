@@ -12,7 +12,7 @@
 <html>
     <head>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Marketing | Product Details</title>
+        <title>Sale | Product Details</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -50,10 +50,10 @@
     <body class="skin-black">
 
         <!-- header logo: style can be found in header.less -->
-        <jsp:include page="../marketing-template/header.jsp"></jsp:include>
+        <jsp:include page="../sale-template/header.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
-            <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
+            <jsp:include page="../sale-template/sideBar.jsp"></jsp:include>
                 <!-- Right side. contains main content -->
                 <aside class="right-side">
                     <!-- Main content -->

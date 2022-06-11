@@ -139,6 +139,7 @@
                                     <th>Featured</th>
                                     <th>Status</th>
                                     <th></th>
+                                    <th></th>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${requestScope.products}" var="p">
@@ -171,7 +172,14 @@
                                             <td>
                                                 <a href="editProductInfo?id=${p.id}" class="text-decoration-none text-white">
                                                     <button type="button" class="btn btn-primary">
-                                                        <i class="fa-solid fa-user-pen"></i>Edit
+                                                        <i class="fa-solid fa-pen-to-square" style="margin-right: 2px"></i>Edit
+                                                    </button>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="productdetail?id=${p.id}" class="text-decoration-none text-white">
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fa-solid fa-eye" style="margin-right: 2px"></i>View
                                                     </button>
                                                 </a>
                                             </td>
