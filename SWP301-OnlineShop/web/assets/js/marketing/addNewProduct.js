@@ -76,6 +76,25 @@ function handleSearchSeller() {
 }
 
 
+function handleSearchSellerInfo() {
+    var seller = document.getElementById('seller').value;
+    var rowShowSeller = document.getElementById('rowShowSeller');
+    $.ajax({
+        url: '/marketing/searchseller',
+        type: 'GET',
+        data: {
+            seller: seller
+        },
+        success: function (data, textStatus, jqXHR) {
+            rowShowSeller.innerHTML = data;
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('The seller with this email was not existed!');
+        }
+    });
+}
+
+
 
 function showThumbnail() {
     const [file] = document.getElementById('thumbnail').files;

@@ -5,7 +5,6 @@
 package controller.sale;
 
 import dal.ProductDBContext;
-import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,17 +12,34 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Product;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "SaleEditFeaturedProductController", urlPatterns = {"/sale/editFeaturedProduct"})
-public class EditFeaturedProductController extends BaseAuthController {
+@WebServlet(name = "SaleProductDetailController", urlPatterns = {"/sale/productdetail"})
+public class ProductDetailController extends HttpServlet {
 
-  
-    
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        ProductDBContext productDB = new ProductDBContext();
+        Product product = productDB.getProductById(id);
+        request.setAttribute("product", product);
+        request.getRequestDispatcher("../view/sale/productDetail.jsp").forward(request, response);
+    }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -33,19 +49,9 @@ public class EditFeaturedProductController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDBContext productDB = new ProductDBContext();
-        boolean featured = request.getParameter("newFeatured").equals("active");
-        int id = Integer.parseInt(request.getParameter("id"));
-        String xpage = request.getParameter("xpage");
-        productDB.changeFeatured(id, featured);
-        if (xpage == null) {
-            xpage = "1";
-        } else {
-            xpage = request.getParameter("xpage");
-        }
-        response.sendRedirect("productlist?alter=Update featured sucess!&search=" + id);
+        processRequest(request, response);
     }
 
     /**
@@ -57,8 +63,9 @@ public class EditFeaturedProductController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

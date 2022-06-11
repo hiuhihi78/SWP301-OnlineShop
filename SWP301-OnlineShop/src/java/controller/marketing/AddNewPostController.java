@@ -7,6 +7,7 @@ package controller.marketing;
 import configs.UploadImage;
 import dal.CategoryPostDBContext;
 import dal.PostDBContext;
+import filter.BaseAuthController;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,14 +34,14 @@ import model.User;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 30, // 30MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
-public class AddNewPostController extends HttpServlet {
+public class AddNewPostController extends BaseAuthController {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SAVE_DIRECTORY = "img";
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CategoryPostDBContext categoryPostDB = new CategoryPostDBContext();
         ArrayList<CategoryPost> listCategoryPost = categoryPostDB.getAllCategoryPost();
@@ -51,10 +52,11 @@ public class AddNewPostController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+        String alert = "";
         try {
             PostDBContext postDB = new PostDBContext();
 
@@ -69,9 +71,8 @@ public class AddNewPostController extends HttpServlet {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
             LocalDate localDate = LocalDate.now();
             Date dateNow = Date.valueOf(dtf.format(localDate).replaceAll("/", "-"));
-//            User user = (User) request.getSession().getAttribute("user");
-//            int idUser = user.getId();
-            int idUser = 1;
+            User user = (User) request.getSession().getAttribute("user");
+            int idUser = user.getId();
             int idCategory = Integer.parseInt(category_raw);
             int idSubCategory = Integer.parseInt(SubCategory_raw);
             boolean isFeatured = (featured_raw.trim().equalsIgnoreCase("on"));
@@ -110,10 +111,12 @@ public class AddNewPostController extends HttpServlet {
                 String urlImage = request.getContextPath().trim() +"/assets/img/"+ fileName;
                 postDB.insertPost(title_raw, urlImage, brief_raw, description_raw, dateNow,idSubCategory, isFeatured, isStatus, idUser);
             }
+            alert = "success";
         } catch (Exception e) {
+            alert = "failed";
             e.printStackTrace();
         }
-        response.sendRedirect("./postlist");
+        response.sendRedirect("./postlist?alert="+alert);
     }
 
     @Override

@@ -276,10 +276,17 @@ public class ProductDBContext extends DBContext {
                 paramProductName[1] = "%" + search + "%";
                 params.put(paramIndex, paramProductName);
                 
+                int id;
+                try {
+                    id = Integer.parseInt(search);
+                } catch (Exception e) {
+                    id = -1;
+                }
+                
                 paramIndex++;
                 Object[] paramProductId = new Object[2];
                 paramProductId[0] = Integer.class.getName();
-                paramProductId[1] = Integer.parseInt(search);
+                paramProductId[1] = id;
                 params.put(paramIndex, paramProductId);
 
             }
@@ -607,10 +614,17 @@ public class ProductDBContext extends DBContext {
                 paramProductName[1] = "%" + search + "%";
                 params.put(paramIndex, paramProductName);
                 
+                int id;
+                try {
+                    id = Integer.parseInt(search);
+                } catch (Exception e) {
+                    id = -1;
+                }
+                
                 paramIndex++;
                 Object[] paramProductId = new Object[2];
                 paramProductId[0] = Integer.class.getName();
-                paramProductId[1] = Integer.parseInt(search);
+                paramProductId[1] = id;
                 params.put(paramIndex, paramProductId);
 
             }

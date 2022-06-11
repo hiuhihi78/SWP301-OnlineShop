@@ -165,7 +165,7 @@
                             <!--/Quantity-->
                             
                             <!--feature-->
-                            <div>
+                            <div class="form-group w-70-percent mx-auto">
                                 <label class="form-check-label" for="featureActivate">Feattured</label>
                                 <div class="display-flex">
                                     <div class="form-check form-check-inline mr-5percent">
@@ -179,7 +179,7 @@
                                 <!-- / feature-->
 
                                 <!--Status-->
-                                <div>
+                                <div class="form-group w-70-percent mx-auto"> 
                                     <label class="form-check-label" for="statusActivate">Status</label>
                                     <div class="display-flex">
                                         <div class="form-check form-check-inline mr-5percent">
@@ -191,8 +191,9 @@
                                 </div>
                             </div>
                             <!-- / Status-->
-                            
-                            <input  type="submit" class="btn btn-success" value="Save" onclick="validateForm()">
+                            <div class="form-group w-70-percent mx-auto">
+                                <input  type="submit" class="btn btn-success" value="Save" onclick="validateForm()">
+                            </div>
                         </form>
                     </div>
                 </section> <!--/ Main content -->

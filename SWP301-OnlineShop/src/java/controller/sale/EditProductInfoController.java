@@ -8,6 +8,7 @@ import configs.DeleteFile;
 import configs.HandleGenerate;
 import dal.CategoryDBContext;
 import dal.ProductDBContext;
+import filter.BaseAuthController;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,7 +34,7 @@ import model.User;
         maxFileSize = 1024 * 1024 * 30, // 10MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
 @WebServlet(name = "SaleEditProductInfoController", urlPatterns = {"/sale/editProductInfo"})
-public class EditProductInfoController extends HttpServlet {
+public class EditProductInfoController extends BaseAuthController {
 
 
     /**
@@ -45,7 +46,7 @@ public class EditProductInfoController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int productId = Integer.parseInt(request.getParameter("id"));
         ProductDBContext productDB = new ProductDBContext();
@@ -75,7 +76,7 @@ public class EditProductInfoController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
