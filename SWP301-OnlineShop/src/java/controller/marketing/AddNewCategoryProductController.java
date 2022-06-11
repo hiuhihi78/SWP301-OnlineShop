@@ -23,7 +23,7 @@ import model.Category;
  * @author Admin
  */
 @WebServlet(name = "AddNewCategoryProductController", urlPatterns = {"/marketing/addCategoryProduct"})
-public class AddNewCategoryProductController extends HttpServlet {
+public class AddNewCategoryProductController extends BaseAuthController {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -34,7 +34,7 @@ public class AddNewCategoryProductController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 
@@ -47,7 +47,7 @@ public class AddNewCategoryProductController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         PrintWriter out = response.getWriter();

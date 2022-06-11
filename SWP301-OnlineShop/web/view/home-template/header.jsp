@@ -35,26 +35,29 @@
                                         <li>
                                             <a href="user/profile" class="text-none-underline">Profile</a>
                                         </li>
-                                        <li>
-                                            <a type="button" class="btn btn-primary text-none-underline" data-toggle="modal" data-target="#myModal">
-                                                Change password
-                                            </a>
-                                        </li>
+                                        
                                         <c:if test="${sessionScope.user.role.id == 1}">
                                             <li>
                                                 <a href="admin/userList" class="text-none-underline">Manage</a>
                                             </li>
                                         </c:if>
-                                        <c:if test="${sessionScope.user.role.id == 1 || sessionScope.user.role.id == 2 || sessionScope.user.role.id == 3}">
-                                            <li>
-                                                <a href="sale/productlist" class="text-none-underline">My store</a>
-                                            </li>
-                                        </c:if>    
+                                        
                                         <c:if test="${sessionScope.user.role.id == 2}">
                                             <li>
                                                 <a href="marketing/productlist" class="text-none-underline">Maketing manage</a>
                                             </li>
                                         </c:if>
+                                            
+                                        <c:if test="${sessionScope.user.role.id == 1 || sessionScope.user.role.id == 2 || sessionScope.user.role.id == 3}">
+                                            <li>
+                                                <a href="sale/productlist" class="text-none-underline">My store</a>
+                                            </li>
+                                        </c:if>  
+                                         
+                                        <li>
+                                            <a type="button" class="btn btn-primary text-none-underline" data-toggle="modal" data-target="#myModal">Change password</a>
+                                        </li>
+                                        
                                         <li>
                                             <a href="logout" class="text-none-underline">Logout</a>
                                         </li>

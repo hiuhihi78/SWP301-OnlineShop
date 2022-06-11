@@ -5,6 +5,7 @@
 package controller.marketing;
 
 import dal.ProductDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Admin
  */
 @WebServlet(name = "EditFeaturedProductController", urlPatterns = {"/marketing/editFeaturedProduct"})
-public class EditFeaturedProductController extends HttpServlet {
+public class EditFeaturedProductController extends BaseAuthController {
 
     
 
@@ -31,7 +32,7 @@ public class EditFeaturedProductController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDBContext productDB = new ProductDBContext();
         boolean featured = request.getParameter("newFeatured").equals("active");
@@ -43,7 +44,7 @@ public class EditFeaturedProductController extends HttpServlet {
         } else {
             xpage = request.getParameter("xpage");
         }
-        response.sendRedirect("productlist?xpage=" + xpage + "&alter=Update featured sucess!");
+        response.sendRedirect("productlist?alter=Update featured sucess!&search=" + id);
     }
 
     /**
@@ -55,7 +56,7 @@ public class EditFeaturedProductController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
     }

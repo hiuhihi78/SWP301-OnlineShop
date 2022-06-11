@@ -55,23 +55,23 @@
                         <!--/alter-->
                     <div class="mb-10" >
                         
-                        <form action="editProductInfo" method="POST" enctype="multipart/form-data" onsubmit="return mySubmitFunction()">
+                        <form action="editProductInfo" method="POST" enctype="multipart/form-data" >
                             
                             <input type="hidden" name="id" value="${requestScope.product.id}"/>
                             
                             <!--Thumbnail-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto" ">
                                 <label for="thumbnail">Thumbnail</label>
                                 <div  class="w-35percent image-input-layout display-flex" style="position: relative">
                                     <div id="closeBtn-thumbnailBoxImg" class="close-btn-not-hide" onclick="closeImgage('thumbnailBoxImg','closeBtn-thumbnailBoxImg','thumbnail');"> <i class="fa-solid fa-xmark close-btn"></i></div>
                                     <img id="thumbnailBoxImg" src="${requestScope.product.thumbnail}" alt="your image" style="height:100%; width:100%;" class="boder-radius  image-thumbnail"/>
                                 </div>
-                                <input type="file" name="thumbnail" id="thumbnail" onchange="showThumbnail()" />
+                                <input type="file" name="thumbnail" id="thumbnail" accept="image/*" onchange="showThumbnail()" />
                             </div>
                             <!--/Thumbnail-->
                             
                              <!--Attached image-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto" >
                                 <label >Attached image</label>
                                 <div class="display-flex">
                                     <div>
@@ -79,46 +79,47 @@
                                             <div id="closeBtn-attachedBoxImg-1" class="close-btn-not-hide" onclick="closeImgage('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1');"> <i class="fa-solid fa-xmark close-btn"></i></div>
                                             <img id="attachedBoxImg-1" src="<%= attchedImg.get(0).getImage() %>" alt="your image" style="height:100%; width:100%;" class="boder-radius image-thumbnail"/>
                                         </div>
-                                        <input type="file" name="attachedImg1" id="attachedImg1" onchange="showAttachedImg('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1')"/>
+                                        <input type="file" name="attachedImg1" id="attachedImg1" accept="image/*" onchange="showAttachedImg('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1')"/>
                                     </div>
                                     <div>
                                         <div  class="w-100percent image-input-layout ml-2percent" style="position: relative">
                                             <div id="closeBtn-attachedBoxImg-2" class="close-btn-not-hide" onclick="closeImgage('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2');"> <i class="fa-solid fa-xmark close-btn"></i></div>
                                             <img id="attachedBoxImg-2" src="<%= attchedImg.get(1).getImage() %>" alt="your image" style="height:100%; width:100%;" class="boder-radius image-thumbnail"/>
                                         </div>
-                                        <input type="file" name="attachedImg2" id="attachedImg2" onchange="showAttachedImg('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2')"/>
+                                        <input type="file" name="attachedImg2" id="attachedImg2" accept="image/*" onchange="showAttachedImg('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2')"/>
                                     </div>
                                 </div>
                             </div>
                             <!--/Attacked image-->
 
                             <!--Name-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto" >
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" value="${requestScope.product.name}" name="name" id="name" placeholder="Enter name of product"  required=""/>
                             </div>
                             <!--/Name-->
 
                             <!--Description-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent" style="margin: 0 auto">
                                 <label for="description">Description</label>
                                 <textarea type="text" class="form-control"  name="description" id="description" placeholder="Enter description of product" required="" rows="3">${requestScope.product.description}</textarea>
                             </div>
                             <!--/Description-->
 
                             <!--Seller-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto" style="margin: 0 auto">
                                 <label for="seller">Seller</label>
                                 <div class="display-flex" >
-                                    <input type="text" class="form-control" value="${requestScope.product.user.email}" name="seller" id="seller"  placeholder="Enter seller email " required=""/>
-                                    <button type="button" onclick="handleSearchSeller()" class="btn btn-primary ml-2percent ">Search</button>
+                                    <input type="hidden" class="form-control" value="${requestScope.product.user.id}" name="sellerId"  />
+                                    <input type="text" class="form-control" value="${requestScope.product.user.email}" id="seller"  disabled="" />
+                                    <button type="button" onclick="handleSearchSellerInfo()" class="btn btn-primary ml-2percent ">Info</button>
                                 </div>
                                 <div id="rowShowSeller"></div>
                             </div>
                             <!--/Seller-->
                             
                             <!--Category-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent max-auto">
                                 <label for="category">Category</label>
                                 <div class="display-flex">
                                     <select class="form-control" name="category" id="category" onchange="handleShowSubCategory()">
@@ -134,7 +135,7 @@
                             <!--/Category-->
                             
                             <!--SubCategory-->
-                            <div class="form-group w-70-percent" >
+                            <div class="form-group w-70-percent mx-auto" >
                                 <label for="subCategory">SubCategory</label>
                                 <div class="display-flex">
                                     <select class="form-control" name="subCategory" id="subCategory">
@@ -151,28 +152,28 @@
                             <!--SubCategory-->
 
                             <!--Price-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="price">Price</label>
                                 <input type="number" class="form-control" name="price" id="price" min="0" placeholder="Enter price of product" value="${requestScope.product.price}" required="">
                             </div>
                             <!--Price-->
 
                             <!--Discount-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="discount">Discount</label>
                                 <input type="number" class="form-control" name="discount" id="discount" min="0" max="100" placeholder="Enter discount of product" value="${requestScope.product.discount}" required="">
                             </div>
                             <!--/Discount-->
                             
                             <!--Quantity-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="quantity">Quantity</label>
                                 <input type="number" class="form-control" name="quantity" id="quantity" min="0"  placeholder="Enter quantity of product" value="${requestScope.product.quantity}"  required="">
                             </div>
                             <!--/Quantity-->
                             
                             <!--feature-->
-                            <div>
+                            <div class="form-group w-70-percent mx-auto">
                                 <label class="form-check-label" for="featureActivate">Feattured</label>
                                 <div class="display-flex">
                                     <div class="form-check form-check-inline mr-5percent">
@@ -186,7 +187,7 @@
                             <!-- / feature-->
 
                              <!--Status-->
-                            <div>
+                            <div class="form-group w-70-percent mx-auto">
                                 <label class="form-check-label" for="statusActivate">Status</label>
                                 <div class="display-flex">
                                     <div class="form-check form-check-inline mr-5percent">
@@ -198,7 +199,9 @@
                                 </div>
                            </div>
                             <!-- / Status-->
-                            <input type="submit" class="btn btn-success"  value="Save" />
+                            <div class="form-group w-70-percent mx-auto">
+                                <input type="submit" class="btn btn-success"  value="Save" />
+                            </div>
                         </form>
                     </div>
                 </section> <!--/ Main content -->

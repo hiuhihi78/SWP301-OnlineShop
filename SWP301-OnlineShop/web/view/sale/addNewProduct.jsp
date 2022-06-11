@@ -9,7 +9,7 @@
 <html>
     <head>  
         <meta charset="UTF-8">
-        <title>Marketing | Produt list</title>
+        <title>Sale | Produt list</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -159,20 +159,21 @@
                             
 
                                 <!--Status-->
-                                <div>
-                                    <label class="form-check-label" for="statusActivate">Status</label>
-                                    <div class="display-flex">
-                                        <div class="form-check form-check-inline mr-5percent">
-                                            <input class="form-check-input" type="radio" name="status" id="statusActivate"  value="activate" > Active
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="status" id="statusDeactivate"  value="deactivate" checked="checked"> Deactivate
+                            <div class="form-group w-70-percent mx-auto">
+                                <label class="form-check-label" for="statusActivate">Status</label>
+                                <div class="display-flex">
+                                    <div class="form-check form-check-inline mr-5percent">
+                                        <input class="form-check-input" type="radio" name="status" id="statusActivate"  value="activate" > Active
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="status" id="statusDeactivate"  value="deactivate" checked="checked"> Deactivate
                                     </div>
                                 </div>
                             </div>
                             <!-- / Status-->
-                            
-                            <input  type="submit" class="btn btn-success" value="Save">
+                            <div class="form-group w-70-percent mx-auto">
+                                <input  type="submit" class="btn btn-success" value="Save">
+                            </div>
                         </form>
                     </div>
                 </section> <!--/ Main content -->

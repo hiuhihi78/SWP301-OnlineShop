@@ -5,6 +5,7 @@
 package controller.sale;
 
 import dal.ProductDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Admin
  */
 @WebServlet(name = "SaleEditStatusProductController", urlPatterns = {"/sale/editStatusProduct"})
-public class EditStatusProductController extends HttpServlet {
+public class EditStatusProductController extends BaseAuthController {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -29,7 +30,7 @@ public class EditStatusProductController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDBContext productDB = new ProductDBContext();
         boolean status = request.getParameter("newStatus").equals("active");
@@ -44,7 +45,7 @@ public class EditStatusProductController extends HttpServlet {
 //        request.setAttribute("xpage", xpage);
 //        request.setAttribute("alter", "Update status sucess");
 //        request.getRequestDispatcher("userList");
-        response.sendRedirect("productlist?xpage=" + xpage + "&alter=Update status sucess!");;
+        response.sendRedirect("productlist?&alter=Update status sucess!&search="+id);
     }
 
     /**
@@ -56,7 +57,7 @@ public class EditStatusProductController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 
