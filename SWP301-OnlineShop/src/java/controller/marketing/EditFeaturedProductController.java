@@ -44,7 +44,7 @@ public class EditFeaturedProductController extends BaseAuthController {
         } else {
             xpage = request.getParameter("xpage");
         }
-        response.sendRedirect("productlist?alter=Update featured sucess!&search=" + id);
+        response.sendRedirect("productlist?alter=Update featured sucess!&xpage=" + xpage);
     }
 
     /**

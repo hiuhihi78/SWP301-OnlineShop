@@ -45,7 +45,7 @@ public class EditStatusProductController extends BaseAuthController {
 //        request.setAttribute("xpage", xpage);
 //        request.setAttribute("alter", "Update status sucess");
 //        request.getRequestDispatcher("userList");
-        response.sendRedirect("productlist?alter=Update status sucess!&search=" + id);
+        response.sendRedirect("productlist?alter=Update status sucess!&xpage=" + xpage);
     }
 
     /**
