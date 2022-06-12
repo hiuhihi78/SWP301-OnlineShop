@@ -104,7 +104,7 @@ public class ProductListController extends BaseAuthController {
         ArrayList<Product> listAllProductFilter = productDB.getListProductFilter(categoryId, subCategoryId, status, featured, search, orderBy, sort);
 //        int totalRecord = productDB.getTotalRecord();
         int totalRecord = listAllProductFilter.size();
-        int page, numberRecordPerPage = 2;
+        int page, numberRecordPerPage = 5;
         int totalPage = totalRecord % numberRecordPerPage == 0
                 ? totalRecord / numberRecordPerPage : totalRecord / numberRecordPerPage + 1;
         String currentPage = request.getParameter("xpage");
