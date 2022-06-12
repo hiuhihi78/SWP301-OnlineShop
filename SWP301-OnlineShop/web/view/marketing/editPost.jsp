@@ -38,7 +38,7 @@
             <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
                 <!-- Right side. contains main content -->
                 <aside class="right-side">
-                    <div id="back-previous-page"  onclick="history.go(-1)" style="cursor: pointer; margin: 10px 0px 0px 10px;">
+                    <div id="back-previous-page" class="cursor-mg"  onclick="history.go(-1)">
                         <span><a><i class="fa-solid fa-angle-left">  <span class="title">Back</span></i> </a></span>
                     </div>
                     <!-- Main content -->
@@ -49,8 +49,8 @@
                                 <input type="hidden" name="id" value="${requestScope.post.id}"/>
                             <input type="hidden" name="thumbnailOld" value="${requestScope.post.thumbnail}"/>
                             <div class="form-group w-70-percent">
-                                <div id="preview-box" style="margin: 0 auto;width: 50%;height: 200px;overflow: hidden;  position: relative; border-radius: 15px;">
-                                    <img style="object-fit: fill;height: inherit; width: 100%;" id="previewImage" src="${requestScope.post.thumbnail}"/>
+                                <div id="preview-box" class="preview-img-edit">
+                                    <img class="img-fit" id="previewImage" src="${requestScope.post.thumbnail}"/>
                                     <!--<button onclick="btnClosePreviewImage()" type="button" class="close" style="font-size: 30px; position: absolute; z-index: 1024; right: 5px;">&times;</button>-->
                                 </div>
                                 <label for="thumbnail">Thumbnail</label>
@@ -251,7 +251,7 @@
                                 listSub.innerHTML = "" + data;
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
-
+                              
                             }
                         });
                         break;

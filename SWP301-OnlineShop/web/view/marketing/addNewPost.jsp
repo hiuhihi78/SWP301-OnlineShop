@@ -38,7 +38,7 @@
             <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
                 <!-- Right side. contains main content -->
                 <aside class="right-side">
-                    <div id="back-previous-page"  onclick="history.go(-1)" style="cursor: pointer; margin: 10px 0px 0px 10px;">
+                    <div id="back-previous-page"  onclick="history.go(-1)" class="cursor-mg">
                         <span><a><i class="fa-solid fa-angle-left">  <span class="title">Back</span></i> </a></span>
                     </div>
                     <!-- Main content -->
@@ -47,9 +47,9 @@
                         <div class="mb-10" >
                             <form action="./addPost" method="POST" class="dflex-column" enctype="multipart/form-data">
                                 <div class="form-group w-70-percent">
-                                    <div id="preview-box" style="margin: 0 auto;width: 50%;height: 200px;overflow: hidden; display: none; position: relative;">
-                                        <img style="object-fit: fill;height: inherit; width: 100%;" id="previewImage"/>
-                                        <button onclick="btnClosePreviewImage()" type="button" class="close" style="font-size: 30px; position: absolute; z-index: 1024; right: 5px;">&times;</button>
+                                    <div id="preview-box" class="preview-img">
+                                        <img class="img-fit" id="previewImage"/>
+                                        <button onclick="btnClosePreviewImage()" type="button" class="close postion-absolute-z-index">&times;</button>
                                     </div>
                                     <label for="thumbnail">Thumbnail</label>
                                     <input type="file" class="form-control" name="file" id="file" required="" onchange="checkFileInput(this)" accept="image/*"/>

@@ -79,7 +79,6 @@ public class EditPostController extends BaseAuthController {
         Date dateNow = Date.valueOf(dtf.format(localDate).replaceAll("/", "-"));
         User user = (User) request.getSession().getAttribute("user");
         int idUser = user.getId();
-        String alert = "";
         Part fileImage = request.getPart("file");
 //        String fileNameRaw = Paths.get(fileImage.getSubmittedFileName()).getFileName().toString();
         if (fileImage.getSize() <= 0) { //fileNameRaw == null || fileNameRaw.equals("") 
@@ -87,9 +86,9 @@ public class EditPostController extends BaseAuthController {
             try {
                 String urlImage = "";
                 postDB.editPost(id, urlImage, title, briefInfo, description, dateNow, idUser, isFeatured, isStatus, category, subCategory);
-                alert = "success2";
+                PostListController.ALERT = "success2";
             } catch (Exception e) {
-                alert = "failed2";
+                PostListController.ALERT = "failed2";
             }
         } else {
             try {
@@ -125,13 +124,13 @@ public class EditPostController extends BaseAuthController {
                     File oldFile = new File(appPath + "" + urlImageOld.substring(urlImageOld.lastIndexOf("/") + 1));
                     oldFile.delete();
                 }
-                alert = "success2";
+                PostListController.ALERT = "success2";
             } catch (Exception e) {
-                alert = "failed2";
+                PostListController.ALERT = "failed2";
                 e.printStackTrace();
             }
         }
-        response.sendRedirect("./postlist?alert="+alert);
+        response.sendRedirect("./postlist");
 
     }
 
