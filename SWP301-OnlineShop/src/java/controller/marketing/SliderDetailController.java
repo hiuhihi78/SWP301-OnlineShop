@@ -4,12 +4,9 @@
  */
 package controller.marketing;
 
-import configs.Security;
-import static configs.Security.SIZE_PAGE_SLIDER_LIST;
 import dal.SliderDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +17,7 @@ import model.Slider;
  *
  * @author Admin
  */
-public class SliderListController extends HttpServlet {
+public class SliderDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,44 +31,7 @@ public class SliderListController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        SliderDBContext sliderDb = new SliderDBContext();
-        String search = "";
-        int status = -1, index = 1;
-
-        //Get data from filter input
-        if (request.getParameter("txtSearch") != null) {
-            search = request.getParameter("txtSearch").trim();
-        }
-        if (request.getParameter("select") != null) {
-            status = Integer.parseInt(request.getParameter("select"));
-        }
-
-        //Get current page from view
-        if (request.getParameter("index") != null) {
-            index = Integer.parseInt(request.getParameter("index"));
-        }
-
-        //Get List Slider
-        ArrayList<Slider> lstSlider = sliderDb.getSliderByIndex(index, SIZE_PAGE_SLIDER_LIST, status, search);
-        
-        //Calculator Last page
-        int sizeOfList = sliderDb.searchSliders(status, search).size();
-        int lastPage = sizeOfList / SIZE_PAGE_SLIDER_LIST;
-        if (sizeOfList % SIZE_PAGE_SLIDER_LIST != 0) {
-            lastPage++;
-        }
-
-        //Send result filter after search
-        request.setAttribute("search", search);
-        request.setAttribute("status", status);
-        //Send Last page of slider list
-        request.setAttribute("lastPage", lastPage);
-        //Send slider List
-        request.setAttribute("sliders", lstSlider);
-        //Send index 
-        request.setAttribute("index", index);
-        
-        request.getRequestDispatcher("/view/marketing/sliders.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/marketing/sliderDetail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -86,7 +46,18 @@ public class SliderListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        try {
+            String strId = request.getParameter("id");
+            SliderDBContext sliderDb = new SliderDBContext();
+            int id = Integer.parseInt(strId);
+            Slider slider = null;
+            slider = sliderDb.getSliderById(id);
+            if (slider != null) {
+                request.setAttribute("slider", slider);
+            }
+            
+        } catch (Exception e) {
+        }
         processRequest(request, response);
     }
 
@@ -101,28 +72,17 @@ public class SliderListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String isChange = "", strId = "";
-            SliderDBContext sliderDb = new SliderDBContext();
-            int id = 0;
-            isChange = request.getParameter("checkbox");
-            strId = request.getParameter("id");
-            id = Integer.parseInt(strId);
-            if (isChange != "" && isChange != null) {
-                sliderDb.changeStatus(id, Security.SHOW_STATUS);
-            } else {
-                sliderDb.changeStatus(id, Security.HIDE_STATUS);
-            }
-        } catch (Exception e) {
-        }
-
         processRequest(request, response);
-
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
 
 }

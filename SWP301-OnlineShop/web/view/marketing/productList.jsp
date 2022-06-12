@@ -15,12 +15,12 @@
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- font Awesome -->
+         font Awesome 
         <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-        <!-- Theme style -->
+         Theme style 
         <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
-        <!--css-->
+        css
         <link href="../../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/css/admin/main.css" rel="stylesheet" type="text/css"/>
 

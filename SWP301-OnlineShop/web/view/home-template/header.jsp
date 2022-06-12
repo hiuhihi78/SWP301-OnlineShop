@@ -45,7 +45,7 @@
                                         </c:if>
                                         <c:if test="${sessionScope.user.role.id == 2}">
                                             <li>
-                                                <a href="marketing/productlist" class="text-none-underline">Maketing manage</a>
+                                                <a href="/marketing/productlist" class="text-none-underline">Maketing manage</a>
                                             </li>
                                         </c:if>
                                         <li>
