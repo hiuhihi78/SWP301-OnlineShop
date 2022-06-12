@@ -6,6 +6,126 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : May 31, 2022, 9:01:17 PM
     Author     : Admin
 */
+.dflex-column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+margin-0-auto{
+    margin: 0 auto;
+}
+
+.text-color-red{
+    color: red;
+}
+
+.text-color-green{
+    color: green;
+}
+.edit-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ml-1percent{
+    margin-left: 1%;
+}
+
+.image-input-layout{
+    height: 200px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    display: flex;
+    background-color: #9e9e9e;
+}
+
+.mr-5{
+    margin-right: 5px;
+}
+.mt-10{
+    margin-top: 10px;
+}
+
+.background-color-9e9e9e{
+    background-color: #9e9e9e;
+}
+
+
+.postion-absolute{
+    position: absolute;
+}
+
+.image-thumbnail{
+    display: inline-block;
+}
+
+.ml-90percent{
+    margin-left: 90%;
+}
+
+.close-btn{
+    font-size: 20px;
+    color: red;
+    margin-left: 90%;
+    position: absolute;
+    display: none;
+}
+
+.close-btn-not-hide{
+    font-size: 20px;
+    color: red;
+    margin-left: 90%;
+    position: absolute;
+}
+
+
+.close-btn:hover{
+    color: orange;
+}
+
+.display-inline-block{
+    display: inline-block;
+}
+
+.display-none{
+    display: none;
+}
+
+.h-100percent{
+    height: 100%;
+}
+
+.w-200{
+    width: 200px;
+}
+
+.w-100percent{
+    width: 100%;
+}
+
+.h-200{
+    height: 200px;
+}
+
+.border{
+    border: 1px solid black;
+}
+
+.boder-radius{
+    border-radius: 10px;
+}
+
+.w-35percent{
+    width: 35%;
+}
+
 .mr-5percent{
     margin-right: 5%;
 }
@@ -31,6 +151,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .w-70-percent{
     width: 70%;
+    /*margin: 0 auto;*/
 }
 
 .w-50-percent{
@@ -42,7 +163,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .display-inline-block{
-    display: inline-block; 
+    display: inline-block;
 }
 .float-r{
     float: right;
@@ -55,7 +176,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #formAddNewUser{
     margin: 0 2%;
     padding: 0;
-    display: inline-block; 
+    display: inline-block;
     float: right;
 }
 
@@ -85,6 +206,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     z-index: 1024;
 }
 
+#showAlterSuccess{
+    position: absolute;
+    width: 20%;
+    left: 78%;
+    z-index: 1024;
+}
+
+#showAlterFail{
+    position: absolute;
+    width: 20%;
+    left: 78%;
+    z-index: 1024;
+}
+
 .filter-select{
     width: 20px;
 }
@@ -98,11 +233,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
-
+/*
 #formFilter{
-    width: 70%; 
+    width: 70%;
     float: left;
-}
+}*/
 
 
 

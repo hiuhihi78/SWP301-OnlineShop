@@ -7,6 +7,7 @@ package configs;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -14,42 +15,21 @@ import java.nio.file.Paths;
  */
 public class DeleteFile {
 
-    public static void handleDeleteFile(String fileName) {
-        String absolutePath = DeleteFile.getAbsolutePathFile("web");
-        String filePathDelete = absolutePath + fileName;
-        
-        File myObj = new File(filePathDelete);
-        if (myObj.delete()) {
-            System.out.println("Deleted the file: " + myObj.getName());
-        } else {
-            System.out.println("Failed to delete the file.");
-        }
+    public static void handleDeleteFile(String fileName, HttpServletRequest request) {
+        String appPath = request.getServletContext().getRealPath("");
+        appPath = appPath.replace('\\', '/');
+        int indexFolderRoot = appPath.indexOf("/build");
+        appPath = appPath.substring(0, indexFolderRoot) + "/web/assets/img/";
+        File oldFile = new File(appPath + "" + fileName.substring(fileName.lastIndexOf("/") + 1));
+        System.out.println(oldFile);
+        oldFile.delete();
     }
+
     public static void main(String[] args) {
-        DeleteFile.handleDeleteFile("/assets/img/con-cho.png");
+//        DeleteFile.handleDeleteFile("/assets/img/con-cho.png");
     }
-    
-    private static String getAbsolutePathFile(String fileName){
-        String absolute = "";
-        // try catch block to handle exceptions
-        try {
-  
-            // Create a file object
-            File f = new File("web");
-  
-            // Get the absolute path of file f
-            absolute = f.getAbsolutePath();
-  
-            // Display the file path of the file object
-            // and also the file path of absolute file
-            System.out.println("Original path: "
-                               + f.getPath());
-            System.out.println("Absolute path: "
-                               + absolute);
-        }
-        catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return absolute;
+
+    public static String getAppPath(HttpServletRequest request) {
+        return request.getServletContext().getRealPath("");
     }
 }

@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Role;
 import model.User;
+import model.User_Update;
 
 /**
  *
@@ -130,22 +131,23 @@ public class CustomerDBContext extends DBContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
         }
+//        finally {
+//            if (stm != null) {
+//                try {
+//                    stm.close();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            if (connection != null) {
+//                try {
+//                    connection.close();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        }
     }
 
     public void addCustomer(User cusomter) {
@@ -283,13 +285,59 @@ public class CustomerDBContext extends DBContext {
         return listCustomer2;
     }
 
-    
-
-    public int count(int userRole) {
+    public int count(int userRole, String searchBy, String statusBy) {
         try {
-            String sql = "SELECT count(*) as Total FROM [User] WHERE [User].RoleId = ?";
+
+            String sql1 = "";
+            String sql2 = "";
+            if (statusBy.isEmpty()) {
+                sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY id desc) as r\n"
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								)\n"
+                        + "		SElECT COUNT(*) as Total FROM x";
+            } else {
+                sql2 = "with x as (select ROW_NUMBER() OVER (ORDER BY id desc) as r\n"
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "				AND status = ?)\n"
+                        + "		SElECT COUNT(*) as Total FROM x";
+            }
+
+            PreparedStatement ps = null;
+            if (statusBy.isEmpty()) {
+                ps = connection.prepareStatement(sql1);
+                ps.setInt(1, userRole);
+                ps.setString(2, "%" + searchBy + "%");
+                ps.setString(3, "%" + searchBy + "%");
+                ps.setString(4, "%" + searchBy + "%");
+            } else {
+                ps = connection.prepareStatement(sql2);
+                ps.setInt(1, userRole);
+                ps.setString(2, "%" + searchBy + "%");
+                ps.setString(3, "%" + searchBy + "%");
+                ps.setString(4, "%" + searchBy + "%");
+                ps.setString(5, statusBy);
+            }
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public int countForUpdate(int customerID) {
+        try {
+            String sql = "SELECT count(*) as Total FROM UserUpdate WHERE userId = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, userRole);
+            stm.setInt(1, customerID);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt("Total");
@@ -302,31 +350,49 @@ public class CustomerDBContext extends DBContext {
 
     public ArrayList<User> getCustomerByPage(int userRole, String searchBy, String statusBy, int pageindex, int pagesize) {
         ArrayList<User> listCustomer = new ArrayList<>();
-        String sql1 = "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (ORDER BY [User].id desc) as row_index FROM [User]) userList\n"
-                + "                    WHERE row_index >= (? - 1)* ? +1 AND row_index <= ? * ?\n"
-                + "					AND roleId = ?\n"
-                + "                AND  \n"
-                + "               (fullname like ?\n"
-                + "                OR email LIKE ?\n"
-                + "                OR mobile LIKE ?)";
+        String sql1 = "";
+        String sql2 = "";
         //check status is empty or not
         if (!statusBy.isEmpty()) {
-            sql1 += "AND status = ?";
+            sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY id desc) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								AND status = ?)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+        } else {
+            sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY id desc) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
         }
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = connection.prepareStatement(sql1);
-            //check status is empty or not
-            ps.setInt(1, pageindex);
-            ps.setInt(2, pagesize);
-            ps.setInt(3, pageindex);
-            ps.setInt(4, pagesize);
-            ps.setInt(5, userRole);
-            ps.setString(6, "%" + searchBy + "%");
-            ps.setString(7, "%" + searchBy + "%");
-            ps.setString(8, "%" + searchBy + "%");
             if (!statusBy.isEmpty()) {
-                ps.setString(9, statusBy);
-
+                ps = connection.prepareStatement(sql1);
+                ps.setInt(1, userRole);
+                ps.setString(2, "%" + searchBy + "%");
+                ps.setString(3, "%" + searchBy + "%");
+                ps.setString(4, "%" + searchBy + "%");
+                ps.setString(5, statusBy);
+                ps.setInt(6, pageindex);
+                ps.setInt(7, pagesize);
+                ps.setInt(8, pageindex);
+                ps.setInt(9, pagesize);
+            } else {
+                ps = connection.prepareStatement(sql2);
+                ps.setInt(1, userRole);
+                ps.setString(2, "%" + searchBy + "%");
+                ps.setString(3, "%" + searchBy + "%");
+                ps.setString(4, "%" + searchBy + "%");
+                ps.setInt(5, pageindex);
+                ps.setInt(6, pagesize);
+                ps.setInt(7, pageindex);
+                ps.setInt(8, pagesize);
             }
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -347,5 +413,249 @@ public class CustomerDBContext extends DBContext {
             Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listCustomer;
+    }
+
+    public ArrayList<User_Update> getListHistoryUpdate(int customerID, int pagesize, int pageindex) {
+        ArrayList<User_Update> listHistoryUpdate = new ArrayList<>();
+        String sql1 = "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (ORDER BY uid desc) as row_index FROM [UserUpdate]) historyUpdate\n"
+                + "   WHERE row_index >= (? - 1)* ? +1 AND row_index <= ? * ?\n"
+                + "   AND userId = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql1);
+            //check status is empty or not
+            ps.setInt(1, pageindex);
+            ps.setInt(2, pagesize);
+            ps.setInt(3, pageindex);
+            ps.setInt(4, pagesize);
+            ps.setInt(5, customerID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User_Update update = new User_Update();
+                update.setEmail(rs.getString("email"));
+                update.setUpdateBy(rs.getString("updateBy"));
+                update.setUpdateDate(rs.getDate("updateDate"));
+                update.setUserId(rs.getInt("userId"));
+                update.setFullname(rs.getString("fullname"));
+                update.setGender(rs.getBoolean("gender"));
+                update.setMobile(rs.getString("mobile"));
+                update.setAddress(rs.getString("address"));
+                listHistoryUpdate.add(update);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listHistoryUpdate;
+    }
+
+    public void addHistoryEditCustomer(User_Update update) {
+        String sql = "INSERT INTO [dbo].[UserUpdate]\n"
+                + "           ([email]\n"
+                + "           ,[updateBy]\n"
+                + "           ,[updateDate]\n"
+                + "           ,[userId]\n"
+                + "           ,[fullname]\n"
+                + "           ,[gender]\n"
+                + "           ,[mobile]\n"
+                + "           ,[address])\n"
+                + "     VALUES\n"
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?)";
+        PreparedStatement stm = null;
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, update.getEmail());
+            stm.setString(2, update.getUpdateBy());
+            stm.setDate(3, update.getUpdateDate());
+            stm.setInt(4, update.getUserId());
+            stm.setString(5, update.getFullname());
+            stm.setBoolean(6, update.isGender());
+            stm.setString(7, update.getMobile());
+            stm.setString(8, update.getAddress());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public ArrayList<User> getListCustomerSortBy(int userRole, String searchBy, String statusBy, int pageindex, int pagesize, String sortBy) {
+        ArrayList<User> listCustomer = new ArrayList<>();
+        String sql1 = "";
+        String sql2 = "";
+        //check status is empty or not
+        if (!statusBy.isEmpty()) {
+            if(sortBy.equals("fullname")){
+                sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY fullname ) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								AND status = ?)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            }else if(sortBy.equals("mobile")){
+                sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY mobile desc) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								AND status = ?)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            }else if(sortBy.equals("email")){
+                sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY email desc) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								AND status = ?)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            }else if(sortBy.equals("status")){
+                sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY status desc) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								AND status = ?)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            } else if(sortBy.equals("")){
+                sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY id desc) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								AND status = ?)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            }
+        } else {
+            if(sortBy.equals("fullname")){
+                sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY fullname ) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            }else if(sortBy.equals("mobile")){
+                sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY mobile desc) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            }else if(sortBy.equals("email")){
+                 sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY email desc) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            }else if(sortBy.equals("status")){
+               sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY status desc) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            } else if(sortBy.equals("")){
+                sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY id desc) as r\n"
+                    + "		, * from [User] where roleId = ? AND \n"
+                    + "                               (fullname like ?\n"
+                    + "                                OR email LIKE ?\n"
+                    + "                                OR mobile LIKE ?)\n"
+                    + "								)\n"
+                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            }
+        }
+        PreparedStatement ps = null;
+        try {
+            if (!statusBy.isEmpty()) {
+                ps = connection.prepareStatement(sql1);
+                ps.setInt(1, userRole);
+                ps.setString(2, "%" + searchBy + "%");
+                ps.setString(3, "%" + searchBy + "%");
+                ps.setString(4, "%" + searchBy + "%");
+                ps.setString(5, statusBy);
+                ps.setInt(6, pageindex);
+                ps.setInt(7, pagesize);
+                ps.setInt(8, pageindex);
+                ps.setInt(9, pagesize);
+            } else {
+                ps = connection.prepareStatement(sql2);
+                ps.setInt(1, userRole);
+                ps.setString(2, "%" + searchBy + "%");
+                ps.setString(3, "%" + searchBy + "%");
+                ps.setString(4, "%" + searchBy + "%");
+                ps.setInt(5, pageindex);
+                ps.setInt(6, pagesize);
+                ps.setInt(7, pageindex);
+                ps.setInt(8, pagesize);
+            }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setFullname(rs.getString("fullname"));
+                user.setGender(rs.getBoolean("gender"));
+                user.setEmail(rs.getString("email"));
+                user.setMobile(rs.getString("mobile"));
+                user.setAddress(rs.getString("address"));
+                Role role = new Role();
+                role.setId(rs.getInt("roleId"));
+                user.setRole(role);
+                user.setStatus(rs.getBoolean("status"));
+                user.setId(rs.getInt("id"));
+                listCustomer.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listCustomer;
+    }
+    
+    
+    public int count(int userRole) {
+        int number = 0;
+        try {
+
+            String sql = "select COUNT(*) num from [User] where roleId = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, userRole);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                number = rs.getInt("num");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return number;
+    }
+    
+    public static void main(String[] args) {
+        CustomerDBContext db = new CustomerDBContext();
+        System.out.println(db.count(4));
     }
 }

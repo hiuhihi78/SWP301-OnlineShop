@@ -8,11 +8,15 @@ import dal.CustomerDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.User;
+import model.User_Update;
 
 /**
  *
@@ -20,21 +24,39 @@ import model.User;
  */
 public class CustomerDetailsControler extends BaseAuthController {
 
-   @Override
+    @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        CustomerDBContext customerDBContext = new CustomerDBContext();
         //get id from jsp, when user choice to Edit or View
         String raw_customerID = request.getParameter("id");
+        String page = request.getParameter("page");
+
         //validate input data
         int customerID = Integer.parseInt(raw_customerID);
+        if (page == null || page.trim().length() == 0) {
+            page = "1";
+        }
+        int pageindex = Integer.parseInt(page);
         //get infomation of that user in database
-        CustomerDBContext customerDBContext  = new CustomerDBContext();
+
+        int pagesize = 10;
+        int numofrecords = customerDBContext.countForUpdate(customerID);
+        int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
+                : (numofrecords / pagesize) + 1;
+
         User customer = customerDBContext.getCustomerByID(customerID);
-        request.setAttribute("customer", customer);
+        ArrayList<User_Update> listHistoryUpdate = customerDBContext.getListHistoryUpdate(customerID, pagesize, pageindex);
+
+        
         //go to customerDetails.jsp
+        request.setAttribute("pagesize", pagesize);
+        request.setAttribute("pageindex", pageindex);
+        request.setAttribute("totalpage", totalpage);
+        request.setAttribute("customer", customer);
+        request.setAttribute("listHistoryUpdate", listHistoryUpdate);
         request.getRequestDispatcher("/view/marketing/customerDetails.jsp").forward(request, response);
     }
-
 
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
@@ -48,11 +70,16 @@ public class CustomerDetailsControler extends BaseAuthController {
         String mobile = request.getParameter("mobile");
         String address = request.getParameter("address");
         String raw_gender = request.getParameter("gender");
-        
+        String updateBy = request.getParameter("updateBy");
+//        String updateBy = "MrChekc";
+
         //validate value
         int customerID = Integer.parseInt(raw_id);
         boolean gender = raw_gender.equals("male");
-        
+
+        LocalDate updateDate_raw = java.time.LocalDate.now();
+        Date updateDate = Date.valueOf(updateDate_raw);
+
         User customer = new User();
         customer.setId(customerID);
         customer.setEmail(email);
@@ -60,11 +87,26 @@ public class CustomerDetailsControler extends BaseAuthController {
         customer.setFullname(fullname);
         customer.setGender(gender);
         customer.setMobile(mobile);
-        
         CustomerDBContext customerDBContext = new CustomerDBContext();
+        
+        
+        
+        
+        User_Update update = new User_Update();
+        update.setEmail(email);
+        update.setUpdateBy(updateBy);
+        update.setUpdateDate(updateDate);
+        update.setUserId(customerID);
+        update.setFullname(fullname);
+        update.setGender(gender);
+        update.setMobile(mobile);
+        update.setAddress(address);
         customerDBContext.editCustomer(customer);
+        customerDBContext.addHistoryEditCustomer(update);
+        
         response.sendRedirect("../customer/list");
     }
+
     @Override
     public String getServletInfo() {
         return "Short description";

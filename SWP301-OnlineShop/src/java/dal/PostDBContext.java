@@ -4,10 +4,13 @@
  */
 package dal;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Post;
@@ -91,13 +94,13 @@ public class PostDBContext extends DBContext {
                     + "from Post p join SubCategoryPost c\n"
                     + "on p.categoryId = c.id and p.status = 1\n";
             if (idSubCategory != -1) {
-                sql += "and p.categoryId = ? "; 
+                sql += "and p.categoryId = ? ";
             }
             if (!searchContent.isEmpty()) {
-                sql += "and (p.title like ? or p.briefInfo like ?)"; 
+                sql += "and (p.title like ? or p.briefInfo like ?)";
             }
             sql += ") PostPaging\n"
-                    + "where row_index >= (?-1)*?+1 and row_index <= ? * ?"; 
+                    + "where row_index >= (?-1)*?+1 and row_index <= ? * ?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             if (idSubCategory != -1 && searchContent.trim().isEmpty()) {
@@ -146,7 +149,7 @@ public class PostDBContext extends DBContext {
                 categoryPost.setId(rs.getInt(12));
                 subCategory.setCategory(categoryPost);
                 post.setPostCategory(subCategory);
-                if(user == null) {
+                if (user == null) {
                     post.setUser(new User());
                 } else {
                     post.setUser(user);
@@ -162,11 +165,13 @@ public class PostDBContext extends DBContext {
         try {
             String sql = "Select count(*) as numberRow from Post\n";
             if (!searchContent.trim().isEmpty() && idCategory == -1) {
-                sql += "where (title like ? or briefInfo like ?)";
+                sql += "where (title like ? or briefInfo like ?) and [status] = 1";
             } else if (searchContent.trim().isEmpty() && idCategory != -1) {
-                sql += "where categoryId = ?";
-            }else if(!searchContent.trim().isEmpty() && idCategory != -1) {
-                sql += "where (title like ? or briefInfo like ?) and categoryId = ?";
+                sql += "where categoryId = ? and [status] = 1";
+            } else if (!searchContent.trim().isEmpty() && idCategory != -1) {
+                sql += "where (title like ? or briefInfo like ?) and categoryId = ? and [status] = 1";
+            } else {
+                sql += " where [status] = 1 ";
             }
 
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -176,7 +181,7 @@ public class PostDBContext extends DBContext {
                 stm.setString(2, "%" + searchContent + "%");
             } else if (searchContent.trim().isEmpty() && idCategory != -1) {
                 stm.setInt(1, idCategory);
-            } else if(!searchContent.trim().isEmpty() && idCategory != -1) {
+            } else if (!searchContent.trim().isEmpty() && idCategory != -1) {
                 stm.setString(1, "%" + searchContent + "%");
                 stm.setString(2, "%" + searchContent + "%");
                 stm.setInt(3, idCategory);
@@ -208,6 +213,7 @@ public class PostDBContext extends DBContext {
         }
         return listCategory;
     }
+
     public ArrayList<SubCategoryPost> getListSubPostById(int idCategory) {
         ArrayList<SubCategoryPost> listCategory = new ArrayList<>();
         try {
@@ -246,7 +252,7 @@ public class PostDBContext extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 Post post = new Post();
                 User user = new User();
                 SubCategoryPost postCategory = new SubCategoryPost();
@@ -264,7 +270,7 @@ public class PostDBContext extends DBContext {
                 postCategory.setId(rs.getInt(11));
                 postCategory.setName(rs.getString(12));
                 post.setPostCategory(postCategory);
-                        
+
                 return post;
             }
         } catch (SQLException ex) {
@@ -287,8 +293,272 @@ public class PostDBContext extends DBContext {
         return postNumber;
     }
     
+
+
+    public ArrayList<Post> getAllPostFiltered(int idCategory, int idAuthor, int idStatus, String searchBy, String orderBy, String sortBy) {
+        ArrayList<Post> listPosts = new ArrayList<>();
+        try {
+            String sql = "DECLARE @Col_Name VARCHAR(128) = " + "'" + orderBy + "'" + "\n"
+                    + "Select p.id, p.thumbnail, p.title, p.feature, p.[status], p.UserId, s.email, s.fullname, p.categoryId as idSubCategory, sp.[name] as nameSubCategory, cp.id as idCategoryPost, cp.[name] as nameCategoryPost\n"
+                    + "                    From post p join [user] s\n"
+                    + "                    on p.UserId = s.id\n"
+                    + "                    join SubCategoryPost sp on p.categoryId = sp.id\n"
+                    + "                    join CategoryPost cp on cp.id = sp.idcategory\n";
+            int index = 0;
+            HashMap<Integer, Object[]> params = new HashMap<>();
+            if (idCategory != -1) {
+                sql += " and cp.id = ?\n";
+                index++;
+                Object[] param = new Object[2];
+                param[0] = Integer.class.getName();
+                param[1] = idCategory;
+                params.put(index, param);
+            }
+            if (idAuthor != -1) {
+                sql += " and p.UserId = ?\n";
+                index++;
+                Object[] param = new Object[2];
+                param[0] = Integer.class.getName();
+                param[1] = idAuthor;
+                params.put(index, param);
+            }
+            if (idStatus != -1) {
+                sql += " and p.[status] = ?\n";
+                index++;
+                Object[] param1 = new Object[2];
+                param1[0] = Boolean.class.getName();
+                param1[1] = (idStatus == 1);
+                params.put(index, param1);
+            }
+
+            if (!searchBy.equals("")) {
+                sql += " and ( p.title like ?\n";
+                index++;
+                Object[] searchContent = new Object[2];
+                searchContent[0] = String.class.getName();
+                searchContent[1] = "%" + searchBy + "%";
+                params.put(index, searchContent);
+                sql += "or s.fullname like ?)\n";
+                index++;
+                Object[] searchAuthor = new Object[2];
+                searchAuthor[0] = String.class.getName();
+                searchAuthor[1] = "%" + searchBy + "%";
+                params.put(index, searchAuthor);
+            }
+            sql += "ORDER BY CASE \n"
+                    + "                    WHEN @Col_Name = 'title' THEN CAST(p.title AS SQL_VARIANT)\n"
+                    + "                    WHEN @Col_Name = 'category' THEN CAST(cp.id AS SQL_VARIANT)\n"
+                    + "                    WHEN @Col_Name = 'author' THEN CAST(p.UserId AS SQL_VARIANT)\n"
+                    + "                    WHEN @Col_Name = 'featured' THEN CAST(p.feature AS SQL_VARIANT)\n"
+                    + "                    WHEN @Col_Name = 'status' THEN CAST(p.status AS SQL_VARIANT)\n"
+                    + "                     END\n" + sortBy;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            for (Map.Entry<Integer, Object[]> entry : params.entrySet()) {
+                Integer indexes = entry.getKey();
+                Object[] value = entry.getValue();
+                String type = value[0].toString();
+                if (type.equalsIgnoreCase(Integer.class.getName())) {
+                    stm.setInt(indexes, (Integer) value[1]);
+                } else if (type.equalsIgnoreCase(Boolean.class.getName())) {
+                    stm.setBoolean(indexes, (Boolean) value[1]);
+                } else if (type.equalsIgnoreCase(String.class.getName())) {
+                    stm.setString(indexes, (String) value[1]);
+                }
+            }
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Post post = new Post();
+                post.setId(rs.getInt(1));
+                post.setThumbnail(rs.getString(2));
+                post.setTitle(rs.getString(3));
+                post.setFeatured(rs.getBoolean(4));
+                post.setStatus(rs.getBoolean(5));
+
+                User author = new User();
+                author.setId(rs.getInt(6));
+                author.setEmail(rs.getString(7));
+                author.setFullname(rs.getString(8));
+                post.setUser(author);
+
+                SubCategoryPost subCategory = new SubCategoryPost();
+                subCategory.setId(rs.getInt(9));
+                subCategory.setName(rs.getString(10));
+                CategoryPost category = new CategoryPost();
+                category.setId(rs.getInt(11));
+                category.setName(rs.getString(12));
+                subCategory.setCategory(category);
+                post.setPostCategory(subCategory);
+
+                listPosts.add(post);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listPosts;
+    }
+
+    public void editStatusPost(int id, boolean status) {
+        try {
+            String sql = "UPDATE [dbo].[Post]\n"
+                    + "   SET [status] = ?\n"
+                    + " WHERE id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setBoolean(1, status);
+            stm.setInt(2, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void editFeaturedPost(int id, boolean featured) {
+        try {
+            String sql = "UPDATE [dbo].[Post]\n"
+                    + "   SET [feature] = ?\n"
+                    + " WHERE id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setBoolean(1, featured);
+            stm.setInt(2, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void insertPost(String title, String urlImage, String brief,
+            String description, Date dateUpdate, int idSubCategory,
+            boolean featured, boolean status, int idUser) {
+        try {
+            String sql = "INSERT INTO [dbo].[Post]\n"
+                    + "           ([thumbnail]\n"
+                    + "           ,[title]\n"
+                    + "           ,[categoryId]\n"
+                    + "           ,[briefInfo]\n"
+                    + "           ,[description]\n"
+                    + "           ,[feature]\n"
+                    + "           ,[dateUpdated]\n"
+                    + "           ,[status]\n"
+                    + "           ,[UserId])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, urlImage);
+            stm.setString(2, title);
+            stm.setInt(3, idSubCategory);
+            stm.setString(4, brief);
+            stm.setString(5, description);
+            stm.setBoolean(6, featured);
+            stm.setDate(7, dateUpdate);
+            stm.setBoolean(8, status);
+            stm.setInt(9, idUser);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public ArrayList<Post> listPostPaging(ArrayList<Post> listPosts, int start, int end) {
+        ArrayList<Post> arr = new ArrayList<>();
+        if (!listPosts.isEmpty()) {
+            for (int i = start; i < end; i++) {
+                arr.add(listPosts.get(i));
+            }
+        }
+        return arr;
+    }
+
+    public Post getPostByIdIncludeCategory(int idPost) {
+        try {
+            String sql = "Select p.id, p.thumbnail, p.title,p.briefInfo, p.[description], p.feature, "
+                    + "p.[status], p.UserId, s.email, s.fullname, p.categoryId as idSubCategory, "
+                    + "sp.[name] as nameSubCategory, cp.id as idCategoryPost, "
+                    + "cp.[name] as nameCategoryPost, p.dateUpdated\n"
+                    + "From post p join [user] s on p.UserId = s.id\n"
+                    + "join SubCategoryPost sp on p.categoryId = sp.id\n"
+                    + "join CategoryPost cp on cp.id = sp.idcategory\n"
+                    + "and p.id = ?\n";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, idPost);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Post post = new Post();
+                post.setId(rs.getInt(1));
+                post.setThumbnail(rs.getString(2));
+                post.setTitle(rs.getString(3));
+                post.setBriefInfo(rs.getString(4));
+                post.setDescription(rs.getString(5));
+                post.setFeatured(rs.getBoolean(6));
+                post.setStatus(rs.getBoolean(7));
+
+                User author = new User();
+                author.setId(rs.getInt(8));
+                author.setEmail(rs.getString(9));
+                author.setFullname(rs.getString(10));
+                post.setUser(author);
+
+                SubCategoryPost subCategory = new SubCategoryPost();
+                subCategory.setId(rs.getInt(11));
+                subCategory.setName(rs.getString(12));
+                CategoryPost category = new CategoryPost();
+                category.setId(rs.getInt(13));
+                category.setName(rs.getString(14));
+                subCategory.setCategory(category);
+                post.setPostCategory(subCategory);
+                post.setDate(rs.getDate(15));
+                return post;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void editPost(int id, String urlImage, String title, String briefInfo,
+            String description, Date dateNow, int idUser, boolean featured,
+            boolean status, int category, int subCategory) {
+        try {
+            String sql = "UPDATE [dbo].[Post]\n"
+                    + "   SET \n"
+                    + "      [title] = ?\n"
+                    + "      ,[categoryId] = ?\n"
+                    + "      ,[briefInfo] = ?\n"
+                    + "      ,[description] = ?\n"
+                    + "      ,[feature] = ?\n"
+                    + "      ,[dateUpdated] = ?\n"
+                    + "      ,[status] = ?\n"
+                    + "      ,[UserId] = ?\n";
+
+            if (!urlImage.equalsIgnoreCase("")) {
+                sql += "     ,[thumbnail] = " + "'" + urlImage + "'" + "\n";
+            }
+            sql += " WHERE [id] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, title);
+            stm.setInt(2, subCategory);
+            stm.setString(3, briefInfo);
+            stm.setString(4, description);
+            stm.setBoolean(5, featured);
+            stm.setDate(6, dateNow);
+            stm.setBoolean(7, status);
+            stm.setInt(8, idUser);
+            stm.setInt(9, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public static void main(String[] args) {
-        PostDBContext db =new PostDBContext();
-        System.out.println(db.getPostNumber());
+        PostDBContext db = new PostDBContext();
+        System.out.println(db.getPostById(2));
     }
 }

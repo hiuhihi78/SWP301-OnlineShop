@@ -56,6 +56,7 @@ public class UserDBContext extends DBContext {
         }
         return null;
     }
+
     public ArrayList<User> getAllUser() {
         ArrayList<User> users = new ArrayList<>();
         String sql = "SELECT [fullname]\n"
@@ -228,17 +229,17 @@ public class UserDBContext extends DBContext {
 
             while (rs.next()) {
                 user = new User(
-                        rs.getString("password"), 
-                        rs.getString("avatar"), 
-                        rs.getString("email"), 
+                        rs.getString("password"),
+                        rs.getString("avatar"),
+                        rs.getString("email"),
                         rs.getString("fullname"),
                         rs.getBoolean("gender"),
                         rs.getString("mobile"),
                         rs.getString("address"),
                         rs.getBoolean("status"));
-                
-               user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
-               user.setId(rs.getInt("id"));
+
+                user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+                user.setId(rs.getInt("id"));
             }
         } catch (Exception ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -257,17 +258,17 @@ public class UserDBContext extends DBContext {
             while (rs.next()) {
 
                 user = new User(
-                        rs.getString("password"), 
-                        rs.getString("avatar"), 
-                        rs.getString("email"), 
+                        rs.getString("password"),
+                        rs.getString("avatar"),
+                        rs.getString("email"),
                         rs.getString("fullname"),
                         rs.getBoolean("gender"),
                         rs.getString("mobile"),
                         rs.getString("address"),
                         rs.getBoolean("Status"));
-                
-               user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
-               user.setId(rs.getInt("id"));
+
+                user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
+                user.setId(rs.getInt("id"));
 
             }
         } catch (Exception ex) {
@@ -289,7 +290,7 @@ public class UserDBContext extends DBContext {
         }
         return false;
     }
-    
+
     public boolean addUser(User user) {
         try {
             String sql = "insert into [User]([password], email, fullname, gender, mobile, address, [Status], roleId, avatar)"
@@ -1028,6 +1029,7 @@ public class UserDBContext extends DBContext {
         }
         return list;
     }
+
     public User getUserByIDLogin(int id) {
         String sql = "SELECT [fullname]\n"
                 + "                     ,[password]\n"
@@ -1142,6 +1144,71 @@ public class UserDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public String getUserPassword(int uid) {
+        String sql = "SELECT [password] FROM [User]\n"
+                + "WHERE id = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, uid);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("password");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void updateUserPassword(int uid, String password) throws SQLException {
+        connection.setAutoCommit(false);
+        String sql = "UPDATE [dbo].[User]\n"
+                + "   SET [password] = ?\n"
+                + " WHERE id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, password);
+            ps.setInt(2, uid);
+            ps.executeUpdate();
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            connection.rollback();
+            connection.close();
+        }
+    }
+
+    public ArrayList<User> getUserMarketing() {
+        ArrayList<User> listUserMarketing = new ArrayList<>();
+        try {
+            String sql = "Select * from [User] \n"
+                    + "Where roleId = 2";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt(1));
+                user.setPassword(rs.getString(2));
+                user.setAvatar(rs.getString(3));
+                user.setFullname(rs.getString(4));
+                user.setGender(rs.getBoolean(5));
+                user.setMobile(rs.getString(6));
+                user.setAddress(rs.getString(7));
+                Role role = new Role();
+                role.setId(rs.getInt(8));
+                user.setRole(role);
+                user.setStatus(rs.getBoolean(9));
+                user.setUsername(rs.getString(10));
+                user.setEmail(rs.getString(11));
+                listUserMarketing.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listUserMarketing;
     }
 
     public static void main(String[] args) {

@@ -27,10 +27,10 @@ public class AddCustomerControler extends BaseAuthController {
         request.getRequestDispatcher("/view/marketing/addCustomer.jsp").forward(request, response);
     }
 
+//xin chào các b?n nha    
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 //        String avatar = request.getParameter("avatar");
         String password = "abc";
@@ -45,7 +45,7 @@ public class AddCustomerControler extends BaseAuthController {
         //validate value
         int roleId = Integer.parseInt(raw_id);
         boolean gender = raw_gender.equals("male");
-        boolean status = raw_gender.equals("active");
+        boolean status = raw_status.equals("active");
 
         User cusomter = new User();
         cusomter.setPassword(password);

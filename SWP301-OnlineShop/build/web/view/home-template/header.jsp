@@ -35,19 +35,29 @@
                                         <li>
                                             <a href="user/profile" class="text-none-underline">Profile</a>
                                         </li>
-                                        <li>
-                                            <a href="#" class="text-none-underline">Change password</a>
-                                        </li>
+                                        
                                         <c:if test="${sessionScope.user.role.id == 1}">
                                             <li>
                                                 <a href="admin/userList" class="text-none-underline">Manage</a>
                                             </li>
                                         </c:if>
+                                        
                                         <c:if test="${sessionScope.user.role.id == 2}">
                                             <li>
                                                 <a href="/marketing/productlist" class="text-none-underline">Maketing manage</a>
                                             </li>
                                         </c:if>
+                                            
+                                        <c:if test="${sessionScope.user.role.id == 1 || sessionScope.user.role.id == 2 || sessionScope.user.role.id == 3}">
+                                            <li>
+                                                <a href="sale/productlist" class="text-none-underline">My store</a>
+                                            </li>
+                                        </c:if>  
+                                         
+                                        <li>
+                                            <a class="btn btn-primary text-none-underline mg-0" data-toggle="modal" data-target="#myModal">Change password</a>
+                                        </li>
+                                        
                                         <li>
                                             <a href="logout" class="text-none-underline">Logout</a>
                                         </li>
@@ -92,4 +102,45 @@
         </div>
     </div>  
     <!--/header-bottom-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                    <h4 class="modal-title" id="myModalLabel">Change password</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Success alert -->
+                        <div class="alert alert-success" id="alertSuccess">
+                            <strong>Success!</strong> ${requestScope.msg}
+                        </div>
+
+                        <!-- Failed alert -->
+                        <div class="alert alert-danger" id="alertDanger">
+                            <strong>Danger!</strong> ${requestScope.msg}
+                        </div>
+                        <form id ="changePassForm">
+                            <div class="form-group">
+                                <label for="oldPassword">Old Password</label>
+                                <input type="password" class="form-control" id="oldPassword" placeholder="Enter old password" name="oldPassword">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" class="form-control" id="newPassword" placeholder="Enter new password" name="newPassword">
+                            </div>
+                            <div class="form-group">
+                                <label for="reEnterNewPassword">Re-enter new password</label>
+                                <input type="password" class="form-control" id="reEnterNewPassword" placeholder="Re-enter new password" name="reEnterPass">
+                            </div>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="saveNewPassword">Save changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>

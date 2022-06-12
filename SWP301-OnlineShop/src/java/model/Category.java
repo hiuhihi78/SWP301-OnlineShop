@@ -4,13 +4,17 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author DELL
  */
 public class Category {
+
     private int id;
     private String name;
+    ArrayList<SubCategory> listSubCategory;
 
     public Category() {
     }
@@ -30,4 +34,13 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
+    public ArrayList<SubCategory> getListSubCategory() {
+        return listSubCategory;
+    }
+
+    public void setListSubCategory(ArrayList<SubCategory> listSubCategory) {
+        this.listSubCategory = listSubCategory;
+    }
+
 }

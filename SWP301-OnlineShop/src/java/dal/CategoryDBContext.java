@@ -17,7 +17,8 @@ import model.SubCategory;
  *
  * @author Admin
  */
-public class CategoryDBContext extends DBContext{
+public class CategoryDBContext extends DBContext {
+
     public ArrayList<Category> getAllCategory() {
         ArrayList<Category> categorys = new ArrayList<>();
         String sql = "SELECT [id]\n"
@@ -66,8 +67,96 @@ public class CategoryDBContext extends DBContext{
         }
         return subCategorys;
     }
+
+    
+
+    public Category addCategory(String name) {
+        Category category = new Category();
+        try {
+            connection.setAutoCommit(false);
+            String sql = "INSERT INTO [dbo].[Category]\n"
+                    + "           ([name])\n"
+                    + "     VALUES\n"
+                    + "           (?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.executeUpdate();
+
+            int id = 0;
+            String sql1 = "Select @@IDENTITY as CategoryId";
+            PreparedStatement ps1 = connection.prepareStatement(sql1);
+            ResultSet rs = ps1.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+            category.setId(id);
+            category.setName(name);
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+                Logger.getLogger(CategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(CategoryDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return category;
+    }
+
+    public SubCategory addSubcategory(int categoryId, String subcategory) {
+        SubCategory subCategory = new SubCategory();
+        try {
+            connection.setAutoCommit(false);
+            String sql = "INSERT INTO [dbo].[SubCategory]\n"
+                    + "           ([name]\n"
+                    + "           ,[categoryId])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, subcategory);
+            ps.setInt(2, categoryId);
+            ps.executeUpdate();
+
+            int id = 0;
+            String sql1 = "Select @@IDENTITY as CategoryId";
+            PreparedStatement ps1 = connection.prepareStatement(sql1);
+            ResultSet rs = ps1.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+            subCategory.setId(id);
+            subCategory.setName(subcategory);
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+                Logger.getLogger(CategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(CategoryDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return subCategory;
+    }
     
     public static void main(String[] args) {
-        System.out.println(new CategoryDBContext().getSubCatgory(1).size());
+        CategoryDBContext bContext = new CategoryDBContext();
+        bContext.addSubcategory(1, "Hat");
     }
+   
+
 }

@@ -103,6 +103,21 @@
     <servlet>
         <servlet-name>MarketingDashboardController</servlet-name>
         <servlet-class>controller.marketing.MarketingDashboardController</servlet-class>
+        </servlet>
+
+<servlet>
+        <servlet-name>ProductListPublicController</servlet-name>
+        <servlet-class>controller.home.ProductListPublicController</servlet-class>
+    </servlet>
+    <servlet>
+        
+        <servlet-name>ChangeUserPassword</servlet-name>
+        <servlet-class>controller.common.ChangeUserPassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserOrdersController</servlet-name>
+        <servlet-class>controller.user.UserOrdersController</servlet-class>
+
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -207,6 +222,18 @@
     <servlet-mapping>
         <servlet-name>MarketingDashboardController</servlet-name>
         <url-pattern>/marketing/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductListPublicController</servlet-name>
+        <url-pattern>/productlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeUserPassword</servlet-name>
+        <url-pattern>/user/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserOrdersController</servlet-name>
+        <url-pattern>/myorders</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
