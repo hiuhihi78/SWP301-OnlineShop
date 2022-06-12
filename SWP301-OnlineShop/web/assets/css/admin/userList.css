@@ -6,6 +6,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : May 30, 2022, 2:24:23 PM
     Author     : Admin
 */
+.word-wrap-w-40 {
+    width: 40%;
+    word-wrap: break-word;
+}
+.btn-close-preview{
+    font-size: 30px;
+    position: absolute;
+    z-index: 1024;
+    right: 5px;
+}
 .postion-absolute-z-index {
     font-size: 30px;
     position: absolute;
@@ -41,6 +51,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .text-indent {
     text-indent: 1.5rem;
     font-size: 18px;
+    word-wrap: break-word;
 }
 .pd-v4-h8 {
     padding: 4px 8px;
@@ -52,9 +63,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     display: flex;
     justify-content: space-between;
 }
-.text-upper {
-    text-transform: uppercase;
+.text-tranform-wrap {
+    text-transform: capitalize;
     font-weight: 700;
+    word-wrap: break-word;
 }
 .w-h-100 {
     width: 100%;
@@ -81,6 +93,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 .mb-1rem {
     margin-bottom: 1rem;
+}
+.t-55px {
+    top: 55px;
 }
 .filter-select{
     width: 20px;

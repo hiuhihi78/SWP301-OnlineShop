@@ -42,7 +42,6 @@
                 <aside class="right-side">
                     <!-- Main content -->
                     <section class="content ">
-
                         <div class="product-content product-wrap clearfix product-deatil">
                             <div class="row">
                                 <div class="col-md-5 col-sm-12 col-xs-12">
@@ -61,7 +60,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
-                                <h2 class="name" class="text-upper">
+                                <h2 class="name text-tranform-wrap" >
                                     ${requestScope.post.title}
                                 </h2>
                                 <hr>
@@ -107,7 +106,7 @@
                                 <hr />
                                 <div class="tab-pane fade active in" id="more-information">
                                     <strong>Description Title:</strong>
-                                    <p class="text-indent" >
+                                    <p class="text-indent">
                                         ${requestScope.post.description}
                                     </p>
                                 </div>  
@@ -129,8 +128,6 @@
             </aside><!-- /.right-side -->
         </div>
 
-        <!--javascrip-->
-        <script src="../../assets/js/marketing/productList.js"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../../js/jquery.min.js" type="text/javascript"></script>

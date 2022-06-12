@@ -49,7 +49,7 @@
                                 <div class="form-group w-70-percent">
                                     <div id="preview-box" class="preview-img">
                                         <img class="img-fit" id="previewImage"/>
-                                        <button onclick="btnClosePreviewImage()" type="button" class="close postion-absolute-z-index">&times;</button>
+                                        <button onclick="btnClosePreviewImage()" type="button" class="close btn-close-preview" >&times;</button>
                                     </div>
                                     <label for="thumbnail">Thumbnail</label>
                                     <input type="file" class="form-control" name="file" id="file" required="" onchange="checkFileInput(this)" accept="image/*"/>
@@ -177,7 +177,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSaveSubcategory()">Save</button>
-                        <!--<button type="button" class="btn btn-primary" onclick="document.getElementById('saveAddNewCategory').submit();">Save</button>-->
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -185,7 +184,7 @@
             </div>
         </div>
         <!--javascrip-->
-        <!--<script src="../../assets/js/marketing/productList.js"></script>-->
+        <script src="../../assets/js/marketing/addNewPost.js" type="text/javascript"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../../js/jquery.min.js" type="text/javascript"></script>
@@ -195,122 +194,6 @@
         <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Director App -->
         <script src="../../assets/js/Director/app.js" type="text/javascript"></script>
-        <script type="text/javascript">
-                            console.log(document.querySelector('#file'));
-                            function btnClosePreviewImage() {
-                                var previewBox = document.querySelector('#preview-box');
-                                var valueFile = document.querySelector('#file');
-                                previewBox.style = "display: none;";
-                                valueFile.removeAttribute('value');
-                                valueFile.setAttribute('value', '');
-                            }
-                            function handleSaveCategory() {
-                                var valueCategory = document.querySelector('#newCategory1').value;
-                                var valuesubCategory = document.querySelector('#newSubCategory1').value;
-                                var listCategory = document.querySelector('#listCategory');
-                                var listCategory2 = document.querySelector('#category2');
-                                $.ajax({
-                                    type: "GET",
-                                    url: "../marketing/handlePost",
-                                    data: {
-                                        nameCategory: valueCategory,
-                                        nameSubCategory: valuesubCategory,
-                                        action: "addNewCategory"
-                                    },
-                                    success: function (data, textStatus, jqXHR) {
-                                        listCategory.innerHTML += data;
-                                        listCategory2.innerHTML += data;
-                                    },
-                                    error: function (jqXHR, textStatus, errorThrown) {
-
-                                    }
-                                });
-                            }
-                            function handleSaveSubcategory() {
-                                var category = document.querySelectorAll('#category2 option');
-                                var valueCategory;
-                                var subCategory = document.querySelector('#newSubcategory2');
-                                for (var i = 0; i < category.length; i++) {
-                                    if (category[i].selected) {
-                                        valueCategory = category[i].value;
-                                        break;
-                                    }
-                                }
-                                $.ajax({
-                                    type: "GET",
-                                    url: "../marketing/handlePost",
-                                    data: {
-                                        idCategory: valueCategory,
-                                        nameSubCategory: subCategory.value,
-                                        action: "addNewSubCategory"
-                                    },
-                                    success: function (data, textStatus, jqXHR) {
-                                        console.log("status ", textStatus);
-                                    },
-                                    error: function (jqXHR, textStatus, errorThrown) {
-
-                                    }
-                                });
-                            }
-                            function selectSubCategory() {
-                                var list = document.querySelectorAll("#listCategory option");
-                                var listSub = document.querySelector("#subCatePost");
-                                console.log(list);
-                                for (var i = 0; i < list.length; i++) {
-                                    if (list[i].selected) {
-                                        $.ajax({
-                                            type: "GET",
-                                            url: "../marketing/handlePost",
-                                            data: {
-                                                idCategory: list[i].value,
-                                                action: "subcategory"
-                                            },
-                                            success: function (data, textStatus, jqXHR) {
-                                                console.log(data);
-                                                listSub.innerHTML = "" + data;
-                                            },
-                                            error: function (jqXHR, textStatus, errorThrown) {
-
-                                            }
-                                        });
-                                        break;
-                                    }
-                                }
-                            }
-//                            var list = document.querySelectorAll("#listCategory option");
-//                            var listSub = document.querySelector("#subCatePost");
-//                            console.log(list);
-//                            for (var i = 0; i < list.length; i++) {
-//                                if (list[i].selected) {
-//                                    $.ajax({
-//                                        type: "GET",
-//                                        url: "../marketing/handlePost",
-//                                        data: {
-//                                            idCategory: list[i].value,
-//                                            action: "subcategory"
-//                                        },
-//                                        success: function (data, textStatus, jqXHR) {
-//                                            console.log(data);
-//                                            listSub.innerHTML = "" + data;
-//                                        },
-//                                        error: function (jqXHR, textStatus, errorThrown) {
-//
-//                                        }
-//                                    });
-//                                    break;
-//                                }
-//                            }
-                            function checkFileInput(e) {
-                                console.log(document.querySelector('#file').value);
-                                var reader = new FileReader();
-                                reader.onload = function (e) {
-                                    document.querySelector('#previewImage').parentNode.style.display = 'block';
-                                    $("#previewImage").attr("src", e.target.result);
-                                };
-                                //Imagepath.files[0] is blob type
-                                reader.readAsDataURL(e.files[0]);
-                            }
-        </script>
     </body>
 </html>
 

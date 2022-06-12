@@ -53,7 +53,7 @@
                     <section class="content ">
                         <!--Alert-->
                     <c:if test="${requestScope.success != null}">
-                        <div class="fixed float-end" id="showAlter">
+                        <div class="fixed float-end t-55px" id="showAlter">
                             <div class="alert alert-success alert-dismissible fade in" id="alterfade">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 ${requestScope.success}
@@ -63,7 +63,7 @@
 
 
                     <c:if test="${requestScope.failed != null}">
-                        <div class="fixed float-end" id="showAlter">
+                        <div class="fixed float-end t-55px" id="showAlter">
                             <div class="alert alert-danger alert-dismissible fade in" id="alterfade">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 ${requestScope.failed}
@@ -82,9 +82,9 @@
                             </select>
                             <!--                            <select id="author" name="author" class="form-control">
                                                             <option value="-1">All Author</option>
-                            <c:forEach items="${requestScope.listUserMarketing}" var="u">
+                            <%--<c:forEach items="${requestScope.listUserMarketing}" var="u">--%>
                                 <option value="${u.id}" ${(requestScope.idAuthor == u.id)?"selected":""}>${u.fullname}</option>
-                            </c:forEach>
+                            <%--</c:forEach>--%>
                         </select>-->
                             <select id="status" name="status" class="form-control">
                                 <option value="-1">All Status</option>
@@ -103,7 +103,7 @@
                                 <option value="asc">ASC</option>
                                 <option value="desc" ${(requestScope.orderBy == "desc")?"selected":""}>DESC</option>
                             </select>
-                            <input id="search" name="search" type="text" class="form-control w-25rem " placeholder="Enter Title, Author" 
+                            <input id="search" name="search" type="text" class="form-control w-25rem" placeholder="Enter Title, Author" 
                                    <c:if test="${(requestScope.searchContent != null)}">
                                        value="${requestScope.searchContent}"
                                    </c:if>
@@ -138,7 +138,7 @@
                                             <tr>
                                                 <td>${p.id}</td>
                                                 <td><img class="img-wh" src="${p.thumbnail}"/></td>
-                                                <td>${p.title}</td>
+                                                <td class="word-wrap-w-40">${p.title}</td>
                                                 <td>${p.postCategory.category.name}</td>
                                                 <td>${p.user.fullname}</td>
                                                 <td>

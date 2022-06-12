@@ -55,7 +55,7 @@
                                         </c:if>  
                                          
                                         <li>
-                                            <a type="button" class="btn btn-primary text-none-underline" data-toggle="modal" data-target="#myModal">Change password</a>
+                                            <a class="btn btn-primary text-none-underline mg-0" data-toggle="modal" data-target="#myModal">Change password</a>
                                         </li>
                                         
                                         <li>
