@@ -105,7 +105,13 @@
                                 </div>
                                 <hr />
                                 <div class="tab-pane fade active in" id="more-information">
-                                    <strong>Description Title:</strong>
+                                    <strong>Brief Information: </strong>
+                                    <p class="text-indent">
+                                        ${requestScope.post.briefInfo}
+                                    </p>
+                                </div>  
+                                <div class="tab-pane fade active in" id="more-information">
+                                    <strong>Description: </strong>
                                     <p class="text-indent">
                                         ${requestScope.post.description}
                                     </p>
