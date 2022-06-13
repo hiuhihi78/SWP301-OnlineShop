@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html lang="en">
 
     <head>
@@ -19,6 +20,7 @@
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
 
         <link href="../../assets/public/css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
 
     </head>
     <!--/head-->
@@ -32,7 +34,7 @@
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                
+
                                 <c:forEach items="${requestScope.listCategorys}" var="list">
                                     <c:if test="${not empty list.listSubCategory}"> <!-- check empty of list subcategory with that category -->
                                         <div class="panel panel-default">
@@ -100,20 +102,48 @@
                         <div class="features_items">
                             <!--features_items-->
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Your orders</h2>
+                            <table
+                                data-toggle="table"
+                                data-pagination="true"
+                                data-search="true"
+                                data-sortable="true">
 
+                                <thead>
+                                    <tr>
+                                        <th data-sortable="true">Order ID</th>
+                                        <th data-sortable="true">Ordered Date</th>
+                                        <th data-sortable="true">Product (First product name)</th>
+                                        <th data-sortable="true">Number of products</th>
+                                        <th data-sortable="true">Total cost</th>
+                                        <th data-sortable="true">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${requestScope.orders}" var="o">
+                                        <tr>
+                                            <td>${o.id}</td>
+                                            <td>${o.date}</td>
+                                            <td>${o.products[0].name}</td>
+                                            <td>${fn:length(o.products)}</td>
+                                            <td>${o.totalcost}</td>
+                                            <td>status</td>
+                                        </tr>
+                                    </c:forEach> 
+                                </tbody>
+                            </table>
                         </div>
 
                         <!--features_items-->
                     </div>
                 </div>
-                                <div class="pagging">
-				<ul class="pagination pull-right">
-					<li class="active"><a href="">1</a></li>
-					<li><a href="">2</a></li>
-					<li><a href="">3</a></li>
-					<li><a href="">&raquo;</a></li>
-				</ul>
-			</div>
+                <div class="pagging">
+                    <ul class="pagination pull-right">
+                        <li class="active"><a href="">1</a></li>
+                        <li><a href="">2</a></li>
+                        <li><a href="">3</a></li>
+                        <li><a href="">&raquo;</a></li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -130,6 +160,7 @@
         <script src="../../assets/public/js/main.js"></script>
         <script src="../../assets/js/home/home.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js" integrity="sha512-FOhq9HThdn7ltbK8abmGn60A/EMtEzIzv1rvuh+DqzJtSGq8BRdEN0U+j0iKEIffiw/yEtVuladk6rsG4X6Uqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
     </body>
 
 </html>
