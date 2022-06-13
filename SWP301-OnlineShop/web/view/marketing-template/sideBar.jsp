@@ -53,7 +53,7 @@
                     <li id="nav-user-list">
                         <a href="productlist">
 
-                            <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
+                            <i class="fa-solid fa-users"></i> <span>Product List</span>
 
 
                         </a>
