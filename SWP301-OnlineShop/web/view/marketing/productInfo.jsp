@@ -60,7 +60,7 @@
                             <input type="hidden" name="id" value="${requestScope.product.id}"/>
                             
                             <!--Thumbnail-->
-                            <div class="form-group w-70-percent mx-auto" ">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="thumbnail">Thumbnail</label>
                                 <div  class="w-35percent image-input-layout display-flex" style="position: relative">
                                     <div id="closeBtn-thumbnailBoxImg" class="close-btn-not-hide" onclick="closeImgage('thumbnailBoxImg','closeBtn-thumbnailBoxImg','thumbnail');"> <i class="fa-solid fa-xmark close-btn"></i></div>

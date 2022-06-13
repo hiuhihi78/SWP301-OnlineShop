@@ -81,8 +81,8 @@
                                 <!--featured-->
                                 <select name="featured" id="featured" class="form-control">
                                     <option value="all" ${requestScope.featured == "all" ? "selected='selected'":""}>All featured</option>
-                                    <option value="active" ${requestScope.featured == "active" ? "selected='selected'":""}>Active</option>
-                                    <option value="unactive" ${requestScope.featured == "unactive" ? "selected='selected'":""}>Deactive</option>
+                                    <option value="active" ${requestScope.featured == "active" ? "selected='selected'":""}>On</option>
+                                    <option value="unactive" ${requestScope.featured == "unactive" ? "selected='selected'":""}>Off</option>
                                 </select>
                                 <!--/featured-->
                                 
@@ -152,8 +152,8 @@
                                             <td>${p.price}</td>
                                             <td>${p.priceDiscount}</td>
                                             <td>
-                                                <c:if test="${!p.featured}"><span class="text-color-red">Deactivate</span></c:if>
-                                                <c:if test="${p.featured}"><span class="text-color-green">Activate</span></c:if>        
+                                                <c:if test="${!p.featured}"><span class="text-color-red">Off</span></c:if>
+                                                <c:if test="${p.featured}"><span class="text-color-green">On</span></c:if>        
                                             </td>
                                             <td>
                                                 <form action="editStatusProduct" id="changeStatus-${p.id}" method="get">
