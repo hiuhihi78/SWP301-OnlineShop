@@ -150,37 +150,34 @@ public class AddSliderController extends HttpServlet {
             String fileNameSlider = extractFileName(partSlider, fullSavePath);
             if (fileNameSlider != null && fileNameSlider.length() > 0) {
                 String fileUrl = "/assets/img/" + fileNameSlider;
-
-                // delete old thubnail
-//                DeleteFile.handleDeleteFile(product.getThumbnail());
-                // update thubnail
+//                if (isAdd == false) {
+//                    DeleteFile.handleDeleteFile(slider.getImage());
+//                }
                 slider.setImage(fileUrl);
-
-                //Add new Slider
-                if (isAdd == false) {
-                    rs = sliderDb.updateSlider(slider);
-                    if (rs) {
-                        request.setAttribute("messTrue", "Update slider successful!");
-                    } else {
-                        request.setAttribute("messFalse", "Slider update failed. Please try again!");
-                    }
-                    //Update Slider
-                } else {
-                    rs = sliderDb.addSlider(slider);
-                    if (rs) {
-                        request.setAttribute("messTrue", "Add slider successfully!");
-                    } else {
-                        request.setAttribute("messFalse", "Adding slider failed. Please try again!");
-                    }
-                    request.setAttribute("id", 0);
-                }
                 String filePath = fullSavePath + File.separator + fileNameSlider;
                 // Ghi vào file.
                 partSlider.write(filePath);
 //                new ProductDBContext().updateThumbnailProduct(productId, fileUrl);
             }
         }
-
+             //Update Slider
+            if (isAdd == false) {
+                rs = sliderDb.updateSlider(slider);
+                if (rs) {
+                    request.setAttribute("messTrue", "Update slider successful!");
+                } else {
+                    request.setAttribute("messFalse", "Slider update failed. Please try again!");
+                }
+                //Add Slider
+            } else {
+                rs = sliderDb.addSlider(slider);
+                if (rs) {
+                    request.setAttribute("messTrue", "Add slider successfully!");
+                } else {
+                    request.setAttribute("messFalse", "Adding slider failed. Please try again!");
+                }
+                request.setAttribute("id", 0);
+            }
     }
 
     /**

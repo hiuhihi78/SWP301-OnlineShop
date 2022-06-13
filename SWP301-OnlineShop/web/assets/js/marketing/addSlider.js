@@ -15,4 +15,9 @@
             } else {
             }
         }
+        
+        
+//       function loadImage(src) {
+//           document.getElementById('clock').style.backgroundImage = "url(../../" + src + ")";
+//       }
 

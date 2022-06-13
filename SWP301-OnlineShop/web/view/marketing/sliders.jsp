@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <meta charset="UTF-8">
@@ -50,6 +51,16 @@
             <aside class="right-side">
                 <!-- Main content -->
                 <section class="content">
+                    <div class="app-title">
+                        <div>
+                            <h1><i class="fa fa-list-ul" aria-hidden="true"></i> Slider List</h1>
+                            <p></p>
+                        </div>
+                        <ul class="app-breadcrumb breadcrumb">
+                            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+                            <li class="breadcrumb-item"><a href="/marketing/dashboard">Sliders</a></li>
+                        </ul>
+                    </div>
                     <div style="padding-bottom: 20px"> 
                         <form action="/marketing/sliderList" method="get" id="fSearch">
 
@@ -77,44 +88,48 @@
                     </form>
                 </div>
 
+
+
                 <c:if test="${not empty sliders}">
                     <c:forEach var="s" items="${sliders}"> 
                         <div class="col-md-12">
-                            <div class="wp-block property list">
-                                <div class="wp-block-title">
-                                    <h3><a href="#"><b>#</b> ${s.id}</a></h3>
+                            <div class="tile">
+                                <div class="wp-block property list">
+                                    <div class="wp-block-title">
+                                        <h3><a href="#"><b>#</b> ${s.id}</a></h3>
 
-                                </div>
-                                <div class="wp-block-body">
-                                    <div class="wp-block-img">
-                                        <a href="#">
-                                            <img src="${s.image}" alt="" id="img-slider">
-                                        </a>
                                     </div>
-                                    <div class="wp-block-content">
-                                        <small>10 days only</small>
-                                        <h4 class="content-title">${s.title}</h4>
-                                        <p class="description">${s.note}</p>
+                                    <div class="wp-block-body">
+                                        <div class="wp-block-img">
+                                            <a href="#">
+                                                <img src="${s.image}" alt="" id="img-slider">
+                                            </a>
+                                        </div>
+                                        <div class="wp-block-content">
+                                            <small>10 days only</small>
+                                            <h4 class="content-title">${s.title}</h4>
+                                            <p class="description">${s.note}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="wp-block-footer">
-                                    <ul class="aux-info">
-                                        <li><a href="${s.backlink}"><i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;Backlink</a></li>
-                                        <li><a href="/marketing/sliderAdd?id=${s.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit</a></li>
+                                    <div class="wp-block-footer">
+                                        <ul class="aux-info">
+                                            <li><a href="${s.backlink}"><i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;Backlink</a></li>
+                                            <li><a href="/marketing/sliderAdd?id=${s.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit</a></li>
 
-                                        <li><a href="/marketing/sliderDetail?id=${s.id}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Details</a></li>
-                                        <li>
-                                            <div>Show&nbsp;</div>
-                                            <div class="toggle lg"> 
-                                                <label>
+                                            <li><a href="/marketing/sliderDetail?id=${s.id}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Details</a></li>
+                                            <li>
+                                                <div>Show&nbsp;</div>
+                                                <div class="toggle lg"> 
+                                                    <label>
 
-                                                    <form action="/marketing/sliderList?id=${s.id}" method="post" id="formChange">
-                                                        <input type="checkbox" name="checkbox" value="check" ${s.status==true?"checked":""} onChange="this.form.submit()"><span class="button-indecator"></span>
-                                                    </form>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                                        <form action="/marketing/sliderList?id=${s.id}" method="post" id="formChange">
+                                                            <input type="checkbox" name="checkbox" value="check" ${s.status==true?"checked":""} onChange="this.form.submit()"><span class="button-indecator"></span>
+                                                        </form>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -125,8 +140,8 @@
                     <c:if test="${index != 1}">
                         <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${1}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
                         <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${index-1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
-                        </c:if>   
-                        <c:forEach var = "i" begin = "1" end = "${lastPage}"> 
+                            </c:if>   
+                            <c:forEach var = "i" begin = "1" end = "${lastPage}"> 
                         <li class="page-item"><a class="page-link ${(index == i)? "active-page":""}" href="/marketing/sliderList?index=${i}<c:if test="${status != null && search
                                                                     != null}">&txtSearch=${search}&select=${status}</c:if>">${i}</a></li>
                         </c:forEach>

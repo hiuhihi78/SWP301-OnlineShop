@@ -102,6 +102,39 @@ public class ProductDBContext extends DBContext {
         }
         return list;
     }
+    
+    
+    public ArrayList<Product> getProductsBySliderId(int sid) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "select * from [product] where sliderId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, sid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt(1));
+                product.setName(rs.getString(2));
+                product.setDescription(rs.getString(3));
+                product.setPrice(rs.getLong(4));
+                product.setDiscount(rs.getInt(5));
+                User user = new User();
+                user.setId(rs.getInt(6));
+                product.setUser(user);
+                product.setFeatured(rs.getBoolean(7));
+                product.setThumbnail(rs.getString(8));
+                product.setDate(rs.getDate(9));
+                SubCategory subCategory = new SubCategory();
+                subCategory.setId(rs.getInt(10));
+                product.setSubCategory(subCategory);
+                product.setQuantity(rs.getInt(11));
+                product.setStatus(rs.getBoolean(12));
+                list.add(product);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
 
     public int getProductNumber() {
         int productNumber = 0;
@@ -119,9 +152,9 @@ public class ProductDBContext extends DBContext {
     
     public static void main(String[] args) {
         ProductDBContext db = new ProductDBContext();
-        ArrayList<KeyValuePair> list = db.getProductsTrend(null, null);
-        for (KeyValuePair keyValuePair : list) {
-            System.out.println("Name: " + keyValuePair.getKey().getName() + "\tNumber: " + keyValuePair.getValue());
+        ArrayList<Product> list = db.getProductsBySliderId(1);
+        for (Product p : list) {
+            System.out.println(p.getName());
         }
     }
 

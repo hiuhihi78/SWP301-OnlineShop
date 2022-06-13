@@ -49,7 +49,7 @@
                                                 <h1 class="text-size-35"><span>${i.title}</span></h1>
                                                 <!--<h2>super sale at midnight</h2>-->
                                                 <p>${i.note}</p>
-                                                <a href="#${i.backlink}" class="btn btn-default get">Get it now</a>
+                                                <a href="${i.backlink}" class="btn btn-default get">Get it now</a>
                                                 <!--</button>-->
                                             </div>
                                             <div class="col-sm-6">

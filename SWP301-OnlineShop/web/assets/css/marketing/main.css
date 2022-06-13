@@ -814,11 +814,11 @@ tfoot tr:nth-child(2) th {
     background-color: #eee;
 }
 
-.active {
+/*.active {
     border-radius: 50% !important;
     background-image: linear-gradient(#1976D2, #1976D2) !important;
     color: #fff !important;
-}
+}*/
 
 .range-start, .range-end {
     border-radius: 50% !important;
@@ -863,8 +863,7 @@ tfoot tr:nth-child(2) th {
     padding: 2rem 1rem;
     margin-bottom: 2rem;
     background-color: white;
-    /*  background-image: url("../../../assets/img/slider1.jpg");*/
-
+/*      background-image: url("../../assets/img/slider1.jpg");*/
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -888,16 +887,56 @@ tfoot tr:nth-child(2) th {
     border-radius: 0;
 }
 
-.active-page {
+/*.active-page {
     color:blue;
     font-weight: bold;
     font-size: initial;
-}
+}*/
 
 
 
 #width {
     width: 350px;
+}
+
+
+
+.tile .tile-title-w-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 20px;
+}
+
+.tile .tile-title-w-btn p {
+  margin: 0;
+}
+
+.tile .tile-title-w-btn .title {
+  margin: 0;
+}
+
+.tile .tile-title-w-btn .side {
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.tile .tile-title-w-btn .btn-group {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+}
+
+.tile .tile-footer {
+  border-top: 1px solid #ddd;
+  padding: 20px 0 0 0;
+  margin-top: 10px;
 }
 
 

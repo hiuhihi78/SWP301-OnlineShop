@@ -103,13 +103,13 @@
                                     <div class="col-sm-10">
                                         <div class="toggle lg"> 
                                             <label>
-                                                <input type="checkbox" name="checkbox" value="check" ${s.status==true?"checked":""}><span class="button-indecator"></span>
+                                                <input type="checkbox" name="checkbox" value="check" ${s.status==true?"checked":""} ><span class="button-indecator"></span>
                                             </label>
                                         </div>
                                         <p class="note">(Hide/Show)</p>
                                     </div>
-                                     
-                                    <input type="file" name="fImage" id="getval" style="margin-top: 260px;">
+
+                                            <input type="file" name="fImage" id="getval" style="margin-top: 260px;" value=""/>
                                 </div>
                             </div>
                         </div>
@@ -161,31 +161,34 @@
 
     </div><!-- ./wrapper -->
 
+    <style type="text/css">
+        #clock{
+            background-image: url("../..${image}");
+        }
+
+    </style>
 
 
-</script>-->
+    <!-- jQuery 2.0.2 -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
+    <!-- jQuery UI 1.10.3 -->
+    <script src="../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+    <!-- Bootstrap -->
+    <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- daterangepicker -->
+    <script src="../assets/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <script src="../assets/js/plugins/chart.js" type="text/javascript"></script>
+    <script src="../assets/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <!-- calendar -->
+    <script src="../assets/js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+    <!-- Director App -->
+    <script src="../assets/js/Director/app.js" type="text/javascript"></script>
+    <script src="../../assets/js/marketing/addSlider.js" type="text/javascript"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-
-<!-- jQuery 2.0.2 -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="../js/jquery.min.js" type="text/javascript"></script>
-<!-- jQuery UI 1.10.3 -->
-<script src="../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-<!-- Bootstrap -->
-<script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
-<!-- daterangepicker -->
-<script src="../assets/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
-<script src="../assets/js/plugins/chart.js" type="text/javascript"></script>
-<script src="../assets/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-<!-- calendar -->
-<script src="../assets/js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
-<!-- Director App -->
-<script src="../assets/js/Director/app.js" type="text/javascript"></script>
-<script src="../../assets/js/marketing/addSlider.js" type="text/javascript"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </body>
 </html>

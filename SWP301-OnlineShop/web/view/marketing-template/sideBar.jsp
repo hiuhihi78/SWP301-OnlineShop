@@ -44,9 +44,7 @@
                 <c:if test="${s.key.url == '/marketing/sliderList' && s.value == true}">
                     <li id="nav-user-list">
                         <a href="/marketing/sliderList">
-                            <i class="fa fa-th-list" aria-hidden="true"></i> <span>${s.key.name}</span>
-
-         
+                            <i class="fa fa-th-list" aria-hidden="true"></i> <span>${s.key.name}</span>        
                             </a>
                     </li>
                 </c:if>

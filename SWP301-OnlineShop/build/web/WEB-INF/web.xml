@@ -103,21 +103,22 @@
     <servlet>
         <servlet-name>MarketingDashboardController</servlet-name>
         <servlet-class>controller.marketing.MarketingDashboardController</servlet-class>
-        </servlet>
-
-<servlet>
+    </servlet>
+    <servlet>
         <servlet-name>ProductListPublicController</servlet-name>
         <servlet-class>controller.home.ProductListPublicController</servlet-class>
     </servlet>
     <servlet>
-        
         <servlet-name>ChangeUserPassword</servlet-name>
         <servlet-class>controller.common.ChangeUserPassword</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserOrdersController</servlet-name>
         <servlet-class>controller.user.UserOrdersController</servlet-class>
-
+    </servlet>
+    <servlet>
+        <servlet-name>BacklinkControlller</servlet-name>
+        <servlet-class>controller.common.BacklinkControlller</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -235,9 +236,11 @@
         <servlet-name>UserOrdersController</servlet-name>
         <url-pattern>/myorders</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BacklinkControlller</servlet-name>
+        <url-pattern>/backlink</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>60</session-timeout>
     </session-config>
 </web-app>

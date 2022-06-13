@@ -35,7 +35,7 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="assets/css/marketing/main.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
@@ -58,7 +58,7 @@
 
                                         <div class="carousel-inner">
                                             <!-- Slide 1 -->
-                                            <div class="item active" border="1">
+                                                <div class="tile">
 
                                                 <img src="${slider.image}" alt="">
                                         </div>
@@ -74,7 +74,7 @@
                             <hr />
                             <h4 class="price-container">
                                 <strong><i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;Backlink:</strong>
-                                <a href="#"><span>7 Working Days</span></a>
+                                <a href="${slider.backlink}"><span>${slider.backlink}</span></a>
                             </h4>
                             <hr>
                             <h4 class="price-container" style="transform: translateY(0px);
