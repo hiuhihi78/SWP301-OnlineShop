@@ -7,6 +7,7 @@ package controller.marketing;
 import dal.CategoryPostDBContext;
 import dal.PostDBContext;
 import dal.UserDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -24,12 +25,14 @@ import model.User;
  * @author DELL
  */
 @WebServlet(name = "PostListController", urlPatterns = {"/marketing/postlist"})
-public class PostListController extends HttpServlet {
+public class PostListController extends BaseAuthController {
+
+    public static String ALERT = "";
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String idCategoryStr = request.getParameter("category");
 //        String idAuthorStr = request.getParameter("author");
         String status = request.getParameter("status");
@@ -37,26 +40,25 @@ public class PostListController extends HttpServlet {
         String orderBy = request.getParameter("orderBy");
         String searchBy = request.getParameter("search");
         String pageStr = request.getParameter("page");
-        
-        if(idCategoryStr == null || idCategoryStr.trim().length() == 0) {
+        if (idCategoryStr == null || idCategoryStr.trim().length() == 0) {
             idCategoryStr = "-1";
         }
 //        if(idAuthorStr == null || idAuthorStr.trim().length() == 0) {
 //            idAuthorStr = "-1";
 //        }
-        if(status == null || status.trim().length() == 0) {
-            status = "-1";  
+        if (status == null || status.trim().length() == 0) {
+            status = "-1";
         }
-        if(sortBy == null || sortBy.trim().length() == 0) {
+        if (sortBy == null || sortBy.trim().length() == 0) {
             sortBy = "title";
         }
-        if(orderBy == null || orderBy.trim().length() == 0) {
+        if (orderBy == null || orderBy.trim().length() == 0) {
             orderBy = "asc";
         }
-        if(searchBy == null || searchBy.trim().length() == 0) {
+        if (searchBy == null || searchBy.trim().length() == 0) {
             searchBy = "";
         }
-        if(pageStr == null || pageStr.trim().length() == 0) {
+        if (pageStr == null || pageStr.trim().length() == 0) {
             pageStr = "1";
         }
         PostDBContext postDB = new PostDBContext();
@@ -64,7 +66,7 @@ public class PostListController extends HttpServlet {
 //        int idAuthor = Integer.parseInt(idAuthorStr);
         int idStatus = Integer.parseInt(status);
         int page = Integer.parseInt(pageStr);
-        
+
         CategoryPostDBContext categoryPostDB = new CategoryPostDBContext();
         UserDBContext userDB = new UserDBContext();
         ArrayList<CategoryPost> listCateogry = categoryPostDB.getAllCategoryPost();
@@ -72,14 +74,24 @@ public class PostListController extends HttpServlet {
         ArrayList<Post> listPosts = postDB.getAllPostFiltered(idCategory, -1, idStatus, searchBy, sortBy, orderBy);
         int numbersRowPerPage = 5;
         int totalPage = ((listPosts.size() % numbersRowPerPage) == 0)
-                ?
-                (listPosts.size() / numbersRowPerPage)
-                :
-                ((listPosts.size() / numbersRowPerPage) + 1);
-        int start =(page-1)*numbersRowPerPage;
+                ? (listPosts.size() / numbersRowPerPage)
+                : ((listPosts.size() / numbersRowPerPage) + 1);
+        int start = (page - 1) * numbersRowPerPage;
         int end = Math.min(page * numbersRowPerPage, listPosts.size());
-        ArrayList<Post> listPagingFiltered = postDB.listPostPaging(listPosts,start, end);
+        ArrayList<Post> listPagingFiltered = postDB.listPostPaging(listPosts, start, end);
 
+        if(!ALERT.equalsIgnoreCase("")) {
+            if(ALERT.equalsIgnoreCase("success")) {
+                request.setAttribute("success", "Add New Post Successfully!");
+            } else if(ALERT.equalsIgnoreCase("success2")) {
+                request.setAttribute("success", "Edit Post Successfully!");
+            } else if(ALERT.equalsIgnoreCase("failed")) {
+                request.setAttribute("failed", "Add New Post Failed!");
+            } else {
+                request.setAttribute("failed", "Edit Post Failed!");
+            }
+        }
+        ALERT = "";
         request.setAttribute("idCategory", idCategory);
 //        request.setAttribute("idAuthor", idAuthor);
         request.setAttribute("idStatus", idStatus);
@@ -95,9 +107,10 @@ public class PostListController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
+
     @Override
     public String getServletInfo() {
         return "Short description";

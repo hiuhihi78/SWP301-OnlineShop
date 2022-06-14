@@ -9,7 +9,7 @@
 <html>
     <head>  
         <meta charset="UTF-8">
-        <title>Marketing | Produt list</title>
+        <title>Sale | Produt list</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -43,15 +43,14 @@
         
         
         <!-- header logo: style can be found in header.less -->
-        <jsp:include page="../marketing-template/header.jsp"></jsp:include>
+        <jsp:include page="../sale-template/header.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
-            <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
+            <jsp:include page="../sale-template/sideBar.jsp"></jsp:include>
             <!-- Right side. contains main content -->
             <aside class="right-side">
                 <!-- Main content -->
                 <section class="content ">
-                    <h1>${requestScope.alter}</h1>
                     <!--Alter-->
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
                     <!--Alter-->
@@ -82,8 +81,8 @@
                                 <!--featured-->
                                 <select name="featured" id="featured" class="form-control">
                                     <option value="all" ${requestScope.featured == "all" ? "selected='selected'":""}>All featured</option>
-                                    <option value="active" ${requestScope.featured == "active" ? "selected='selected'":""}>Active</option>
-                                    <option value="unactive" ${requestScope.featured == "unactive" ? "selected='selected'":""}>Deactive</option>
+                                    <option value="active" ${requestScope.featured == "active" ? "selected='selected'":""}>On</option>
+                                    <option value="unactive" ${requestScope.featured == "unactive" ? "selected='selected'":""}>Off</option>
                                 </select>
                                 <!--/featured-->
                                 
@@ -140,6 +139,7 @@
                                     <th>Featured</th>
                                     <th>Status</th>
                                     <th></th>
+                                    <th></th>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${requestScope.products}" var="p">
@@ -152,18 +152,8 @@
                                             <td>${p.price}</td>
                                             <td>${p.priceDiscount}</td>
                                             <td>
-                                                <form action="editFeaturedProduct" id="changeFeatured-${p.id}" method="get">
-                                                    <input type="hidden" name="xpage" value="${page}">
-                                                    <input type="hidden" name="id" value="${p.id}">
-                                                    <c:if test="${!p.featured}">
-                                                        <input type="hidden" name="newFeatured" value="active">
-                                                        <button type="button" class="btn btn-danger" onclick="submitForm('changeFeatured-${p.id}')">Deactivate</button>
-                                                    </c:if>
-                                                    <c:if test="${p.featured}">
-                                                        <input type="hidden" name="newFeatured" value="unactive">
-                                                        <button type="button" class="btn btn-success" onclick="submitForm('changeFeatured-${p.id}')">Activate</button>
-                                                    </c:if>
-                                                </form>
+                                                <c:if test="${!p.featured}"><span class="text-color-red">Off</span></c:if>
+                                                <c:if test="${p.featured}"><span class="text-color-green">On</span></c:if>        
                                             </td>
                                             <td>
                                                 <form action="editStatusProduct" id="changeStatus-${p.id}" method="get">
@@ -182,7 +172,14 @@
                                             <td>
                                                 <a href="editProductInfo?id=${p.id}" class="text-decoration-none text-white">
                                                     <button type="button" class="btn btn-primary">
-                                                        <i class="fa-solid fa-user-pen"></i>Edit
+                                                        <i class="fa-solid fa-pen-to-square" style="margin-right: 2px"></i>Edit
+                                                    </button>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="productdetail?id=${p.id}" class="text-decoration-none text-white">
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fa-solid fa-eye" style="margin-right: 2px"></i>View
                                                     </button>
                                                 </a>
                                             </td>

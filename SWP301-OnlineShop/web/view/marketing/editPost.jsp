@@ -38,7 +38,7 @@
             <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
                 <!-- Right side. contains main content -->
                 <aside class="right-side">
-                    <div id="back-previous-page"  onclick="history.go(-1)" style="cursor: pointer; margin: 10px 0px 0px 10px;">
+                    <div id="back-previous-page"  onclick="history.go(-1)" class="cursor-mg">
                         <span><a><i class="fa-solid fa-angle-left">  <span class="title">Back</span></i> </a></span>
                     </div>
                     <!-- Main content -->
@@ -49,20 +49,20 @@
                                 <input type="hidden" name="id" value="${requestScope.post.id}"/>
                             <input type="hidden" name="thumbnailOld" value="${requestScope.post.thumbnail}"/>
                             <div class="form-group w-70-percent">
-                                <div id="preview-box" style="margin: 0 auto;width: 50%;height: 200px;overflow: hidden;  position: relative; border-radius: 15px;">
-                                    <img style="object-fit: fill;height: inherit; width: 100%;" id="previewImage" src="${requestScope.post.thumbnail}"/>
+                                <div id="preview-box" class="preview-img-edit">
+                                    <img class="img-fit" id="previewImage" src="${requestScope.post.thumbnail}"/>
                                     <!--<button onclick="btnClosePreviewImage()" type="button" class="close" style="font-size: 30px; position: absolute; z-index: 1024; right: 5px;">&times;</button>-->
                                 </div>
                                 <label for="thumbnail">Thumbnail</label>
-                                <input type="file" class="form-control" name="file" id="file"  onchange="checkFileInput(this)" accept="image/*">
+                                <input type="file" class="form-control" name="file" id="file"  onchange="checkFileInput(this)" accept="image/*"/>
                             </div>
                             <div class="form-group w-70-percent">
                                 <label for="title">Title</label>
-                                <input type="text" class="form-control" name="title" id="title" placeholder="Enter title of post" value="${requestScope.post.title}" required="">
+                                <input type="text" class="form-control" name="title" id="title" placeholder="Enter title of post" value="${requestScope.post.title}" required=""/>
                             </div>
                             <div class="form-group w-70-percent">
                                 <label for="bief">Brief</label>
-                                <input type="text" class="form-control" name="brief"  value="${requestScope.post.briefInfo}" id="brief" required="" placeholder="Enter biref of post">
+                                <input type="text" class="form-control" name="brief"  value="${requestScope.post.briefInfo}" id="brief" required="" placeholder="Enter biref of post"/>
                             </div>
                             <div class="form-group w-70-percent">
                                 <label for="description">Description</label>
@@ -96,10 +96,10 @@
                                 <label class="form-check-label" for="featureActivate">Featured</label>
                                 <div class="display-flex form-group w-70-percent">
                                     <div class="form-check form-check-inline mr-5percent">
-                                        <input class="form-check-input" type="radio" name="featured" id="featureActivate"  value="hot" ${(requestScope.post.featured)?"checked":""}> On
+                                        <input class="form-check-input" type="radio" name="featured" id="featureActivate"  value="hot" ${(requestScope.post.featured)?"checked":""}/> On
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="featured" id="featureDeactivate"  value="normal" ${(!requestScope.post.featured)?"checked":""}> Off
+                                        <input class="form-check-input" type="radio" name="featured" id="featureDeactivate"  value="normal" ${(!requestScope.post.featured)?"checked":""}/> Off
                                     </div>
                                 </div>
                             </div>
@@ -110,15 +110,15 @@
                                 <label class="form-check-label" for="statusActivate">Status</label>
                                 <div class="display-flex form-group w-70-percent">
                                     <div class="form-check form-check-inline mr-5percent">
-                                        <input class="form-check-input" type="radio" name="status" id="statusActivate"  value="show" ${(requestScope.post.status)?"checked":""}> Show
+                                        <input class="form-check-input" type="radio" name="status" id="statusActivate"  value="show" ${(requestScope.post.status)?"checked":""}/> Show
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="status" id="statusDeactivate"  value="hide" ${(!requestScope.post.status)?"checked":""}> Hide
+                                        <input class="form-check-input" type="radio" name="status" id="statusDeactivate"  value="hide" ${(!requestScope.post.status)?"checked":""}/> Hide
                                     </div>
                                 </div>
                             </div>
                             <!-- / Status-->
-                            <input class="btn btn-primary active"type="submit" value="Save">
+                            <input class="btn btn-primary active"type="submit" value="Save"/>
                         </form>
                     </div>
                 </section> <!--/ Main content -->
@@ -137,11 +137,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="newCategory">New Category</label>
-                            <input type="text" class="form-control" name="newCategory" id="newCategory1" placeholder="Enter new category name" required=""> 
+                            <input type="text" class="form-control" name="newCategory" id="newCategory1" placeholder="Enter new category name" required=""/> 
                         </div>
                         <div class="form-group">
                             <label for="newCategory">New SubCategory</label>
-                            <input type="text" class="form-control" name="newCategory" id="newSubCategory1" placeholder="Enter new subcategory name" required=""> 
+                            <input type="text" class="form-control" name="newCategory" id="newSubCategory1" placeholder="Enter new subcategory name" required=""/> 
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -173,7 +173,7 @@
                         </div>
                         <div class="form-group">
                             <label for="newSubcategory">New subcategory</label>
-                            <input type="text" class="form-control" name="newSubcategory2" id="newSubcategory2" placeholder="Enter new Subcategory name" required=""> 
+                            <input type="text" class="form-control" name="newSubcategory2" id="newSubcategory2" placeholder="Enter new Subcategory name" required=""/> 
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -184,92 +184,7 @@
             </div>
         </div>
         <!--javascrip-->
-        <script type="text/javascript">
-            function handleSaveCategory() {
-                var valueCategory = document.querySelector('#newCategory1').value;
-                var valuesubCategory = document.querySelector('#newSubCategory1').value;
-                var listCategory = document.querySelector('#listCategory');
-                var listCategory2 = document.querySelector('#category2');
-                $.ajax({
-                    type: "GET",
-                    url: "../marketing/handlePost",
-                    data: {
-                        nameCategory: valueCategory,
-                        nameSubCategory: valuesubCategory,
-                        action: "addNewCategory"
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        listCategory.innerHTML += data;
-                        listCategory2.innerHTML += data;
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-
-                    }
-                });
-            }
-            function handleSaveSubcategory() {
-                var category = document.querySelectorAll('#category2 option');
-                var valueCategory;
-                var subCategory = document.querySelector('#newSubcategory2');
-                for (var i = 0; i < category.length; i++) {
-                    if (category[i].selected) {
-                        valueCategory = category[i].value;
-                        break;
-                    }
-                }
-                $.ajax({
-                    type: "GET",
-                    url: "../marketing/handlePost",
-                    data: {
-                        idCategory: valueCategory,
-                        nameSubCategory: subCategory.value,
-                        action: "addNewSubCategory"
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        console.log("status ", textStatus);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-
-                    }
-                });
-            }
-            function selectSubCategory() {
-                var list = document.querySelectorAll("#listCategory option");
-                var listSub = document.querySelector("#subCatePost");
-                console.log(list);
-                for (var i = 0; i < list.length; i++) {
-                    if (list[i].selected) {
-                        $.ajax({
-                            type: "GET",
-                            url: "../marketing/handlePost",
-                            data: {
-                                idCategory: list[i].value,
-                                action: "subcategory"
-                            },
-                            success: function (data, textStatus, jqXHR) {
-                                console.log(data);
-                                listSub.innerHTML = "" + data;
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-
-                            }
-                        });
-                        break;
-                    }
-                }
-            }
-            function checkFileInput(e) {
-                console.log(document.querySelector('#file').value);
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    document.querySelector('#previewImage').parentNode.style.display = 'block';
-                    $("#previewImage").attr("src", e.target.result);
-                };
-                //Imagepath.files[0] is blob type
-                reader.readAsDataURL(e.files[0]);
-            }
-        </script>
-        <script src="../../assets/js/marketing/productList.js"></script>
+        <script src="../../assets/js/marketing/editPost.js" type="text/javascript"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../../js/jquery.min.js" type="text/javascript"></script>

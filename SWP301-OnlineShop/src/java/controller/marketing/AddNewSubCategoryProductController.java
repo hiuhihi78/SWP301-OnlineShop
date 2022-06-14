@@ -5,6 +5,7 @@
 package controller.marketing;
 
 import dal.CategoryDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import model.SubCategory;
  * @author Admin
  */
 @WebServlet(name = "AddNewSubCategoryProductController", urlPatterns = {"/marketing/addSubCategoryProduct"})
-public class AddNewSubCategoryProductController extends HttpServlet {
+public class AddNewSubCategoryProductController extends BaseAuthController {
 
 
     /**
@@ -33,7 +34,7 @@ public class AddNewSubCategoryProductController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
@@ -56,7 +57,7 @@ public class AddNewSubCategoryProductController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));

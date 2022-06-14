@@ -634,4 +634,28 @@ public class CustomerDBContext extends DBContext {
         }
         return listCustomer;
     }
+    
+    
+    public int count(int userRole) {
+        int number = 0;
+        try {
+
+            String sql = "select COUNT(*) num from [User] where roleId = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, userRole);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                number = rs.getInt("num");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return number;
+    }
+    
+    public static void main(String[] args) {
+        CustomerDBContext db = new CustomerDBContext();
+        System.out.println(db.count(4));
+    }
 }

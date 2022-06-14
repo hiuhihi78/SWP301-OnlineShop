@@ -6,6 +6,7 @@ package controller.sale;
 
 import dal.CategoryDBContext;
 import dal.ProductDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import model.User;
  * @author Admin
  */
 @WebServlet(name = "SaleProductListController", urlPatterns = {"/sale/productlist"})
-public class ProductListController extends HttpServlet {
+public class ProductListController extends BaseAuthController {
 
     
     /**
@@ -37,7 +38,7 @@ public class ProductListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
@@ -111,7 +112,7 @@ public class ProductListController extends HttpServlet {
         ArrayList<Product> listAllProductFilter = productDB.getListProductFilterBySaleId(categoryId, subCategoryId, status, featured, search, orderBy, sort,sellerId);
 //        int totalRecord = productDB.getTotalRecord();
         int totalRecord = listAllProductFilter.size();
-        int page, numberRecordPerPage = 2;
+        int page, numberRecordPerPage = 5;
         int totalPage = totalRecord % numberRecordPerPage == 0
                 ? totalRecord / numberRecordPerPage : totalRecord / numberRecordPerPage + 1;
         String currentPage = request.getParameter("xpage");
@@ -137,7 +138,7 @@ public class ProductListController extends HttpServlet {
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("products", listPaging);
 
-        request.getRequestDispatcher("../view/marketing/productList.jsp").forward(request, response);
+        request.getRequestDispatcher("../view/sale/productList.jsp").forward(request, response);
     }
 
     /**
@@ -149,7 +150,7 @@ public class ProductListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
     }
@@ -163,5 +164,8 @@ public class ProductListController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
+
 
 }

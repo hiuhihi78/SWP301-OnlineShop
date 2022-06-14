@@ -4,6 +4,7 @@
  */
 package dal;
 
+import configs.KeyValuePair;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,6 +58,108 @@ public class ProductDBContext extends DBContext {
         } catch (SQLException e) {
         }
         return listProduct;
+    }
+    public ArrayList<KeyValuePair> getProductsTrend(Date from, Date to) {
+        ArrayList<KeyValuePair> list = new ArrayList<>();
+        try {
+            String sql = "select p.*, p1.number from product as p,"
+                    + " (select top (10) od.productId, sum(od.quantity) as number from OrderDetail as [od] , [Order] as [o] where od.orderId = o.id"
+                    + " and o.userid in (select id from [User] where MONTH(dateCreated) = MONTH(GETDATE()) and YEAR(dateCreated) = YEAR(GETDATE()))";
+            if (from != null) {
+                sql += " and o.[date] >= '" + from + "'";
+            }
+            if (to != null) {
+                sql += " and o.[date] <= '" + to + "'";
+            }
+            if (from == null && to == null) {
+                sql += " and o.[date] >= DATEADD(day,-7, GETDATE())";
+            }
+            sql += " group by  od.productId";
+            sql += " order by number desc) as p1 where p.id = p1.productId";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt(1));
+                product.setName(rs.getString(2));
+                product.setDescription(rs.getString(3));
+                product.setPrice(rs.getLong(4));
+                product.setDiscount(rs.getInt(5));
+                User user = new User();
+                user.setId(rs.getInt(6));
+                product.setUser(user);
+                product.setFeatured(rs.getBoolean(7));
+                product.setThumbnail(rs.getString(8));
+                product.setDate(rs.getDate(9));
+                SubCategory subCategory = new SubCategory();
+                subCategory.setId(rs.getInt(10));
+                product.setSubCategory(subCategory);
+                product.setQuantity(rs.getInt(11));
+                product.setStatus(rs.getBoolean(12));
+                list.add(new KeyValuePair(product, rs.getInt("number")));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+    
+    
+    public ArrayList<Product> getProductsBySliderId(int sid) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "select * from [product] where sliderId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, sid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt(1));
+                product.setName(rs.getString(2));
+                product.setDescription(rs.getString(3));
+                product.setPrice(rs.getLong(4));
+                product.setDiscount(rs.getInt(5));
+                User user = new User();
+                user.setId(rs.getInt(6));
+                product.setUser(user);
+                product.setFeatured(rs.getBoolean(7));
+                product.setThumbnail(rs.getString(8));
+                product.setDate(rs.getDate(9));
+                SubCategory subCategory = new SubCategory();
+                subCategory.setId(rs.getInt(10));
+                product.setSubCategory(subCategory);
+                product.setQuantity(rs.getInt(11));
+                product.setStatus(rs.getBoolean(12));
+                list.add(product);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public int getProductNumber() {
+        int productNumber = 0;
+        try {
+            String sql = "select COUNT(*) num from product";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                productNumber = rs.getInt("num");
+            }
+        } catch (SQLException e) {
+        }
+        return productNumber;
+    }
+    
+    public static void main(String[] args) {
+        ProductDBContext db = new ProductDBContext();
+        ArrayList<Product> list = db.getProductsBySliderId(1);
+        for (Product p : list) {
+            System.out.println(p.getName());
+        }
+    }
+
+    public ArrayList<KeyValuePair> getProductsTrend(java.util.Date from, java.util.Date to) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public Product addProduct(String name, String description, int sellerId, int subCategoryId, long price, int discount, long quantity, boolean featured, boolean status) {
@@ -276,10 +379,17 @@ public class ProductDBContext extends DBContext {
                 paramProductName[1] = "%" + search + "%";
                 params.put(paramIndex, paramProductName);
                 
+                int id;
+                try {
+                    id = Integer.parseInt(search);
+                } catch (Exception e) {
+                    id = -1;
+                }
+                
                 paramIndex++;
                 Object[] paramProductId = new Object[2];
                 paramProductId[0] = Integer.class.getName();
-                paramProductId[1] = Integer.parseInt(search);
+                paramProductId[1] = id;
                 params.put(paramIndex, paramProductId);
 
             }
@@ -607,10 +717,17 @@ public class ProductDBContext extends DBContext {
                 paramProductName[1] = "%" + search + "%";
                 params.put(paramIndex, paramProductName);
                 
+                int id;
+                try {
+                    id = Integer.parseInt(search);
+                } catch (Exception e) {
+                    id = -1;
+                }
+                
                 paramIndex++;
                 Object[] paramProductId = new Object[2];
                 paramProductId[0] = Integer.class.getName();
-                paramProductId[1] = Integer.parseInt(search);
+                paramProductId[1] = id;
                 params.put(paramIndex, paramProductId);
 
             }
@@ -669,11 +786,11 @@ public class ProductDBContext extends DBContext {
         return products;
     }
     
-    public static void main(String[] args) {
-        ProductDBContext productDB = new ProductDBContext();
-        System.out.println(productDB.getProductById(13).getImage().get(0).getImage());
-//        productDB.getProductById(1);
-//        int categoryId, int subCategoryId, String status, String featured, String search, String orderBy, String sort
-//        System.out.println(new ProductDBContext().getListProductFilter(1, 1, "active", "active", "", "id", "asc").size());
-    }
+//    public static void main(String[] args) {
+//        ProductDBContext productDB = new ProductDBContext();
+//        System.out.println(productDB.getProductById(13).getImage().get(0).getImage());
+////        productDB.getProductById(1);
+////        int categoryId, int subCategoryId, String status, String featured, String search, String orderBy, String sort
+////        System.out.println(new ProductDBContext().getListProductFilter(1, 1, "active", "active", "", "id", "asc").size());
+//    }
 }

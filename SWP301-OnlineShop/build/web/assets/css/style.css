@@ -954,7 +954,8 @@ content: '';
     left: 0;
   }
   body.fixed .sidebar-offcanvas {
-    margin-top: 50px;
+   
+   margin-top: 50px;
     left: -220px;
   }
   body.fixed .row-offcanvas-left.active .navbar {

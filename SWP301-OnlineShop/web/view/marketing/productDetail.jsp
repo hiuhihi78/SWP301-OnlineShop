@@ -11,13 +11,13 @@
 <!DOCTYPE html>
 <html>
     <head>  
-        <meta charset="UTF-8">
-        <title>Marketing | Produt list</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Marketing | Product Details</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
-        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!--<link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />-->
         <!-- font Awesome -->
         <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
@@ -27,25 +27,28 @@
         <link href="../../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/css/admin/main.css" rel="stylesheet" type="text/css"/>
 
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <!--active button nav in sidebar-->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <%
-            ArrayList<Image> attchedImg = ((Product)request.getAttribute("product")).getImage();
-            if(attchedImg == null || attchedImg.size() == 0){
+            ArrayList<Image> attchedImg = ((Product) request.getAttribute("product")).getImage();
+            if (attchedImg == null || attchedImg.size() == 0) {
                 Image image = new Image();
                 image.setImage("#");
                 attchedImg.add(image);
                 attchedImg.add(image);
             }
         %>
-        
-        
+
+
     </head>
-    
-    
+
+
     <body class="skin-black">
-        
+
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="../marketing-template/header.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
@@ -55,207 +58,126 @@
                 <aside class="right-side">
                     <!-- Main content -->
                     <section class="content ">
-                        <!--alter-->
-                    <jsp:include page="../marketing-template/alter.jsp"></jsp:include>
-                        <!--/alter-->
-                    <div class="mb-10" >
-                        <form action="#" method="POST" enctype="multipart/form-data" id="formform">
-                            <input type="text" name="id" value="${requestScope.product.id}"/>
-                            
-                            <!--Thumbnail-->
-                            <div class="form-group w-70-percent">
-                                <label for="thumbnail">Thumbnail</label>
-                                <div  class="w-35percent image-input-layout display-flex" style="position: relative">
-                                    <div id="closeBtn-thumbnailBoxImg" class="close-btn-not-hide" onclick="closeImgage('thumbnailBoxImg','closeBtn-thumbnailBoxImg','thumbnail');"> <i class="fa-solid fa-xmark close-btn"></i></div>
-                                    <img id="thumbnailBoxImg" src="${requestScope.product.thumbnail}" alt="your image" style="height:100%; width:100%;" class="boder-radius  image-thumbnail"/>
+
+                        <div class="product-content product-wrap clearfix product-deatil">
+                            <div class="row">
+                                <div class="col-md-5 col-sm-12 col-xs-12">
+                                    <div class="product-image">
+
+                                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                            <!-- Indicators -->
+                                            <ol class="carousel-indicators">
+                                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                                            </ol>
+
+                                            <!-- Wrapper for slides -->
+                                        <div class="carousel-inner">
+                                            <div class="item active">
+                                                <img src="${requestScope.product.thumbnail}" alt="thumbnail" style="height: 300px; width: 100%;">
+                                            </div>
+                                            <div class="item">
+                                                 <img src="<%= attchedImg.get(1).getImage()%>" alt="thumbnail" style="height: 300px; width: 100%;">
+                                            </div>
+                                            <div class="item">
+                                                <img src="<%= attchedImg.get(0).getImage()%>" alt="thumbnail" style="height: 300px; width: 100%;">
+                                            </div>
+                                        </div>
+
+                                        <!-- Left and right controls -->
+                                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                            <span class="glyphicon glyphicon-chevron-left"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                            <span class="glyphicon glyphicon-chevron-right"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
                                 </div>
-                                <input type="file" name="thumbnail" id="thumbnail" onchange="showThumbnail()"  style="display: none" required=""/>
                             </div>
-                            <!--/Thumbnail-->
-                            
-                            <!--Attached image-->
-                            <div class="form-group w-70-percent">
-                                <label >Attached image</label>
-                                <div class="display-flex">
+                            <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
+                                <h2 class="name" style="text-transform: uppercase; font-weight: 700;">
+                                    ${requestScope.product.name}
+                                </h2>
+                                <hr>
+                                <div class="price-container" style="display: flex; justify-content: space-between;">
                                     <div>
-                                        <div  class="w-100percent image-input-layout display-flex" style="position: relative">
-                                            <div id="closeBtn-attachedBoxImg-1" class="close-btn-not-hide" onclick="closeImgage('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1');"> <i class="fa-solid fa-xmark close-btn"></i></div>
-                                            <img id="attachedBoxImg-1" src="<%= attchedImg.get(0).getImage() %>" alt="your image" style="height:100%; width:100%;" class="boder-radius image-thumbnail"/>
+                                        <div style="margin-bottom: 10px;">
+                                            <strong><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspStatus:</strong>&nbsp&nbsp
+                                            <c:choose>
+                                                <c:when test="${requestScope.product.status}">
+                                                    <span class="label label-success" style="padding: 4px 8px">Show</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="label label-danger" style="padding: 4px 8px">Hide</span>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
-                                        <input type="file" name="attachedImg1" id="attachedImg1" onchange="showAttachedImg('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1')" style="display: none"  required=""/>
+                                        <div>
+                                            <strong><i class="fa fa-flag" aria-hidden="true"></i>&nbspFeatured:</strong>&nbsp&nbsp
+                                            <c:choose>
+                                                <c:when test="${requestScope.product.featured==true}">
+                                                    <span class="label label-success" style="padding: 4px 8px">On</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="label label-danger" style="padding: 4px 8px">Off</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
                                     </div>
                                     <div>
-                                        <div  class="w-100percent image-input-layout ml-2percent" style="position: relative">
-                                            <div id="closeBtn-attachedBoxImg-2" class="close-btn-not-hide" onclick="closeImgage('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2');"> <i class="fa-solid fa-xmark close-btn"></i></div>
-                                            <img id="attachedBoxImg-2" src="<%= attchedImg.get(1).getImage() %>" alt="your image" style="height:100%; width:100%;" class="boder-radius image-thumbnail"/>
+                                        <div style="margin-bottom: 10px;">
+                                            <strong><i class="fa fa-at" aria-hidden="true"></i>&nbspSeller:</strong>&nbsp&nbsp<span>${requestScope.product.user.fullname}</span>
                                         </div>
-                                        <input type="file" name="attachedImg2" id="attachedImg2" onchange="showAttachedImg('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2')" style="display: none"  required=""/>
+                                        <div style="margin-bottom: 10px;">
+                                            <strong><i class="fa fa-upload" aria-hidden="true"></i>&nbspPublish:</strong>&nbsp&nbsp<span><fmt:formatDate type = "date" />${requestScope.product.date}</span>
+                                        </div>
+                                        <div>
+                                            <strong><i class="fa fa-file" aria-hidden="true"></i>&nbspCategory:</strong>&nbsp&nbsp<span>${requestScope.product.subCategory.category.name}</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="tab-pane fade active in" id="more-information">
+                                    <strong>Description Title:</strong>
+                                    <p style="text-indent: 1.5rem; font-size: 15px;">
+                                        ${requestScope.product.description}
+                                    </p>
+                                </div>  
+
+                                <div class="tab-pane fade active in mb-10" id="more-information">
+                                    <strong>Quantity</strong>
+                                    <span style="text-indent: 1.5rem; font-size: 15px;">
+                                        ${requestScope.product.quantity}
+                                    </span>
+                                </div> 
+
+                                <div class="tab-pane fade active in" id="more-information">
+                                    <strong>Price</strong>
+                                    <span style="text-indent: 1.5rem; font-size: 15px;">
+                                        ${requestScope.product.price}
+                                    </span>
+                                </div>
+
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <a href="./productlist" class="btn btn-success btn-lg"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>&nbspBack to List</a>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="btn-group pull-right">
+                                            <a href="./editProductInfo?id=${requestScope.product.id}" class="btn btn-success btn-lg"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>&nbspEdit</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--/Attacked image-->
-                            
-                            <!--Name-->
-                            <div class="form-group w-70-percent">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" value="${requestScope.product.name}" name="name" id="name" placeholder="Enter name of product"  required=""/>
-                            </div>
-                            <div class="form-group w-70-percent">
-                                <label for="description">Description</label>
-                                <textarea type="text" class="form-control"  name="description" id="description" placeholder="Enter description of product" required="" rows="3">${requestScope.product.description}</textarea>
-                            </div>
-                            <!--/Name-->
-
-                            <!--Seller-->
-                            <div class="form-group w-70-percent">
-                                <label for="seller">Seller</label>
-                                <div class="display-flex" >
-                                    <input type="text" class="form-control" value="${requestScope.product.user.email}" name="seller" id="seller"  placeholder="Enter seller email " required=""/>
-                                    <button type="button" onclick="handleSearchSeller()" class="btn btn-primary ml-2percent ">Search</button>
-                                </div>
-                                <div id="rowShowSeller"></div>
-                            </div>
-                            <!--/Seller-->
-                            
-                            <!--Category-->
-                            <div class="form-group w-70-percent">
-                                <label for="category">Category</label>
-                                <div class="display-flex">
-                                    <select class="form-control" name="category" id="category" onchange="handleShowSubCategory()">
-                                        <c:forEach items="${requestScope.categorys}" var="c">
-                                            <option value="${c.id}" ${requestScope.categoryId == c.id ? "selected='selected'" : ""}>
-                                                ${c.name}
-                                            </option>
-                                        </c:forEach>
-                                    </select>
-                                    <button type="button" class="btn btn-primary ml-2percent" data-toggle="modal" data-target="#addCategoryModal">Add new Category</button>
-                                </div>
-                            </div>
-                            <!--/Category-->
-                            
-                            <!--SubCategory-->
-                            <div class="form-group w-70-percent" >
-                                <label for="subCategory">SubCategory</label>
-                                <div class="display-flex">
-                                    <select class="form-control" name="subCategory" id="subCategory">
-                                        <c:forEach items="${requestScope.subCategorys}" var="c">
-                                            <option value="${c.id}" ${requestScope.subCategory.id == c.id ? "selected='selected'" : ""}>
-                                                ${c.name}
-                                            </option>
-                                        </c:forEach>    
-                                    </select>
-                                    <button type="button" class="btn btn-primary ml-2percent " data-toggle="modal" data-target="#addSubcategoryModal">Add new SubCategory</button>
-                                </div>
-                            </div>
-                            <!--SubCategory-->
-
-                            <!--Price-->
-                            <div class="form-group w-70-percent">
-                                <label for="price">Price</label>
-                                <input type="number" class="form-control" name="price" id="price" min="0" placeholder="Enter price of product" value="${requestScope.product.price}" required="">
-                            </div>
-                            <!--Price-->
-
-                            <!--Discount-->
-                            <div class="form-group w-70-percent">
-                                <label for="discount">Discount</label>
-                                <input type="number" class="form-control" name="discount" id="discount" min="0" max="100" placeholder="Enter discount of product" value="${requestScope.product.discount}" required="">
-                            </div>
-                            <!--/Discount-->
-                            
-                            <!--Quantity-->
-                            <div class="form-group w-70-percent">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" class="form-control" name="quantity" id="quantity" min="0"  placeholder="Enter quantity of product" value="${requestScope.product.quantity}"  required="">
-                            </div>
-                            <!--/Quantity-->
-                            
-                            <!--feature-->
-                            <div>
-                                <label class="form-check-label" for="featureActivate">Feattured</label>
-                                <div class="display-flex">
-                                    <div class="form-check form-check-inline mr-5percent">
-                                        <input class="form-check-input" type="radio" name="featured" id="featureActivate"  value="activate" <c:if test="${requestScope.product.featured == 'activate'}">checked="checked"</c:if> > Active
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="featured" id="featureDeactivate"  value="deactivate" <c:if test="${requestScope.product.featured == 'deactivate'}">checked="checked"</c:if>> Deactivate
-                                        </div>
-                                    </div>
-                            </div>
-                            <!-- / feature-->
-
-                                <!--Status-->
-                                <div>
-                                    <label class="form-check-label" for="statusActivate">Status</label>
-                                    <div class="display-flex">
-                                        <div class="form-check form-check-inline mr-5percent">
-                                            <input class="form-check-input" type="radio" name="status" id="statusActivate"  value="activate" <c:if test="${requestScope.product.status == 'activate'}">checked="checked"</c:if>> Active
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="status" id="statusDeactivate"  value="deactivate" <c:if test="${requestScope.product.status == 'deactivate'}">checked="checked"</c:if>> Deactivate
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- / Status-->
-                            
-                                <button onclick="document.getElementById('formform').submit()"></button>
-                            <input type="submit" class="btn btn-success" onclick="validateForm()" value="Save" >
-                        </form>
+                        </div>
                     </div>
                 </section> <!--/ Main content -->
             </aside><!-- /.right-side -->
-        </div>
-
-
-        <!-- Modal for add new category-->
-        <div class="modal fade" id="addCategoryModal" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <!--<h4 class="modal-title">Modal Header</h4>-->
-                    </div>
-                    <div class="modal-body">
-                            <div class="form-group">
-                                <label for="newCategory">New category</label>
-                                <input type="text" class="form-control" name="newCategory" id="newCategory" placeholder="Enter new category name" required=""> 
-                            </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSaveCategory()">Save</button>
-                        <!--<button type="button" class="btn btn-primary" onclick="document.getElementById('saveAddNewCategory').submit();">Save</button>-->
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <!-- Modal for add new Subcategory-->
-        <div class="modal fade" id="addSubcategoryModal" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <!--<h4 class="modal-title">Modal Header</h4>-->
-                    </div>
-                    <div class="modal-body">
-                            <div class="form-group">
-                                <label for="newSubcategory">New subcategory</label>
-                                <input type="text" class="form-control" name="newSubcategory" id="newSubcategory" placeholder="Enter new Subcategory name" required=""> 
-                            </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSaveSubcategory()">Save</button>
-                        <!--<button type="button" class="btn btn-primary" onclick="document.getElementById('saveAddNewCategory').submit();">Save</button>-->
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-                
-            </div>
         </div>
 
         <!--javascrip-->

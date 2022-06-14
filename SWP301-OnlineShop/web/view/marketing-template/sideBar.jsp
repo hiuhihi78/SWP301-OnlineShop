@@ -30,32 +30,48 @@
             </div>
         </div>
         <ul class="sidebar-menu">
+
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <c:forEach items="${sessionScope.user.role.allowFeatures}" var="s">
-                <c:if test="${s.key.url == '/sale/dashboard' && s.value == true}">
+
+                <c:if test="${s.key.url == '/marketing/dashboard' && s.value == true}">
                     <li id="nav-dashboard">
-                        <a href="#">
-                            <i class="fa fa-dashboard"></i> <span>${s.key.name}</span>
+                        <a href="/marketing/dashboard">
+                            <i class="fa fa-tachometer"></i> <span>${s.key.name}</span>
                         </a>
                     </li>
                 </c:if>
-                <c:if test="${s.key.url == '/sale/productlist' && s.value == true}">
+                <c:if test="${s.key.url == '/marketing/sliderList' && s.value == true}">
+                    <li id="nav-user-list">
+                        <a href="/marketing/sliderList">
+                            <i class="fa fa-th-list" aria-hidden="true"></i> <span>${s.key.name}</span>        
+                            </a>
+                    </li>
+                </c:if>
+
+                <c:if test="${s.key.url == '/marketing/productlist' && s.value == true}">
                     <li id="nav-user-list">
                         <a href="productlist">
-                            <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
+
+                            <i class="fa-solid fa-users"></i> <span>Product List</span>
+
 
                         </a>
                     </li>
                 </c:if>
-                <c:if test="${s.key.url == '/marketing/postList' && s.value == true}">
+
+                <c:if test="${s.key.url == '/marketing/postlist' && s.value == true}">
                     <li id="nav-user-list">
-                        <a href="./postList">
-                            <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
+                        <a href="postlist">
+                            <i class="fa-solid fa-rss"></i> <span>Post List</span>
 
                         </a>
                     </li>
-                </c:if>
+                </c:if>    
             </c:forEach>
+
+        </ul>         
+
     </section>
     <!-- /.sidebar -->
 </aside>

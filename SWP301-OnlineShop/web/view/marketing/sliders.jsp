@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <meta charset="UTF-8">
@@ -31,52 +32,68 @@
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <!-- Theme style -->
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="../../assets/css/marketing/style.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/marketing/style.css" rel="stylesheet" type="text/css" />
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="assets/css/marketing/main.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body class="skin-black">
     <!-- header logo: style can be found in header.less -->
-    <jsp:include page="../admin-layout/header.jsp"></jsp:include>
+    <jsp:include page="../marketing-template/header.jsp"></jsp:include>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
-        <jsp:include page="../admin-layout/sideBar.jsp"></jsp:include>
+        <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
 
             <!-- Right side. contains main content -->
             <aside class="right-side">
                 <!-- Main content -->
                 <section class="content">
-                    <div class="row">
-                        <form method="post" id="form1">
-                            <div class="col-xs-8 col-xs-offset-2">
+                    <div class="app-title">
+                        <div>
+                            <h1><i class="fa fa-list-ul" aria-hidden="true"></i> Slider List</h1>
+                            <p></p>
+                        </div>
+                        <ul class="app-breadcrumb breadcrumb">
+                            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+                            <li class="breadcrumb-item"><a href="/marketing/dashboard">Sliders</a></li>
+                        </ul>
+                    </div>
+                    <div style="padding-bottom: 20px"> 
+                        <form action="/marketing/sliderList" method="get" id="fSearch">
+
+                            <div class="row" style="display: flex;
+                                 justify-content: flex-end; padding-right: 16px">
+                                <div class="col-xs-6 col-md-1">
+                                    <select class="form-control" name="select">
+                                        <option value="-1" ${status == -1 ?"selected":""}>All</option>
+                                    <option value="1" ${status == 1?"selected":""}>Show</option>
+                                    <option value="0" ${status == 0?"selected":""}>Hide</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-7 col-md-4">
                                 <div class="input-group">
-                                    <div class="input-group-btn search-panel">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                            <span id="search_concept">Filter by</span> <span class="caret"></span>
+                                    <input type="text" class="form-control" placeholder="Enter title or backlink..." name="txtSearch" value="${search}"/>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit" form="fSearch">
+                                            <span class="glyphicon glyphicon-search"></span>
                                         </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#contains">Show</a></li>
-                                            <li><a href="#contains">Hide</a></li>
-                                        </ul>
                                     </div>
-                                    <input type="hidden" name="search_param" value="all" id="search_param">         
-                                    <input type="text" class="form-control" name="x" placeholder="Enter title or backlink...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="submit" form="form1"><span class="glyphicon glyphicon-search"></span></button>
-                                    </span>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <p>
-                    <div class="row">
-                    <c:if test="${not empty sliders}">
-                        <c:forEach var="s" items="${sliders}"> 
-                            <div class="col-md-12">
+                            <a href="/marketing/sliderAdd" class="btn btn-info" role="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Slider</a>
+                        </div>
+                    </form>
+                </div>
+
+
+
+                <c:if test="${not empty sliders}">
+                    <c:forEach var="s" items="${sliders}"> 
+                        <div class="col-md-12">
+                            <div class="tile">
                                 <div class="wp-block property list">
                                     <div class="wp-block-title">
                                         <h3><a href="#"><b>#</b> ${s.id}</a></h3>
@@ -85,7 +102,7 @@
                                     <div class="wp-block-body">
                                         <div class="wp-block-img">
                                             <a href="#">
-                                                <img src="${s.image}" alt="">
+                                                <img src="${s.image}" alt="" id="img-slider">
                                             </a>
                                         </div>
                                         <div class="wp-block-content">
@@ -97,13 +114,15 @@
                                     <div class="wp-block-footer">
                                         <ul class="aux-info">
                                             <li><a href="${s.backlink}"><i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;Backlink</a></li>
-                                            <li><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit</a></li>
-                                            <li><a href="home"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View</a></li>
+                                            <li><a href="/marketing/sliderAdd?id=${s.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit</a></li>
+
+                                            <li><a href="/marketing/sliderDetail?id=${s.id}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Details</a></li>
                                             <li>
-                                                <div class="toggle lg">
+                                                <div>Show&nbsp;</div>
+                                                <div class="toggle lg"> 
                                                     <label>
-                                                        Show&nbsp;
-                                                        <form action="sliderList?id=${s.id}" method="post" id="formChange">
+
+                                                        <form action="/marketing/sliderList?id=${s.id}" method="post" id="formChange">
                                                             <input type="checkbox" name="checkbox" value="check" ${s.status==true?"checked":""} onChange="this.form.submit()"><span class="button-indecator"></span>
                                                         </form>
                                                     </label>
@@ -113,16 +132,24 @@
                                     </div>
                                 </div>
                             </div>
-                        </c:forEach>
-                    </c:if>
+                        </div>
+                    </c:forEach>
+                </c:if>
 
-                </div> 
                 <ul class="pagination justify-content-center" style="margin:20px 0">
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    <c:if test="${index != 1}">
+                        <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${1}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
+                        <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${index-1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+                            </c:if>   
+                            <c:forEach var = "i" begin = "1" end = "${lastPage}"> 
+                        <li class="page-item"><a class="page-link ${(index == i)? "active-page":""}" href="/marketing/sliderList?index=${i}<c:if test="${status != null && search
+                                                                    != null}">&txtSearch=${search}&select=${status}</c:if>">${i}</a></li>
+                        </c:forEach>
+                        <c:if test="${index != lastPage}">
+                        <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${index+1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                        <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${lastPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                            </c:if>
+
                 </ul>
             </section><!-- /.content -->
 
@@ -137,6 +164,19 @@
 
 
 
+
+    <style type="text/css">
+        .active-page {
+            color:blue;
+            font-weight: bold;
+            font-size: initial;
+        }
+
+        #img-slider{
+            height: 200px;
+        }
+
+    </style>
 
 
 

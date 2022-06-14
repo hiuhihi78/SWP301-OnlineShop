@@ -6,12 +6,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : May 31, 2022, 9:01:17 PM
     Author     : Admin
 */
-.dflex-column{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+margin-0-auto{
+    margin: 0 auto;
 }
 
+.text-color-red{
+    color: red;
+}
+
+.text-color-green{
+    color: green;
+}
 .edit-form{
     display: flex;
     flex-direction: column;

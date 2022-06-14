@@ -8,6 +8,7 @@ import configs.UploadImage;
 import static controller.marketing.AddNewPostController.SAVE_DIRECTORY;
 import dal.CategoryPostDBContext;
 import dal.PostDBContext;
+import filter.BaseAuthController;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +27,7 @@ import javax.servlet.http.Part;
 import model.CategoryPost;
 import model.Post;
 import model.SubCategoryPost;
+import model.User;
 
 /**
  *
@@ -35,10 +37,10 @@ import model.SubCategoryPost;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 30, // 30MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
-public class EditPostController extends HttpServlet {
+public class EditPostController extends BaseAuthController {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");
         int idPost = Integer.parseInt(id);
@@ -57,7 +59,7 @@ public class EditPostController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -75,15 +77,19 @@ public class EditPostController extends HttpServlet {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
         LocalDate localDate = LocalDate.now();
         Date dateNow = Date.valueOf(dtf.format(localDate).replaceAll("/", "-"));
-        //            User user = (User) request.getSession().getAttribute("user");
-//            int idUser = user.getId();
-        int idUser = 1;
+        User user = (User) request.getSession().getAttribute("user");
+        int idUser = user.getId();
         Part fileImage = request.getPart("file");
 //        String fileNameRaw = Paths.get(fileImage.getSubmittedFileName()).getFileName().toString();
         if (fileImage.getSize() <= 0) { //fileNameRaw == null || fileNameRaw.equals("") 
             System.out.println("true");
-            String urlImage = "";
-            postDB.editPost(id, urlImage, title, briefInfo, description, dateNow, idUser, isFeatured, isStatus, category, subCategory);
+            try {
+                String urlImage = "";
+                postDB.editPost(id, urlImage, title, briefInfo, description, dateNow, idUser, isFeatured, isStatus, category, subCategory);
+                PostListController.ALERT = "success2";
+            } catch (Exception e) {
+                PostListController.ALERT = "failed2";
+            }
         } else {
             try {
                 String urlImageOld = request.getParameter("thumbnailOld").trim();
@@ -118,7 +124,9 @@ public class EditPostController extends HttpServlet {
                     File oldFile = new File(appPath + "" + urlImageOld.substring(urlImageOld.lastIndexOf("/") + 1));
                     oldFile.delete();
                 }
+                PostListController.ALERT = "success2";
             } catch (Exception e) {
+                PostListController.ALERT = "failed2";
                 e.printStackTrace();
             }
         }

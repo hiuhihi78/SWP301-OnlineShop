@@ -6,6 +6,7 @@ package controller.marketing;
 
 import dal.CategoryDBContext;
 import dal.ProductDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import model.SubCategory;
  * @author Admin
  */
 @WebServlet(name = "ProductListController", urlPatterns = {"/marketing/productlist"})
-public class ProductListController extends HttpServlet {
+public class ProductListController extends BaseAuthController {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -34,7 +35,7 @@ public class ProductListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String tempCategoryId = request.getParameter("categoryId");
         String tempSubCategoryId = request.getParameter("subCategoryId");
@@ -103,7 +104,7 @@ public class ProductListController extends HttpServlet {
         ArrayList<Product> listAllProductFilter = productDB.getListProductFilter(categoryId, subCategoryId, status, featured, search, orderBy, sort);
 //        int totalRecord = productDB.getTotalRecord();
         int totalRecord = listAllProductFilter.size();
-        int page, numberRecordPerPage = 2;
+        int page, numberRecordPerPage = 5;
         int totalPage = totalRecord % numberRecordPerPage == 0
                 ? totalRecord / numberRecordPerPage : totalRecord / numberRecordPerPage + 1;
         String currentPage = request.getParameter("xpage");
@@ -141,7 +142,7 @@ public class ProductListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Hoang Quang
+ * @author Admin
  */
 public class Feedback {
     private int id;
@@ -87,8 +87,5 @@ public class Feedback {
         this.status = status;
     }
 
-
-
- 
     
 }
