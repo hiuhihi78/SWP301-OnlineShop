@@ -107,7 +107,8 @@
                                         <div class="single-products">
                                             <div class="productinfo text-center">
                                                 <a href="productdetails?productID=${product.id}">
-                                                    <img src="https://scontent.fhan15-1.fna.fbcdn.net/v/t39.30808-6/275371862_3038155186514086_3839060998726981047_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=174925&_nc_ohc=WGpVr3rw1UcAX8vIcmv&_nc_ht=scontent.fhan15-1.fna&oh=00_AT_MhS1AX6179FKJj3sMQ74SdqqErOiA_oN6S_f2jS2jnA&oe=62AB7C37" alt="" />
+                                                    ${product.thumbnail}
+                                                    <img src="${product.thumbnail}" alt="" />
                                                 </a>
                                                 
                                                 <h2 class="break-down-line">${product.name}</h2>
