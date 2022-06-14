@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Feature;
+import model.User;
 
 /**
  *
@@ -38,7 +39,6 @@ public class AddRoleController extends BaseAuthController {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         RoleDBContext roleDB = new RoleDBContext();
-
         ArrayList<Feature> adminFeatures = roleDB.getFeatureByGroup("Admin");
         ArrayList<Feature> marketingFeatures = roleDB.getFeatureByGroup("Marketing");
 

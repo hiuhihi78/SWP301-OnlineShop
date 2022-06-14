@@ -4,6 +4,7 @@
  */
 package controller.admin;
 
+import dal.DashboardDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 
 /**
  *
@@ -30,6 +32,13 @@ public class DashboardController extends BaseAuthController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        DashboardDBContext dashboardDB = new DashboardDBContext();
+        request.setAttribute("successCount", dashboardDB.getSuccessOrders());
+        request.setAttribute("cancelledCount", dashboardDB.getCancelledOrders());
+        request.setAttribute("processingCount", dashboardDB.getProcessingOrders());
+        request.setAttribute("revenueByCategory", dashboardDB.getRevenueByProductCategory());
+        request.setAttribute("totalRevenue", dashboardDB.getTotalRevenue());
+        
         request.getRequestDispatcher("../view/admin/dashboard.jsp").forward(request, response);
     }
 

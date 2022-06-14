@@ -4,7 +4,9 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,7 +39,7 @@
         <!-- Theme style -->
         <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet" type="text/css" />
 
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,69 +58,92 @@
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
             <jsp:include page="../admin-layout/sideBar.jsp"></jsp:include>
-            <!-- Right side. contains main content -->
-            <aside class="right-side">
+                <!-- Right side. contains main content -->
+                <aside class="right-side">
 
-                <!-- Main content -->
-                <section class="content">
-
-                    <div class="row" style="margin-bottom:5px;">
-
-
-                        <div class="col-md-3">
-                            <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-red"><i class="fa fa-check-square-o"></i></span>
-                                <div class="sm-st-info">
-                                    <span>3200</span>
-                                    Total Tasks
+                    <!-- Main content -->
+                    <section class="content">
+                        <section class="panel">
+                            <header class="panel-heading">Orders staticstic</header>
+                            <div class="row" style="margin-bottom:5px;">
+                                <div class="col-md-4">
+                                    <div class="sm-st clearfix">
+                                        <span class="sm-st-icon st-dark"><i class="fa fa-ban"></i></span>
+                                        <div class="sm-st-info">
+                                            <span>${requestScope.cancelledCount}</span>
+                                        Orders Cancelled
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="sm-st clearfix">
+                                    <span class="sm-st-icon st-blue"><i class="fa fa-info"></i></span>
+                                    <div class="sm-st-info">
+                                        <span>${requestScope.processingCount}</span>
+                                        Orders Processing
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="sm-st clearfix">
+                                    <span class="sm-st-icon st-green"><i class="fa fa-check"></i></span>
+                                    <div class="sm-st-info">
+                                        <span>${requestScope.successCount}</span>
+                                        Orders Success
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-violet"><i class="fa fa-envelope-o"></i></span>
-                                <div class="sm-st-info">
-                                    <span>2200</span>
-                                    Total Messages
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-blue"><i class="fa fa-dollar"></i></span>
-                                <div class="sm-st-info">
-                                    <span>100,320</span>
-                                    Total Profit
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-green"><i class="fa fa-paperclip"></i></span>
-                                <div class="sm-st-info">
-                                    <span>4567</span>
-                                    Total Documents
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    </section>
                     <!-- Main row -->
                     <div class="row">
-
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <!--earning graph start-->
                             <section class="panel">
                                 <header class="panel-heading">
-                                    Earning Graph
+                                    Total Revenues
                                 </header>
-                                <div class="panel-body">
-                                    <canvas id="linechart" width="600" height="330"></canvas>
+                                <div class="sm-st clearfix">
+                                    <span class="sm-st-icon st-red"><i class="fa fa-money"></i></span>
+                                    <div class="sm-st-info">
+                                        <span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${requestScope.totalRevenue}"/></span>
+                                        Total revenue
+                                    </div>
                                 </div>
-                            </section>
-                            <!--earning graph end-->
-
                         </div>
+
+                        <div class="col-md-6">
+                            <div id="table">
+                                <!--earning graph start-->
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        Revenues by Product categories
+                                    </header>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Category ID</th>
+                                                <th scope="col">Category Name</th>
+                                                <th scope="col">Revenue</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${requestScope.revenueByCategory}" var='r'>
+                                            <tr>
+                                                <th scope="row">${r.categoryid}</th>
+                                                <td>${r.categoryname}</td>
+                                                <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${r.revenue}"/></td>
+                                            </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <!--earning graph end-->
+
+                    </div>
                     </div>
                     <!-- row end -->
                 </section><!-- /.content -->
