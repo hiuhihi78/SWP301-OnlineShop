@@ -35,12 +35,7 @@
                                         <li>
                                             <a href="user/profile" class="text-none-underline">Profile</a>
                                         </li>
-                                        <li>
-<!--                                            <a type="button" class="btn btn-primary text-none-underline" data-toggle="modal" data-target="#myModal">
-                                                Change password
-                                            </a>-->
-                                            <a href="#" class="text-none-underline" data-toggle="modal" data-target="#myModal">Change password</a>
-                                        </li>
+                                        
                                         <c:if test="${sessionScope.user.role.id == 1}">
                                             <li>
                                                 <a href="admin/userList" class="text-none-underline">Manage</a>
@@ -58,10 +53,18 @@
                                                 <a href="sale/productlist" class="text-none-underline">My store</a>
                                             </li>
                                         </c:if>  
-
+                                            
+                                            
                                         <li>
-                                            <a class="btn btn-primary text-none-underline mg-0" data-toggle="modal" data-target="#myModal">Change password</a>
+<!--                                            <a type="button" class="btn btn-primary text-none-underline" data-toggle="modal" data-target="#myModal">
+                                                Change password
+                                            </a>-->
+                                            <a href="#" class="text-none-underline" data-toggle="modal" data-target="#myModal">Change password</a>
                                         </li>
+
+<!--                                        <li>
+                                            <a class="btn btn-primary text-none-underline mg-0" data-toggle="modal" data-target="#myModal">Change password</a>
+                                        </li>-->
 
                                         <li>
                                             <a href="logout" class="text-none-underline">Logout</a>
