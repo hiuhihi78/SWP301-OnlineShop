@@ -7,9 +7,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Admin
 */
 
-margin-0-auto{
+.mx-auto{
     margin: 0 auto;
 }
+
 
 .text-color-red{
     color: red;
@@ -141,7 +142,6 @@ margin-0-auto{
 
 .w-70-percent{
     width: 70%;
-    margin: 0 auto;
 }
 
 .w-50-percent{

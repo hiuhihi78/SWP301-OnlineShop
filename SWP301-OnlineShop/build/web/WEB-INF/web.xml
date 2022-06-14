@@ -93,6 +93,7 @@
         <servlet-class>controller.marketing.SliderListController</servlet-class>
     </servlet>
     <servlet>
+
         <servlet-name>SliderDetailController</servlet-name>
         <servlet-class>controller.marketing.SliderDetailController</servlet-class>
     </servlet>
@@ -225,6 +226,7 @@
         <url-pattern>/marketing/dashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
         <servlet-name>ProductListPublicController</servlet-name>
         <url-pattern>/productlist</url-pattern>
     </servlet-mapping>
@@ -235,6 +237,7 @@
     <servlet-mapping>
         <servlet-name>UserOrdersController</servlet-name>
         <url-pattern>/myorders</url-pattern>
+
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BacklinkControlller</servlet-name>

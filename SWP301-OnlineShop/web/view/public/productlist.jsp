@@ -31,13 +31,13 @@
                     <div class="col-sm-3 box-shadow height-fit-content border-radius-2" >
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
-                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                
+                            <div class="panel-group category-products" id="accordian"><!--category-products-->
                                 <c:forEach items="${requestScope.listCategorys}" var="list">
-                                    <c:if test="${not empty list.listSubCategory}"> <!-- check empty of list subcategory with that category -->
+                                    <c:if test="${ not empty list.listSubCategory }"> <!-- check empty of list subcategory with that category -->
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
+
                                                     <a data-toggle="collapse" data-parent="#accordian" href="#${list.id}">
                                                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                                                             ${list.name}
@@ -48,17 +48,10 @@
                                                 <div class="panel-body">
                                                     <ul>
                                                         <c:forEach items="${list.listSubCategory}" var="listSub">
-                                                            <li><a href="">${listSub.name} </a></li> 
+                                                            <li><a href="productlist?subCategory=${listSub.id}&searchBy=${searchBy}">${listSub.name} </a></li> 
                                                             </c:forEach>
                                                     </ul>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${ empty list.listSubCategory}"> <!-- check empty of list subcategory with that category -->
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title"><a href="#">${list.name}</a></h4>
                                             </div>
                                         </div>
                                     </c:if>
@@ -77,7 +70,7 @@
                                                         <img src="${leastProduct.thumbnail}" alt="" />
                                                     </a>
                                                     <h2 class="break-down-line">${leastProduct.name}</h2>
-                                                    <!--<p class="break-down-line">${leastProduct.description}</p>-->
+                                                    <p class="break-down-line">${leastProduct.description}</p>
                                                     <p>
                                                         <span class="text-line-through">
                                                             <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${leastProduct.price}"/>
@@ -86,7 +79,7 @@
                                                             <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${leastProduct.priceDiscount}"/>
                                                         </span>
                                                     </p>
-                                                    <a href="#" class="btn btn-default add-to-cart">More Information</a>
+                                                    <a href="productdetails?productID=${leastProduct.id}" class="btn btn-default add-to-cart">More Information</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -96,102 +89,60 @@
 
                         </div>                     
                     </div>
+                    <!--PRODUCT LIST-->
                     <div class="col-sm-9 padding-right">
                         <div class="features_items">
                             <!--features_items-->
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Product List</h2>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <a href="#"><img src="images/shop/product12.jpg" alt="" /></a>
-                                            <h2>$56</h2>
-                                            <p>Easy Polo Black Edition</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
+                            <!--Show product-->
+                            <c:forEach items="${requestScope.listProducts}" var="product" >
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <a href="productdetails?productID=${product.id}">
+                                                    <img src="${product.thumbnail}" alt="" />
+                                                </a>
+                                                
+                                                <h2 class="break-down-line">${product.name}</h2>
+                                                <p class="break-down-line">${product.description}</p>
+                                                <p>
+                                                    <span class="text-line-through">
+                                                        <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
+                                                    </span>
+                                                    <span class="text-danger">
+                                                        <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
+                                                    </span>
+                                                </p>
+                                                <a href="productdetails?productID=${product.id}" class="btn btn-default add-to-cart"><i
+                                                        class="fa fa-shopping-cart"></i> Buy & Feedback</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <a href="#"><img src="images/shop/product12.jpg" alt="" /></a>
-                                            <h2>$56</h2>
-                                            <p>Easy Polo Black Edition</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <a href="#"><img src="images/shop/product12.jpg" alt="" /></a>
-                                            <h2>$56</h2>
-                                            <p>Easy Polo Black Edition</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <a href="#"><img src="images/shop/product12.jpg" alt="" /></a>
-                                            <h2>$56</h2>
-                                            <p>Easy Polo Black Edition</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <a href="#"><img src="images/shop/product12.jpg" alt="" /></a>
-                                            <h2>$56</h2>
-                                            <p>Easy Polo Black Edition</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <a href="#"><img src="images/shop/product12.jpg" alt="" /></a>
-                                            <h2>$56</h2>
-                                            <p>Easy Polo Black Edition</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </c:forEach>
+
+
+
 
                         </div>
-
-                        <!--features_items-->
                     </div>
+                    <!--END PRODCUT LIST-->
                 </div>
-                                <div class="pagging">
-				<ul class="pagination pull-right">
-					<li class="active"><a href="">1</a></li>
-					<li><a href="">2</a></li>
-					<li><a href="">3</a></li>
-					<li><a href="">&raquo;</a></li>
-				</ul>
-			</div>
+                <div class="pagging">
+                    <ul class="pagination pull-right">
+                        <c:if test="${requestScope.totalpage > 1}">
+                        <li><a href="productlist?page=1&searchBy=${searchBy}&subCategory=${listSub.id}">Frist</a></li>
+                        </c:if>
+                            <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
+                            <li class="${pageindex == page ? "active =" : ""}" ><a href="productlist?page=${page}&searchBy=${searchBy}&subCategory=${listSub.id}">${page}</a></li>    
+                            </c:forEach>
+                            <c:if test="${requestScope.totalpage > 1}">
+                        <li><a href="productlist?page=${requestScope.totalpage}&searchBy=${searchBy}&subCategory=${listSub.id}">Last</a></li>
+                        </c:if>
+                    </ul>
+                </div>
+               
             </div>
         </section>
 
@@ -207,6 +158,7 @@
         <script src="../../assets/public/js/jquery.prettyPhoto.js"></script>
         <script src="../../assets/public/js/main.js"></script>
         <script src="../../assets/js/home/home.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js" integrity="sha512-FOhq9HThdn7ltbK8abmGn60A/EMtEzIzv1rvuh+DqzJtSGq8BRdEN0U+j0iKEIffiw/yEtVuladk6rsG4X6Uqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </body>
 
 </html>

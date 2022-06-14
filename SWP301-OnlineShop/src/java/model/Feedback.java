@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
@@ -14,10 +16,19 @@ public class Feedback {
     private Product product;
     private int start;
     private String comment;
-    private String image;
+    private ArrayList<Image> image = new ArrayList<>();
     private boolean status;
 
     public Feedback() {
+    }
+
+    public Feedback(int id, User user, Product product, int start, String comment, boolean status) {
+        this.id = id;
+        this.user = user;
+        this.product = product;
+        this.start = start;
+        this.comment = comment;
+        this.status = status;
     }
 
     public int getId() {
@@ -60,11 +71,11 @@ public class Feedback {
         this.comment = comment;
     }
 
-    public String getImage() {
+    public ArrayList<Image> getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(ArrayList<Image> image) {
         this.image = image;
     }
 
@@ -75,6 +86,6 @@ public class Feedback {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
+
     
 }

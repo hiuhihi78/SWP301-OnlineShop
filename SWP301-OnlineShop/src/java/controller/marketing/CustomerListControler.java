@@ -51,6 +51,7 @@ public class CustomerListControler extends BaseAuthController {
             sortBy = "";
         }
         request.setAttribute("sortBy", sortBy);
+        
         int numofrecords = customerDBContext.count(userRole, searchBy, statusBy);
         int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
                 : (numofrecords / pagesize) + 1;

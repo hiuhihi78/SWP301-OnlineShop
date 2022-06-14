@@ -132,13 +132,9 @@
                                 <ul class="pagination pull-right">
 
                                     <li><a href="list?page=1&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Frist</a></li>
-                                    
-                                    
                                         <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
                                         <li class="${pageindex == page ? "active =" : ""}" ><a href="list?page=${page}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">${page}</a></li>    
                                         </c:forEach>
-
-
                                     <li><a href="list?page=${requestScope.totalpage}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Last</a></li>
                                 </ul>
                             </div>

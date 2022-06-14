@@ -27,7 +27,7 @@
                 <div class="row flex-justify">
                     <div class="col-sm-3 pd-top-15 box-shadow height-fit-content border-radius-20">
                         <div class="left-side"> <!-- left-sidebar -->
-                            <h2 class="title text-center">Category</h2>
+                            <h2 class="title text-center" style="border-bottom: solid 2px;">Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <div class="panel panel-default">
                                     <input type="hidden" value="${requestScope.idCategory}" id="search-category"/>
@@ -37,27 +37,29 @@
                                     </div>
                                 </div>
                                 <c:forEach items="${requestScope.listAllCateogry}" var="i">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordian" href="#${i.id}" ${(requestScope.idCategory == i.id)?"":"class=\"collapsed\""}>
-                                                    <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                    ${i.name}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <c:if test="${i.listSubPost != null}">
-                                            <div id="${i.id}" class="panel-collapse ${(requestScope.idCategory == i.id)?"in height-auto":"collapse"}">
-                                                <div class="panel-body">
-                                                    <ul>
-                                                        <c:forEach items="${i.listSubPost}" var="s">
-                                                            <li><a href="bloglist?category=${i.id}&subcategory=${s.id}" ${(requestScope.idSubCategory == s.id)?"class=\"active-category\"":""}>${s.name}</a></li>
-                                                        </c:forEach>
-                                                    </ul>
-                                                </div>
+                                    <c:if test="${i.listSubPost != null}">                                                                         
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordian" href="#${i.id}" ${(requestScope.idCategory == i.id)?"":"class=\"collapsed\""}>
+                                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                                            ${i.name}
+                                                    </a>
+                                                </h4>
                                             </div>
-                                        </c:if>
-                                    </div>
+                                            <c:if test="${i.listSubPost != null}">
+                                                <div id="${i.id}" class="panel-collapse ${(requestScope.idCategory == i.id)?"in height-auto":"collapse"}">
+                                                    <div class="panel-body">
+                                                        <ul>
+                                                            <c:forEach items="${i.listSubPost}" var="s">
+                                                                <li><a href="bloglist?category=${i.id}&subcategory=${s.id}" ${(requestScope.idSubCategory == s.id)?"class=\"active-category\"":""}>${s.name}</a></li>
+                                                                </c:forEach>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </c:if>
                                 </c:forEach>
 
                                 <%--<c:forEach items="${requestScope.listAllCateogry}" var="i">--%>
@@ -69,7 +71,7 @@
                                 <%--</c:forEach>--%>
                             </div><!--/category-products-->
                             <div class="panel-group category-products" id="accordian">
-                                <h2 class="title text-center">Latest Posts</h2>
+                                <h2 class="title text-center" style="border-bottom: solid 2px;">Latest Posts</h2>
                                 <c:if test="${requestScope.listTopLatestPost != null}">
                                     <c:forEach items="${requestScope.listTopLatestPost}" var="i">
                                         <div class="panel panel-default">
@@ -95,7 +97,7 @@
                     </div>
                     <div class="col-sm-8 pd-top-15 box-shadow border-radius-20 height-fit-content">
                         <div class="blog-post-area">
-                            <h2 class="title text-center">Post List</h2>
+                            <h2 class="title text-center" style="border-bottom: solid 2px;">Post List</h2>
                             <c:forEach items="${requestScope.listPostFiltered}" var="i">
                                 <div class="single-blog-post">
                                     <h3 class="break-down-line">${i.title}</h3>
@@ -143,5 +145,6 @@
         <script src="../../assets/public/js/jquery.prettyPhoto.js"></script>
         <script src="../../assets/public/js/main.js"></script>
         <script src="../../assets/js/blog/bloglist.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js" integrity="sha512-FOhq9HThdn7ltbK8abmGn60A/EMtEzIzv1rvuh+DqzJtSGq8BRdEN0U+j0iKEIffiw/yEtVuladk6rsG4X6Uqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </body>
 </html>
