@@ -107,7 +107,6 @@
                                         <div class="single-products">
                                             <div class="productinfo text-center">
                                                 <a href="productdetails?productID=${product.id}">
-                                                    ${product.thumbnail}
                                                     <img src="${product.thumbnail}" alt="" />
                                                 </a>
                                                 
