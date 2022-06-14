@@ -7,112 +7,220 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Admin
 */
 .wp-block.property.list {
-  border: 1px solid #e0eded;
+    border: 1px solid #e0eded;
 }
 
 .wp-block {
-  margin: 0 0 15px 0;
-  -webkit-transition: all .3s linear;
-  transition: all .3s linear;
-  position: relative;
-  cursor: default;
-  border-radius: 2px;
+    margin: 0 0 15px 0;
+    -webkit-transition: all .3s linear;
+    transition: all .3s linear;
+    position: relative;
+    cursor: default;
+    border-radius: 2px;
 }
 
 .wp-block.property.list .wp-block-title {
-  padding: 15px 15px 0 15px;
+    padding: 15px 15px 0 15px;
 }
 
 .wp-block.property.list .wp-block-title h3 {
-  margin: 0;
-  padding: 0;
-  font-size: 16px;
-  font-weight: 400;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .wp-block .wp-block-body {
-  padding: 15px;
+    padding: 15px;
 }
 
 .wp-block.property.list .wp-block-img {
-  display: table-cell;
-  width: 440px;
+    display: table-cell;
+    width: 440px;
 }
 
 .wp-block.property.list .wp-block-img img {
-  width: 100%;
+    width: 100%;
 }
 
 .wp-block.property.list .wp-block-content .content-title {
-  font-size: 20px;
-  color: #3498db;
-  margin-bottom: 5px;
+    font-size: 20px;
+    color: #3498db;
+    margin-bottom: 5px;
 }
 
 .wp-block.property.list .wp-block-body .wp-block-content {
-  display: table-cell;
-  vertical-align: top;
-  padding-left: 15px;
+    display: table-cell;
+    vertical-align: top;
+    padding-left: 15px;
 }
 
 .wp-block.property.list .wp-block-content .description {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #e0eded;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0eded;
 }
 
 .wp-block.property.list .wp-block-footer ul.aux-info {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  display: block;
-  background: #fcfcfc;
-  border-top: 1px solid #e0eded;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: block;
+    background: #fcfcfc;
+    border-top: 1px solid #e0eded;
 }
 
 .wp-block.property.list .wp-block-footer ul.aux-info li {
-  display: table-cell;
-  padding: 10px 15px;
-  vertical-align: middle;
-  border-right: 1px solid #e0eded;
+    display: table-cell;
+    padding: 10px 15px;
+    vertical-align: middle;
+    border-right: 1px solid #e0eded;
 }
 
 .ribbon.base {
-  background: #3498db;
-  color: #fff;
-  border-right: 5px solid #8bc4ea;
+    background: #3498db;
+    color: #fff;
+    border-right: 5px solid #8bc4ea;
 }
 
 .ribbon {
-  position: absolute;
-  top: 20px;
-  right: -5px;
-  padding: 15px;
+    position: absolute;
+    top: 20px;
+    right: -5px;
+    padding: 15px;
 }
 
 .base {
-  background: #3498db;
-  color: #fff !important;
+    background: #3498db;
+    color: #fff !important;
 }
 
 .ribbon:before, .ribbon:after {
-  content: '';
-  position: absolute;
-  left: -9px;
-  border-left: 10px solid transparent;
+    content: '';
+    position: absolute;
+    left: -9px;
+    border-left: 10px solid transparent;
 }
 
 .ribbon:before {
-  top: 0;
+    top: 0;
 }
 
 .ribbon.base:before {
-  border-top: 27px solid #3498db;
+    border-top: 27px solid #3498db;
 }
 
 .ribbon.base:after {
-  border-bottom: 27px solid #3498db;
+    border-bottom: 27px solid #3498db;
 }
 
 .ribbon:after {
-  bottom: 0;
+    bottom: 0;
 }
+
+
+.box-shadow {
+    box-shadow: 0px 0px 10px 2px #ccc7c7;
+    margin-bottom: 30px;
+}
+body{
+    margin-top:20px;
+    background-color:#f2f6fc;
+    color:#69707a;
+}
+.img-account-profile {
+    height: 10rem;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.card {
+    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+    font-weight: 500;
+}
+.card-header:first-child {
+    border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+.form-control, .dataTable-input {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #69707a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5ccd6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.35rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.nav-borders .nav-link.active {
+    color: #0061f2;
+    border-bottom-color: #0061f2;
+}
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+/*.container {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    border-style: inset;
+   
+    
+
+}*/
+
+.note {
+    color: red
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+p.description {
+    display: -webkit-box;
+    max-width: 500px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+}
+
+.height {
+    height: 25px;
+}
+
+.active-page {
+    color:blue;
+    font-weight: bold;
+    font-size: initial;
+}
+
+#img-slider{
+    height: 200px;
+}
+

@@ -38,7 +38,7 @@
             <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
                 <!-- Right side. contains main content -->
                 <aside class="right-side">
-                    <div id="back-previous-page"  onclick="history.go(-1)" style="cursor: pointer; margin: 10px 0px 0px 10px;">
+                    <div id="back-previous-page"  onclick="history.go(-1)" class="cursor-mg">
                         <span><a><i class="fa-solid fa-angle-left">  <span class="title">Back</span></i> </a></span>
                     </div>
                     <!-- Main content -->
@@ -49,8 +49,8 @@
                                 <input type="hidden" name="id" value="${requestScope.post.id}"/>
                             <input type="hidden" name="thumbnailOld" value="${requestScope.post.thumbnail}"/>
                             <div class="form-group w-70-percent">
-                                <div id="preview-box" style="margin: 0 auto;width: 50%;height: 200px;overflow: hidden;  position: relative; border-radius: 15px;">
-                                    <img style="object-fit: fill;height: inherit; width: 100%;" id="previewImage" src="${requestScope.post.thumbnail}"/>
+                                <div id="preview-box" class="preview-img-edit">
+                                    <img class="img-fit" id="previewImage" src="${requestScope.post.thumbnail}"/>
                                     <!--<button onclick="btnClosePreviewImage()" type="button" class="close" style="font-size: 30px; position: absolute; z-index: 1024; right: 5px;">&times;</button>-->
                                 </div>
                                 <label for="thumbnail">Thumbnail</label>
@@ -184,92 +184,7 @@
             </div>
         </div>
         <!--javascrip-->
-        <script type="text/javascript">
-            function handleSaveCategory() {
-                var valueCategory = document.querySelector('#newCategory1').value;
-                var valuesubCategory = document.querySelector('#newSubCategory1').value;
-                var listCategory = document.querySelector('#listCategory');
-                var listCategory2 = document.querySelector('#category2');
-                $.ajax({
-                    type: "GET",
-                    url: "../marketing/handlePost",
-                    data: {
-                        nameCategory: valueCategory,
-                        nameSubCategory: valuesubCategory,
-                        action: "addNewCategory"
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        listCategory.innerHTML += data;
-                        listCategory2.innerHTML += data;
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-
-                    }
-                });
-            }
-            function handleSaveSubcategory() {
-                var category = document.querySelectorAll('#category2 option');
-                var valueCategory;
-                var subCategory = document.querySelector('#newSubcategory2');
-                for (var i = 0; i < category.length; i++) {
-                    if (category[i].selected) {
-                        valueCategory = category[i].value;
-                        break;
-                    }
-                }
-                $.ajax({
-                    type: "GET",
-                    url: "../marketing/handlePost",
-                    data: {
-                        idCategory: valueCategory,
-                        nameSubCategory: subCategory.value,
-                        action: "addNewSubCategory"
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        console.log("status ", textStatus);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-
-                    }
-                });
-            }
-            function selectSubCategory() {
-                var list = document.querySelectorAll("#listCategory option");
-                var listSub = document.querySelector("#subCatePost");
-                console.log(list);
-                for (var i = 0; i < list.length; i++) {
-                    if (list[i].selected) {
-                        $.ajax({
-                            type: "GET",
-                            url: "../marketing/handlePost",
-                            data: {
-                                idCategory: list[i].value,
-                                action: "subcategory"
-                            },
-                            success: function (data, textStatus, jqXHR) {
-                                console.log(data);
-                                listSub.innerHTML = "" + data;
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-
-                            }
-                        });
-                        break;
-                    }
-                }
-            }
-            function checkFileInput(e) {
-                console.log(document.querySelector('#file').value);
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    document.querySelector('#previewImage').parentNode.style.display = 'block';
-                    $("#previewImage").attr("src", e.target.result);
-                };
-                //Imagepath.files[0] is blob type
-                reader.readAsDataURL(e.files[0]);
-            }
-        </script>
-<!--        <script src="../../assets/js/marketing/productList.js"></script>-->
+        <script src="../../assets/js/marketing/editPost.js" type="text/javascript"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../../js/jquery.min.js" type="text/javascript"></script>

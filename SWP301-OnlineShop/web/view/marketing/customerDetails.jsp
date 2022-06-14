@@ -184,9 +184,9 @@
                 </script>-->
         
         <!-- jQuery 2.0.2 -->
-        <script src="../../assets/js/customer/customerHistory.js" type="text/javascript">
+<!--        <script src="../../assets/js/customer/customerHistory.js" type="text/javascript">
             validateForm();
-        </script>
+        </script>-->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../../assets/js/jquery.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->

@@ -126,7 +126,7 @@
                             <div class="form-group w-70-percent mx-auto" >
                                 <label for="subCategory">SubCategory</label>
                                 <div class="display-flex">
-                                    <select class="form-control" name="subCategory" id="subCategory">
+                                    <select class="form-control" name="subCategory" id="subCategory" required="">
                                         <c:forEach items="${requestScope.subCategorys}" var="c">
                                             <option value="${c.id}" 
                                                     <c:if test="${subCategory == c.id}">slected = "slected"</c:if> >

@@ -5,6 +5,7 @@
 package controller.marketing;
 
 import configs.Security;
+import static configs.Security.SIZE_PAGE_SLIDER_LIST;
 import dal.SliderDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,9 +35,43 @@ public class SliderListController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         SliderDBContext sliderDb = new SliderDBContext();
-        ArrayList<Slider> sliders = sliderDb.getAllSlider();
-        request.setAttribute("sliders", sliders);
-        request.getRequestDispatcher("view/marketing/sliders.jsp").forward(request, response);
+        String search = "";
+        int status = -1, index = 1;
+
+        //Get data from filter input
+        if (request.getParameter("txtSearch") != null) {
+            search = request.getParameter("txtSearch").trim();
+        }
+        if (request.getParameter("select") != null) {
+            status = Integer.parseInt(request.getParameter("select"));
+        }
+
+        //Get current page from view
+        if (request.getParameter("index") != null) {
+            index = Integer.parseInt(request.getParameter("index"));
+        }
+
+        //Get List Slider
+        ArrayList<Slider> lstSlider = sliderDb.getSliderByIndex(index, SIZE_PAGE_SLIDER_LIST, status, search);
+        
+        //Calculator Last page
+        int sizeOfList = sliderDb.searchSliders(status, search).size();
+        int lastPage = sizeOfList / SIZE_PAGE_SLIDER_LIST;
+        if (sizeOfList % SIZE_PAGE_SLIDER_LIST != 0) {
+            lastPage++;
+        }
+
+        //Send result filter after search
+        request.setAttribute("search", search);
+        request.setAttribute("status", status);
+        //Send Last page of slider list
+        request.setAttribute("lastPage", lastPage);
+        //Send slider List
+        request.setAttribute("sliders", lstSlider);
+        //Send index 
+        request.setAttribute("index", index);
+        
+        request.getRequestDispatcher("/view/marketing/sliders.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,7 +86,7 @@ public class SliderListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         processRequest(request, response);
     }
 
@@ -81,18 +116,13 @@ public class SliderListController extends HttpServlet {
         } catch (Exception e) {
         }
 
-    processRequest(request, response);
+        processRequest(request, response);
 
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

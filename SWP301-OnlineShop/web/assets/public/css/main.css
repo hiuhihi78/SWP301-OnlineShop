@@ -5,6 +5,33 @@
 /*@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
 @import url(http://fonts.googleapis.com/css?family=Abel);*/
+.mg-l-3percent-radius {
+    border-radius: 5px !important;
+    margin-left: 3%;
+}
+.bg-darkgray-radius {
+    background-color: darkgray !important;
+    border-radius: 5px !important;
+}
+.flex-justify-end-wrap {
+    display: flex;
+    justify-content: end;
+    flex-wrap: wrap;
+}
+.fw-bolder-fz-20 {
+    font-weight: bolder;
+    font-size: 20px;
+}
+.pd-20px {
+    padding: 20px;
+    border-radius: 15px;
+}
+.w-30percent {
+    width: 30%;
+}
+.mg-0 {
+    margin: 0px !important;
+}
 .pd-left-0 {
     padding-left: 0px;
 }

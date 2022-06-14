@@ -53,7 +53,7 @@ public class UploadImageController extends HttpServlet {
             appPath = appPath.replace('\\', '/');
             int indexFolderRoot = appPath.indexOf("/build");
             appPath = appPath.substring(0, indexFolderRoot) + "/web/assets/";
-            // Thư mục để save file tải lên.
+            // Thư mục để save file tải lên. 
             String fullSavePath = null;
             if (appPath.endsWith("/")) {
                 fullSavePath = appPath + SAVE_DIRECTORY;

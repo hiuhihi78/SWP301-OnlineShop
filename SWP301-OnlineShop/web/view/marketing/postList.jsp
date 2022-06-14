@@ -40,7 +40,7 @@
         <c:set var="page" value="${requestScope.page}"/>
         <c:set var="gapPage" value="2"/>
         <c:set var="totalPage" value="${requestScope.totalPage}"/>
-        <c:set var="content" value="categoy=${idCategory}&author=${roleId}&status=${status}&sort=${sort}&orderBy=${orderBy}&search=${search}"/>
+        <c:set var="content" value="categoy=${idCategory}&status=${status}&sort=${sort}&orderBy=${orderBy}&search=${search}"/>
 
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="../marketing-template/header.jsp"></jsp:include>
@@ -53,7 +53,7 @@
                     <section class="content ">
                         <!--Alert-->
                     <c:if test="${requestScope.success != null}">
-                        <div class="fixed float-end" id="showAlter">
+                        <div class="fixed float-end t-55px" id="showAlter">
                             <div class="alert alert-success alert-dismissible fade in" id="alterfade">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 ${requestScope.success}
@@ -63,7 +63,7 @@
 
 
                     <c:if test="${requestScope.failed != null}">
-                        <div class="fixed float-end" id="showAlter">
+                        <div class="fixed float-end t-55px" id="showAlter">
                             <div class="alert alert-danger alert-dismissible fade in" id="alterfade">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 ${requestScope.failed}
@@ -73,7 +73,7 @@
                     <!--Search, add and filter post-->
                     <div class="row d-flex mb-10">
                         <!--form filter-->
-                        <form id="searchForm" action="../marketing/postlist" method="GET" class="form-inline" style="margin-bottom: 1rem;">
+                        <form id="searchForm" action="../marketing/postlist" method="GET" class="form-inline mb-1rem">
                             <select id="category" name="category" class="form-control">
                                 <option value="-1">All Category</option>
                                 <c:forEach items="${requestScope.listCateogry}" var="i">
@@ -82,9 +82,9 @@
                             </select>
                             <!--                            <select id="author" name="author" class="form-control">
                                                             <option value="-1">All Author</option>
-                            <c:forEach items="${requestScope.listUserMarketing}" var="u">
+                            <%--<c:forEach items="${requestScope.listUserMarketing}" var="u">--%>
                                 <option value="${u.id}" ${(requestScope.idAuthor == u.id)?"selected":""}>${u.fullname}</option>
-                            </c:forEach>
+                            <%--</c:forEach>--%>
                         </select>-->
                             <select id="status" name="status" class="form-control">
                                 <option value="-1">All Status</option>
@@ -103,7 +103,7 @@
                                 <option value="asc">ASC</option>
                                 <option value="desc" ${(requestScope.orderBy == "desc")?"selected":""}>DESC</option>
                             </select>
-                            <input id="search" name="search" style="width: 25rem;" type="text" class="form-control" placeholder="Enter Title, Author" 
+                            <input id="search" name="search" type="text" class="form-control w-25rem" placeholder="Enter Title, Author" 
                                    <c:if test="${(requestScope.searchContent != null)}">
                                        value="${requestScope.searchContent}"
                                    </c:if>
@@ -137,8 +137,8 @@
                                         <c:forEach items="${requestScope.listPosts}" var="p">
                                             <tr>
                                                 <td>${p.id}</td>
-                                                <td><img style="width: 60px; height: 60px" src="${p.thumbnail}"/></td>
-                                                <td>${p.title}</td>
+                                                <td><img class="img-wh" src="${p.thumbnail}"/></td>
+                                                <td class="word-wrap-w-40">${p.title}</td>
                                                 <td>${p.postCategory.category.name}</td>
                                                 <td>${p.user.fullname}</td>
                                                 <td>
@@ -156,14 +156,14 @@
                                                     </form>
                                                 </td>
                                                 <td>
-                                                    <a href="./editPost?id=${p.id}" style="text-decoration: none; color:white">
+                                                    <a href="./editPost?id=${p.id}" class="text-n-color-w">
                                                         <button type="button" class="btn btn-primary">
-                                                            <i class="fa-solid fa-pen-to-square" style="margin-right: 2px"></i>Edit
+                                                            <i class="fa-solid fa-pen-to-square mr-2px"></i>Edit
                                                         </button>
                                                     </a>
-                                                    <a href="./postDetails?id=${p.id}" style="text-decoration: none; color:white">
+                                                    <a href="./postDetails?id=${p.id}" class="text-n-color-w">
                                                         <button type="button" class="btn btn-primary">
-                                                            <i class="fa-solid fa-eye" style="margin-right: 2px"></i>View
+                                                            <i class="fa-solid fa-eye mr-2px"></i>View
                                                         </button>
                                                     </a>
                                                 </td>

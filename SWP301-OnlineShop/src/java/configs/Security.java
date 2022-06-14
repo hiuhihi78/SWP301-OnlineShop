@@ -18,12 +18,17 @@ public class Security {
     public static final int MAKETING_ROLL_ID = 2;
     public static final int SALE_ROLL_ID = 3;
     public static final int CUSTOMER_ROLL_ID = 4;
-    public static final int MAXIMUM_AGE = 60*60*24*10;
-    public static final int MAXIMUM_AGE_TOKEN = 60*5;
+    public static final int MAXIMUM_AGE = 60 * 60 * 24 * 10;
+    public static final int MAXIMUM_AGE_TOKEN = 60 * 5;
     public static final boolean DEFAULT_STATUS = true;
     public static final boolean ACTIVE_STATUS = true;
     public static final boolean DEACTIVE_STATUS = false;
     public static final int MAXIMUM_AGE_TOKEN_REGISTER = 60 * 5;
+
+    /*Start  Config of slider page*/
+    public static final int SIZE_PAGE_SLIDER_LIST = 2; //Number of sliders per page
+    /*End  Config of slider page*/
+
     public static final boolean SHOW_STATUS = true;
     public static final boolean HIDE_STATUS = false;
 }

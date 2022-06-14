@@ -106,7 +106,7 @@
                             <div class="form-group w-70-percent">
                                 <label for="category">Category</label>
                                 <div class="display-flex">
-                                    <select class="form-control" name="category" id="category" onchange="handleShowSubCategory()">
+                                    <select class="form-control" name="category" id="category" onchange="handleShowSubCategory()" >
                                         <c:forEach items="${requestScope.categorys}" var="c">
                                             <option value="${c.id}"
                                                     <c:if test="${category == c.id}">slected = "slected"</c:if>>
@@ -123,7 +123,7 @@
                             <div class="form-group w-70-percent" >
                                 <label for="subCategory">SubCategory</label>
                                 <div class="display-flex">
-                                    <select class="form-control" name="subCategory" id="subCategory">
+                                    <select class="form-control" name="subCategory" id="subCategory" required="">
                                         <c:forEach items="${requestScope.subCategorys}" var="c">
                                             <option value="${c.id}" 
                                                     <c:if test="${subCategory == c.id}">slected = "slected"</c:if> >

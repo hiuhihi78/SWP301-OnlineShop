@@ -278,6 +278,22 @@ public class PostDBContext extends DBContext {
         }
         return null;
     }
+    
+    public int getPostNumber() {
+        int postNumber = 0;
+        try {
+            String sql = "select COUNT(*) num from post";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                postNumber = rs.getInt("num");
+            }
+        } catch (SQLException e) {
+        }
+        return postNumber;
+    }
+    
+
 
     public ArrayList<Post> getAllPostFiltered(int idCategory, int idAuthor, int idStatus, String searchBy, String orderBy, String sortBy) {
         ArrayList<Post> listPosts = new ArrayList<>();

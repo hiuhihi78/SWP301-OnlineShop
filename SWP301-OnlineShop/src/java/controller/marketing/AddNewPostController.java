@@ -56,7 +56,6 @@ public class AddNewPostController extends BaseAuthController {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        String alert = "";
         try {
             PostDBContext postDB = new PostDBContext();
 
@@ -111,12 +110,12 @@ public class AddNewPostController extends BaseAuthController {
                 String urlImage = request.getContextPath().trim() +"/assets/img/"+ fileName;
                 postDB.insertPost(title_raw, urlImage, brief_raw, description_raw, dateNow,idSubCategory, isFeatured, isStatus, idUser);
             }
-            alert = "success";
+            PostListController.ALERT = "success";
         } catch (Exception e) {
-            alert = "failed";
+            PostListController.ALERT = "failed";
             e.printStackTrace();
         }
-        response.sendRedirect("./postlist?alert="+alert);
+        response.sendRedirect("./postlist");
     }
 
     @Override

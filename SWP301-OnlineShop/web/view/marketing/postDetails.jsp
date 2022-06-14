@@ -42,39 +42,17 @@
                 <aside class="right-side">
                     <!-- Main content -->
                     <section class="content ">
-                        <!--Search, add and filter post  row d-flex-->
-                        <!--                        <div class="mb-10" style="width: 782px; box-shadow: 0px 0px 10px -5px #6a6262; border-radius: 10px; padding: 20px; margin: 0 auto;">
-                                                    Post Details
-                                                    <h3 class="title text-center" style="text-transform: uppercase; font-weight: 700;">${requestScope.post.title}</h3>
-                                                <div style="margin: 0 20px; display: flex; justify-content: space-between;">
-                                                    <div id="infoPost">
-                                                        <div>Category: ${requestScope.post.postCategory.category.name}</div>
-                                                        <div>Author: ${requestScope.post.user.fullname}</div>
-                                                        <div>Publish: ${requestScope.post.date}</div>
-                                                    </div>
-                                                    <div id="mode">
-                                                        <div>Featured: ${(requestScope.post.featured)?"On":"Off"}</div>
-                                                        <div>Status: ${(requestScope.post.status)?"Show":"Hide"}</div>
-                                                    </div>
-                                                </div>
-                                                <div id="thumbnail" style="width: 100%; height: 300px; overflow: hidden; border-radius: 15px; margin: 20px 0px;">
-                                                    <img src="${requestScope.post.thumbnail}" style="width: 100%; height: 100%;"/>
-                                                </div>
-                                                <div id="description">
-                                                    <p>${requestScope.post.title}</p>
-                                                </div>
-                                            </div>-->
-                    <div class="product-content product-wrap clearfix product-deatil">
-                        <div class="row">
-                            <div class="col-md-5 col-sm-12 col-xs-12">
-                                <div class="product-image">
-                                    <div id="myCarousel-2" class="carousel slide">
+                        <div class="product-content product-wrap clearfix product-deatil">
+                            <div class="row">
+                                <div class="col-md-5 col-sm-12 col-xs-12">
+                                    <div class="product-image">
+                                        <div id="myCarousel-2" class="carousel slide">
 
-                                        <div class="carousel-inner">
-                                            <!-- Slide 1 -->
-                                            <div class="item active" border="1" style="border-radius: 15px; overflow: hidden; height: 340px;">
+                                            <div class="carousel-inner">
+                                                <!-- Slide 1 -->
+                                                <div class="item active boder-radius-over-h" border="1">
 
-                                                <img src="${requestScope.post.thumbnail}" alt="thumbnail" style="height: 100%; width: 100%;">
+                                                    <img src="${requestScope.post.thumbnail}" alt="thumbnail" class="w-h-100">
                                             </div>
                                         </div>
 
@@ -82,20 +60,20 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
-                                <h2 class="name" style="text-transform: uppercase; font-weight: 700;">
+                                <h2 class="name text-tranform-wrap" >
                                     ${requestScope.post.title}
                                 </h2>
                                 <hr>
-                                <div class="price-container" style="display: flex; justify-content: space-between;">
+                                <div class="price-container flex-between">
                                     <div>
-                                        <div style="margin-bottom: 10px;">
+                                        <div class="mb-10px">
                                             <strong><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspStatus:</strong>&nbsp&nbsp
                                             <c:choose>
                                                 <c:when test="${requestScope.post.status}">
-                                                    <span class="label label-success" style="padding: 4px 8px">Show</span>
+                                                    <span class="label label-success pd-v4-h8">Show</span>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <span class="label label-danger" style="padding: 4px 8px">Hide</span>
+                                                    <span class="label label-danger pd-v4-h8">Hide</span>
                                                 </c:otherwise>
                                             </c:choose>
                                         </div>
@@ -103,22 +81,22 @@
                                             <strong><i class="fa fa-flag" aria-hidden="true"></i>&nbspFeatured:</strong>&nbsp&nbsp
                                             <c:choose>
                                                 <c:when test="${requestScope.post.featured==true}">
-                                                    <span class="label label-success" style="padding: 4px 8px">On</span>
+                                                    <span class="label label-success pd-v4-h8">On</span>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <span class="label label-danger" style="padding: 4px 8px">Off</span>
+                                                    <span class="label label-danger pd-v4-h8">Off</span>
                                                 </c:otherwise>
                                             </c:choose>
                                         </div>
                                     </div>
                                     <div>
-                                        <div style="margin-bottom: 10px;">
+                                        <div class="mb-10px">
                                             <strong><i class="fa fa-at" aria-hidden="true"></i>&nbspAuthor:</strong>&nbsp&nbsp<span>${requestScope.post.user.fullname}</span>
                                         </div>
-                                        <div style="margin-bottom: 10px;">
+<!--                                        <div class="mb-10px">
                                             <strong><i class="fa fa-upload" aria-hidden="true"></i>&nbspPublish:</strong>&nbsp&nbsp<span><fmt:formatDate type = "date" 
                                                             value = "${requestScope.post.date}" /></span>
-                                        </div>
+                                        </div>-->
                                         <div>
                                             <strong><i class="fa fa-file" aria-hidden="true"></i>&nbspCategory:</strong>&nbsp&nbsp<span>${requestScope.post.postCategory.category.name}</span>
                                         </div>
@@ -127,8 +105,14 @@
                                 </div>
                                 <hr />
                                 <div class="tab-pane fade active in" id="more-information">
-                                    <strong>Description Title:</strong>
-                                    <p style="text-indent: 1.5rem; font-size: 18px;">
+                                    <strong>Brief Information: </strong>
+                                    <p class="text-indent">
+                                        ${requestScope.post.briefInfo}
+                                    </p>
+                                </div>  
+                                <div class="tab-pane fade active in" id="more-information">
+                                    <strong>Description: </strong>
+                                    <p class="text-indent">
                                         ${requestScope.post.description}
                                     </p>
                                 </div>  
@@ -150,8 +134,6 @@
             </aside><!-- /.right-side -->
         </div>
 
-        <!--javascrip-->
-        <script src="../../assets/js/marketing/productList.js"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../../js/jquery.min.js" type="text/javascript"></script>

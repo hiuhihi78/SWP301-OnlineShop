@@ -93,6 +93,19 @@
         <servlet-class>controller.marketing.SliderListController</servlet-class>
     </servlet>
     <servlet>
+
+        <servlet-name>SliderDetailController</servlet-name>
+        <servlet-class>controller.marketing.SliderDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddSliderController</servlet-name>
+        <servlet-class>controller.marketing.AddSliderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MarketingDashboardController</servlet-name>
+        <servlet-class>controller.marketing.MarketingDashboardController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ProductListPublicController</servlet-name>
         <servlet-class>controller.home.ProductListPublicController</servlet-class>
     </servlet>
@@ -103,6 +116,10 @@
     <servlet>
         <servlet-name>UserOrdersController</servlet-name>
         <servlet-class>controller.user.UserOrdersController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BacklinkControlller</servlet-name>
+        <servlet-class>controller.common.BacklinkControlller</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -194,9 +211,22 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SliderListController</servlet-name>
-        <url-pattern>/sliderList</url-pattern>
+        <url-pattern>/marketing/sliderList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SliderDetailController</servlet-name>
+        <url-pattern>/marketing/sliderDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddSliderController</servlet-name>
+        <url-pattern>/marketing/sliderAdd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarketingDashboardController</servlet-name>
+        <url-pattern>/marketing/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+
         <servlet-name>ProductListPublicController</servlet-name>
         <url-pattern>/productlist</url-pattern>
     </servlet-mapping>
@@ -207,10 +237,13 @@
     <servlet-mapping>
         <servlet-name>UserOrdersController</servlet-name>
         <url-pattern>/myorders</url-pattern>
+
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BacklinkControlller</servlet-name>
+        <url-pattern>/backlink</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>60</session-timeout>
     </session-config>
 </web-app>

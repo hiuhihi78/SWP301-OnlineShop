@@ -26,10 +26,14 @@ public class DeleteFile {
     }
 
     public static void main(String[] args) {
-//        DeleteFile.handleDeleteFile("/assets/img/con-cho.png");
+        DeleteFile.handleDeleteFile("/assets/img/con-cho.png");
     }
 
     public static String getAppPath(HttpServletRequest request) {
         return request.getServletContext().getRealPath("");
+    }
+
+    public static void handleDeleteFile(String image) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
