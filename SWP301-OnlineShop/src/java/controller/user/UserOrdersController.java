@@ -4,13 +4,17 @@
  */
 package controller.user;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import dal.OrderDBContext;
 import dal.ProductCategoryDBContext;
 import dal.ProductListDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,15 +43,12 @@ public class UserOrdersController extends BaseAuthController {
         response.setContentType("text/html;charset=UTF-8");
         ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
         ProductListDBContext productListDBContext = new ProductListDBContext();
-        OrderDBContext orderDB = new OrderDBContext(); 
-        User u = (User)request.getSession().getAttribute("user");
+        OrderDBContext orderDB = new OrderDBContext();
+        User u = (User) request.getSession().getAttribute("user");
         //get list subcategory
         ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
         //get least post
         ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
-        
-        ArrayList<Order> orders = orderDB.getUserOrders(u.getId());
-        request.setAttribute("orders", orders);
         request.setAttribute("listCategorys", listCategorys);
         request.setAttribute("leastProduct", leastProduct);
         request.getRequestDispatcher("./view/public/myorders.jsp").forward(request, response);
@@ -79,7 +80,28 @@ public class UserOrdersController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        try {
+            String requestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+            JsonElement jelement = new JsonParser().parse(requestBody);
+            JsonObject jobject = jelement.getAsJsonObject();
+            String startDate = jobject.get("startTime").getAsString();
+            String endDate = jobject.get("endTime").getAsString();
+            System.out.println(startDate + " " + endDate);
+            User u = (User) request.getSession().getAttribute("user");
+            OrderDBContext orderDB = new OrderDBContext();
+            ArrayList<Order> orders = orderDB.getUserOrders(u.getId(), startDate, endDate);
+            if (orders != null) {
+                response.getWriter().println(new GsonBuilder().setPrettyPrinting().create().toJson(orders).toString());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JsonObject json = new JsonObject();
+            json.addProperty("Code", 500);
+            json.addProperty("Msg", "An error has occured!" + e.getMessage());
+            response.setStatus(500);
+            response.getWriter().println(new GsonBuilder().setPrettyPrinting().create().toJson(json).toString());
+        }
     }
 
     /**

@@ -216,7 +216,7 @@ public class AuthFilter implements Filter {
 
     public boolean checkPublicPath(String requestPath, ArrayList<Feature> allowFeatures) {
         for (Feature f : allowFeatures) {
-            log("checkPublicPath: " + requestPath + " " + f.getUrl().indexOf(requestPath));
+            //log("checkPublicPath: " + requestPath + " " + f.getUrl().indexOf(requestPath));
             if (requestPath.indexOf(f.getUrl()) != -1) {
                 return true;
             }
@@ -228,7 +228,7 @@ public class AuthFilter implements Filter {
 
         for (Feature f : allowedFeatures.keySet()) {
             boolean isAllowed = allowedFeatures.get(f);
-            log("checkNonPublicPath: " + requestPath + " " + f.getUrl().indexOf(requestPath));
+            //log("checkNonPublicPath: " + requestPath + " " + f.getUrl().indexOf(requestPath));
             if (requestPath.indexOf(f.getUrl()) != -1 && isAllowed) {
 
                 return true;

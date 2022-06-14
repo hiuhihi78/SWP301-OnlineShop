@@ -17,7 +17,8 @@ public class Order {
     private ArrayList<Product> products;
     private double totalcost;
     private int status;
-
+    private int numproducts;
+    
     public Order() {
     }
 
@@ -60,6 +61,13 @@ public class Order {
     public void setStatus(int status) {
         this.status = status;
     }
-    
-    
+
+    public int getNumproducts() {
+        return numproducts;
+    }
+
+    public void setNumproducts(int numproducts) {
+        this.numproducts = numproducts;
+    }
+     
 }

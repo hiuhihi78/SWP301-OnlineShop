@@ -21,6 +21,7 @@
 
         <link href="../../assets/public/css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     </head>
     <!--/head-->
@@ -102,35 +103,63 @@
                         <div class="features_items">
                             <!--features_items-->
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Your orders</h2>
+                            <div id ="customToolbar">
+                                <span>Please set date range to view your data:</span></br>
+                                <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                    <i class="fa fa-calendar"></i>&nbsp;
+                                    <span></span> <i class="fa fa-caret-down"></i>
+                                </div>
+                            </div>
+                            <!-- Order table -->
                             <table
                                 data-toggle="table"
                                 data-pagination="true"
+                                data-sortable="true"
                                 data-search="true"
-                                data-sortable="true">
+                                data-toolbar="#customToolbar"
+                                data-flat="true"
+                                data-method="post"
+                                data-query-params="queryParams"
+                                data-url="/myorders">
 
                                 <thead>
                                     <tr>
-                                        <th data-sortable="true">Order ID</th>
-                                        <th data-sortable="true">Ordered Date</th>
-                                        <th data-sortable="true">Product (First product name)</th>
-                                        <th data-sortable="true">Number of products</th>
-                                        <th data-sortable="true">Total cost</th>
-                                        <th data-sortable="true">Status</th>
+                                        <th data-sortable="true" data-field="id">Order ID</th>
+                                        <th data-sortable="true" data-field="date">Ordered Date</th>
+                                        <th data-sortable="true" data-field="products.0.name">Product (First product name)</th>
+                                        <th data-sortable="true" data-field="numproducts">Number of products</th>
+                                        <th data-sortable="true" data-field="totalcost">Total cost</th>
+                                        <th data-sortable="true" data-field="status" data-align="center">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+<!--                                <tbody>
                                     <c:forEach items="${requestScope.orders}" var="o">
                                         <tr>
                                             <td>${o.id}</td>
-                                            <td>${o.date}</td>
+                                            <td><fmt:formatDate pattern="dd-MM-yyyy" value="${o.date}"/></td>
                                             <td>${o.products[0].name}</td>
-                                            <td>${fn:length(o.products)}</td>
+                                            <td>${o.numproducts}</td>
                                             <td>${o.totalcost}</td>
-                                            <td>status</td>
+                                            <c:if test="${o.status == 0}">
+                                                <td>
+                                                    <span class="label label-default">Cancelled</span>
+                                                </td>
+                                            </c:if>
+                                            <c:if test="${o.status == 1}">
+                                                <td>
+                                                    <span class="label label-info">Processing</span>
+                                                </td>
+                                            </c:if>
+                                            <c:if test="${o.status == 2}">
+                                                <td>
+                                                    <span class="label label-success">Finished</span>
+                                                </td>
+                                            </c:if>
                                         </tr>
                                     </c:forEach> 
-                                </tbody>
+                                </tbody>-->
                             </table>
+                            <!-- Order table -->
                         </div>
 
                         <!--features_items-->
@@ -161,6 +190,8 @@
         <script src="../../assets/js/home/home.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js" integrity="sha512-FOhq9HThdn7ltbK8abmGn60A/EMtEzIzv1rvuh+DqzJtSGq8BRdEN0U+j0iKEIffiw/yEtVuladk6rsG4X6Uqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     </body>
 
 </html>
