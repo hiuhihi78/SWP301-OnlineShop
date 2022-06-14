@@ -10,7 +10,7 @@
     <div class="header-top">
         <!--header-top-->
         <div class="container">
-            <div class="row">
+            <div class="row" style="padding: 5px 0px; box-shadow: 0px 4px 5px -3px #fe980f;">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
                         <a href="./home"><img src="../../assets/public/images/home/logo.png" alt="" /></a>
