@@ -93,10 +93,10 @@
                                         <div class="mb-10px">
                                             <strong><i class="fa fa-at" aria-hidden="true"></i>&nbspAuthor:</strong>&nbsp&nbsp<span>${requestScope.post.user.fullname}</span>
                                         </div>
-                                        <div class="mb-10px">
+<!--                                        <div class="mb-10px">
                                             <strong><i class="fa fa-upload" aria-hidden="true"></i>&nbspPublish:</strong>&nbsp&nbsp<span><fmt:formatDate type = "date" 
                                                             value = "${requestScope.post.date}" /></span>
-                                        </div>
+                                        </div>-->
                                         <div>
                                             <strong><i class="fa fa-file" aria-hidden="true"></i>&nbspCategory:</strong>&nbsp&nbsp<span>${requestScope.post.postCategory.category.name}</span>
                                         </div>
