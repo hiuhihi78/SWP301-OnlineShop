@@ -84,23 +84,25 @@ $(document).ready(function () {
         }
     });
 
-    var start = moment();
-    var end = moment();
     $(function () {
-        function refreshTable(startTime, endTime)
-        {
-            console.log("calling refreshTable");
-            var params = {
-                "startTime": startTime,
-                "endTime": endTime
-            };
-            console.log(params);
-            $('#table').bootstrapTable('refresh', params);
-        }
-
+        var start = moment();
+        var end = moment();
         function cb(start, end) {
-            $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
-            refreshTable(start.format('DD/MM/YYYY'), end.format('DD/MM/YYYY'));
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
+            var startTime = params.startTime;
+            var endTime = params.endTime;
+            if(startTime == null || endTime == null)
+            {
+                $('#reportrange span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+            }
+            else
+            {
+                console.log()
+                $('#reportrange span').html(startTime + ' - ' + endTime);
+            }
+
         }
         $('#reportrange').daterangepicker({
             startDate: start,
@@ -116,5 +118,8 @@ $(document).ready(function () {
         }, cb);
         cb(start, end);
     });
-});
 
+    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+        window.location.href = window.location.pathname + "?" + $.param({'startTime': picker.startDate.format('YYYY-MM-DD'), 'endTime': picker.endDate.format('YYYY-MM-DD')})
+    });
+});

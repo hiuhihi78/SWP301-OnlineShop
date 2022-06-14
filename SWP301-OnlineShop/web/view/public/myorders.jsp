@@ -116,27 +116,23 @@
                                 data-pagination="true"
                                 data-sortable="true"
                                 data-search="true"
-                                data-toolbar="#customToolbar"
-                                data-flat="true"
-                                data-method="post"
-                                data-query-params="queryParams"
-                                data-url="/myorders">
+                                data-toolbar="#customToolbar">
 
                                 <thead>
                                     <tr>
-                                        <th data-sortable="true" data-field="id">Order ID</th>
-                                        <th data-sortable="true" data-field="date">Ordered Date</th>
-                                        <th data-sortable="true" data-field="products.0.name">Product (First product name)</th>
-                                        <th data-sortable="true" data-field="numproducts">Number of products</th>
-                                        <th data-sortable="true" data-field="totalcost">Total cost</th>
-                                        <th data-sortable="true" data-field="status" data-align="center">Status</th>
+                                        <th data-sortable="true">Order ID</th>
+                                        <th data-sortable="true">Ordered Date</th>
+                                        <th data-sortable="true">Product (First product name)</th>
+                                        <th data-sortable="true">Number of products</th>
+                                        <th data-sortable="true">Total cost</th>
+                                        <th data-sortable="true"data-align="center">Status</th>
                                     </tr>
                                 </thead>
-<!--                                <tbody>
+                                <tbody>
                                     <c:forEach items="${requestScope.orders}" var="o">
                                         <tr>
                                             <td>${o.id}</td>
-                                            <td><fmt:formatDate pattern="dd-MM-yyyy" value="${o.date}"/></td>
+                                            <td><fmt:formatDate pattern="yyyy-MM-dd" value="${o.date}"/></td>
                                             <td>${o.products[0].name}</td>
                                             <td>${o.numproducts}</td>
                                             <td>${o.totalcost}</td>
@@ -157,7 +153,7 @@
                                             </c:if>
                                         </tr>
                                     </c:forEach> 
-                                </tbody>-->
+                                </tbody>
                             </table>
                             <!-- Order table -->
                         </div>
