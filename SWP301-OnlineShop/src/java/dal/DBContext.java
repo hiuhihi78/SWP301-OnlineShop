@@ -16,9 +16,9 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class DBContext {
-    
-    Connection connection;
 
+    Connection connection;
+//
 //    public DBContext() {
 //        try {
 //            String username = "se1617-g1";
@@ -32,8 +32,7 @@ public class DBContext {
 //            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-    
-    
+
     public DBContext() {
         try {
 //            String username = "sa";
@@ -51,10 +50,6 @@ public class DBContext {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    
-    
 //    public DBContext() {
 //        try {
 //            String username = "sa";
@@ -68,8 +63,11 @@ public class DBContext {
 //            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
+
     public static void main(String[] args) {
         DBContext db = new DBContext();
-        if(db.connection != null) System.out.println("abc");
+        if (db.connection != null) {
+            System.out.println("abc");
+        }
     }
 }
