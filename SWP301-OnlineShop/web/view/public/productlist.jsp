@@ -33,10 +33,11 @@
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-products-->
                                 <c:forEach items="${requestScope.listCategorys}" var="list">
-                                    <c:if test="${not empty list.listSubCategory}"> <!-- check empty of list subcategory with that category -->
+                                    <c:if test="${ not empty list.listSubCategory }"> <!-- check empty of list subcategory with that category -->
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
+
                                                     <a data-toggle="collapse" data-parent="#accordian" href="#${list.id}">
                                                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                                                             ${list.name}
@@ -51,13 +52,6 @@
                                                             </c:forEach>
                                                     </ul>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${ empty list.listSubCategory}"> <!-- check empty of list subcategory with that category -->
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title"><a href="#">${list.name}</a></h4>
                                             </div>
                                         </div>
                                     </c:if>
