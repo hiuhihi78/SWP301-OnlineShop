@@ -152,33 +152,19 @@
                                             <td>${p.price}</td>
                                             <td>${p.priceDiscount}</td>
                                             <td>
-                                                <form action="editFeaturedProduct" id="changeFeatured-${p.id}" method="get">
-                                                    <input type="hidden" name="xpage" value="${page}">
-                                                    <input type="hidden" name="id" value="${p.id}">
-                                                    <c:if test="${!p.featured}">
-                                                        <input type="hidden" name="newFeatured" value="active">
-                                                        <button type="button" class="btn btn-danger" onclick="submitForm('changeFeatured-${p.id}')">Off</button>
-                                                    </c:if>
-                                                    <c:if test="${p.featured}">
-                                                        <input type="hidden" name="newFeatured" value="unactive">
-                                                        <button type="button" class="btn btn-success" onclick="submitForm('changeFeatured-${p.id}')">On</button>
-                                                    </c:if>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form action="editStatusProduct" id="changeStatus-${p.id}" method="get">
-                                                    <input type="hidden" name="xpage" value="${page}">
-                                                    <input type="hidden" name="id" value="${p.id}">
-                                                    <c:if test="${!p.status}">
-                                                        <input type="hidden" name="newStatus" value="active">
-                                                        <button type="button" class="btn btn-danger" onclick="submitForm('changeStatus-${p.id}')">Hide</button>
-                                                    </c:if>
-                                                    <c:if test="${p.status}">
-                                                        <input type="hidden" name="newStatus" value="unactive">
-                                                        <button type="button" class="btn btn-success" onclick="submitForm('changeStatus-${p.id}')">Show</button>
-                                                    </c:if>
-                                                </form>
-                                            </td>
+                                                    <form id="changeFeatured-${p.id}" action="#" method="POST">
+                                                        <button id="btn-featured-${p.id}" type="button" class="btn ${(p.featured)?"btn-success":"btn-danger"}" data-toggle="modal" data-target="#active" onclick="openAnnouceAccept('${p.id}')">
+                                                            ${(p.featured)?"On":"Off"}
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form id="changeStatus-${p.id}" action="" method="POST">
+                                                        <button id="btn-status-${p.id}" type="button" class="btn ${(p.status)?"btn-success":"btn-danger"}" data-toggle="modal" data-target="#active" onclick="openModals('${p.id}')">
+                                                            ${(p.status)?"Show":"Hide"}
+                                                        </button>
+                                                    </form>
+                                                </td>
                                             <td>
                                                 <a href="editProductInfo?id=${p.id}" class="text-decoration-none text-white">
                                                     <button type="button" class="btn btn-primary">
@@ -236,12 +222,87 @@
                             </c:if>
                         </ul>
                     </div> <!-- / Pagging-->
-
                 </section> <!--/ Main content -->
             </aside><!-- /.right-side -->
+            
+            <!--Modal-->
+        <div  class="modal" id="active">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id="message-modal" class="modal-body">
+                        Are you sure to change status!
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-change" type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/Modal-->
+        
+        <script>
+            // modal for change status
+            function openModals(id) {
+                var button = document.getElementById('btn-change');
+                document.getElementById('message-modal').innerHTML = "Are you sure to change featured post?";
+                var btn_status = document.querySelector('#btn-status-' + id).parentNode;
+                var btn_name_status = document.querySelector('#btn-status-' + id).innerHTML.toLowerCase();
+                console.log(btn_status);
+                console.log(btn_name_status);
+
+                button.onclick = function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "../marketing/editStatusProduct",
+                        data: {
+                            idPost: id,
+                            idStatus: btn_name_status
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                            btn_status.innerHTML = data;
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+
+                        }
+                    });
+            //        document.getElementById('showAlter').innerHTML = "Change Successfuly";
+                };
+            }
+            // modal for chang featured
+            function openAnnouceAccept(id) {
+                var button = document.getElementById('btn-change');
+                document.getElementById('message-modal').innerHTML = "Are you sure to change featured post?";
+                var btn_featured = document.querySelector('#btn-featured-' + id).parentNode;
+                var btn_name_featured = document.querySelector('#btn-featured-' + id).innerHTML.toLowerCase();
+
+            //    button.innerHTML = '';
+            //    button.setAttribute('class', "btn btn-primary");
+            //    button.setAttribute('onclick', 'document.getElementById("' + id + '").submit();');
+                button.onclick = function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "../marketing/editFeaturedProduct",
+                        data: {
+                            idPost: id,
+                            idFeatured: btn_name_featured
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                            btn_featured.innerHTML = "" + data;
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+
+                        }
+                    });
+                    document.getElementById('showAlter').innerHTML = "Change Successfuly";
+                };
+            }
+            
+        </script>
+        
         </div>
         <!--javascrip-->
-        <script src="../../assets/js/marketing/productList.js"></script>
+        <script src="../../assets/js/marketing/productList.js" type="text/javascript"></script>
         <script src="../../assets/js/admin/main.js"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

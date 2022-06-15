@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "EditFeaturedProductController", urlPatterns = {"/marketing/editFeaturedProduct"})
 public class EditFeaturedProductController extends BaseAuthController {
 
-    
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -34,17 +32,21 @@ public class EditFeaturedProductController extends BaseAuthController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        int id = Integer.parseInt(request.getParameter("idPost"));
+        String nameFeatured = (request.getParameter("idFeatured").trim().equalsIgnoreCase("on")) ? "Off" : "On";
+        String btnFeatured = (nameFeatured.equalsIgnoreCase("on")) ? "btn-success" : "btn-danger";
         ProductDBContext productDB = new ProductDBContext();
-        boolean featured = request.getParameter("newFeatured").equals("active");
-        int id = Integer.parseInt(request.getParameter("id"));
-        String xpage = request.getParameter("xpage");
-        productDB.changeFeatured(id, featured);
-        if (xpage == null) {
-            xpage = "1";
-        } else {
-            xpage = request.getParameter("xpage");
+
+        boolean isFeatured = (nameFeatured.trim().equalsIgnoreCase("on"));
+        productDB.changeFeatured(id, isFeatured);
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<button id=\"btn-featured-" + id + "\" type=\"button\" class=\"btn " + btnFeatured + "\" data-toggle=\"modal\" data-target=\"#active\" onclick=\"openAnnouceAccept('" + id + "')\">\n"
+                    + "                                                        " + nameFeatured + "\n"
+                    + "                                                    </button>");
+
         }
-        response.sendRedirect("productlist?alter=Update featured sucess!&xpage=" + xpage);
     }
 
     /**
@@ -58,7 +60,7 @@ public class EditFeaturedProductController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
