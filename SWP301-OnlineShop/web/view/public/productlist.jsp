@@ -32,11 +32,22 @@
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-products-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a href="productlist">
+                                                <span class="badge pull-right"></span>
+                                                All Category
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </div>
                                 <c:forEach items="${requestScope.listCategorys}" var="list">
-                                    <c:if test="${not empty list.listSubCategory}"> <!-- check empty of list subcategory with that category -->
+                                    <c:if test="${ not empty list.listSubCategory }"> <!-- check empty of list subcategory with that category -->
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
+
                                                     <a data-toggle="collapse" data-parent="#accordian" href="#${list.id}">
                                                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                                                             ${list.name}
@@ -51,13 +62,6 @@
                                                             </c:forEach>
                                                     </ul>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${ empty list.listSubCategory}"> <!-- check empty of list subcategory with that category -->
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title"><a href="#">${list.name}</a></h4>
                                             </div>
                                         </div>
                                     </c:if>
@@ -107,10 +111,9 @@
                                         <div class="single-products">
                                             <div class="productinfo text-center">
                                                 <a href="productdetails?productID=${product.id}">
-                                                    ${product.thumbnail}
                                                     <img src="${product.thumbnail}" alt="" />
                                                 </a>
-                                                
+
                                                 <h2 class="break-down-line">${product.name}</h2>
                                                 <p class="break-down-line">${product.description}</p>
                                                 <p>
@@ -139,17 +142,17 @@
                 <div class="pagging">
                     <ul class="pagination pull-right">
                         <c:if test="${requestScope.totalpage > 1}">
-                        <li><a href="productlist?page=1&searchBy=${searchBy}&subCategory=${listSub.id}">Frist</a></li>
-                        </c:if>
+                            <li><a href="productlist?page=1&searchBy=${searchBy}&subCategory=${listSub.id}">Frist</a></li>
+                            </c:if>
                             <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
                             <li class="${pageindex == page ? "active =" : ""}" ><a href="productlist?page=${page}&searchBy=${searchBy}&subCategory=${listSub.id}">${page}</a></li>    
                             </c:forEach>
                             <c:if test="${requestScope.totalpage > 1}">
-                        <li><a href="productlist?page=${requestScope.totalpage}&searchBy=${searchBy}&subCategory=${listSub.id}">Last</a></li>
-                        </c:if>
+                            <li><a href="productlist?page=${requestScope.totalpage}&searchBy=${searchBy}&subCategory=${listSub.id}">Last</a></li>
+                            </c:if>
                     </ul>
                 </div>
-               
+
             </div>
         </section>
 

@@ -32,13 +32,23 @@
                     <div class="col-sm-3 box-shadow height-fit-content border-radius-2" >
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
-                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-
+                            <div class="panel-group category-products" id="accordian"><!--category-products-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a href="productlist">
+                                                <span class="badge pull-right"></span>
+                                                All Category
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </div>
                                 <c:forEach items="${requestScope.listCategorys}" var="list">
-                                    <c:if test="${not empty list.listSubCategory}"> <!-- check empty of list subcategory with that category -->
+                                    <c:if test="${ not empty list.listSubCategory }"> <!-- check empty of list subcategory with that category -->
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
+
                                                     <a data-toggle="collapse" data-parent="#accordian" href="#${list.id}">
                                                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                                                             ${list.name}
@@ -53,13 +63,6 @@
                                                             </c:forEach>
                                                     </ul>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${ empty list.listSubCategory}"> <!-- check empty of list subcategory with that category -->
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title"><a href="#">${list.name}</a></h4>
                                             </div>
                                         </div>
                                     </c:if>
@@ -171,39 +174,44 @@
                             </div>
                             <p id="demo"></p>-->
 
-                                    <form action="#" method="post">
-                                        <input type="hidden" value="${product.quantity}" id="quantity">
-                                        <h2><b>${product.name}</b></h2>
-                                        <p>Web ID: ${product.id}</p>
-                                        <p>Seller: ${product.user.fullname}</p>
-                                        <p> 
-                                            Description:
-                                            ${product.description}
-                                        </p>
-                                        <p>
-                                            <label>Price: </label>
-                                            <span class="text-line-through">
-                                                <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
-                                            </span>
-                                            <span class="text-danger">
-                                                <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
-                                            </span>
-                                        </p>
-                                        <p> <label>Total Quantity: ${product.quantity}</label> </p>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <p> 
-                                                    <label>Choice Your Quantity: </label>
-                                                    <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;" 
-                                                           min="1" max="${product.quantity}" value = "1" required>
-                                                </p>
-                                                <button type="submit" style="width: 10em; " class="form-control" >
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                    Add to cart
-                                                </button> 
-                                            </div>
-                                        </div><!-- comment -->
-                                    </form>
+                                   <form action="productdetails" method="post">
+                                    <input type="hidden" value="${product.id}" name="productId">
+                                    <input type="hidden" value="${product.name}" name="productName">
+                                    <input type="hidden" value="${product.quantity}" name="quantity">
+                                    <input type="hidden" value="${product.priceDiscount}" name="price">
+                                    <input type="hidden" value="${product.user.id}" name="sellerId">
+                                    <input type="hidden" value="${product.thumbnail}" name="thumbnail">
+                                    <h2><b>${product.name}</b></h2>
+                                    <p>Web ID: ${product.id}</p>
+                                    <p>Seller: ${product.user.fullname}</p>
+                                    <p> 
+                                        Description:
+                                        ${product.description}
+                                    </p>
+                                    <p>
+                                        <label>Price: </label>
+                                        <span class="text-line-through">
+                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
+                                        </span>
+                                        <span class="text-danger">
+                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
+                                        </span>
+                                    </p>
+                                    <p> <label>Total Quantity: ${product.quantity}</label> </p>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <p> 
+                                                <label>Choice Your Quantity: </label>
+                                                <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;" 
+                                                       min="1" max="${product.quantity}" value = "1" required>
+                                            </p>
+                                            <button type="submit" style="width: 10em; " class="form-control" >
+                                                <i class="fa fa-shopping-cart"></i>
+                                                Add to cart
+                                            </button> 
+                                        </div>
+                                    </div><!-- comment -->
+                                </form>
                                 </div><!--/product-information-->
                             </div>
                         </div>
