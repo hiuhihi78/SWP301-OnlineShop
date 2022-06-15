@@ -27,6 +27,8 @@
     </head>
     <body>
         <jsp:include page="../home-template/header.jsp"/>
+        <div >
+        <div style="margin: 0 auto; width: 80%;">
         <img src="../../assets/img/backlink1.jpg"/>
         <div class="brands_product "> 
                             <!--products_featured-->
@@ -55,5 +57,7 @@
                                 </div>
                             </c:forEach>
                         </div>
+        </div>
+             </div>
     </body>
 </html>

@@ -32,6 +32,9 @@ public class ProductListPublicController extends HttpServlet {
         String raw_subCategory = request.getParameter("subCategory");
         String page = request.getParameter("page");
         
+        System.out.println(searchBy);
+        System.out.println("---");
+        
         //get list subcategory
         ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
 

@@ -10,7 +10,7 @@
     <div class="header-top">
         <!--header-top-->
         <div class="container">
-            <div class="row">
+            <div class="row" style="padding: 5px 0px; box-shadow: 0px 4px 5px -3px #fe980f;">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
                         <a href="./home"><img src="../../assets/public/images/home/logo.png" alt="" /></a>
@@ -19,7 +19,7 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="cartlist"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <c:if test="${sessionScope.user == null}">
                                 <li><a href="login" id="button"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>
@@ -35,7 +35,7 @@
                                         <li>
                                             <a href="user/profile" class="text-none-underline">Profile</a>
                                         </li>
-
+                                        
                                         <c:if test="${sessionScope.user.role.id == 1}">
                                             <li>
                                                 <a href="admin/userList" class="text-none-underline">Manage</a>
@@ -53,10 +53,18 @@
                                                 <a href="sale/productlist" class="text-none-underline">My store</a>
                                             </li>
                                         </c:if>  
-
+                                            
+                                            
                                         <li>
-                                            <a class="btn btn-primary text-none-underline mg-0" data-toggle="modal" data-target="#myModal">Change password</a>
+<!--                                            <a type="button" class="btn btn-primary text-none-underline" data-toggle="modal" data-target="#myModal">
+                                                Change password
+                                            </a>-->
+                                            <a href="#" class="text-none-underline" data-toggle="modal" data-target="#myModal">Change password</a>
                                         </li>
+
+<!--                                        <li>
+                                            <a class="btn btn-primary text-none-underline mg-0" data-toggle="modal" data-target="#myModal">Change password</a>
+                                        </li>-->
 
                                         <li>
                                             <a href="logout" class="text-none-underline">Logout</a>
@@ -90,6 +98,7 @@
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="home" ${(requestScope.active == "home")?"class=\"active\"":""}>Home</a></li>
                             <li><a href="bloglist" ${(requestScope.active == "blog")?"class=\"active\"":""}>Blog</a></li>
+                            <li><a href="productlist" ${(requestScope.active == "productList")?"class=\"active\"":""}>Product List</a></li>
                         </ul>
                     </div>
                 </div>

@@ -55,7 +55,7 @@
                     <div class="mb-10" >
                         <form action="#" method="POST" enctype="multipart/form-data">
                             <!--Thumbnail-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="thumbnail">Thumbnail</label>
                                 <div  class="w-35percent image-input-layout display-flex" style="position: relative">
                                     <div id="closeBtn-thumbnailBoxImg" class="close-btn" onclick="closeImg('thumbnailBoxImg','closeBtn-thumbnailBoxImg','thumbnail');"> <i class="fa-solid fa-xmark close-btn"></i></div>
@@ -66,7 +66,7 @@
                             <!--/Thumbnail-->
                             
                             <!--Attached image-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label >Attached image</label>
                                 <div class="display-flex">
                                     <div>
@@ -88,11 +88,11 @@
                             <!--/Attacked image-->
 
                             <!--Name-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" value="${name}" name="name" id="name" placeholder="Enter name of product"  required="">
                             </div>
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="description">Description</label>
                                 <textarea type="text" class="form-control" value="${description}"  name="description" id="description" placeholder="Enter description of product" required="" rows="3"></textarea>
                             </div>
@@ -103,7 +103,7 @@
                             <!--/Seller-->
                             
                             <!--Category-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="category">Category</label>
                                 <div class="display-flex">
                                     <select class="form-control" name="category" id="category" onchange="handleShowSubCategory()" >
@@ -120,7 +120,7 @@
                             <!--/Category-->
                             
                             <!--SubCategory-->
-                            <div class="form-group w-70-percent" >
+                            <div class="form-group w-70-percent mx-auto" >
                                 <label for="subCategory">SubCategory</label>
                                 <div class="display-flex">
                                     <select class="form-control" name="subCategory" id="subCategory" required="">
@@ -137,21 +137,21 @@
                             <!--SubCategory-->
 
                             <!--Price-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="price">Price</label>
                                 <input type="number" class="form-control" name="price" id="price" min="0" placeholder="Enter price of product" required="">
                             </div>
                             <!--Price-->
 
                             <!--Discount-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="discount">Discount</label>
                                 <input type="number" class="form-control" name="discount" id="discount" min="0" max="100" placeholder="Enter discount of product" required="">
                             </div>
                             <!--/Discount-->
                             
                             <!--Quantity-->
-                            <div class="form-group w-70-percent">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="quantity">Quantity</label>
                                 <input type="number" class="form-control" name="quantity" id="discount" min="0"  placeholder="Enter quantity of product" required="">
                             </div>

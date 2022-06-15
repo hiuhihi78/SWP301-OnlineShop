@@ -24,7 +24,7 @@
     <!--/head-->
     <body>
 
-        <jsp:include page="../home-template/header.jsp"/>
+        <jsp:include page="../home-template/headerProductlist.jsp"/>
         <section id="cart_items">
             <div class="container" style="margin-top: 4%; margin-bottom: 8%;" >
                 <h2 class="title text-center" style="border-bottom: solid 3px;">Cart List</h2>

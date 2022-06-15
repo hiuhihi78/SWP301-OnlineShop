@@ -96,11 +96,11 @@
                     </div>
                     <div class="col-md-12 text-align">
                         <div class="tile display">
-                            <div class="row">
-                                <form action="/marketing/dashboard" method="post">
-                                    <input placeholder="Start Date" class="textbox-n height" type="text" onfocus="(this.type='date')" id="date" style="height: 25px;" name="txtStart">
+                            <div class="row" id="row1">
+                                <form action="/marketing/dashboard" method="post" id="dateForm">
+                                    <input placeholder="Start Date" class="textbox-n height" type="text" onfocus="(this.type='date')" id="dt" style="height: 25px;" name="txtStart" onchange="checkDate2()" required="">
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input placeholder="End Date" class="textbox-n height" type="text" onfocus="(this.type='date')" id="date" style="height: 25px;" name="txtEnd">
+                                <input placeholder="End Date" class="textbox-n height" type="text" onfocus="(this.type='date')" id="dt1" style="height: 25px;" name="txtEnd" onchange="checkDate2()" required="">
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <button class="btn btn-primary" type="submit" >Search</button>
                                 </form>
@@ -140,8 +140,65 @@
                 </section> <!--/ Main content -->
             </aside><!-- /.right-side -->
         </div>
+                                      
+        <script type="text/javascript">
+            document.getElementById('dt').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+            document.getElementById('dt1').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+        function checkDate2() {
+            var stringDate = document.getElementById('dt').value;
+            var stringDate1 = document.getElementById('dt1').value;
+            var myDate = new Date(stringDate);
+            var myDate1 = new Date(stringDate1);
+            if ( myDate > myDate1) {
+                $('#row1').after('<p style="color:red;">The start date must be less than the end date!</p>');
+
+                 document.getElementById("dateForm").reset();
+                 return false;
+            }else{
+                return true;
+            }
+             
+        }
+        
+ 
+ 
+// $().ready(function () {
+//    $("#dateForm").validate({
+//        onfocusout: false,
+//        onkeyup: false,
+//        onclick: false,
+//        rules: {
+//
+//            "txtStart": {
+//               
+//                checkDate: true
+//            },
+//            "txtEnd": {
+//                checkDate: true
+//            }
+//        }
+//    });
+//});
+
+//$("dateForm").validate({
+//    rules: {
+//        EndDate: { greaterThan: "#StartDate" }
+//    }
+//});
+//
+//$.validator.addMethod("checkDate", function(value, element, params) {
+//
+//    if (!/Invalid|NaN/.test(new Date(value))) {
+//        return new Date(value) > new Date($(params).val());
+//    }
+//
+//    return isNaN(value) && isNaN($(params).val()) 
+//        || (Number(value) > Number($(params).val())); 
+//},'Must be greater than {0}.');
+</script>
         
         <!--javascrip-->
+        <script src="../../assets/js/marketing/dashboard.js"></script>
         <script src="../../assets/js/marketing/productList.js"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

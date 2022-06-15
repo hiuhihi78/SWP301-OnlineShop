@@ -25,49 +25,58 @@
 
     <body>
         <c:set value="${requestScope.productInfomation}" var="product"/>
-        <jsp:include page="../home-template/header.jsp"/>
+        <jsp:include page="../home-template/headerProductlist.jsp"/>
         <section>
             <div class="container">
                 <div class="row flex-justify">
                     <div class="col-sm-3 box-shadow height-fit-content border-radius-2" >
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
-                            <div class="panel-group category-products" id="accordian"><!--category-products-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a href="productlist">
-                                                <span class="badge pull-right"></span>
-                                                All Category
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                                <c:forEach items="${requestScope.listCategorys}" var="list">
-                                    <c:if test="${ not empty list.listSubCategory }"> <!-- check empty of list subcategory with that category -->
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
+                           <form action="productlist" method="get">
+                                <div class="panel-group category-products" id="accordian"><!--category-products-->
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
 
-                                                    <a data-toggle="collapse" data-parent="#accordian" href="#${list.id}">
-                                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                            ${list.name}
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="${list.id}" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <ul>
-                                                        <c:forEach items="${list.listSubCategory}" var="listSub">
-                                                            <li><a href="productlist?subCategory=${listSub.id}&searchBy=${searchBy}">${listSub.name} </a></li> 
-                                                            </c:forEach>
-                                                    </ul>
-                                                </div>
+                                            <div class="search_box">
+                                                <!--<input id="search-box" type="text" placeholder="Search..." name="searchBy" value="${requestScope.searchBy}">-->
+                                                 <input type="text" id="search_box" name="searchBy" value="${requestScope.search}" placeholder="Search" />
                                             </div>
                                         </div>
-                                    </c:if>
-                                </c:forEach>
-                            </div><!--/category-products-->
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a href="productlist">
+                                                    <span class="badge pull-right"></span>
+                                                    All Category
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <c:forEach items="${requestScope.listCategorys}" var="list">
+                                        <c:if test="${ not empty list.listSubCategory }"> <!-- check empty of list subcategory with that category -->
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordian" href="#${list.id}">
+                                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                                                ${list.name}
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="${list.id}" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <ul>
+                                                            <c:forEach items="${list.listSubCategory}" var="listSub">
+                                                                <li><a href="productlist?subCategory=${listSub.id}&searchBy=${searchBy}">${listSub.name} </a></li> 
+                                                                </c:forEach>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                    </c:forEach>
+                                </div><!--/category-products-->    
+                            </form>
 
                             <div class="panel-group category-products" id="accordian"><!-- 3 least product -->
                                 <h2 class="title text-center" style="border-bottom: solid 2px;">Latest Product</h2>

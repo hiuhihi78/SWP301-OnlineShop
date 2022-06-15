@@ -7,6 +7,7 @@ package controller.marketing;
 import configs.Security;
 import static configs.Security.SIZE_PAGE_SLIDER_LIST;
 import dal.SliderDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import model.Slider;
  *
  * @author Admin
  */
-public class SliderListController extends HttpServlet {
+public class SliderListController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -84,7 +85,7 @@ public class SliderListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         processRequest(request, response);
@@ -99,7 +100,7 @@ public class SliderListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String isChange = "", strId = "";
