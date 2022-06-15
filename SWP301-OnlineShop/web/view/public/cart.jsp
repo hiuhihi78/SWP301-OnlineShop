@@ -48,7 +48,7 @@
                                 <c:forEach items="${requestScope.listCarts}" var="cart">
                                     <tr>
                                         <td class="cart_product">
-                                            <a href="#"><img src="${cart.thumbnail}" alt=""></a>
+                                            <a href="#"><img  style="width: 120px; height: 120px;" src="${cart.thumbnail}" alt=""></a>
                                         </td>
                                         <td class="cart_description">
                                             <h4><a href="#">${cart.product.name}</a></h4>
