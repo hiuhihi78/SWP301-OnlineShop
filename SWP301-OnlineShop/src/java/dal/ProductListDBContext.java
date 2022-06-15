@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Cart;
 import model.Feedback;
 import model.Product;
 import model.User;
@@ -38,7 +39,7 @@ public class ProductListDBContext extends DBContext {
                 return product;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -62,7 +63,7 @@ public class ProductListDBContext extends DBContext {
                 listProduct.add(product);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listProduct;
     }
@@ -91,7 +92,7 @@ public class ProductListDBContext extends DBContext {
                 return rs.getInt("Total");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -118,7 +119,7 @@ public class ProductListDBContext extends DBContext {
         try {
             PreparedStatement ps = connection.prepareStatement(sql1);
             if (subCategory > 0) {
-                ps.setInt(1 , subCategory);
+                ps.setInt(1, subCategory);
                 ps.setString(2, "%" + searchBy + "%");
                 ps.setString(3, "%" + searchBy + "%");
                 ps.setInt(4, pageindex);
@@ -146,7 +147,7 @@ public class ProductListDBContext extends DBContext {
                 listProdcuts.add(product);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listProdcuts;
     }
@@ -176,7 +177,7 @@ public class ProductListDBContext extends DBContext {
                 return product;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -198,7 +199,7 @@ public class ProductListDBContext extends DBContext {
                 return rs.getInt("Total");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -235,9 +236,114 @@ public class ProductListDBContext extends DBContext {
                 listFeedbacks.add(feedback);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listFeedbacks;
     }
 
-}
+    public ArrayList<Cart> getAllProductIdInCart() {
+        ArrayList<Cart> listCarts = new ArrayList<>();
+        String sql1 = " select * from cart  ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql1);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt("productId"));
+
+                User userBuyId = new User();
+                userBuyId.setId(rs.getInt("userBuyId"));
+
+                Cart cart = new Cart();
+                cart.setProduct(product);
+                cart.setUserBuy(userBuyId);
+                listCarts.add(cart);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listCarts;
+    }
+
+    public void editQuantityOrderOfCart(int quantityOrder, int productId, int userBuyId) {
+        String spl1 = " UPDATE [dbo].[Cart]\n"
+                + "   SET [quantityOrder] = ? \n"
+                + "      \n"
+                + " WHERE userBuyId = ? and productId = ? ";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(spl1);
+            stm.setInt(1, quantityOrder);
+            stm.setInt(2, userBuyId);
+            stm.setInt(3, productId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void addNewCartInfomation(Cart cart) {
+        String sql = " INSERT INTO [dbo].[Cart]\n"
+                + "           ([productId]\n"
+                + "           ,[productName]\n"
+                + "           ,[quantityOrder]\n"
+                + "           ,[price]\n"
+                + "           ,[userBuyId]\n"
+                + "           ,[sellerId]\n"
+                + "           ,[thumbnail])\n"
+                + "     VALUES\n"
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?) ";
+        PreparedStatement stm = null;
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, cart.getProduct().getId());
+            stm.setString(2, cart.getProduct().getName());
+            stm.setInt(3, cart.getQuantityOrder());
+            stm.setLong(4, cart.getPrice());
+            stm.setInt(5, cart.getUserBuy().getId());
+            stm.setInt(6, cart.getUserSeller().getId());
+            stm.setString(7, cart.getThumbnail());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    }

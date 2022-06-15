@@ -32,6 +32,9 @@ public class ProductListPublicController extends HttpServlet {
         String raw_subCategory = request.getParameter("subCategory");
         String page = request.getParameter("page");
         
+        System.out.println(searchBy);
+        System.out.println("---");
+        
         //get list subcategory
         ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
 
@@ -61,9 +64,6 @@ public class ProductListPublicController extends HttpServlet {
 
         ArrayList<Product> listProducts = productListDBContext.getListProductsPagging(searchBy, subCategory, pageindex, pagesize);
         
-        System.out.println(listProducts.size());
-        System.out.println(numofrecords);
-        System.out.println(subCategory);
         
         request.setAttribute("listCategorys", listCategorys);
         request.setAttribute("leastProduct", leastProduct);
@@ -114,5 +114,7 @@ public class ProductListPublicController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+
 
 }
