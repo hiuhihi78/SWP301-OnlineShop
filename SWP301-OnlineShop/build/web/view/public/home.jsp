@@ -78,7 +78,7 @@
                 <div class="row flex-justify">
                     <div class="col-sm-3 pd-top-15 box-shadow height-fit-content border-radius-20" >
                         <div class="left-side"> <!-- left-sidebar -->
-                            <h2 class="title text-center">Latest Posts</h2>
+                            <h2 class="title text-center" style="border-bottom: solid 2px;">Latest Posts</h2>
                             <div class="panel-group category-products" id="accordian">
                                 <c:if test="${requestScope.listLatestPost != null}">
                                     <c:forEach items="${requestScope.listLatestPost}" var="i">
@@ -107,7 +107,7 @@
 
                     <div class="col-sm-8 padding-right pd-top-15 box-shadow  border-radius-20 height-fit-content pd-left-0"> <!-- right-sidebar -->
                         <div class="features_items">
-                            <h2 class="title text-center">Hot Posts</h2>
+                            <h2 class="title text-center" style="border-bottom: solid 2px;">Hot Posts</h2>
 
                             <c:forEach items="${requestScope.listHotPost}" var="i">
                                 <div class="col-sm-4">
@@ -128,7 +128,7 @@
                         </div><!-- hot-posts -->
                         <div class="brands_product "> 
                             <!--products_featured-->
-                            <h2 class="title text-center">Product Featured</h2>
+                            <h2 class="title text-center" style="border-bottom: solid 2px;">Product Featured</h2>
                             <c:forEach items="${requestScope.listProductFeatured}" var="i">
                                 <div class="col-sm-4">
                                     <div class="product-image-wrapper">

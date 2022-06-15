@@ -115,7 +115,7 @@
                                 <!--/Sort-->
                                 
                                 <!--search-->
-                                <input type="text" id="search" name="search" value="${requestScope.search}" placeholder="Enter part of name, phone or email" style="width: 30rem" class="form-control"/>
+                                <input type="text" id="search" name="search" value="${requestScope.search}" placeholder="Enter name or id" style="width: 30rem" class="form-control"/>
                                 <!--/search-->
                             </form>
                                 

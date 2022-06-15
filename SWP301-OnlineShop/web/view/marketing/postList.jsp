@@ -34,7 +34,7 @@
         <c:set var="idCategory" value="${requestScope.idCategory}"/>
         <c:set var="roleId" value="${requestScope.idAuthor}"/>
         <c:set var="status" value="${requestScope.idStatus}"/>
-        <c:set var="sort" value="${requestScope.sort}"/>
+        <c:set var="sort" value="${requestScope.sortBy}"/>
         <c:set var="orderBy" value="${requestScope.orderBy}"/>
         <c:set var="search" value="${requestScope.searchContent}"/>
         <c:set var="page" value="${requestScope.page}"/>

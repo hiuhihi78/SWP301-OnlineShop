@@ -661,8 +661,8 @@ body {
 }
 
 input {
-    padding: 22px 15px !important;
-    border: 1px solid #CFD8DC !important;
+/*    padding: 22px 15px !important;
+    border: 1px solid #CFD8DC !important;*/
     border-radius: 4px !important;
     box-sizing: border-box;
     background-color: #fff !important;

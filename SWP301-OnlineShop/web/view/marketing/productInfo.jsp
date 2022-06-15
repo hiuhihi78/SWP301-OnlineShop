@@ -18,6 +18,7 @@
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        
         <!-- font Awesome -->
         <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
@@ -119,7 +120,7 @@
                             <!--/Seller-->
                             
                             <!--Category-->
-                            <div class="form-group w-70-percent max-auto">
+                            <div class="form-group w-70-percent mx-auto">
                                 <label for="category">Category</label>
                                 <div class="display-flex">
                                     <select class="form-control" name="category" id="category" onchange="handleShowSubCategory()">

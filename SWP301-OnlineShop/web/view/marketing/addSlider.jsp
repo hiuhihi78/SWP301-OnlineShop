@@ -42,6 +42,7 @@
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
     <link href="../../assets/css/marketing/style.css" rel="stylesheet" type="text/css" />
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css"/>
 
@@ -109,7 +110,7 @@
                                         <p class="note">(Hide/Show)</p>
                                     </div>
 
-                                            <input type="file" name="fImage" id="getval" style="margin-top: 260px;" value=""/>
+                                <input type="file" name="fImage" id="getval" style="margin-top: 300px;" value="" <c:if test="${s == null}">required=""</c:if>/>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +120,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-1" for="firstname">Title</label>
                             <div class="col-sm-10">
-                                <input type="text" name= "txtTitle" class="form-control" placeholder="Enter Title" value="${s.title}">
+                                <input type="text" name= "txtTitle" class="form-control" placeholder="Enter Title" value="${s.title}" required="">
                                 <input type="hidden" name= "hId" class="form-control" value="${id}"/>
                             </div>
                         </div>
@@ -127,14 +128,14 @@
                         <div class="form-group">
                             <label class="control-label col-sm-1">Backlink</label>
                             <div class="col-sm-10">
-                                <input type="text" name="txtBacklink" class="form-control" placeholder="Enter Backlink" value="${s.backlink}">
+                                <input type="text" name="txtBacklink" class="form-control" placeholder="Enter Backlink" value="${s.backlink}" required="">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-sm-1" for="Password">Notes</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="5" placeholder="Enter your notes" name="txtNotes" >${s.note}</textarea>
+                                <textarea class="form-control" rows="5" placeholder="Enter your notes" name="txtNotes" required="">${s.note}</textarea>
                             </div>
                         </div>
 

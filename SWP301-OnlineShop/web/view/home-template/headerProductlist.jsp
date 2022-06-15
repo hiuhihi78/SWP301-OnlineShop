@@ -102,11 +102,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="search_box pull-right">
-                        <input id="search-box" type="text" placeholder="Search" name="search-product"/>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>  
