@@ -97,19 +97,54 @@ public class DashboardDBContext extends DBContext {
     }
 
     public int getTotalRevenue() {
-        String sql = "select SUM([Order].totalPrice) as totalRevenue \n"
+        String sql = "with t as\n"
+                + "(\n"
+                + "select [Order].totalPrice\n"
                 + "from [Order] inner join [OrderDetail] on [Order].id = [OrderDetail].orderId\n"
                 + "inner join Product on [OrderDetail].productId = [Product].id\n"
                 + "inner join SubCategory on Product.subCategoryId = SubCategory.id\n"
                 + "inner join Category on SubCategory.categoryId = Category.id\n"
                 + "where [Order].[status] = 2\n"
-                + "group by Category.id";
+                + "group by [Order].totalPrice)\n"
+                + "select SUM(t.totalPrice) as totalRevenue from t";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int totalRevenue = rs.getInt("totalRevenue");
                 return totalRevenue;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public int getNewCustomer() {
+        String sql = "select count(*) as newCustomer from [User] where dateCreated >= DATEADD(day, -1, GETDATE())";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int totalNewCustomer = rs.getInt("newCustomer");
+                return totalNewCustomer;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public int getNewCustomerBought() {
+        String sql = "select count(*) as newCustomerBought from [User]\n"
+                + "inner join [Order] on [User].id = [Order].userId\n"
+                + "where [Order].[date] >= DATEADD(day, -1, GETDATE())";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int totalNewBought = rs.getInt("newCustomerBought");
+                return totalNewBought;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DashboardDBContext.class.getName()).log(Level.SEVERE, null, ex);

@@ -38,6 +38,8 @@ public class DashboardController extends BaseAuthController {
         request.setAttribute("processingCount", dashboardDB.getProcessingOrders());
         request.setAttribute("revenueByCategory", dashboardDB.getRevenueByProductCategory());
         request.setAttribute("totalRevenue", dashboardDB.getTotalRevenue());
+        request.setAttribute("newCustomer", dashboardDB.getNewCustomer());
+        request.setAttribute("newBought", dashboardDB.getNewCustomerBought());
         
         request.getRequestDispatcher("../view/admin/dashboard.jsp").forward(request, response);
     }

@@ -129,11 +129,11 @@
                                         </thead>
                                         <tbody>
                                             <c:forEach items="${requestScope.revenueByCategory}" var='r'>
-                                            <tr>
-                                                <th scope="row">${r.categoryid}</th>
-                                                <td>${r.categoryname}</td>
-                                                <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${r.revenue}"/></td>
-                                            </tr>
+                                                <tr>
+                                                    <th scope="row">${r.categoryid}</th>
+                                                    <td>${r.categoryname}</td>
+                                                    <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${r.revenue}"/></td>
+                                                </tr>
                                             </c:forEach>
                                         </tbody>
                                     </table>
@@ -141,15 +141,40 @@
                             </div>
                         </div>
                     </div>
-                    <!--earning graph end-->
 
+                    <section class="content">
+                        <section class="panel">
+                            <header class="panel-heading">Customer staticstic in the last 24-hour</header>
+                            <div class="row" style="margin-bottom:5px;">
+                                <div class="col-md-6">
+                                    <div class="sm-st clearfix">
+                                        <span class="sm-st-icon st-blue"><i class="fa fa-user-plus"></i></span>
+                                        <div class="sm-st-info">
+                                            <span>${requestScope.newCustomer}</span>
+                                            New Registered Customers
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="sm-st clearfix">
+                                        <span class="sm-st-icon st-green"><i class="fa fa-shopping-bag"></i></span>
+                                        <div class="sm-st-info">
+                                            <span>${requestScope.newBought}</span>
+                                            New Orders
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!--earning graph end-->
+
+                        </div>
+                        </div>
+                        <!-- row end -->
+                    </section><!-- /.content -->
+                    <div class="footer-main">
+                        Copyright &copy Director, 2014
                     </div>
-                    </div>
-                    <!-- row end -->
-                </section><!-- /.content -->
-                <div class="footer-main">
-                    Copyright &copy Director, 2014
-                </div>
             </aside><!-- /.right-side -->
 
         </div><!-- ./wrapper -->
