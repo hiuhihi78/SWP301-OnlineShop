@@ -34,7 +34,6 @@ public class PostListController extends BaseAuthController {
             throws ServletException, IOException {
 
         String idCategoryStr = request.getParameter("category");
-//        String idAuthorStr = request.getParameter("author");
         String status = request.getParameter("status");
         String sortBy = request.getParameter("sort");
         String orderBy = request.getParameter("orderBy");
@@ -43,9 +42,6 @@ public class PostListController extends BaseAuthController {
         if (idCategoryStr == null || idCategoryStr.trim().length() == 0) {
             idCategoryStr = "-1";
         }
-//        if(idAuthorStr == null || idAuthorStr.trim().length() == 0) {
-//            idAuthorStr = "-1";
-//        }
         if (status == null || status.trim().length() == 0) {
             status = "-1";
         }
@@ -63,14 +59,11 @@ public class PostListController extends BaseAuthController {
         }
         PostDBContext postDB = new PostDBContext();
         int idCategory = Integer.parseInt(idCategoryStr);
-//        int idAuthor = Integer.parseInt(idAuthorStr);
         int idStatus = Integer.parseInt(status);
         int page = Integer.parseInt(pageStr);
 
         CategoryPostDBContext categoryPostDB = new CategoryPostDBContext();
-        UserDBContext userDB = new UserDBContext();
         ArrayList<CategoryPost> listCateogry = categoryPostDB.getAllCategoryPost();
-        ArrayList<User> listUserMarketing = userDB.getUserMarketing();
         ArrayList<Post> listPosts = postDB.getAllPostFiltered(idCategory, -1, idStatus, searchBy, sortBy, orderBy);
         int numbersRowPerPage = 5;
         int totalPage = ((listPosts.size() % numbersRowPerPage) == 0)
@@ -93,14 +86,12 @@ public class PostListController extends BaseAuthController {
         }
         ALERT = "";
         request.setAttribute("idCategory", idCategory);
-//        request.setAttribute("idAuthor", idAuthor);
         request.setAttribute("idStatus", idStatus);
         request.setAttribute("searchContent", searchBy);
         request.setAttribute("sortBy", sortBy);
         request.setAttribute("orderBy", orderBy);
         request.setAttribute("listPosts", listPagingFiltered);
         request.setAttribute("listCateogry", listCateogry);
-        request.setAttribute("listUserMarketing", listUserMarketing);
         request.setAttribute("page", page);
         request.setAttribute("totalPage", totalPage);
         request.getRequestDispatcher("../view/marketing/postList.jsp").forward(request, response);
