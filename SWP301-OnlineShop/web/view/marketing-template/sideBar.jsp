@@ -44,7 +44,7 @@
                 <c:if test="${s.key.url == '/marketing/sliderList' && s.value == true}">
                     <li id="nav-user-list">
                         <a href="/marketing/sliderList">
-                            <i class="fa fa-th-list" aria-hidden="true"></i> <span>${s.key.name}</span>        
+                            <i class="fa fa-th-list" aria-hidden="true"></i>    <span>${s.key.name}</span>        
                             </a>
                     </li>
                 </c:if>
@@ -52,10 +52,7 @@
                 <c:if test="${s.key.url == '/marketing/productlist' && s.value == true}">
                     <li id="nav-user-list">
                         <a href="productlist">
-
-                            <i class="fa-solid fa-users"></i> <span>Product List</span>
-
-
+                            <i class="fa-solid fa-box-open"></i> <span>Product List</span>
                         </a>
                     </li>
                 </c:if>
@@ -63,8 +60,16 @@
                 <c:if test="${s.key.url == '/marketing/postlist' && s.value == true}">
                     <li id="nav-user-list">
                         <a href="postlist">
-                            <i class="fa-solid fa-rss"></i> <span>Post List</span>
+                            <i class="fa-solid fa-rss"></i>   <span>  Post List</span>
 
+                        </a>
+                    </li>
+                </c:if>    
+                    
+                <c:if test="${s.key.url == '/marketing/feedbacklist' && s.value == true}">
+                    <li id="nav-user-list">
+                        <a href="feedbacklist">
+                           <i class="fas fa-comment"></i>    <span>Feedback List</span>
                         </a>
                     </li>
                 </c:if>    
