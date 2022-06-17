@@ -22,6 +22,7 @@ public class CartCompletionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getRequestDispatcher("view/public/CartCompletion.jsp").forward(request, response);
     }
 
     @Override
