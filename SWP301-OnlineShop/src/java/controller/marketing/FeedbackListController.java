@@ -5,6 +5,7 @@
 package controller.marketing;
 
 import dal.CategoryDBContext;
+import dal.FeedbackDBContext;
 import dal.ProductDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Category;
+import model.Feedback;
 import model.Product;
 import model.SubCategory;
 
@@ -23,8 +25,9 @@ import model.SubCategory;
  *
  * @author Admin
  */
-@WebServlet(name = "ProductListController", urlPatterns = {"/marketing/productlist"})
-public class ProductListController extends BaseAuthController {
+@WebServlet(name = "FeedbackListController", urlPatterns = {"/marketing/feedbacklist"})
+public class FeedbackListController extends BaseAuthController {
+
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -40,12 +43,12 @@ public class ProductListController extends BaseAuthController {
         String tempCategoryId = request.getParameter("categoryId");
         String tempSubCategoryId = request.getParameter("subCategoryId");
         String tempStatus = request.getParameter("status");
-        String tempFeatured = request.getParameter("featured");
+        String tempStar = request.getParameter("star");
         String tempSearch = request.getParameter("search");
         String tempOrderBy = request.getParameter("orderBy");
         String tempSort = request.getParameter("sort");
-        int categoryId, subCategoryId;
-        String status, featured, search, orderBy, sort;
+        int categoryId, subCategoryId, star;
+        String status, search, orderBy, sort;
         if (tempCategoryId == null) {
             categoryId = 0;
         } else {
@@ -58,10 +61,10 @@ public class ProductListController extends BaseAuthController {
             subCategoryId = Integer.parseInt(request.getParameter("subCategoryId"));
         }
 
-        if (tempFeatured == null) {
-            featured = "all";
+        if (tempStar == null) {
+            star = -1;
         } else {
-            featured = request.getParameter("featured");
+            star = Integer.parseInt(request.getParameter("star"));
         }
 
         if (tempStatus == null) {
@@ -99,11 +102,11 @@ public class ProductListController extends BaseAuthController {
         } else {
             subCategorys = categoryDB.getSubCatgory(categoryId);
         }
-        ProductDBContext productDB = new ProductDBContext();
-
-        ArrayList<Product> listAllProductFilter = productDB.getListProductFilter(categoryId, subCategoryId, status, featured, search, orderBy, sort);
+        
+        FeedbackDBContext feedbackDB = new FeedbackDBContext();
+        ArrayList<Feedback> listAllFeedbackFilter = feedbackDB.getListFeedbackFilter(categoryId, subCategoryId, status, star, search, orderBy, sort);
 //        int totalRecord = productDB.getTotalRecord();
-        int totalRecord = listAllProductFilter.size();
+        int totalRecord = listAllFeedbackFilter.size();
         int page, numberRecordPerPage = 5;
         int totalPage = totalRecord % numberRecordPerPage == 0
                 ? totalRecord / numberRecordPerPage : totalRecord / numberRecordPerPage + 1;
@@ -115,22 +118,22 @@ public class ProductListController extends BaseAuthController {
         }
         int startRecord = (page - 1) * numberRecordPerPage;
         int endRecord = Math.min(page * numberRecordPerPage, totalRecord);
-        ArrayList<Product> listPaging = productDB.getListProductByPage(listAllProductFilter, startRecord, endRecord);
+        ArrayList<Feedback> listPaging = feedbackDB.getListFeedbackByPage(listAllFeedbackFilter, startRecord, endRecord);
 
         request.setAttribute("categorys", categorys);
         request.setAttribute("subCategorys", subCategorys);
         request.setAttribute("categoryId", categoryId);
         request.setAttribute("subCategoryId", subCategoryId);
         request.setAttribute("status", status);
-        request.setAttribute("featured", featured);
+        request.setAttribute("star", star);
         request.setAttribute("search", search);
         request.setAttribute("orderBy", orderBy);
         request.setAttribute("sort", sort);
         request.setAttribute("page", page);
         request.setAttribute("totalPage", totalPage);
-        request.setAttribute("products", listPaging);
+        request.setAttribute("feedbacks", listPaging);
 
-        request.getRequestDispatcher("../view/marketing/productList.jsp").forward(request, response);
+        request.getRequestDispatcher("../view/marketing/feedbackList.jsp").forward(request, response);
     }
 
     /**

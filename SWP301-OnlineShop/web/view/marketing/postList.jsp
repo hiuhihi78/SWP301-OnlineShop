@@ -79,7 +79,6 @@
                                     <option value="${i.id}" ${(requestScope.idCategory == i.id)?"selected":""}>${i.name}</option>
                                 </c:forEach>
                             </select>
-                            </select>-->
                             <select id="status" name="status" class="form-control">
                                 <option value="-1">All Status</option>
                                 <option value="1" ${(requestScope.idStatus == 1)?"selected":""}>Show</option>
