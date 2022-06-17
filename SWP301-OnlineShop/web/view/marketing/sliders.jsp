@@ -34,7 +34,6 @@
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/marketing/style.css" rel="stylesheet" type="text/css" />
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -185,11 +184,8 @@
 
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <script src="../js/jquery.min.js" type="text/javascript"></script>
     <!-- jQuery UI 1.10.3 -->
     <script src="../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-    <!-- Bootstrap -->
-    <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- daterangepicker -->
     <script src="../assets/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
     <script src="../assets/js/plugins/chart.js" type="text/javascript"></script>
