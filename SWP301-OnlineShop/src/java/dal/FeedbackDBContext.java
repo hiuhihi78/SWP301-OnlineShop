@@ -171,10 +171,7 @@ public class FeedbackDBContext extends DBContext {
         return feedbacks;
     }
 
-    public static void main(String[] args) throws SQLException {
-        FeedbackDBContext bContext = new FeedbackDBContext();
-        System.out.println(bContext.getListFeedbackFilter(6, 4, "all", -1, "", "id", "asc"));
-    }
+    
 
     public ArrayList<Feedback> getListFeedbackByPage(ArrayList<Feedback> list, int start, int end) {
         ArrayList<Feedback> arr = new ArrayList<>();

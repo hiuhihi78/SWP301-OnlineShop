@@ -134,9 +134,9 @@
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <a href="productdetails?productID=${i.id}">
-                                                    <img class="img-height-255" src="${i.thumbnail}" alt="" />
-                                                </a>
+                                                    <a href="productdetails?productID=${i.id}">
+                                                        <img class="img-height-255" src="${i.thumbnail}" alt="" />
+                                                    </a>
                                                 <h2 class="break-down-line">${i.name}</h2>
                                                 <p>
                                                     <span class="text-line-through">

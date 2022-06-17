@@ -57,7 +57,7 @@
                             <!--Thumbnail-->
                             <div class="form-group w-70-percent mx-auto">
                                 <label for="thumbnail">Thumbnail</label>
-                                <div  class="w-35percent image-input-layout display-flex" style="position: relative">
+                                <div  class="w-35percent image-input-layout display-flex" style="position: relative; width: fit-content;">
                                     <div id="closeBtn-thumbnailBoxImg" class="close-btn" onclick="closeImg('thumbnailBoxImg','closeBtn-thumbnailBoxImg','thumbnail');"> <i class="fa-solid fa-xmark close-btn"></i></div>
                                     <img id="thumbnailBoxImg" src="#" alt="your image" style="height:100%; width:100%;" class="boder-radius display-none image-thumbnail"/>
                                 </div>
@@ -70,14 +70,14 @@
                                 <label >Attached image</label>
                                 <div class="display-flex">
                                     <div>
-                                        <div  class="w-100percent image-input-layout display-flex" style="position: relative">
+                                        <div  class="w-100percent image-input-layout display-flex" style="position: relative; width: fit-content;">
                                             <div id="closeBtn-attachedBoxImg-1" class="close-btn" onclick="closeImg('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1');"> <i class="fa-solid fa-xmark close-btn"></i></div>
                                             <img id="attachedBoxImg-1" src="#" alt="your image" style="height:100%; width:100%;" class="boder-radius display-none image-thumbnail"/>
                                         </div>
                                         <input type="file" name="attachedImg1" id="attachedImg1" onchange="showAttachedImg('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1')" required=""/>
                                     </div>
                                     <div>
-                                        <div  class="w-100percent image-input-layout ml-2percent" style="position: relative">
+                                        <div  class="w-100percent image-input-layout ml-2percent" style="position: relative; width: fit-content;">
                                             <div id="closeBtn-attachedBoxImg-2" class="close-btn" onclick="closeImg('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2');"> <i class="fa-solid fa-xmark close-btn"></i></div>
                                             <img id="attachedBoxImg-2" src="#" alt="your image" style="height:100%; width:100%;" class="boder-radius display-none image-thumbnail"/>
                                         </div>

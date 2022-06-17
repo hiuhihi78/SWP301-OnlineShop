@@ -96,42 +96,63 @@
                         </div>                     
                     </div>
                     <div class="col-sm-8 pd-top-15 box-shadow border-radius-20 height-fit-content">
-                        <div class="blog-post-area">
+                        <!--blog-post-area-->
+                        <div class=" features_items">
                             <h2 class="title text-center" style="border-bottom: solid 2px;">Post List</h2>
                             <c:forEach items="${requestScope.listPostFiltered}" var="i">
-                                <div class="single-blog-post">
-                                    <h3 class="break-down-line">${i.title}</h3>
-                                    <div class="post-meta">
-                                        <ul>
-                                            <li><i class="fa fa-user"></i>${i.user.fullname}</li>
-                                            <li><i class="fa fa-calendar"></i>${i.date}</li>
-                                            <li><i class="fa fa-caret-right"></i>${i.postCategory.name}</li>
-                                        </ul>
+                                <!--single-blog-post-->
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <a href="blogDetail?blogId=${i.id}">
+                                                    <img class="img-height-255" src="${i.thumbnail}" alt="" />
+                                                </a>
+                                                <h2 class="break-down-line">${i.title}</h2>
+                                                <p class="break-down-line" >${i.briefInfo}</p>
+                                                <c:if test="${requestScope.idCategory == -1}">
+                                                    <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}">Read More</a>
+                                                </c:if>
+                                                <c:if test="${requestScope.idCategory != -1}">
+                                                    <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}&category=${requestScope.idCategory}&subcategory=${requestScope.idSubCategory}">Read More</a>
+                                                </c:if>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <a href="blogDetail?blogId=${i.id}">
-                                        <img class="img-height-500" src="${i.thumbnail}" alt="">
-                                    </a>
-                                    <p class="break-down-line">${i.briefInfo}</p>
-                                    <c:if test="${requestScope.idCategory == -1}">
-                                        <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}">Read More</a>
-                                    </c:if>
-                                    <c:if test="${requestScope.idCategory != -1}">
-                                        <a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}&category=${requestScope.idCategory}&subcategory=${requestScope.idSubCategory}">Read More</a>
-                                    </c:if>
                                 </div>
+                                <!--                                    <div class="post-meta">
+                                                                        <ul>
+                                                                            <li><i class="fa fa-user"></i>${i.user.fullname}</li>
+                                                                            <li><i class="fa fa-calendar"></i>${i.date}</li>
+                                                                            <li><i class="fa fa-caret-right"></i>${i.postCategory.name}</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <a href="blogDetail?blogId=${i.id}">
+                                                                        <img class="img-height-500" src="${i.thumbnail}" alt="">
+                                                                    </a>
+                                                                    <h3 class="break-down-line">${i.title}</h3>
+                                                                    <p class="break-down-line">${i.briefInfo}</p>-->
+                                <%--<c:if test="${requestScope.idCategory == -1}">--%>
+                                    <!--<a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}">Read More</a>-->
+                                <%--</c:if>--%>
+                                <%--<c:if test="${requestScope.idCategory != -1}">--%>
+                                    <!--<a  class="btn btn-default add-to-cart" href="blogDetail?blogId=${i.id}&category=${requestScope.idCategory}&subcategory=${requestScope.idSubCategory}">Read More</a>-->
+                                <%--</c:if>--%>
+                                <!--</div>-->
                             </c:forEach>
 
-                            <div class="pagination-area">
-                                <input type="hidden" value="${requestScope.pageIndex}" id="search-page-index"/>
-                                <c:if test="${requestScope.totalPage >= 2}">
-                                    <ul class="pagination">
-                                        <c:forEach var="i" begin="1" end="${requestScope.totalPage}" step="1">
-                                            <li><a href="#" class="${(i == 1)? "active":""}">${i}</a></li>
-                                            </c:forEach>
-                                        <li><a id="next-page" href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                                    </ul>
-                                </c:if>
-                            </div>
+
+                        </div>
+                        <div class="pagination-area">
+                            <input type="hidden" value="${requestScope.pageIndex}" id="search-page-index"/>
+                            <c:if test="${requestScope.totalPage >= 2}">
+                                <ul class="pagination">
+                                    <c:forEach var="i" begin="1" end="${requestScope.totalPage}" step="1">
+                                        <li><a href="#" class="${(i == 1)? "active":""}">${i}</a></li>
+                                        </c:forEach>
+                                    <li><a id="next-page" href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                                </ul>
+                            </c:if>
                         </div>
                     </div>
                 </div>
