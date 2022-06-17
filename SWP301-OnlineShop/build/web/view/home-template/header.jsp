@@ -19,7 +19,7 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="cartlist"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="cartDetails"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <c:if test="${sessionScope.user == null}">
                                 <li><a href="login" id="button"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>

@@ -89,8 +89,8 @@ public class ProductDetailsControler extends HttpServlet {
 
         //get user Id
         User user = (User) session.getAttribute("user");
-//        int userBuyId = user.getId();
-        int userBuyId = 76;
+        int userBuyId = user.getId();
+//        int userBuyId = 76;
 
         //get value from form
 //        <input type = "hidden" value = "${product.id}" name = "productId"
