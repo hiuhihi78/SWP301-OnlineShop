@@ -32,7 +32,6 @@
     </head>
     <body class="skin-black">
         <c:set var="idCategory" value="${requestScope.idCategory}"/>
-        <c:set var="roleId" value="${requestScope.idAuthor}"/>
         <c:set var="status" value="${requestScope.idStatus}"/>
         <c:set var="sort" value="${requestScope.sortBy}"/>
         <c:set var="orderBy" value="${requestScope.orderBy}"/>
@@ -80,12 +79,6 @@
                                     <option value="${i.id}" ${(requestScope.idCategory == i.id)?"selected":""}>${i.name}</option>
                                 </c:forEach>
                             </select>
-                            <!--                            <select id="author" name="author" class="form-control">
-                                                            <option value="-1">All Author</option>
-                            <%--<c:forEach items="${requestScope.listUserMarketing}" var="u">--%>
-                                <option value="${u.id}" ${(requestScope.idAuthor == u.id)?"selected":""}>${u.fullname}</option>
-                            <%--</c:forEach>--%>
-                        </select>-->
                             <select id="status" name="status" class="form-control">
                                 <option value="-1">All Status</option>
                                 <option value="1" ${(requestScope.idStatus == 1)?"selected":""}>Show</option>
@@ -243,6 +236,6 @@
         <script src="../../assets/js/marketing/postsList.js" type="text/javascript">
                                     openModals(id);
         </script>
-        
+
     </body>
 </html>

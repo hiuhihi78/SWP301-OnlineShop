@@ -5,6 +5,7 @@
 package controller.marketing;
 
 import dal.CategoryPostDBContext;
+import dal.FeedbackDBContext;
 import dal.PostDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
@@ -82,18 +83,28 @@ public class HandlePostController extends BaseAuthController {
                 out.println("<option value=\"" + categoryPost.getId() + "\">" + categoryPost.getName() + "</option>");
                 System.out.println("<option value=\"" + categoryPost.getId() + "\">" + categoryPost.getName() + "</option>");
             }
+        } else if (action.trim().equalsIgnoreCase("editStatusFeedback")) {
+            FeedbackDBContext feedbackDB = new FeedbackDBContext();
+            int id = Integer.parseInt(request.getParameter("idPost"));
+            String nameStatus = (request.getParameter("idStatus").trim().equalsIgnoreCase("show")) ? "Hide" : "Show";
+            String btnStatus = (nameStatus.equalsIgnoreCase("show")) ? "btn-success" : "btn-danger";
+            boolean isStatus = (nameStatus.trim().equalsIgnoreCase("show"));
+            feedbackDB.editStatusFeedback(id, isStatus);
+            try ( PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<button id=\"btn-status-" + id + "\" type=\"button\" class=\"btn " + btnStatus + "\" data-toggle=\"modal\" data-target=\"#active\" onclick=\"openModals('" + id + "')\">\n"
+                        + "                                                        " + nameStatus + "\n"
+                        + "                                                    </button>");
+            }
         }
-
     }
 
-    
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-  
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

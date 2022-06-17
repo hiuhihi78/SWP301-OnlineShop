@@ -13,7 +13,7 @@ $(document).ready(function () {
     $('#subCategoryId').on('change', function () {
         this.form.submit();
     });
-    $('#featured').on('change', function () {
+    $('#star').on('change', function () {
         this.form.submit();
     });
     $('#status').on('change', function () {
@@ -40,19 +40,6 @@ function submitForm(id) {
 }
 
 
-function handleShowSubCategory() {
-    $.ajax({
-        url: '/marketing/addSubCategoryProduct',
-        type: 'GET',
-        data: {
-            categoryId: document.getElementById('categoryId').value
-        },
-        success: function (data, textStatus, jqXHR) {
-            document.getElementById('subCategoryId').innerHTML = data;
-        }
-    });
-}
-
 
 
 function paggerPageIndex(page, content) {
@@ -73,10 +60,11 @@ function openModals(id) {
     button.onclick = function () {
         $.ajax({
             type: "GET",
-            url: "../marketing/editStatusProduct",
+            url: "../marketing/handlePost",
             data: {
                 idPost: id,
-                idStatus: btn_name_status
+                idStatus: btn_name_status,
+                action: "editStatusFeedback"
             },
             success: function (data, textStatus, jqXHR) {
                 btn_status.innerHTML = data;
@@ -86,33 +74,5 @@ function openModals(id) {
             }
         });
 //        document.getElementById('showAlter').innerHTML = "Change Successfuly";
-    };
-}
-// modal for chang featured
-function openAnnouceAccept(id) {
-    var button = document.getElementById('btn-change');
-    document.getElementById('message-modal').innerHTML = "Are you sure to change featured post?";
-    var btn_featured = document.querySelector('#btn-featured-' + id).parentNode;
-    var btn_name_featured = document.querySelector('#btn-featured-' + id).innerHTML.toLowerCase();
-
-//    button.innerHTML = '';
-//    button.setAttribute('class', "btn btn-primary");
-//    button.setAttribute('onclick', 'document.getElementById("' + id + '").submit();');
-    button.onclick = function () {
-        $.ajax({
-            type: "GET",
-            url: "/marketing/editFeaturedProduct",
-            data: {
-                idPost: id,
-                idFeatured: btn_name_featured
-            },
-            success: function (data, textStatus, jqXHR) {
-                btn_featured.innerHTML = "" + data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-            }
-        });
-        document.getElementById('showAlter').innerHTML = "Change Successfuly";
     };
 }

@@ -4,7 +4,9 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,7 +39,7 @@
         <!-- Theme style -->
         <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet" type="text/css" />
 
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,69 +58,127 @@
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
             <jsp:include page="../admin-layout/sideBar.jsp"></jsp:include>
-            <!-- Right side. contains main content -->
-            <aside class="right-side">
+                <!-- Right side. contains main content -->
+                <aside class="right-side">
 
-                <!-- Main content -->
-                <section class="content">
-
-                    <div class="row" style="margin-bottom:5px;">
-
-
-                        <div class="col-md-3">
-                            <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-red"><i class="fa fa-check-square-o"></i></span>
-                                <div class="sm-st-info">
-                                    <span>3200</span>
-                                    Total Tasks
+                    <!-- Main content -->
+                    <section class="content">
+                        <section class="panel">
+                            <header class="panel-heading">Orders staticstic</header>
+                            <div class="row" style="margin-bottom:5px;">
+                                <div class="col-md-4">
+                                    <div class="sm-st clearfix">
+                                        <span class="sm-st-icon st-dark"><i class="fa fa-ban"></i></span>
+                                        <div class="sm-st-info">
+                                            <span>${requestScope.cancelledCount}</span>
+                                        Orders Cancelled
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="sm-st clearfix">
+                                    <span class="sm-st-icon st-blue"><i class="fa fa-info"></i></span>
+                                    <div class="sm-st-info">
+                                        <span>${requestScope.processingCount}</span>
+                                        Orders Processing
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="sm-st clearfix">
+                                    <span class="sm-st-icon st-green"><i class="fa fa-check"></i></span>
+                                    <div class="sm-st-info">
+                                        <span>${requestScope.successCount}</span>
+                                        Orders Success
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-violet"><i class="fa fa-envelope-o"></i></span>
-                                <div class="sm-st-info">
-                                    <span>2200</span>
-                                    Total Messages
+                    </section>
+                    <!-- Main row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!--earning graph start-->
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    Total Revenues
+                                </header>
+                                <div class="sm-st clearfix">
+                                    <span class="sm-st-icon st-red"><i class="fa fa-money"></i></span>
+                                    <div class="sm-st-info">
+                                        <span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${requestScope.totalRevenue}"/></span>
+                                        Total revenue
+                                    </div>
                                 </div>
-                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-blue"><i class="fa fa-dollar"></i></span>
-                                <div class="sm-st-info">
-                                    <span>100,320</span>
-                                    Total Profit
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-green"><i class="fa fa-paperclip"></i></span>
-                                <div class="sm-st-info">
-                                    <span>4567</span>
-                                    Total Documents
-                                </div>
+
+                        <div class="col-md-6">
+                            <div id="table">
+                                <!--earning graph start-->
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        Revenues by Product categories
+                                    </header>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Category ID</th>
+                                                <th scope="col">Category Name</th>
+                                                <th scope="col">Revenue</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${requestScope.revenueByCategory}" var='r'>
+                                                <tr>
+                                                    <th scope="row">${r.categoryid}</th>
+                                                    <td>${r.categoryname}</td>
+                                                    <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${r.revenue}"/></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </section>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Main row -->
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <!--earning graph start-->
-                            <section class="panel">
-                                <header class="panel-heading">
-                                    Earning Graph
-                                </header>
-                                <div class="panel-body">
-                                    <canvas id="linechart" width="600" height="330"></canvas>
+                    <section class="content">
+                        <section class="panel">
+                            <header class="panel-heading">Customer staticstic in the last 24-hour</header>
+                            <div class="row" style="margin-bottom:5px;">
+                                <div class="col-md-6">
+                                    <div class="sm-st clearfix">
+                                        <span class="sm-st-icon st-blue"><i class="fa fa-user-plus"></i></span>
+                                        <div class="sm-st-info">
+                                            <span>${requestScope.newCustomer}</span>
+                                            New Registered Customers
+                                        </div>
+                                    </div>
                                 </div>
-                            </section>
-                            <!--earning graph end-->
-
+                                <div class="col-md-6">
+                                    <div class="sm-st clearfix">
+                                        <span class="sm-st-icon st-green"><i class="fa fa-shopping-bag"></i></span>
+                                        <div class="sm-st-info">
+                                            <span>${requestScope.newBought}</span>
+                                            New Orders
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                    <section class="content">
+                        <section class="panel">
+                            <header class="panel-heading">Trend of new orders</header>
+                        </section>
+                        <div class="panel-body">
+                            <!--                            <canvas id="linechart" width="600" height="330"></canvas>-->
+                            <canvas id="myChart" width="300" height="150"></canvas>
                         </div>
+                    </section>
+                    <!--earning graph end-->
+
+                    </div>
                     </div>
                     <!-- row end -->
                 </section><!-- /.content -->
@@ -139,10 +199,11 @@
         <!-- Bootstrap -->
         <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- daterangepicker -->
-        <script src="${pageContext.request.contextPath}/assets/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<!--        <script src="${pageContext.request.contextPath}/assets/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
 
-        <script src="${pageContext.request.contextPath}/assets/js/plugins/chart.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/plugins/chart.js" type="text/javascript"></script>-->
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- datepicker
         <script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>-->
         <!-- Bootstrap WYSIHTML5
@@ -158,70 +219,75 @@
         <!-- Director dashboard demo (This is only for demo purposes) -->
         <script src="${pageContext.request.contextPath}/assets/js/Director/dashboard.js" type="text/javascript"></script>
 
-        <!-- Director for demo purposes -->
-        <script type="text/javascript">
-            $('input').on('ifChecked', function (event) {
-                // var element = $(this).parent().find('input:checkbox:first');
-                // element.parent().parent().parent().addClass('highlight');
-                $(this).parents('li').addClass("task-done");
-                console.log('ok');
-            });
-            $('input').on('ifUnchecked', function (event) {
-                // var element = $(this).parent().find('input:checkbox:first');
-                // element.parent().parent().parent().removeClass('highlight');
-                $(this).parents('li').removeClass("task-done");
-                console.log('not');
-            });
+        <!--        <script type="text/javascript">
+                    $(function () {
+                        "use strict";
+                        //BAR CHART
+                        var data = {
+                            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                            datasets: [
+                                {
+                                    label: "My First dataset",
+                                    fillColor: "rgba(220,220,220,0.2)",
+                                    strokeColor: "rgba(220,220,220,1)",
+                                    pointColor: "rgba(220,220,220,1)",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(220,220,220,1)",
+                                    data: [65, 59, 80, 81, 56, 55, 40]
+                                },
+                                {
+                                    label: "My Second dataset",
+                                    fillColor: "rgba(151,187,205,0.2)",
+                                    strokeColor: "rgba(151,187,205,1)",
+                                    pointColor: "rgba(151,187,205,1)",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [28, 48, 40, 19, 86, 27, 90]
+                                }
+                            ]
+                        };
+                        new Chart(document.getElementById("linechart").getContext("2d")).Line(data, {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        });
+        
+                    });
+                    // Chart.defaults.global.responsive = true;
+                </script>-->
 
+        <script>
+            const labels = [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+            ];
+
+            const data = {
+                labels: labels,
+                datasets: [{
+                        label: 'My First dataset',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, 2, 20, 30, 45],
+                    }]
+            };
+
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
         </script>
         <script>
-            $('#noti-box').slimScroll({
-                height: '400px',
-                size: '5px',
-                BorderRadius: '5px'
-            });
-
-            $('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
-                checkboxClass: 'icheckbox_flat-grey',
-                radioClass: 'iradio_flat-grey'
-            });
-        </script>
-        <script type="text/javascript">
-            $(function () {
-                "use strict";
-                //BAR CHART
-                var data = {
-                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-                    datasets: [
-                        {
-                            label: "My First dataset",
-                            fillColor: "rgba(220,220,220,0.2)",
-                            strokeColor: "rgba(220,220,220,1)",
-                            pointColor: "rgba(220,220,220,1)",
-                            pointStrokeColor: "#fff",
-                            pointHighlightFill: "#fff",
-                            pointHighlightStroke: "rgba(220,220,220,1)",
-                            data: [65, 59, 80, 81, 56, 55, 40]
-                        },
-                        {
-                            label: "My Second dataset",
-                            fillColor: "rgba(151,187,205,0.2)",
-                            strokeColor: "rgba(151,187,205,1)",
-                            pointColor: "rgba(151,187,205,1)",
-                            pointStrokeColor: "#fff",
-                            pointHighlightFill: "#fff",
-                            pointHighlightStroke: "rgba(151,187,205,1)",
-                            data: [28, 48, 40, 19, 86, 27, 90]
-                        }
-                    ]
-                };
-                new Chart(document.getElementById("linechart").getContext("2d")).Line(data, {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                });
-
-            });
-            // Chart.defaults.global.responsive = true;
+            const myChart = new Chart(
+                    document.getElementById('myChart'),
+                    config
+                    );
         </script>
     </body>
 </html>

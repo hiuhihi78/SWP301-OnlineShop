@@ -95,12 +95,12 @@ $(document).ready(function () {
             var endTime = params.endTime;
             if(startTime == null || endTime == null)
             {
-                $('#reportrange span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+                $('#reportrange span').html(start.format('YYYY-MM-DD') + ' -> ' + end.format('YYYY-MM-DD'));
             }
             else
             {
                 console.log()
-                $('#reportrange span').html(startTime + ' - ' + endTime);
+                $('#reportrange span').html(startTime + ' -> ' + endTime);
             }
 
         }

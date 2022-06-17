@@ -5,7 +5,7 @@
 // modal for change status
 function openModals(id) {
     var button = document.getElementById('btn-change');
-    document.getElementById('message-modal').innerHTML = "Are you sure to change featured post?";
+    document.getElementById('message-modal').innerHTML = "Are you sure to change status post?";
     var btn_status = document.querySelector('#btn-status-' + id).parentNode;
     var btn_name_status = document.querySelector('#btn-status-' + id).innerHTML.toLowerCase();
     console.log(btn_status);

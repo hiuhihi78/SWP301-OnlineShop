@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 
 /**
  *
@@ -72,7 +73,7 @@ public class EditStatusUserController extends BaseAuthController {
         request.setAttribute("xpage", xpage);
         request.setAttribute("alter", "Edit user's profile success!");
 //        request.getRequestDispatcher("userList").forward(request, response);
-        response.sendRedirect("../admin/userList?xpage="+xpage+"&alter=Update stauts success");
+        response.sendRedirect("../admin/userList?xpage=" + xpage + "&alter=Update stauts success");
     }
 
     /**

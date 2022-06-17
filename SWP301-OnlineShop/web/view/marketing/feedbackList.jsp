@@ -33,13 +33,13 @@
         <c:set var="categoryId" value="${requestScope.categoryId}"></c:set>
         <c:set var="subCategoryId" value="${requestScope.subCategoryId}"></c:set>
         <c:set var="status" value="${requestScope.status}"></c:set>
-        <c:set var="featured" value="${requestScope.featured}"></c:set>
+        <c:set var="star" value="${requestScope.star}"></c:set>
         <c:set var="search" value="${requestScope.search}"></c:set>
         <c:set var="orderBy" value="${requestScope.orderBy}"></c:set>
         <c:set var="sort" value="${requestScope.sort}"></c:set>
         <c:set var="gapPage" value="1"></c:set>
         <c:set var="totalPage" value="${requestScope.totalPage}"></c:set>
-        <c:set var="content" value="categoryId=${categoryId}&subCategoryId=${subCategoryId}&featured=${featured}&status=${status}&search=${search}&orderBy=${orderBy}&sort=${sort}"></c:set>
+        <c:set var="content" value="categoryId=${categoryId}&subCategoryId=${subCategoryId}&star=${star}&status=${status}&search=${search}&orderBy=${orderBy}&sort=${sort}"></c:set>
         
         
         <!-- header logo: style can be found in header.less -->
@@ -55,8 +55,8 @@
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
                     <!--Alter-->
                         <!--Search, add and filter product-->
-                        <div class="row d-flex" id="searchfilter">
-                            <form action="productlist" method="get"  class="form-inline" id="formFilter">
+                        <div class="row d-flex">
+                            <form action="feedbacklist" method="get"  class="form-inline">
                                 <input type="hidden" name="action" value="all"/>
                                 <input type="hidden" name="xpage" value="1"/>
                                 
@@ -78,19 +78,22 @@
                                 </select>
                                 <!--/subCategory-->
                                 
-                                <!--featured-->
-                                <select name="featured" id="featured" class="form-control">
-                                    <option value="all" ${requestScope.featured == "all" ? "selected='selected'":""}>All featured</option>
-                                    <option value="active" ${requestScope.featured == "active" ? "selected='selected'":""}>On</option>
-                                    <option value="unactive" ${requestScope.featured == "unactive" ? "selected='selected'":""}>Off</option>
+                                <!--star-->
+                                <select name="star" id="star" class="form-control">
+                                    <option value="-1" ${requestScope.star == "-1" ? "selected='selected'":""}>All star</option>
+                                    <option value="1" ${requestScope.star == "1" ? "selected='selected'":""}>1</option>
+                                    <option value="2" ${requestScope.star == "2" ? "selected='selected'":""}>2</option>
+                                    <option value="3" ${requestScope.star == "3" ? "selected='selected'":""}>3</option>
+                                    <option value="4" ${requestScope.star == "4" ? "selected='selected'":""}>4</option>
+                                    <option value="5" ${requestScope.star == "5" ? "selected='selected'":""}>5</option>
                                 </select>
-                                <!--/featured-->
+                                <!--/star-->
                                 
                                 <!--status-->
                                 <select name="status" id="status" class="form-control">
                                     <option value="all" ${requestScope.status == "all" ? "selected='selected'":""}>All status</option>
-                                    <option value="active" ${requestScope.status == "active" ? "selected='selected'":""}>Active</option>
-                                    <option value="unactive" ${requestScope.status == "unactive" ? "selected='selected'":""}>Deactive</option>
+                                    <option value="active" ${requestScope.status == "active" ? "selected='selected'":""}>Show</option>
+                                    <option value="unactive" ${requestScope.status == "unactive" ? "selected='selected'":""}>Hide</option>
                                 </select>
                                 <!--/status-->
                                 
@@ -99,10 +102,9 @@
                                 <!--Order by-->
                                 <select name="orderBy" id="orderBy" class="form-control">
                                     <option value="id" ${requestScope.orderBy == "id" ? "selected='selected'":""}>ID</option>
-                                    <option value="category" ${requestScope.orderBy == "category" ? "selected='selected'":""}>Category</option>
-                                    <option value="subCategory" ${requestScope.orderBy == "subCategory" ? "selected='selected'":""}>subCategory</option>
-                                    <option value="originalPrice" ${requestScope.orderBy == "originalPrice" ? "selected='selected'":""}>Original price</option>
-                                    <option value="featured" ${requestScope.orderBy == "featured" ? "selected='selected'":""}>Featured</option>
+                                    <option value="username" ${requestScope.orderBy == "username" ? "selected='selected'":""}>Customer name</option>
+                                    <option value="productName" ${requestScope.orderBy == "productName" ? "selected='selected'":""}>Product name</option>
+                                    <option value="star" ${requestScope.orderBy == "star" ? "selected='selected'":""}>Start</option>
                                     <option value="status" ${requestScope.orderBy == "status" ? "selected='selected'":""}>Status</option>
                                 </select>
                                 <!--/Order by-->
@@ -115,12 +117,8 @@
                                 <!--/Sort-->
                                 
                                 <!--search-->
-                                <input type="text" id="search" name="search" value="${requestScope.search}" placeholder="Enter part of name or id" style="width: 30rem" class="form-control"/>
+                                <input type="text" id="search" name="search" value="${requestScope.search}" placeholder="Enter part customer name or content" style="width: 30rem" class="form-control"/>
                                 <!--/search-->
-                            </form>
-                                
-                            <form action="addproduct" method="get"  class="m-0-2percent padding-0 float-r display-inline-block">
-                                <input class="btn btn-primary" type="submit" value="Add new Product">
                             </form>
                         </div><!--/Search, add and filter user-->
 
@@ -130,50 +128,28 @@
                             <table class="table table-hover ">
                                 <thead>
                                     <th>ID</th>
-                                    <th>Thumbnail</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Subcategory</th>
-                                    <th>Original Price</th>
-                                    <th>Sale Price</th>
-                                    <th>Featured</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>Customer name</th>
+                                    <th>Product name</th>
+                                    <th>rated star</th>
+                                    <th>status</th>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${requestScope.products}" var="p">
+                                    <c:forEach items="${requestScope.feedbacks}" var="p">
                                         <tr>
                                             <td>${p.id}</td>
-                                            <td><img src="${p.thumbnail}" alt="thumbnail" width="100px" height="100px"/></td>
-                                            <td>${p.name}</td>
-                                            <td>${p.subCategory.category.name}</td>
-                                            <td>${p.subCategory.name}</td>
-                                            <td>${p.price}</td>
-                                            <td>${p.priceDiscount}</td>
+                                            <td>${p.user.fullname}</td>
+                                            <td>${p.product.name}</td>
+                                            <td>${p.start}</td>
+                                            
                                             <td>
-                                                    <form id="changeFeatured-${p.id}" action="#" method="POST">
-                                                        <button id="btn-featured-${p.id}" type="button" class="btn ${(p.featured)?"btn-success":"btn-danger"}" data-toggle="modal" data-target="#active" onclick="openAnnouceAccept('${p.id}')">
-                                                            ${(p.featured)?"On":"Off"}
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <form id="changeStatus-${p.id}" action="" method="POST">
-                                                        <button id="btn-status-${p.id}" type="button" class="btn ${(p.status)?"btn-success":"btn-danger"}" data-toggle="modal" data-target="#active" onclick="openModals('${p.id}')">
-                                                            ${(p.status)?"Show":"Hide"}
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            <td>
-                                                <a href="editProductInfo?id=${p.id}" class="text-decoration-none text-white">
-                                                    <button type="button" class="btn btn-primary">
-                                                        <i class="fa-solid fa-pen-to-square" style="margin-right: 2px"></i>Edit
+                                                <form id="changeStatus-${p.id}" action="" method="POST">
+                                                    <button id="btn-status-${p.id}" type="button" class="btn ${(p.status)?"btn-success":"btn-danger"}" data-toggle="modal" data-target="#active" onclick="openModals('${p.id}')">
+                                                        ${(p.status)?"Show":"Hide"}
                                                     </button>
-                                                </a>
+                                                </form>
                                             </td>
                                             <td>
-                                                <a href="productdetail?id=${p.id}" class="text-decoration-none text-white">
+                                                <a href="#?id=${p.id}" class="text-decoration-none text-white">
                                                     <button type="button" class="btn btn-primary">
                                                         <i class="fa-solid fa-eye" style="margin-right: 2px"></i>View
                                                     </button>
@@ -241,68 +217,11 @@
         </div>
         <!--/Modal-->
         
-        <script>
-            // modal for change status
-            function openModals(id) {
-                var button = document.getElementById('btn-change');
-                document.getElementById('message-modal').innerHTML = "Are you sure to change featured post?";
-                var btn_status = document.querySelector('#btn-status-' + id).parentNode;
-                var btn_name_status = document.querySelector('#btn-status-' + id).innerHTML.toLowerCase();
-                console.log(btn_status);
-                console.log(btn_name_status);
-
-                button.onclick = function () {
-                    $.ajax({
-                        type: "GET",
-                        url: "../marketing/editStatusProduct",
-                        data: {
-                            idPost: id,
-                            idStatus: btn_name_status
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            btn_status.innerHTML = data;
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-
-                        }
-                    });
-            //        document.getElementById('showAlter').innerHTML = "Change Successfuly";
-                };
-            }
-            // modal for chang featured
-            function openAnnouceAccept(id) {
-                var button = document.getElementById('btn-change');
-                document.getElementById('message-modal').innerHTML = "Are you sure to change featured post?";
-                var btn_featured = document.querySelector('#btn-featured-' + id).parentNode;
-                var btn_name_featured = document.querySelector('#btn-featured-' + id).innerHTML.toLowerCase();
-
-            //    button.innerHTML = '';
-            //    button.setAttribute('class', "btn btn-primary");
-            //    button.setAttribute('onclick', 'document.getElementById("' + id + '").submit();');
-                button.onclick = function () {
-                    $.ajax({
-                        type: "GET",
-                        url: "../marketing/editFeaturedProduct",
-                        data: {
-                            idPost: id,
-                            idFeatured: btn_name_featured
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            btn_featured.innerHTML = "" + data;
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-
-                        }
-                    });
-                    document.getElementById('showAlter').innerHTML = "Change Successfuly";
-                };
-            }
-            
-        </script>
+        
         
         </div>
         <!--javascrip-->
-        <script src="../../assets/js/marketing/productList.js" type="text/javascript"></script>
+        <script src="../../assets/js/marketing/feedbacklist.js" type="text/javascript"></script>
         <script src="../../assets/js/admin/main.js"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

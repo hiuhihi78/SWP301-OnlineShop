@@ -35,7 +35,7 @@
             <c:forEach items="${sessionScope.user.role.allowFeatures}" var="s">
                 <c:if test="${s.key.url == '/admin/dashboard' && s.value == true}">
                     <li id="nav-dashboard">
-                        <a href="#">
+                        <a href="${s.key.url}">
                             <i class="fa fa-dashboard"></i> <span>${s.key.name}</span>
                         </a>
                     </li>
@@ -44,7 +44,6 @@
                     <li id="nav-user-list">
                         <a href="userList">
                             <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
-
                         </a>
                     </li>
                 </c:if>

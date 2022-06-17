@@ -4,6 +4,7 @@
  */
 package controller.marketing;
 
+import dal.PostDBContext;
 import dal.ProductDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
@@ -32,20 +33,20 @@ public class EditStatusProductController extends BaseAuthController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDBContext productDB = new ProductDBContext();
-        boolean status = request.getParameter("newStatus").equals("active");
-        int id = Integer.parseInt(request.getParameter("id"));
-        String xpage = request.getParameter("xpage");
-        productDB.changeStatus(id, status);
-        if (xpage == null) {
-            xpage = "1";
-        } else {
-            xpage = request.getParameter("xpage");
-        }
-//        request.setAttribute("xpage", xpage);
-//        request.setAttribute("alter", "Update status sucess");
-//        request.getRequestDispatcher("userList");
-        response.sendRedirect("productlist?alter=Update status sucess!&xpage=" + xpage);
+        
+        int id = Integer.parseInt(request.getParameter("idPost"));
+            String nameStatus = (request.getParameter("idStatus").trim().equalsIgnoreCase("show")) ? "Hide" : "Show";
+            String btnStatus = (nameStatus.equalsIgnoreCase("show")) ? "btn-success" : "btn-danger";
+            ProductDBContext productDB = new ProductDBContext();
+            boolean isStatus = (nameStatus.trim().equalsIgnoreCase("show"));
+            productDB.changeStatus(id, isStatus);
+            try ( PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<button id=\"btn-status-" + id + "\" type=\"button\" class=\"btn " + btnStatus + "\" data-toggle=\"modal\" data-target=\"#active\" onclick=\"openModals('" + id + "')\">\n"
+                        + "                                                        " + nameStatus + "\n"
+                        + "                                                    </button>");
+
+            }
     }
 
     /**

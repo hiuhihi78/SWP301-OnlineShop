@@ -39,7 +39,7 @@
 
                                             <div class="search_box">
                                                 <!--<input id="search-box" type="text" placeholder="Search..." name="searchBy" value="${requestScope.searchBy}">-->
-                                                 <input type="text" id="search_box" name="searchBy" value="${requestScope.search}" placeholder="Search" />
+                                                 <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search"/>
                                             </div>
                                         </div>
                                         <div class="panel-heading">
@@ -86,7 +86,7 @@
                                         <div class="product-image-wrapper">
                                             <div class="single-products">
                                                 <div class="productinfo text-center">
-                                                    <a href="#">
+                                                    <a href="productdetails?productID=${leastProduct.id}">
                                                         <img src="${leastProduct.thumbnail}" alt="" />
                                                     </a>
                                                     <h2 class="break-down-line">${leastProduct.name}</h2>
