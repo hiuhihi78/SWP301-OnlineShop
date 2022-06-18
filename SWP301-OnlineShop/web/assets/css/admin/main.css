@@ -6,6 +6,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : May 31, 2022, 9:01:17 PM
     Author     : Admin
 */
+.span-rated-star{
+    font-size: 20px; 
+    color: #ffe500; 
+    opacity: 1; 
+    transform: rotateX(0deg);
+    text-shadow: 0 0 30px #ffc;
+}
 
 .mx-auto{
     margin: 0 auto;

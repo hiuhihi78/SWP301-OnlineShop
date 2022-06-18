@@ -1,0 +1,68 @@
+/* 
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
+ */
+
+
+function  openFeedbackImg(id) {
+    var divImage = document.getElementById('feedback-img-zoom-' + id);
+    console.log('feedback-img-zoom-' + id);
+    console.log(divImage);
+    $.ajax({
+        url: '/handlegetdata',
+        type: 'POST',
+        data: {
+            feedbackId: id,
+            action: "getFeedbackImageModal"
+        },
+        success: function (data, textStatus, jqXHR) {
+            divImage.innerHTML = data;
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert("daw");
+        }
+    });
+}
+
+
+function closeFeedbackImage(divId) {
+    var divImage = document.getElementById('feedback-img-zoom-' + divId);
+    divImage.innerHTML = "";
+}
+
+
+function addToCartFunction() {
+    var customerId = document.getElementById('customerId').value === "" ? -1 : document.getElementById('customerId').value;
+    var productId = document.getElementById('productId').value;
+    var quantityOrder = document.getElementById('quantityOrder').value;
+    if (customerId === -1) {
+        window.location.href = "/login";
+        window.location.assign("http://localhost:8080/login");
+        return ;
+    }
+
+    $.ajax({
+        url: '/addProductToCart',
+        type: 'POST',
+        data: {
+            customerId: customerId,
+            quantityOrder: quantityOrder,
+            productId: productId
+        },
+        success: function (data, textStatus, jqXHR) {
+            var divAlter = document.getElementById('add-to-cart-alter');
+            divAlter.innerHTML = "<div class='add-to-cart-show'>\n"
+                    + '<div class="add-to-cart-show__icon-check"><i class="fa-solid fa-circle-check icon-check"></i></div>\n'
+                    + '<div class="add-to-cart-show__content">Product was added in to Cart!</div>\n'
+                    + '</div>\n';
+            setTimeout(function () {
+                divAlter.innerHTML = "";
+            }, 3000);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(ajaxOptions);
+        }
+    });
+
+}
+            

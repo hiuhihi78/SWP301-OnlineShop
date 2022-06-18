@@ -50,50 +50,50 @@ public class CartDetailsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Declare and initialize the initial value
-        CartDBContext cartDBContext = new CartDBContext();
-        String search = "";
-        int index = 1;
-        HttpSession session = request.getSession();
-        
-        //Get user login from session
-        User user = (User) session.getAttribute("user");
-        int userID = user.getId();
-        
-        //Get data from input search
-        if (request.getParameter("txtSearch") != null) {
-            search = request.getParameter("txtSearch").trim();
-        }
-        
-        //Get current page from view
-        if (request.getParameter("index") != null) {
-            index = Integer.parseInt(request.getParameter("index"));
-        }
-
-        //Get List Cart 
-        ArrayList<Cart> lstCart = cartDBContext.getCartByIndexAndUserId(0, 0, search, userID);
-        
-        //Calculator Last page
-        int sizeOfList = lstCart.size();
-        int lastPage = sizeOfList / SIZE_PAGE_CART_LIST;
-        if (sizeOfList % SIZE_PAGE_CART_LIST != 0) {
-            lastPage++;
-        }
-        
-        //Set List Cart by current index
-        lstCart = cartDBContext.getCartByIndexAndUserId(index, SIZE_PAGE_CART_LIST, search, userID);
-
-        //Send result after search
-        request.setAttribute("search", search);
-        //Send Last page of cart list
-        request.setAttribute("lastPage", lastPage);
-        //Send cart List
-        request.setAttribute("carts", lstCart);
-        //Send index 
-        request.setAttribute("index", index);
-        
-        
-        processRequest(request, response);
+//        //Declare and initialize the initial value
+//        CartDBContext cartDBContext = new CartDBContext();
+//        String search = "";
+//        int index = 1;
+//        HttpSession session = request.getSession();
+//        
+//        //Get user login from session
+//        User user = (User) session.getAttribute("user");
+//        int userID = user.getId();
+//        
+//        //Get data from input search
+//        if (request.getParameter("txtSearch") != null) {
+//            search = request.getParameter("txtSearch").trim();
+//        }
+//        
+//        //Get current page from view
+//        if (request.getParameter("index") != null) {
+//            index = Integer.parseInt(request.getParameter("index"));
+//        }
+//
+//        //Get List Cart 
+//        ArrayList<Cart> lstCart = cartDBContext.getCartByIndexAndUserId(0, 0, search, userID);
+//        
+//        //Calculator Last page
+//        int sizeOfList = lstCart.size();
+//        int lastPage = sizeOfList / SIZE_PAGE_CART_LIST;
+//        if (sizeOfList % SIZE_PAGE_CART_LIST != 0) {
+//            lastPage++;
+//        }
+//        
+//        //Set List Cart by current index
+//        lstCart = cartDBContext.getCartByIndexAndUserId(index, SIZE_PAGE_CART_LIST, search, userID);
+//
+//        //Send result after search
+//        request.setAttribute("search", search);
+//        //Send Last page of cart list
+//        request.setAttribute("lastPage", lastPage);
+//        //Send cart List
+//        request.setAttribute("carts", lstCart);
+//        //Send index 
+//        request.setAttribute("index", index);
+//        
+//        
+//        processRequest(request, response);
     }
 
     /**
