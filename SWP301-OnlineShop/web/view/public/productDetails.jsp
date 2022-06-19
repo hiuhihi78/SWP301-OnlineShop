@@ -9,7 +9,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Product List</title>
+        <title>Product Detail</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -48,7 +48,7 @@
 
     <body>
         <c:set value="${requestScope.productInfomation}" var="product"/>
-        <jsp:include page="../home-template/headerProductlist.jsp"/>
+        <jsp:include page="../home-template/header.jsp"/>
         <section>
             <div class="container">
                 <div class="row flex-justify">
@@ -138,7 +138,7 @@
                         <div class="product-details"><!--product-details-->
                             <div class="col-sm-6">
                                 <!--thumbnail-->
-                                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                <div id="myCarousel" class="carousel slide cursor-zoom" data-ride="carousel" onclick="ZoomProductImage(${product.id})">
                                             <!-- Indicators -->
                                             <ol class="carousel-indicators">
                                                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -195,7 +195,8 @@
                                             <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
                                         </span>
                                     </p>
-                                    <p> <label>Total Quantity: ${product.quantity}</label> </p>
+                                        <p> <label>Total Quantity: ${product.quantity}</label> </p>
+                                    
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <p> 
@@ -203,11 +204,16 @@
                                                 <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;"  class="chose-quantity"
                                                        min="1" max="${product.quantity}" value = "1" required>
                                             </p>
+                                            
+                                                <div id="alter_quantityOrder">
+                                                    
+                                                </div>
+                                            
                                             <button  style="width: 10em; " class="form-control add-to-cart" onclick="addToCartFunction();" >
                                                 <i class="fa fa-shopping-cart"></i>
                                                 Add to cart
                                             </button>
-                                                
+                                            </form>    
                                         </div>
                                     </div><!-- comment -->
                                 </div><!--/product-information-->
@@ -292,9 +298,17 @@
                         </c:if>
                     </div>
                     <!--END PRODCUT DETAILS-->
+                    
+                    <!--add to cart-->
                     <div id="add-to-cart-alter"></div>
                     <input type="hidden" id="customerId" value="${sessionScope.user.id}">
                     <input type="hidden" id="productId" value="${product.id}">
+                    <input type="hidden" id="productQuantity" value="${product.quantity}">
+                    <!--/add to cart-->
+                    
+                    <!--zoom product image-->
+                    <div class="carouse-zoom" id="carouse-zoom" onclick=""></div>
+                    <!--/zoom product image-->
         </section>
                                 
                                             

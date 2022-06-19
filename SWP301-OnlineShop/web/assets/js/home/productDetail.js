@@ -35,12 +35,27 @@ function addToCartFunction() {
     var customerId = document.getElementById('customerId').value === "" ? -1 : document.getElementById('customerId').value;
     var productId = document.getElementById('productId').value;
     var quantityOrder = document.getElementById('quantityOrder').value;
+    var quantityProduct = document.getElementById('productQuantity').value;
+    
+    var divAlterQuantityOrder = document.getElementById('alter_quantityOrder');
     if (customerId === -1) {
         window.location.href = "/login";
         window.location.assign("http://localhost:8080/login");
         return ;
     }
+    if(quantityOrder < 0){
+        divAlterQuantityOrder.innerHTML = "<div class='alert alert-danger' style='padding: 10px;width: 75%;'>Quantity must be greater than 1! </div>";
+        return ;
+    }
+    
+    
 
+    if(quantityOrder > quantityProduct){
+        divAlterQuantityOrder.innerHTML = "<div class='alert alert-danger' style='padding: 10px;width: 75%;'>Quantity must be less than " + quantityProduct + "!"+"</div>";
+        return ;
+    }
+    
+    
     $.ajax({
         url: '/addProductToCart',
         type: 'POST',
@@ -58,6 +73,8 @@ function addToCartFunction() {
             setTimeout(function () {
                 divAlter.innerHTML = "";
             }, 3000);
+            
+            divAlterQuantityOrder.innerHTML="";
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert(ajaxOptions);
@@ -65,4 +82,36 @@ function addToCartFunction() {
     });
 
 }
+
+function ZoomProductImage(productId){
+    var container = document.getElementById('carouse-zoom');
+    $.ajax({
+        url: '/handlegetdata',
+        type: 'POST',
+        data: {
+            productId: productId,
+            action:"zoomImageProduct"
+        },
+        success: function (data, textStatus, jqXHR) {
+            container.innerHTML = data;
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(ajaxOptions);
+        }
+    });
+}
+
+$(document).click((event) => {
+  if (!$(event.target).closest('#carouse-zoom').length) {
+      document.getElementById('carouse-zoom').innerHTML = "";
+  }        
+});
+
+                        
+                          
+
+
+
+
+
             

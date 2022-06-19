@@ -5,6 +5,7 @@
 package controller.home;
 
 import dal.FeedbackDBContext;
+import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Image;
+import model.Product;
 
 /**
  *
@@ -35,9 +37,10 @@ public class HandleGetDataController extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
-        String tempFeedbackId = request.getParameter("feedbackId");
-        int feedbackId = Integer.parseInt(tempFeedbackId);
-        if (action.trim().equals("getFeedbackImageModal") || action != null) {
+        
+        if (action.trim().equals("getFeedbackImageModal")) {
+            String tempFeedbackId = request.getParameter("feedbackId");
+            int feedbackId = Integer.parseInt(tempFeedbackId);
             FeedbackDBContext feedbackDB = new FeedbackDBContext();
             ArrayList<Image> images = feedbackDB.getFeedbackImage(feedbackId);
             PrintWriter out = response.getWriter();
@@ -76,6 +79,45 @@ public class HandleGetDataController extends HttpServlet {
                     + " </a>\n"
                     + " </div>";
 
+            out.println(print);
+        }
+        
+        if (action.trim().equals("zoomImageProduct")) {
+            String tempProductId = request.getParameter("productId");
+            int productId = Integer.parseInt(tempProductId);
+            
+            ProductDBContext db = new ProductDBContext();
+            Product product = db.getProductById(productId);
+                        
+            String print = "";
+            print += "<div id=\"myCarouse-zoom\" class=\"carousel slide \" data-ride=\"carousel\" style=\"height: 680px; width: 60vw;\">\n";
+            print += "<ol class=\"carousel-indicators\">\n";
+            print += "<li data-target=\"#myCarouse-zoom\" data-slide-to=\"0\" class=\"active\"></li>\n";
+            print += "<li data-target=\"#myCarouse-zoom\" data-slide-to=\"1\"></li>\n";
+            print += "<li data-target=\"#myCarouse-zoom\" data-slide-to=\"2\"></li>\n";
+            print += "</ol>\n";
+            print += "<div class=\"carousel-inner\">\n";
+            print += "<div class=\"item active\">\n";
+            print += "<img src=\""+ product.getThumbnail() +"\" alt=\"thumbnail\" style=\"height: 680px; width: 60vw;\">\n";
+            print += "</div>\n";
+            print += "<div class=\"item\">\n";
+            print += "<img src=\""+ product.getImage().get(0).getImage() +"\" alt=\"thumbnail\" style=\"height: 680px; width: 60vw;\">\n";
+            print += "</div>\n";
+            print += "<div class=\"item\">\n";
+            print += "<img src=\""+ product.getImage().get(1).getImage() + "\" alt=\"thumbnail\" style=\"height: 680px; width: 60vw;\">\n";
+            print += "</div>\n";
+            print += "</div>\n";
+            print += "<a class=\"left carousel-control\" href=\"#myCarouse-zoom\" data-slide=\"prev\">\n";
+            print += "<span class=\"glyphicon glyphicon-chevron-left\"></span>\n";
+            print += "<span class=\"sr-only\">Previous</span>\n";
+            print += "</a>\n";
+            print += "<a class=\"right carousel-control\" href=\"#myCarouse-zoom\" data-slide=\"next\">\n";
+            print += "<span class=\"glyphicon glyphicon-chevron-right\"></span>\n";
+            print += "<span class=\"sr-only\">Next</span>\n";
+            print += "</a>\n";
+            print += "</div>\n";
+            
+            PrintWriter out = response.getWriter();
             out.println(print);
         }
     }
