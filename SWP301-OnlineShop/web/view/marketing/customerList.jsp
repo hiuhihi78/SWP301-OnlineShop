@@ -88,9 +88,8 @@
                                             <tbody>
                                                 <c:forEach items="${requestScope.listCustomer}" var="list">
                                                     <tr>
-                                                        <td>
-                                                            <a href="../../customer/details?id=${list.id}" style="text-decoration: none; color: black">${list.id}</a>
-                                                        </td>
+                                                        
+                                                        <td>${list.id}</td>
                                                         <td>${list.fullname}</td>
                                                         <td>${list.gender ==true ? "Male" : "Female"}</td>
                                                         <td>${list.mobile}</td>

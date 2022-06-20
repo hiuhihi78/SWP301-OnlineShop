@@ -27,7 +27,7 @@
     <!--/head-->
 
     <body>
-        <jsp:include page="../home-template/header.jsp"/>
+        <jsp:include page="../home-template/headerProductlist.jsp"/>
         <section>
             <div class="container">
                 <div class="row flex-justify">
@@ -35,7 +35,11 @@
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-
+                                <div class="panel-heading">
+                                    <div class="search_box">
+                                        <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search"/>
+                                    </div>
+                                </div>
                                 <c:forEach items="${requestScope.listCategorys}" var="list">
                                     <c:if test="${not empty list.listSubCategory}"> <!-- check empty of list subcategory with that category -->
                                         <div class="panel panel-default">
@@ -48,7 +52,7 @@
                                                 </h4>
                                             </div>
                                             <div id="${list.id}" class="panel-collapse collapse">
-                                                <div class="panel-body">
+                                                <div class="panel-body">                                                    
                                                     <ul>
                                                         <c:forEach items="${list.listSubCategory}" var="listSub">
                                                             <li><a href="">${listSub.name} </a></li> 
@@ -135,7 +139,7 @@
                                             <td><fmt:formatDate pattern="yyyy-MM-dd" value="${o.date}"/></td>
                                             <td>${o.products[0].name}</td>
                                             <td>${o.numproducts}</td>
-                                            <td>${o.totalcost}</td>
+                                            <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${o.totalcost}"/></td>
                                             <c:if test="${o.status == 0}">
                                                 <td>
                                                     <span class="label label-default">Cancelled</span>
@@ -160,14 +164,6 @@
 
                         <!--features_items-->
                     </div>
-                </div>
-                <div class="pagging">
-                    <ul class="pagination pull-right">
-                        <li class="active"><a href="">1</a></li>
-                        <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">&raquo;</a></li>
-                    </ul>
                 </div>
             </div>
         </section>

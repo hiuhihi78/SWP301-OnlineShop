@@ -23,8 +23,7 @@ public class RoleDBContext extends DBContext {
         ArrayList<Role> roles = new ArrayList<>();
         String sql = "SELECT [id]\n"
                 + "      ,[name]\n"
-                + "  FROM [dbo].[Role]\n"
-                + "WHERE isSuperAdmin = 0";
+                + "  FROM [dbo].[Role]\n";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -39,6 +38,11 @@ public class RoleDBContext extends DBContext {
         return roles;
     }
 
+    public static void main(String[] args) {
+        RoleDBContext bContext = new RoleDBContext();
+        System.out.println(bContext.getAllRole().size());
+    }
+    
     public LinkedHashMap<Feature, Boolean> getAllowFeatures(int role) {
         String sql = "SELECT [Feature].id, [Feature].url, [Feature].name, [Role_Feature].enable\n"
                 + "from [Role]\n"

@@ -93,7 +93,6 @@
         <servlet-class>controller.marketing.SliderListController</servlet-class>
     </servlet>
     <servlet>
-
         <servlet-name>SliderDetailController</servlet-name>
         <servlet-class>controller.marketing.SliderDetailController</servlet-class>
     </servlet>
@@ -120,6 +119,10 @@
     <servlet>
         <servlet-name>BacklinkControlller</servlet-name>
         <servlet-class>controller.common.BacklinkControlller</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartDetailsController</servlet-name>
+        <servlet-class>controller.common.CartDetailsController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -226,7 +229,6 @@
         <url-pattern>/marketing/dashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-
         <servlet-name>ProductListPublicController</servlet-name>
         <url-pattern>/productlist</url-pattern>
     </servlet-mapping>
@@ -237,11 +239,14 @@
     <servlet-mapping>
         <servlet-name>UserOrdersController</servlet-name>
         <url-pattern>/myorders</url-pattern>
-
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BacklinkControlller</servlet-name>
         <url-pattern>/backlink</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartDetailsController</servlet-name>
+        <url-pattern>/cartDetails</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>60</session-timeout>

@@ -58,13 +58,13 @@ public class ProductListController extends BaseAuthController {
             subCategoryId = Integer.parseInt(request.getParameter("subCategoryId"));
         }
 
-        if (tempStatus == null) {
+        if (tempFeatured == null) {
             featured = "all";
         } else {
             featured = request.getParameter("featured");
         }
 
-        if (tempFeatured == null) {
+        if (tempStatus == null) {
             status = "all";
         } else {
             status = request.getParameter("status");

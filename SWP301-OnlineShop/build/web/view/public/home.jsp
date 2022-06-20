@@ -134,9 +134,9 @@
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <a href="#${i.id}">
-                                                    <img class="img-height-255" src="${i.thumbnail}" alt="" />
-                                                </a>
+                                                    <a href="productdetails?productID=${i.id}">
+                                                        <img class="img-height-255" src="${i.thumbnail}" alt="" />
+                                                    </a>
                                                 <h2 class="break-down-line">${i.name}</h2>
                                                 <p>
                                                     <span class="text-line-through">
@@ -146,7 +146,7 @@
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price - (i.price*i.discount/100)}"/>
                                                     </span>
                                                 </p>
-                                                <a href="#${i.id}" class="btn btn-default add-to-cart">Show</a>
+                                                <a href="productdetails?productID=${i.id}" class="btn btn-default add-to-cart">Show</a>
                                             </div>
                                         </div>
                                     </div>

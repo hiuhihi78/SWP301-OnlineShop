@@ -61,7 +61,7 @@ public class ProductDetailsControler extends HttpServlet {
                 : (numofrecords / pagesize) + 1;
 
         //get product with that id
-        Product productInfomation = productListDBContext.getProductByID(productID);
+        Product productInfomation = productListDBContext.getProductById(productID);
         //get all feedback of that product
         ArrayList<Feedback> listFeedbacks = productListDBContext.getListFeedbackByProductID(productID, pageindex, pagesize);
 

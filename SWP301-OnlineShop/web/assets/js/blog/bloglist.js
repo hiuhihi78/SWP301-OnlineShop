@@ -35,16 +35,16 @@ function handleAttributeBoxSearch(content) {
 
 //handle category
 function handleCategory() {
-//    for (var i = 0; i < categories.length; i++) {
-//        categories[i].onclick = function (e) {
-//            var category = e.target.id;
-//            var url = "bloglist?category=" + category;
-//            if (category == -1) {
-//                url = "bloglist";
-//            }
-//            window.location.href = url;
-//        };
-//    }
+    for (var i = 0; i < categories.length; i++) {
+        categories[i].onclick = function (e) {
+            var category = e.target.id;
+            var url = "bloglist?category=" + category;
+            if (category == -1) {
+                url = "bloglist";
+            }
+            window.location.href = url;
+        };
+    }
 }
 
 

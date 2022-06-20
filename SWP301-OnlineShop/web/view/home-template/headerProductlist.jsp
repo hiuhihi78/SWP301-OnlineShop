@@ -19,7 +19,7 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="cartlist"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="cartDetails"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <c:if test="${sessionScope.user == null}">
                                 <li><a href="login" id="button"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>
@@ -35,7 +35,7 @@
                                         <li>
                                             <a href="user/profile" class="text-none-underline">Profile</a>
                                         </li>
-                                        
+
                                         <c:if test="${sessionScope.user.role.id == 1}">
                                             <li>
                                                 <a href="admin/userList" class="text-none-underline">Manage</a>
@@ -53,18 +53,20 @@
                                                 <a href="sale/productlist" class="text-none-underline">My store</a>
                                             </li>
                                         </c:if>  
-                                            
-                                            
+
                                         <li>
-<!--                                            <a type="button" class="btn btn-primary text-none-underline" data-toggle="modal" data-target="#myModal">
-                                                Change password
-                                            </a>-->
+                                            <a href="myorders" class="text-none-underline">My orders</a>
+                                        </li>
+                                        <li>
+                                            <!--                                            <a type="button" class="btn btn-primary text-none-underline" data-toggle="modal" data-target="#myModal">
+                                                                                            Change password
+                                                                                        </a>-->
                                             <a href="#" class="text-none-underline" data-toggle="modal" data-target="#myModal">Change password</a>
                                         </li>
 
-<!--                                        <li>
-                                            <a class="btn btn-primary text-none-underline mg-0" data-toggle="modal" data-target="#myModal">Change password</a>
-                                        </li>-->
+                                        <!--                                        <li>
+                                                                                    <a class="btn btn-primary text-none-underline mg-0" data-toggle="modal" data-target="#myModal">Change password</a>
+                                                                                </li>-->
 
                                         <li>
                                             <a href="logout" class="text-none-underline">Logout</a>
@@ -98,11 +100,11 @@
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="home" ${(requestScope.active == "home")?"class=\"active\"":""}>Home</a></li>
                             <li><a href="bloglist" ${(requestScope.active == "blog")?"class=\"active\"":""}>Blog</a></li>
-                            <li><a href="productlist" ${(requestScope.active == "productList")?"class=\"active\"":""}>Product List</a></li>
+                            <li><a href="productlist" ${(requestScope.active == "productList")?"class=\"active\"":""}>Products</a></li>
                         </ul>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>  

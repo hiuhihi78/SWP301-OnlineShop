@@ -11,8 +11,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Cart;
+import model.Category;
+import model.Feature;
 import model.Feedback;
+import model.Image;
 import model.Product;
+import model.SubCategory;
 import model.User;
 
 /**
@@ -141,6 +145,7 @@ public class ProductListDBContext extends DBContext {
                 product.setId(rs.getInt("id"));
                 product.setName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
+                product.setQuantity(rs.getInt("quantity"));
                 product.setPrice(rs.getLong("price"));
                 product.setDiscount(rs.getInt("discount"));
                 product.setThumbnail(rs.getString("thumbnail"));
@@ -182,6 +187,99 @@ public class ProductListDBContext extends DBContext {
         return null;
     }
 
+    public Product getProductById(int productId) {
+        Product product = new Product();
+        try {
+            connection.setAutoCommit(false);
+            String sql = "SELECT [Product].[id]\n"
+                    + "      ,[Product].[name]\n"
+                    + "      ,[description]\n"
+                    + "      ,[price]\n"
+                    + "      ,[discount]\n"
+                    + "      ,[sellerId]\n"
+                    + "      ,[User].[fullname]\n"
+                    + "      ,[featured]\n"
+                    + "      ,[thumbnail]\n"
+                    + "      ,[date]\n"
+                    + "      ,[subCategoryId]\n"
+                    + "	  ,[SubCategory].[name]\n"
+                    + "	  ,[Category].[id]\n"
+                    + "	  ,[Category].[name]\n"
+                    + "      ,[quantity]\n"
+                    + "      ,[Product].[status]\n"
+                    + "      ,[User].email\n"
+                    + "      ,[User].avatar\n"
+                    + "  FROM [dbo].[Product] join SubCategory on subCategoryId = SubCategory.id\n"
+                    + "		     join Category on Category.id = SubCategory.categoryId\n"
+                    + "			 join [User] on [User].id = sellerId\n"
+                    + "Where [Product].[id] = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                product.setId(productId);
+                product.setName(rs.getString(2));
+                product.setDescription(rs.getString(3));
+                product.setPrice(rs.getLong(4));
+                product.setDiscount(rs.getInt(5));
+                User user = new User();
+                user.setId(rs.getInt(6));
+                user.setFullname(rs.getString(7));
+                product.setUser(user);
+                product.setFeatured(rs.getBoolean(8));
+                product.setThumbnail(rs.getString(9));
+                product.setDate(rs.getDate(10));
+                SubCategory subCategory = new SubCategory();
+                subCategory.setId(rs.getInt(11));
+                subCategory.setName(rs.getString(12));
+                product.setSubCategory(subCategory);
+                Category category = new Category();
+                category.setId(rs.getInt(13));
+                category.setName(rs.getString(14));
+                subCategory.setCategory(category);
+                product.setSubCategory(subCategory);
+                product.setQuantity(rs.getInt(15));
+                product.setStatus(rs.getBoolean(16));
+                user.setEmail(rs.getString(17));
+                user.setAddress(rs.getString(18));
+                product.setUser(user);
+            }
+
+            String sql1 = " SELECT [Image].id, [Image].[image]\n"
+                    + "  FROM [dbo].[Image] join Product_Image on [Image].id = Product_Image.imageId\n"
+                    + "					join Product on Product.id = Product_Image.productId\n"
+                    + "WHERE Product_Image.productId = ?";
+            PreparedStatement ps1 = connection.prepareStatement(sql1);
+            ps1.setInt(1, productId);
+            ResultSet rs1 = ps1.executeQuery();
+
+            ArrayList<Image> images = new ArrayList<>();
+            while (rs1.next()) {
+                Image image = new Image();
+                image.setId(rs1.getInt(1));
+                image.setImage(rs1.getString(2));
+                images.add(image);
+            }
+
+            product.getImage().addAll(images);
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return product;
+    }
+
     public int countSizeOfFeedback(int productID) {
         try {
 
@@ -206,13 +304,15 @@ public class ProductListDBContext extends DBContext {
 
     public ArrayList<Feedback> getListFeedbackByProductID(int productID, int pageindex, int pagesize) {
         ArrayList<Feedback> listFeedbacks = new ArrayList<>();
-        String sql1 = " with x as (select ROW_NUMBER() OVER (ORDER BY f.id desc) as r\n"
-                + "                    		, f.id, f.userId, f.productId, f.start,f.comment ,f.image, f.status, u.fullname from Feedback f INNER JOIN [User] u\n"
-                + "							ON f.userId = u.id\n"
-                + "							where f.status = 1\n"
-                + "							AND f.productId = ? )\n"
-                + "                    		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?  ";
+
         try {
+            String sql1 = " with x as (select ROW_NUMBER() OVER (ORDER BY f.id desc) as r\n"
+                    + "                    		, f.id, f.userId, f.productId, f.start,f.comment ,f.image, f.status, u.fullname, u.avatar, f.date from Feedback f INNER JOIN [User] u\n"
+                    + "							ON f.userId = u.id\n"
+                    + "							where f.status = 1\n"
+                    + "							AND f.productId = ? )\n"
+                    + "                    		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?  ";
+
             PreparedStatement ps = connection.prepareStatement(sql1);
             ps.setInt(1, productID);
             ps.setInt(2, pageindex);
@@ -227,12 +327,31 @@ public class ProductListDBContext extends DBContext {
                 User user = new User();
                 user.setId(rs.getInt("userId"));
                 user.setFullname(rs.getString("fullname"));
+                user.setAvatar(rs.getString("avatar"));
                 feedback.setUser(user);
                 Product product = new Product();
                 product.setId(rs.getInt("productId"));
                 feedback.setProduct(product);
                 feedback.setComment(rs.getString("comment"));
                 feedback.setStart(rs.getInt("start"));
+                if (rs.getDate("date") != null) {
+                    feedback.setDate(rs.getDate("date"));
+                }
+
+                ArrayList<Image> images = new ArrayList<>();
+                String sql2 = "SELECT [Image].[image], [Image].[id]\n"
+                        + "  FROM [dbo].[Feedback_Image] join Image on [Image].id = Feedback_Image.imageId\n"
+                        + "  Where feedbackId = ?";
+                PreparedStatement ps2 = connection.prepareStatement(sql2);
+                ps2.setInt(1, feedback.getId());
+                ResultSet rs2 = ps2.executeQuery();
+                while (rs2.next()) {
+                    Image image = new Image();
+                    image.setImage(rs2.getString(1));
+                    image.setId(rs.getInt(2));
+                    images.add(image);
+                }
+                feedback.setImage(images);
                 listFeedbacks.add(feedback);
             }
         } catch (SQLException ex) {
@@ -241,29 +360,29 @@ public class ProductListDBContext extends DBContext {
         return listFeedbacks;
     }
 
-    public ArrayList<Cart> getAllProductIdInCart() {
-        ArrayList<Cart> listCarts = new ArrayList<>();
-        String sql1 = " select * from cart  ";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql1);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setId(rs.getInt("productId"));
-
-                User userBuyId = new User();
-                userBuyId.setId(rs.getInt("userBuyId"));
-
-                Cart cart = new Cart();
-                cart.setProduct(product);
-                cart.setUserBuy(userBuyId);
-                listCarts.add(cart);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listCarts;
-    }
+//    public ArrayList<Cart> getAllProductIdInCart() {
+//        ArrayList<Cart> listCarts = new ArrayList<>();
+//        String sql1 = " select * from cart  ";
+//        try {
+//            PreparedStatement ps = connection.prepareStatement(sql1);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                Product product = new Product();
+//                product.setId(rs.getInt("productId"));
+//
+//                User userBuyId = new User();
+//                userBuyId.setId(rs.getInt("userBuyId"));
+//
+//                Cart cart = new Cart();
+//                cart.setProduct(product);
+//                cart.setUserBuy(userBuyId);
+//                listCarts.add(cart);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return listCarts;
+//    }
 
     public void editQuantityOrderOfCart(int quantityOrder, int productId, int userBuyId) {
         String spl1 = " UPDATE [dbo].[Cart]\n"
@@ -297,53 +416,57 @@ public class ProductListDBContext extends DBContext {
         }
     }
 
-    public void addNewCartInfomation(Cart cart) {
-        String sql = " INSERT INTO [dbo].[Cart]\n"
-                + "           ([productId]\n"
-                + "           ,[productName]\n"
-                + "           ,[quantityOrder]\n"
-                + "           ,[price]\n"
-                + "           ,[userBuyId]\n"
-                + "           ,[sellerId]\n"
-                + "           ,[thumbnail])\n"
-                + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?) ";
-        PreparedStatement stm = null;
+//    public void addNewCartInfomation(Cart cart) {
+//        String sql = " INSERT INTO [dbo].[Cart]\n"
+//                + "           ([productId]\n"
+//                + "           ,[productName]\n"
+//                + "           ,[quantityOrder]\n"
+//                + "           ,[price]\n"
+//                + "           ,[userBuyId]\n"
+//                + "           ,[sellerId]\n"
+//                + "           ,[thumbnail])\n"
+//                + "     VALUES\n"
+//                + "           (?\n"
+//                + "           ,?\n"
+//                + "           ,?\n"
+//                + "           ,?\n"
+//                + "           ,?\n"
+//                + "           ,?\n"
+//                + "           ,?) ";
+//        PreparedStatement stm = null;
+//
+//        try {
+//            stm = connection.prepareStatement(sql);
+//            stm.setInt(1, cart.getProduct().getId());
+//            stm.setString(2, cart.getProduct().getName());
+//            stm.setInt(3, cart.getQuantityOrder());
+//            stm.setLong(4, cart.getPrice());
+//            stm.setInt(5, cart.getUserBuy().getId());
+//            stm.setInt(6, cart.getUserSeller().getId());
+//            stm.setString(7, cart.getThumbnail());
+//            stm.executeUpdate();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            if (stm != null) {
+//                try {
+//                    stm.close();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            if (connection != null) {
+//                try {
+//                    connection.close();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        }
+//    }
 
-        try {
-            stm = connection.prepareStatement(sql);
-            stm.setInt(1, cart.getProduct().getId());
-            stm.setString(2, cart.getProduct().getName());
-            stm.setInt(3, cart.getQuantityOrder());
-            stm.setLong(4, cart.getPrice());
-            stm.setInt(5, cart.getUserBuy().getId());
-            stm.setInt(6, cart.getUserSeller().getId());
-            stm.setString(7, cart.getThumbnail());
-            stm.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+    public static void main(String[] args) {
+        ProductListDBContext bContext = new ProductListDBContext();
+        System.out.println(bContext.getListFeedbackByProductID(9, 1, 5));
     }
-
-    }
+}

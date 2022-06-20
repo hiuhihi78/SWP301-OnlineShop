@@ -403,8 +403,7 @@ public class ProductDBContext extends DBContext {
                     + "	WHEN @Col_Name = 'status' THEN CAST([status]  AS SQL_VARIANT)\n"
                     + "END " + sort;
 
-            System.out.println("param index" + paramIndex);
-            System.out.println(sql);
+            
             PreparedStatement ps = connection.prepareStatement(sql);
             for (Map.Entry<Integer, Object[]> entry : params.entrySet()) {
                 Integer index = entry.getKey();
@@ -741,8 +740,6 @@ public class ProductDBContext extends DBContext {
                     + "	WHEN @Col_Name = 'status' THEN CAST([status]  AS SQL_VARIANT)\n"
                     + "END " + sort;
 
-            System.out.println("param index" + paramIndex);
-            System.out.println(sql);
             PreparedStatement ps = connection.prepareStatement(sql);
             for (Map.Entry<Integer, Object[]> entry : params.entrySet()) {
                 Integer index = entry.getKey();

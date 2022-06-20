@@ -46,9 +46,10 @@
                         <h2 class="title text-center">Add New Post</h2>
                         <div class="mb-10" >
                             <form action="./addPost" method="POST" class="dflex-column" enctype="multipart/form-data">
-                                <div class="form-group w-70-percent">
-                                    <div id="preview-box" class="preview-img">
-                                        <img class="img-fit" id="previewImage"/>
+                                <div class="form-group w-70-percent" >
+                                    <div id="preview-box" class="preview-img" style="height: 300px; width: fit-content;">
+                                        <img class="img-fit" id="previewImage" style="width: 100%;
+                                             height: 100%;"/>
                                         <button onclick="btnClosePreviewImage()" type="button" class="close btn-close-preview" >&times;</button>
                                     </div>
                                     <label for="thumbnail">Thumbnail</label>

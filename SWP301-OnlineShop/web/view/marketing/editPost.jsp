@@ -49,9 +49,8 @@
                                 <input type="hidden" name="id" value="${requestScope.post.id}"/>
                             <input type="hidden" name="thumbnailOld" value="${requestScope.post.thumbnail}"/>
                             <div class="form-group w-70-percent">
-                                <div id="preview-box" class="preview-img-edit">
-                                    <img class="img-fit" id="previewImage" src="${requestScope.post.thumbnail}"/>
-                                    <!--<button onclick="btnClosePreviewImage()" type="button" class="close" style="font-size: 30px; position: absolute; z-index: 1024; right: 5px;">&times;</button>-->
+                                <div id="preview-box" class="preview-img-edit" style="height: 300px; width: fit-content">
+                                    <img class="img-fit" id="previewImage" src="${requestScope.post.thumbnail}" style="width: 100%; height: 100%;"/>
                                 </div>
                                 <label for="thumbnail">Thumbnail</label>
                                 <input type="file" class="form-control" name="file" id="file"  onchange="checkFileInput(this)" accept="image/*"/>

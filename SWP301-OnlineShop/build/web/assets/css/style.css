@@ -4207,3 +4207,8 @@ padding: 6px 10px;
 .st-blue {
   background-color: #23b7e5;
 }
+
+#table {
+    overflow-y:scroll;
+    height: 250px;
+}

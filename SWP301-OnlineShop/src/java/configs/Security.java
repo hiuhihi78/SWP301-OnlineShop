@@ -28,6 +28,10 @@ public class Security {
     /*Start  Config of slider page*/
     public static final int SIZE_PAGE_SLIDER_LIST = 2; //Number of sliders per page
     /*End  Config of slider page*/
+    
+    /*Start  Config of cart page*/
+    public static final int SIZE_PAGE_CART_LIST = 10; //Number of product per cart page 
+    /*End  Config of cart page*/
 
     public static final boolean SHOW_STATUS = true;
     public static final boolean HIDE_STATUS = false;
