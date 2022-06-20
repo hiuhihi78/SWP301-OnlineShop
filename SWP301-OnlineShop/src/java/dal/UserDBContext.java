@@ -425,7 +425,7 @@ public class UserDBContext extends DBContext {
 
     }
 
-    public User getUserById(int id) throws IOException {
+    public User getUserById(int id)  {
         String sql = "SELECT [fullname]\n"
                 + "	  ,[gender]\n"
                 + "      ,[avatar]\n"
@@ -475,6 +475,8 @@ public class UserDBContext extends DBContext {
                 u.setRole(role);
                 u.setStatus(rs.getBoolean(9));
                 u.setId(id);
+                
+                System.out.println(u);
                 return u;
 
             }
@@ -1223,8 +1225,9 @@ public class UserDBContext extends DBContext {
 //        } catch (Exception e) {
 //
 //        }
-        User user = db.getUserByEmail("Nguyenhieuskynett@gmail.com");
-        System.out.println(user.getEmail());
+//        User user = db.getUserByEmail("Nguyenhieuskynett@gmail.com");
+//        System.out.println(user.getEmail());
+        System.out.println(db.getUserById(1).toString());
 
     }
 }

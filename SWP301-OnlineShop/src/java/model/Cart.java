@@ -4,52 +4,30 @@
  */
 package model;
 
+import java.sql.Date;
+import java.util.ArrayList;
+
 /**
  *
  * @author Hoang Quang
  */
 public class Cart {
-//    CREATE TABLE [dbo].[Cart](
-//	[id] [int] IDENTITY(1,1) primary key NOT NULL,
-//	[productId] [int] NOT NULL,
-//	[productName] [nvarchar](200) NOT NULL,
-//	[quantityOrder] [int] NOT NULL,
-//	[price] [float] NOT NULL,
-//	[userBuyId] [int] NOT NULL,
-//	[sellerId] [int] NOT NULL,
-//	[thumbnail] [varchar](max) NOT NULL,
 
     private int id;
-    private Product product;
-    private int quantityOrder;
-    private long price;
-    private User userBuy;
-    private User userSeller;
-    private String thumbnail;
-    private long total;
-
-    public Cart() {
+    private User customer;
+    private ArrayList<Cart_Product> cart_Products = new ArrayList<>();
+    private Date dateUpdated;
+    private int statusId;
+    
+    public Date getDateUpdated() {
+        return dateUpdated;
     }
 
-    public Cart(int id, Product product, int quantityOrder, long price, User userBuy, User userSeller, String thumbnail, long total) {
-        this.id = id;
-        this.product = product;
-        this.quantityOrder = quantityOrder;
-        this.price = price;
-        this.userBuy = userBuy;
-        this.userSeller = userSeller;
-        this.thumbnail = thumbnail;
-        this.total = total;
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 
-    public long getTotal() {
-        return (price * quantityOrder);
-    }
-
-    public void setTotal(long total) {
-        this.total = total;
-    }
-
+    
     public int getId() {
         return id;
     }
@@ -58,52 +36,35 @@ public class Cart {
         this.id = id;
     }
 
-    public Product getProduct() {
-        return product;
+    public User getCustomer() {
+        return customer;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setCustomer(User customer) {
+        this.customer = customer;
     }
 
-    public int getQuantityOrder() {
-        return quantityOrder;
+    public ArrayList<Cart_Product> getCart_Products() {
+        return cart_Products;
     }
 
-    public void setQuantityOrder(int quantityOrder) {
-        this.quantityOrder = quantityOrder;
+    public void setCart_Products(ArrayList<Cart_Product> cart_Products) {
+        this.cart_Products = cart_Products;
     }
 
-    public long getPrice() {
-        return price;
+   
+    public int getStatusId() {
+        return statusId;
     }
 
-    public void setPrice(long price) {
-        this.price = price;
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
-
-    public User getUserBuy() {
-        return userBuy;
-    }
-
-    public void setUserBuy(User userBuy) {
-        this.userBuy = userBuy;
-    }
-
-    public User getUserSeller() {
-        return userSeller;
-    }
-
-    public void setUserSeller(User userSeller) {
-        this.userSeller = userSeller;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+    
+     @Override
+    public String toString() {
+        return "Cart{" + "id=" + id + ", customer=" + customer + ", cart_Products=" +'}';
     }
 
 }
+

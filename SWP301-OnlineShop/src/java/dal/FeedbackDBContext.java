@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Feedback;
+import model.Image;
 import model.Product;
 import model.User;
 
@@ -104,7 +105,7 @@ public class FeedbackDBContext extends DBContext {
                 paramContent[0] = String.class.getName();
                 paramContent[1] = "%" + search + "%";
                 params.put(paramIndex, paramContent);
-                
+
                 paramIndex++;
                 Object[] paramProductName = new Object[2];
                 paramProductName[0] = String.class.getName();
@@ -171,8 +172,6 @@ public class FeedbackDBContext extends DBContext {
         return feedbacks;
     }
 
-    
-
     public ArrayList<Feedback> getListFeedbackByPage(ArrayList<Feedback> list, int start, int end) {
         ArrayList<Feedback> arr = new ArrayList<>();
         int totalRecord = list.size();
@@ -188,7 +187,7 @@ public class FeedbackDBContext extends DBContext {
 
     public void editStatusFeedback(int id, boolean status) {
         try {
-            
+
             String sql = "UPDATE [dbo].[Feedback]\n"
                     + "   SET [status] = ?\n"
                     + " WHERE  id = ?";
@@ -199,6 +198,30 @@ public class FeedbackDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(FeedbackDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public ArrayList<Image> getFeedbackImage(int feedbackId) {
+        ArrayList<Image> images = new ArrayList<>();
+        String sql = "select [Image].[image] from Feedback_Image join [Image] on Feedback_Image.imageId = [Image].id \n"
+                + "Where feedbackId = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, feedbackId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Image image = new Image();
+                image.setImage(rs.getString(1));
+                images.add(image);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedbackDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return images;
+    }
+    
+    public static void main(String[] args) {
+        FeedbackDBContext db = new FeedbackDBContext();
+        System.err.println(db.getFeedbackImage(5).size());
     }
 
 }

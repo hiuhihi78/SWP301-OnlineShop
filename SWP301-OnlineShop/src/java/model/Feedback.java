@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +19,15 @@ public class Feedback {
     private String comment;
     private ArrayList<Image> image = new ArrayList<>();
     private boolean status;
+    private Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Feedback() {
     }
@@ -87,5 +97,11 @@ public class Feedback {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return  id +  " " + user.toString();
+    }
+
+    
     
 }

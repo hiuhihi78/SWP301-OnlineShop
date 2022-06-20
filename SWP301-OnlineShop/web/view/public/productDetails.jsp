@@ -1,3 +1,6 @@
+<%@page import="model.Image"%>
+<%@page import="model.Product"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -6,7 +9,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Product List</title>
+        <title>Product Detail</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,14 +21,34 @@
         <link href="../../assets/public/css/main.css" rel="stylesheet">
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
 
+         <!-- font Awesome -->
+        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
         <link href="../../assets/public/css/style.css" rel="stylesheet">
+        <link href="../../assets/css/admin/feedback.css" rel="stylesheet">
+        
 
+               <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!--active button nav in sidebar-->
+        
+        <%
+            ArrayList<Image> attchedImg = ((Product) request.getAttribute("productInfomation")).getImage();
+            if (attchedImg == null || attchedImg.size() == 0) {
+                Image image = new Image();
+                image.setImage("#");
+                attchedImg.add(image);
+                attchedImg.add(image);
+            }
+        %>
     </head>
     <!--/head-->
 
     <body>
         <c:set value="${requestScope.productInfomation}" var="product"/>
-        <jsp:include page="../home-template/headerProductlist.jsp"/>
+        <jsp:include page="../home-template/header.jsp"/>
         <section>
             <div class="container">
                 <div class="row flex-justify">
@@ -106,96 +129,60 @@
                                     </c:forEach>
                                 </c:if>
                             </div><!-- end two least product --> 
-
                         </div>                     
                     </div>
-
                     <!--PRODUCT DETAILS-->
                     <div class="col-sm-9 padding-right">
+
                         <h2 class="title text-center" style="border-bottom: solid 2px;">Product Details</h2>
                         <div class="product-details"><!--product-details-->
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 <!--thumbnail-->
-                                <div class="view-product">
-                                    <img src="${product.thumbnail}" alt="" />
-                                    <!--<h3>ZOOM</h3>-->
-                                </div>
+                                <div id="myCarousel" class="carousel slide cursor-zoom" data-ride="carousel" onclick="ZoomProductImage(${product.id})">
+                                            <!-- Indicators -->
+                                            <ol class="carousel-indicators">
+                                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                                            </ol>
 
-                                <!--                                <div id="similar-product" class="carousel slide" data-ride="carousel">
-                                                                     Wrapper for slides 
-                                                                    <div class="carousel-inner">
-                                                                        <div class="item active">
-                                                                            <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                                                            <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                                                            <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                            <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                                                            <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                                                            <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                            <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                                                            <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                                                            <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                                                        </div>
-                                
-                                                                    </div>
-                                
-                                                                     Controls 
-                                                                    <a class="left item-control" href="#similar-product" data-slide="prev">
-                                                                        <i class="fa fa-angle-left"></i>
-                                                                    </a>
-                                                                    <a class="right item-control" href="#similar-product" data-slide="next">
-                                                                        <i class="fa fa-angle-right"></i>
-                                                                    </a>
-                                                                </div>-->
+                                            <!-- Wrapper for slides -->
+                                        <div class="carousel-inner">
+                                            <div class="item active">
+                                                <img src="${requestScope.productInfomation.thumbnail}" alt="thumbnail" style="height: 350px; width: 120%; object-fit: cover;">
+                                            </div>
+                                            <div class="item">
+                                                 <img src="<%= attchedImg.get(1).getImage()%>" alt="thumbnail" style="height: 350px; width: 120%; object-fit: cover;">
+                                            </div>
+                                            <div class="item">
+                                                <img src="<%= attchedImg.get(0).getImage()%>" alt="thumbnail" style="height: 350px; width: 124530%; object-fit: cover;">
+                                            </div>
+                                        </div>
+
+                                        <!-- Left and right controls -->
+                                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                            <span class="sr-only"></span>
+                                        </a>
+                                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                            <span class="sr-only"></span>
+                                        </a>
+                                    </div>
 
                             </div>
                             <!--Information here-->
-                            <div class="col-sm-7">
+                            <div class="col-sm-6">
                                 <div class="product-information"><!--/product-information-->
-<!--                                    <input type="hidden" value="${product.quantity}" id="quantity">
+                                   
                                     <h2><b>${product.name}</b></h2>
-                                    <p>Web ID: ${product.id}</p>
-                                    <p>Seller: ${product.user.fullname}</p>
-                                    <p> 
-                                        Description:
-                                    ${product.description}
-                                </p>
-                                <p>
-                                    <label>Price: </label>
-                                    <span class="text-line-through">
-                                    <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
-                                </span>
-                                <span class="text-danger">
-                                    <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
-                                </span>
-                            </p>
-                            <p> <label>Total Quantity: ${product.quantity}</label> </p>
-                            <div class="add-cart">
-                                <label>Enter Quantity: </label>
-                                <input class="form-control" style="width: 4em; " type="text" name="quantityOrder" id="quantityOrder" value="1">
-                                <button type="button" style="width: 10em; " class="form-control" onclick="myFunction()">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    Add to cart
-                                </button> 
-                            </div>
-                            <p id="demo"></p>-->
+                                                            
 
-                                   <form action="productdetails" method="post">
-                                    <input type="hidden" value="${product.id}" name="productId">
-                                    <input type="hidden" value="${product.name}" name="productName">
-                                    <input type="hidden" value="${product.quantity}" name="quantity">
-                                    <input type="hidden" value="${product.priceDiscount}" name="price">
-                                    <input type="hidden" value="${product.user.id}" name="sellerId">
-                                    <input type="hidden" value="${product.thumbnail}" name="thumbnail">
-                                    <h2><b>${product.name}</b></h2>
-                                    <p>Web ID: ${product.id}</p>
-                                    <p>Seller: ${product.user.fullname}</p>
+                                    <p>
+                                        <label>Seller: </label>
+                                        <span> ${product.user.fullname}</span> 
+                                    </p>
                                     <p> 
-                                        Description:
-                                        ${product.description}
+                                        <label>Description: </label>
+                                        <span> ${product.description}</span> 
                                     </p>
                                     <p>
                                         <label>Price: </label>
@@ -206,21 +193,27 @@
                                             <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
                                         </span>
                                     </p>
-                                    <p> <label>Total Quantity: ${product.quantity}</label> </p>
+                                        <p> <label>Total Quantity: ${product.quantity}</label> </p>
+                                    
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <p> 
                                                 <label>Choice Your Quantity: </label>
-                                                <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;" 
+                                                <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;"  class="chose-quantity"
                                                        min="1" max="${product.quantity}" value = "1" required>
                                             </p>
-                                            <button type="submit" style="width: 10em; " class="form-control" >
+                                            
+                                                <div id="alter_quantityOrder">
+                                                    
+                                                </div>
+                                            
+                                            <button  style="width: 10em; " class="form-control add-to-cart" onclick="addToCartFunction();" >
                                                 <i class="fa fa-shopping-cart"></i>
                                                 Add to cart
-                                            </button> 
+                                            </button>
+                                            </form>    
                                         </div>
                                     </div><!-- comment -->
-                                </form>
                                 </div><!--/product-information-->
                             </div>
                         </div>
@@ -231,33 +224,54 @@
                             <div class="category-tab shop-details-tab">
                                 <div class="tab-pane fade active in" id="reviews">
                                     <c:forEach items="${requestScope.listFeedbacks}" var="feedback">
-                                        <div class="col-sm-12" style="border-bottom: solid 1px; margin-top: 20px;">
-                                            <ul>
-
-                                                <li><a><i class="fa fa-user"></i>${feedback.user.fullname}</a></li>
-
-                                            </ul>
-                                            <ul>
-                                                Rating: ${feedback.start} star
-                                            </ul>
-                                            <p>${feedback.comment}</p>
-                                            <!--                                    <p><b>Write Your Review</b></p> 
-                                                                                <form action="#">
-                                                                                    <span>
-                                                                                        <input type="text" placeholder="Your Name"/>
-                                                                                        <input type="email" placeholder="Email Address"/>
-                                                                                    </span>
-                                                                                    <textarea name="" ></textarea>
-                                            
-                                                                                    <button type="button" class="btn btn-default pull-right">
-                                                                                        Submit
-                                                                                    </button>
-                                                                                </form> -->
+                                        <div class="feedback-detail">
+                                            <div class="feedback-detail__avatar">
+                                                <div class="customer-avatar">
+                                                    <div class="customer-avatar__placeholder">
+                                                        <c:if test="${feedback.user.avatar == null}">
+                                                            <img class="customer-avatar__img" src="../assets/img/defaultUserAvatar.png" style="width: 40px;height: 40px">
+                                                        </c:if>
+                                                        <c:if test="${feedback.user.avatar != null}">
+                                                            <img class="customer-avatar__img" src="${feedback.user.avatar}" style="width: 40px;height: 40px">
+                                                        </c:if>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="feedback-detail__main">
+                                                <div class="feedback-detail__author-name">
+                                                    ${feedback.user.fullname}
+                                                </div>
+                                                <div class="repeat-purchase-con">
+                                                    <div class="feedback-detail__rating">
+                                                        <c:forEach begin="0" end="${feedback.start}">
+                                                            <span style=" font-size: 20px; color: #ffe500; opacity: 1; transform: rotateX(0deg);text-shadow: 0 0 30px #ffc;">★</span>
+                                                        </c:forEach>
+                                                    </div>
+                                                    <div class="feedback-detail__time">
+                                                        ${feedback.date}
+                                                    </div>
+                                                </div>
+                                                <div class="feedback-detail__comment">
+                                                    <div >${feedback.comment}</div>
+                                                </div>
+                                                <div class="rating-media-list">
+                                                    <div class="rating-media-list__container">
+                                                        <c:forEach items="${feedback.image}" var="image">
+                                                            <div class="rating-media-list__image-wrapper">
+                                                                <img class="feedback-img" src="${image.image}" alt="he" onclick="openFeedbackImg(${feedback.id})"/>
+                                                            </div>
+                                                        </c:forEach>
+                                                    </div>
+                                                    <div id="feedback-img-zoom-${feedback.id}" style="width: 50%;"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </c:forEach>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="pagging">
+                        </div>                
+                            <div class="pagging" style="clear: both">
                                 <ul class="pagination pull-right">
                                     <c:if test="${requestScope.totalpage > 1}">
                                         <li><a href="productdetails?page=1&productID=${product.id}">Frist</a></li>
@@ -282,36 +296,36 @@
                         </c:if>
                     </div>
                     <!--END PRODCUT DETAILS-->
-                </div>
-
-            </div>
+                    
+                    <!--add to cart-->
+                    <div id="add-to-cart-alter"></div>
+                    <input type="hidden" id="customerId" value="${sessionScope.user.id}">
+                    <input type="hidden" id="productId" value="${product.id}">
+                    <input type="hidden" id="productQuantity" value="${product.quantity}">
+                    <!--/add to cart-->
+                    
+                    <!--zoom product image-->
+                    <div class="carouse-zoom" id="carouse-zoom" onclick=""></div>
+                    <!--/zoom product image-->
         </section>
+                                
+                                            
+        
+                                               
+                                                
         <script language="JavaScript" type="text/javascript">
-            function myFunction() {
-                // Get the value of the input field with id="numb"
-                let quantityOrder = document.getElementById("quantityOrder").value;
-                let quantity = document.getElementById("quantity").value;
-                // If x is Not a Number or less than one or greater than 10
-                let text;
-                if (isNaN(quantityOrder) || quantityOrder < 0 || quantityOrder > quantity || quantityOrder == "") {
-                    text = "Please input quantity from 1 to " + quantity;
-                    document.getElementById("demo").innerHTML = text;
-                } else {
-                    var result = confirm("Are you sure to add this product to your cart?");
-                    if (result) {
-                        window.location.href = "delete?id="
-                    }
-                }
-
-            }
+            
+          
         </script>
         <jsp:include page="../home-template/footer.jsp"/>
+        
+        
+        <script src="../../assets/js/home/productDetail.js"></script>
         <script src="../../assets/public/js/jquery.js"></script>
         <script src="../../assets/public/js/bootstrap.min.js"></script>
         <script src="../../assets/public/js/jquery.scrollUp.min.js"></script>
         <script src="../../assets/public/js/price-range.js"></script>
         <script src="../../assets/public/js/jquery.prettyPhoto.js"></script>
-        <script src="../../assets/public/js/main.js"></script>
         <script src="../../assets/js/home/home.js"></script>
     </body>
 

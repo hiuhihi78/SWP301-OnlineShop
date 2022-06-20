@@ -28,39 +28,39 @@ public class CartListControler extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //get list cart of user with id form DB
-        CartDBContext cartDBContext = new CartDBContext();
-        HttpSession session = request.getSession();
-        
-        //get user Id
-        User user = (User) session.getAttribute("user");
-        int userID = user.getId();
-        
-        //get value from paramester;
-        String page = request.getParameter("page");
-
-        //validate value
-        if (page == null || page.trim().length() == 0) {
-            page = "1";
-        }
-        int pagesize = 10;
-        int pageindex = Integer.parseInt(page);
-
-        int numofrecords = cartDBContext.countTotalOfListCart(userID);
-        int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
-                : (numofrecords / pagesize) + 1;
-
-        ArrayList<Cart> listCarts = cartDBContext.getListCartByUserID(userID, pageindex, pagesize);
-
-        System.out.println(listCarts.size());
-        System.out.println(totalpage);
-        System.out.println(userID);
-
-        //pass infomation jsp
-        request.setAttribute("listCarts", listCarts);
-        request.setAttribute("pagesize", pagesize);
-        request.setAttribute("pageindex", pageindex);
-        request.setAttribute("totalpage", totalpage);
-        request.getRequestDispatcher("view/public/cart.jsp").forward(request, response);
+//        CartDBContext cartDBContext = new CartDBContext();
+//        HttpSession session = request.getSession();
+//        
+//        //get user Id
+//        User user = (User) session.getAttribute("user");
+//        int userID = user.getId();
+//        
+//        //get value from paramester;
+//        String page = request.getParameter("page");
+//
+//        //validate value
+//        if (page == null || page.trim().length() == 0) {
+//            page = "1";
+//        }
+//        int pagesize = 10;
+//        int pageindex = Integer.parseInt(page);
+//
+//        int numofrecords = cartDBContext.countTotalOfListCart(userID);
+//        int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
+//                : (numofrecords / pagesize) + 1;
+//
+//        ArrayList<Cart> listCarts = cartDBContext.getListCartByUserID(userID, pageindex, pagesize);
+//
+//        System.out.println(listCarts.size());
+//        System.out.println(totalpage);
+//        System.out.println(userID);
+//
+//        //pass infomation jsp
+//        request.setAttribute("listCarts", listCarts);
+//        request.setAttribute("pagesize", pagesize);
+//        request.setAttribute("pageindex", pageindex);
+//        request.setAttribute("totalpage", totalpage);
+//        request.getRequestDispatcher("view/public/cart.jsp").forward(request, response);
     }
 
     /**

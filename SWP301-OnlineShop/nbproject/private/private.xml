@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/DELL/Desktop/dev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/ProductListPublicController.java</file>
+            <file>file:/C:/Users/DELL/Desktop/dev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/CartCompletionController.java</file>
+            <file>file:/C:/Users/DELL/Desktop/dev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/productlist.jsp</file>
+            <file>file:/C:/Users/DELL/Desktop/dev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/CartCompletion.jsp</file>
+        </group>
     </open-files>
 </project-private>
