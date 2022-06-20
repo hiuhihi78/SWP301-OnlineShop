@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -18,7 +19,7 @@ public class Cart_Product {
     private Product product;
     private int quantity;
     private String sku;
-    private Date dateUpdated;
+   private Timestamp dateUpdated;
 
 
     
@@ -74,20 +75,12 @@ public class Cart_Product {
         this.sku = sku;
     }
 
-    
-
-    public Date getDateUpdated() {
+    public Timestamp getDateUpdated() {
         return dateUpdated;
     }
 
-    public void setDateUpdated(Date dateUpdated) {
+    public void setDateUpdated(Timestamp dateUpdated) {
         this.dateUpdated = dateUpdated;
     }
-
-
-    
-    
-    
-    
     
 }

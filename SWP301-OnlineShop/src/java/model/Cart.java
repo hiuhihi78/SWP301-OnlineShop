@@ -4,23 +4,30 @@
  */
 package model;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
  * @author Hoang Quang
  */
 public class Cart {
+
     private int id;
     private User customer;
     private ArrayList<Cart_Product> cart_Products = new ArrayList<>();
-    
     private Date dateUpdated;
     private int statusId;
     
-    
+    public Date getDateUpdated() {
+        return dateUpdated;
+    }
 
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
+    }
+
+    
     public int getId() {
         return id;
     }
@@ -45,18 +52,7 @@ public class Cart {
         this.cart_Products = cart_Products;
     }
 
-
-
-    public Date getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
-    }
-
-    
-
+   
     public int getStatusId() {
         return statusId;
     }
@@ -64,15 +60,11 @@ public class Cart {
     public void setStatusId(int statusId) {
         this.statusId = statusId;
     }
-
     
-    
-
-    @Override
+     @Override
     public String toString() {
         return "Cart{" + "id=" + id + ", customer=" + customer + ", cart_Products=" +'}';
     }
 
-   
 }
 

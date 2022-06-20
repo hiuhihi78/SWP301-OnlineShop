@@ -107,7 +107,8 @@ public class CartDBContext extends DBContext {
                 cart_Product.setCartId(rs1.getInt(1));
                 cart_Product.setProductId(rs1.getInt(2));
                 cart_Product.setQuantity(rs1.getInt(3));
-
+                cart_Product.setDateUpdated(rs1.getTimestamp("DateUpdated"));
+                
                 cart_Products.add(cart_Product);
             }
             cart.getCart_Products().addAll(cart_Products);
@@ -140,11 +141,14 @@ public class CartDBContext extends DBContext {
         try {
             connection.setAutoCommit(false);
             String sql = "INSERT INTO [dbo].[Cart]\n"
-                    + "           ([customerId])\n"
+                    + "           ([customerId]\n"
+                    + "           ,[DateUpdated])\n"
                     + "     VALUES\n"
-                    + "           (?)";
+                    + "           (?\n"
+                    + "           ,?)";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, cart.getCustomer().getId());
+            ps.setDate(2, cart.getDateUpdated());
             ps.executeUpdate();
 
             int cartId = 0;
@@ -156,17 +160,20 @@ public class CartDBContext extends DBContext {
             }
 
             String sql2 = "INSERT INTO [dbo].[Cart_Product]\n"
-                    + "           ([cartId]\n"
-                    + "           ,[productId]\n"
-                    + "           ,[quantity])\n"
+                    + "           ([CartId]\n"
+                    + "           ,[ProductId]\n"
+                    + "           ,[Quantity]\n"
+                    + "           ,[DateUpdated])\n"
                     + "     VALUES\n"
                     + "           (?\n"
+                    + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?)";
             PreparedStatement ps2 = connection.prepareStatement(sql2);
             ps2.setInt(1, cartId);
             ps2.setInt(2, cart.getCart_Products().get(0).getProductId());
             ps2.setInt(3, cart.getCart_Products().get(0).getQuantity());
+            ps2.setTimestamp(4, cart.getCart_Products().get(0).getDateUpdated());
             ps2.executeUpdate();
 
             connection.commit();
@@ -190,39 +197,40 @@ public class CartDBContext extends DBContext {
 
         try {
             connection.setAutoCommit(false);
+            
             String sql = "DELETE FROM [dbo].[Cart_Product]\n"
                     + "      WHERE cartId = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, cart.getId());
             ps.executeUpdate();
 
-            System.out.println("cart size: " + cart.getCart_Products().size());
-
             for (int i = 0; i < cart.getCart_Products().size(); i++) {
                 String sql2 = "INSERT INTO [dbo].[Cart_Product]\n"
-                        + "           ([cartId]\n"
-                        + "           ,[productId]\n"
-                        + "           ,[quantity])\n"
+                        + "           ([CartId]\n"
+                        + "           ,[ProductId]\n"
+                        + "           ,[Quantity]\n"
+                        + "           ,[DateUpdated])\n"
                         + "     VALUES\n"
                         + "           (?\n"
+                        + "           ,?\n"
                         + "           ,?\n"
                         + "           ,?)";
                 PreparedStatement ps2 = connection.prepareStatement(sql2);
                 ps2.setInt(1, cart.getId());
                 ps2.setInt(2, cart.getCart_Products().get(i).getProductId());
                 ps2.setInt(3, cart.getCart_Products().get(i).getQuantity());
+                ps2.setTimestamp(4, cart.getCart_Products().get(i).getDateUpdated());
                 ps2.executeUpdate();
             }
-            System.out.println("cart size : " + cart.getCart_Products().size());
-//            String sql2 = "INSERT INTO [dbo].[Cart_Product]\n"
-//                        + "           ([cartId]\n"
-//                        + "           ,[productId]\n"
-//                        + "           ,[quantity])\n"
-//                        + "     VALUES\n";
-//            int count = 0;
-//            for (int i = 0; i < cart.getCart_Products().size(); i++) {
-//                
-//            }
+
+            String sql3 = "UPDATE [dbo].[Cart]\n"
+                    + "   SET \n"
+                    + "      [DateUpdated] = ?\n"
+                    + " WHERE [Cart].id = ?";
+            PreparedStatement ps3 = connection.prepareStatement(sql3);
+            ps3.setDate(1, cart.getDateUpdated());
+            ps3.setInt(2, cart.getId());
+            ps3.executeUpdate();
 
             connection.commit();
         } catch (SQLException ex) {
@@ -282,7 +290,7 @@ public class CartDBContext extends DBContext {
                 cartProduct.setProduct(productDb.getProductById(pid));
                 cartProduct.setQuantity(rs.getInt("Quantity"));
        
-                cartProduct.setDateUpdated(rs.getDate("DateUpdated"));
+                cartProduct.setDateUpdated(rs.getTimestamp("DateUpdated"));
 
                 lstProduct.add(cartProduct);
                 cart.setCart_Products(lstProduct);

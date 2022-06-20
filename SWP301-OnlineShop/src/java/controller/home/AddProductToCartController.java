@@ -9,7 +9,10 @@ import dal.ProductDBContext;
 import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,6 +45,8 @@ public class AddProductToCartController extends HttpServlet {
         int quantityOrder = Integer.parseInt(request.getParameter("quantityOrder"));
         int productId = Integer.parseInt(request.getParameter("productId"));
 
+        Timestamp currentDateForCart_Product = new Timestamp(System.currentTimeMillis());
+
         CartDBContext cartDB = new CartDBContext();
         UserDBContext userDB = new UserDBContext();
         ProductDBContext productDB = new ProductDBContext();
@@ -62,8 +67,15 @@ public class AddProductToCartController extends HttpServlet {
             cart_Product.setProductId(productId);
             cart_Product.setQuantity(quantityOrder);
             cart_Products.add(cart_Product);
-
+            //date cart_product
+            cart_Product.setDateUpdated(currentDateForCart_Product);
+            
             newCart.getCart_Products().addAll(cart_Products);
+            
+            // date cart
+            newCart.setDateUpdated(new java.sql.Date(System.currentTimeMillis()));
+           
+            
             cartDB.addNewCartForNewCustomer(newCart);
         } else {
             boolean isNewProduct = true;
@@ -80,6 +92,9 @@ public class AddProductToCartController extends HttpServlet {
                     } else {
                         products.get(i).setQuantity(newQuantity);
                     }
+                    
+                    // update date cart_product
+                    products.get(i).setDateUpdated(currentDateForCart_Product);
                     isNewProduct = false;
                     break;
                 }
@@ -90,9 +105,11 @@ public class AddProductToCartController extends HttpServlet {
                 product.setCartId(cart.getId());
                 product.setProductId(productId);
                 product.setQuantity(quantityOrder);
+                product.setDateUpdated(currentDateForCart_Product);
                 products.add(product);
             }
 
+            cart.setDateUpdated(new java.sql.Date(System.currentTimeMillis()));
             cartDB.updateCart(cart);
         }
     }
