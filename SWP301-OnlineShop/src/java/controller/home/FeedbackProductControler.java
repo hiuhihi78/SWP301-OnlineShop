@@ -10,79 +10,70 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Category;
+import model.Feedback;
 import model.Product;
 
 /**
  *
  * @author Hoang Quang
  */
-public class ProductListPublicController extends HttpServlet {
+@WebServlet(name = "FeedbackProductControler", urlPatterns = {"/feedbackproduct"})
+public class FeedbackProductControler extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductListDBContext productListDBContext = new ProductListDBContext();
         ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
-        
-        //get Parameter value
-        String searchBy = request.getParameter("searchBy");
-        String raw_subCategory = request.getParameter("subCategory");
-        String raw_categoryID = request.getParameter("categoryID");
-        String page = request.getParameter("page");
-        
-        
+        ProductListDBContext productListDBContext = new ProductListDBContext();
+
         //get list subcategory
         ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
 
         //get least post
         ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
 
+        //GET PRODUCT DETAILS, FEEDBACK OF THAT PRODUCT
+        //get value from jsp
+        String raw_productID = request.getParameter("productID");
+        String page = request.getParameter("page");
+
+        // validate value
+        int productID = Integer.parseInt(raw_productID);
+
         //get list product sort by date
         if (page == null || page.trim().length() == 0) {
             page = "1";
         }
-        int pagesize = 9;
+        int pagesize = 5;
         int pageindex = Integer.parseInt(page);
 
-        //check search
-        if (searchBy == null || searchBy.length() == 0 || searchBy.equals("-1")) {
-            searchBy = "";
-        }
-        //check subCategory
-        if (raw_subCategory == null || raw_subCategory.length() == 0 || raw_subCategory.equals("-1")) {
-            raw_subCategory = "0";
-        }
-        int subCategory = Integer.parseInt(raw_subCategory);
-        
-        //check Category
-        if (raw_categoryID == null || raw_categoryID.length() == 0 || raw_categoryID.equals("-1")) {
-            raw_categoryID = "0";
-        }
-        int categoryID = Integer.parseInt(raw_categoryID);
-        
-        int numofrecords = productListDBContext.countSizeOfListProduct(searchBy, subCategory);
+        //get pageSize
+        int numofrecords = productListDBContext.countSizeOfFeedback(productID);
         int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
                 : (numofrecords / pagesize) + 1;
 
-        ArrayList<Product> listProducts = productListDBContext.getListProductsPagging(searchBy, subCategory, pageindex, pagesize);
-        
-//        System.out.println(subCategory);
-//        System.out.println(categoryID);
-//        System.out.println("---");
-        
+        //get product with that id
+        Product productInfomation = productListDBContext.getProductByID(productID);
+        //get all feedback of that product
+        ArrayList<Feedback> listFeedbacks = productListDBContext.getListFeedbackByProductID(productID, pageindex, pagesize);
+
+        //check value
+        System.out.println(numofrecords);
+        System.out.println(listFeedbacks.size());
+
+        //pass to jsp
+        request.setAttribute("productInfomation", productInfomation);
         request.setAttribute("listCategorys", listCategorys);
+        request.setAttribute("listFeedbacks", listFeedbacks);
         request.setAttribute("leastProduct", leastProduct);
-        request.setAttribute("listProducts", listProducts);
-        request.setAttribute("searchBy", searchBy);
-        request.setAttribute("subCategory", subCategory);
-        request.setAttribute("categoryID", categoryID);
         request.setAttribute("pagesize", pagesize);
         request.setAttribute("pageindex", pageindex);
         request.setAttribute("totalpage", totalpage);
-        request.getRequestDispatcher("view/public/productlist.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/public/feedbackProduct.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -123,7 +114,5 @@ public class ProductListPublicController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-
 
 }

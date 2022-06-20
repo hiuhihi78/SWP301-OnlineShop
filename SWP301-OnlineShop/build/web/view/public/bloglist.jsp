@@ -32,6 +32,7 @@
                                 <div class="panel panel-default">
                                     <input type="hidden" value="${requestScope.idCategory}" id="search-category"/>
                                     <input type="hidden" value="${requestScope.idSubCategory}" id="search-subcategory"/>
+                                    
                                     <div class="panel-heading">
                                         <h4 class="panel-title"><a ${(requestScope.idCategory == -1)?"class=\"active-category\"":""} id="all-category" href="#">All Category</a></h4>
                                     </div>

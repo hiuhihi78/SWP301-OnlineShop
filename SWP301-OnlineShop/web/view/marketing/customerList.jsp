@@ -117,6 +117,12 @@
                                                                     <i class="fa-solid fa-user-pen"></i>Edit
                                                                 </button>
                                                             </a>
+                                                            <!--VIEW-->
+                                                            <a href="../../customer/viewdetails?id=${list.id}" style="text-decoration: none; color:white">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    <i class="fa-solid fa-user-pen"></i>View
+                                                                </button>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

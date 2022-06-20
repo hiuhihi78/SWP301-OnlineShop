@@ -2,6 +2,26 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/customerDetails.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/cart.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/CartListControler.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/NewClass.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/newjsp.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/customerList.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/home-template/header.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/DBContext.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/CustomerViewDetailsControler.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/productlist.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/customerViewDetails.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/NewServlet.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/filter/BaseAuthController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/CustomerListControler.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/productDetails.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/AddNewCategoryProductController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/home-template/headerProductlist.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/newjsp1.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/CustomerDetailsControler.java</file>
+        </group>
     </open-files>
 </project-private>

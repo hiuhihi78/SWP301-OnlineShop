@@ -17,7 +17,7 @@ import model.User;
  *
  * @author Hoang Quang
  */
-public class CustomerListControler extends BaseAuthController {
+    public class CustomerListControler extends BaseAuthController {
 
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)

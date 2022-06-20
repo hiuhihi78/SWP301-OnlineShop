@@ -113,63 +113,6 @@
 
                     <!--PRODUCT DETAILS-->
                     <div class="col-sm-9 padding-right">
-                        <h2 class="title text-center" style="border-bottom: solid 2px;">Product Details</h2>
-                        <div class="product-details"><!--product-details-->
-                            <div class="col-sm-5">
-                                <!--thumbnail-->
-                                <div class="view-product">
-                                    <img src="${product.thumbnail}" alt="" />
-                                    <!--<h3>ZOOM</h3>-->
-                                </div>
-
-                            </div>
-                            <!--Information here-->
-                            <div class="col-sm-7">
-                                <div class="product-information"><!--/product-information-->
-
-
-                                   <form action="addcart" method="post">
-                                    <input type="hidden" value="${product.id}" name="productId">
-                                    <input type="hidden" value="${product.name}" name="productName">
-                                    <input type="hidden" value="${product.quantity}" name="quantity">
-                                    <input type="hidden" value="${product.priceDiscount}" name="price">
-                                    <input type="hidden" value="${product.user.id}" name="sellerId">
-                                    <input type="hidden" value="${product.thumbnail}" name="thumbnail">
-                                    <h2><b>${product.name}</b></h2>
-                                    <p>Web ID: ${product.id}</p>
-                                    <p>Seller: ${product.user.fullname}</p>
-                                    <p> 
-                                        Description:
-                                        ${product.description}
-                                    </p>
-                                    <p>
-                                        <label>Price: </label>
-                                        <span class="text-line-through">
-                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
-                                        </span>
-                                        <span class="text-danger">
-                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
-                                        </span>
-                                    </p>
-                                    <p> <label>Total Quantity: ${product.quantity}</label> </p>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <p> 
-                                                <label>Choice Your Quantity: </label>
-                                                <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;" 
-                                                       min="1" max="${product.quantity}" value = "1" required>
-                                            </p>
-                                            <button type="submit" style="width: 10em; " class="form-control" >
-                                                <i class="fa fa-shopping-cart"></i>
-                                                Add to cart
-                                            </button> 
-                                        </div>
-                                    </div><!-- comment -->
-                                </form>
-                                </div><!--/product-information-->
-                            </div>
-                        </div>
-
                         <c:if test="${not empty requestScope.listFeedbacks }">
                             <!-- FEEDBACK -->
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Feedback</h2>
@@ -186,18 +129,6 @@
                                                 Rating: ${feedback.start} star
                                             </ul>
                                             <p>${feedback.comment}</p>
-                                            <!--                                    <p><b>Write Your Review</b></p> 
-                                                                                <form action="#">
-                                                                                    <span>
-                                                                                        <input type="text" placeholder="Your Name"/>
-                                                                                        <input type="email" placeholder="Email Address"/>
-                                                                                    </span>
-                                                                                    <textarea name="" ></textarea>
-                                            
-                                                                                    <button type="button" class="btn btn-default pull-right">
-                                                                                        Submit
-                                                                                    </button>
-                                                                                </form> -->
                                         </div>
                                     </c:forEach>
                                 </div>
@@ -225,31 +156,16 @@
                             </div>
                             <!--/END FEEDBACK-->
                         </c:if>
+                            </div>
+                        </div>
+
                     </div>
                     <!--END PRODCUT DETAILS-->
                 </div>
 
             </div>
         </section>
-        <script language="JavaScript" type="text/javascript">
-            function myFunction() {
-                // Get the value of the input field with id="numb"
-                let quantityOrder = document.getElementById("quantityOrder").value;
-                let quantity = document.getElementById("quantity").value;
-                // If x is Not a Number or less than one or greater than 10
-                let text;
-                if (isNaN(quantityOrder) || quantityOrder < 0 || quantityOrder > quantity || quantityOrder == "") {
-                    text = "Please input quantity from 1 to " + quantity;
-                    document.getElementById("demo").innerHTML = text;
-                } else {
-                    var result = confirm("Are you sure to add this product to your cart?");
-                    if (result) {
-                        window.location.href = "delete?id="
-                    }
-                }
 
-            }
-        </script>
         <jsp:include page="../home-template/footer.jsp"/>
         <script src="../../assets/public/js/jquery.js"></script>
         <script src="../../assets/public/js/bootstrap.min.js"></script>

@@ -26,20 +26,37 @@
     <body>
         <c:set value="${requestScope.productInfomation}" var="product"/>
         <jsp:include page="../home-template/headerProductlist.jsp"/>
+        <c:if test="${requestScope.alert != null}">
+            <div class="fixed float-end t-55px" id="showAlter" style="    width: 18%;
+                 z-index: 1024;
+                 right: 23%;
+                 top: 6%;
+                 position: fixed;
+                 ">
+                <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="transform: rotate(90deg);
+                       font-size: 39px;
+                       opacity: 0.2;
+                       top: 8px;">&times;</a>
+                    ${requestScope.alert}
+                </div>
+            </div>
+        </c:if>
         <section>
             <div class="container">
                 <div class="row flex-justify">
+
                     <div class="col-sm-3 box-shadow height-fit-content border-radius-2" >
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
-                           <form action="productlist" method="get">
+                            <form action="productlist" method="get">
                                 <div class="panel-group category-products" id="accordian"><!--category-products-->
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
 
                                             <div class="search_box">
                                                 <!--<input id="search-box" type="text" placeholder="Search..." name="searchBy" value="${requestScope.searchBy}">-->
-                                                 <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search"/>
+                                                <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search"/>
                                             </div>
                                         </div>
                                         <div class="panel-heading">
@@ -110,7 +127,6 @@
 
                         </div>                     
                     </div>
-
                     <!--PRODUCT DETAILS-->
                     <div class="col-sm-9 padding-right">
                         <h2 class="title text-center" style="border-bottom: solid 2px;">Product Details</h2>
@@ -121,134 +137,69 @@
                                     <img src="${product.thumbnail}" alt="" />
                                     <!--<h3>ZOOM</h3>-->
                                 </div>
-
                             </div>
-                            <!--Information here-->
+                            <!--ADD TO CART-->
                             <div class="col-sm-7">
                                 <div class="product-information"><!--/product-information-->
-
-
-                                   <form action="addcart" method="post">
-                                    <input type="hidden" value="${product.id}" name="productId">
-                                    <input type="hidden" value="${product.name}" name="productName">
-                                    <input type="hidden" value="${product.quantity}" name="quantity">
-                                    <input type="hidden" value="${product.priceDiscount}" name="price">
-                                    <input type="hidden" value="${product.user.id}" name="sellerId">
-                                    <input type="hidden" value="${product.thumbnail}" name="thumbnail">
-                                    <h2><b>${product.name}</b></h2>
-                                    <p>Web ID: ${product.id}</p>
-                                    <p>Seller: ${product.user.fullname}</p>
-                                    <p> 
-                                        Description:
-                                        ${product.description}
-                                    </p>
-                                    <p>
-                                        <label>Price: </label>
-                                        <span class="text-line-through">
-                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
-                                        </span>
-                                        <span class="text-danger">
-                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
-                                        </span>
-                                    </p>
-                                    <p> <label>Total Quantity: ${product.quantity}</label> </p>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <p> 
-                                                <label>Choice Your Quantity: </label>
-                                                <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;" 
-                                                       min="1" max="${product.quantity}" value = "1" required>
-                                            </p>
-                                            <button type="submit" style="width: 10em; " class="form-control" >
-                                                <i class="fa fa-shopping-cart"></i>
-                                                Add to cart
-                                            </button> 
-                                        </div>
-                                    </div><!-- comment -->
-                                </form>
+                                    <form action="addcart" method="post"  id="addcart">
+                                        <input type="hidden" value="${product.id}" name="productId">
+                                        <input type="hidden" value="${product.name}" name="productName">
+                                        <input type="hidden" value="${product.quantity}" name="quantity">
+                                        <input type="hidden" value="${product.priceDiscount}" name="price">
+                                        <input type="hidden" value="${product.user.id}" name="sellerId">
+                                        <input type="hidden" va="hidden" value="${product.thumbnail}" name="thumbnail">
+                                        <h2><b>${product.name}</b></h2>
+                                        <p>Web ID: ${product.id}</p>
+                                        <p>Seller: ${product.user.fullname}</p>
+                                        <p> 
+                                            Description:
+                                            ${product.description}
+                                        </p>
+                                        <p>
+                                            <label>Price: </label>
+                                            <span class="text-line-through">
+                                                <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
+                                            </span>
+                                            <span class="text-danger">
+                                                <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
+                                            </span>
+                                        </p>
+                                        <p> <label>Total Quantity: ${product.quantity}</label> </p>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <p> 
+                                                    <label>Choice Your Quantity: </label>
+                                                    <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;" 
+                                                           min="1" max="${product.quantity}" value = "1" required>
+                                                </p>
+                                                <button type="submit" style="width: 10em; " class="form-control" onsubmit ="addToCart()">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                    Add to cart
+                                                </button> 
+                                            </div>
+                                        </div><!-- comment -->
+                                    </form>
                                 </div><!--/product-information-->
-                            </div>
+                            </div><!-- END ADD TO CART -->
                         </div>
-
-                        <c:if test="${not empty requestScope.listFeedbacks }">
-                            <!-- FEEDBACK -->
-                            <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Feedback</h2>
-                            <div class="category-tab shop-details-tab">
-                                <div class="tab-pane fade active in" id="reviews">
-                                    <c:forEach items="${requestScope.listFeedbacks}" var="feedback">
-                                        <div class="col-sm-12" style="border-bottom: solid 1px; margin-top: 20px;">
-                                            <ul>
-
-                                                <li><a><i class="fa fa-user"></i>${feedback.user.fullname}</a></li>
-
-                                            </ul>
-                                            <ul>
-                                                Rating: ${feedback.start} star
-                                            </ul>
-                                            <p>${feedback.comment}</p>
-                                            <!--                                    <p><b>Write Your Review</b></p> 
-                                                                                <form action="#">
-                                                                                    <span>
-                                                                                        <input type="text" placeholder="Your Name"/>
-                                                                                        <input type="email" placeholder="Email Address"/>
-                                                                                    </span>
-                                                                                    <textarea name="" ></textarea>
-                                            
-                                                                                    <button type="button" class="btn btn-default pull-right">
-                                                                                        Submit
-                                                                                    </button>
-                                                                                </form> -->
-                                        </div>
-                                    </c:forEach>
-                                </div>
-                            </div>
-                            <div class="pagging">
-                                <ul class="pagination pull-right">
-                                    <c:if test="${requestScope.totalpage > 1}">
-                                        <li><a href="productdetails?page=1&productID=${product.id}">Frist</a></li>
-                                        </c:if>
-                                        <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
-                                        <li class="${pageindex == page ? "active =" : ""}" ><a href="productdetails?page=${page}&productID=${product.id}">${page}</a></li>    
-                                        </c:forEach>
-                                        <c:if test="${requestScope.totalpage > 1}">
-                                        <li><a href="productdetails?page=${requestScope.totalpage}&productID=${product.id}">Last</a></li>
-                                        </c:if>
-                                </ul>
-                            </div>
-                            <!--/END FEEDBACK-->
-                        </c:if>
-                        <c:if test="${empty requestScope.listFeedbacks}">
-                            <!-- FEEDBACK -->
-                            <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Feedback</h2>
-                            <div style="text-align: center;">
-                                <b>This Product Have No Feedback</b>
-                            </div>
-                            <!--/END FEEDBACK-->
-                        </c:if>
                     </div>
                     <!--END PRODCUT DETAILS-->
                 </div>
-
             </div>
         </section>
         <script language="JavaScript" type="text/javascript">
-            function myFunction() {
-                // Get the value of the input field with id="numb"
-                let quantityOrder = document.getElementById("quantityOrder").value;
-                let quantity = document.getElementById("quantity").value;
-                // If x is Not a Number or less than one or greater than 10
-                let text;
-                if (isNaN(quantityOrder) || quantityOrder < 0 || quantityOrder > quantity || quantityOrder == "") {
-                    text = "Please input quantity from 1 to " + quantity;
-                    document.getElementById("demo").innerHTML = text;
-                } else {
-                    var result = confirm("Are you sure to add this product to your cart?");
-                    if (result) {
-                        window.location.href = "delete?id="
-                    }
+            function addToCart() {
+                
+                var result = confirm("Are you sure to add this product to your cart?");
+                if (result) {
+//                    window.location.href = "addcart"
+                    document.getElementById("addcart").submit();
                 }
-
             }
+            setTimeout(function () {
+                const element = document.getElementById('showAlter');
+                element.remove();
+            }, 3000);
         </script>
         <jsp:include page="../home-template/footer.jsp"/>
         <script src="../../assets/public/js/jquery.js"></script>

@@ -31,7 +31,6 @@
                     <div class="col-sm-3 box-shadow height-fit-content border-radius-2" >
                         <div class="left-side"> <!-- left-sidebar -->
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
-
                             <form action="productlist" method="get">
                                 <div class="panel-group category-products" id="accordian"><!--category-products-->
                                     <div class="panel panel-default">
@@ -44,7 +43,7 @@
                                         </div>
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <a href="productlist" ${(requestScope.categoryID == 0) ? "class=\"active-category\"" : ""}>
+                                                <a href="productlist">
                                                     <span class="badge pull-right"></span>
                                                     All Category
                                                 </a>
@@ -60,24 +59,24 @@
                                                         <a data-toggle="collapse" data-parent="#accordian" href="#${list.id}" ${(requestScope.categoryID == list.id)?"":"class=\"collapsed\""} >
                                                             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                                                                 ${list.name}
-
+                                                            
                                                         </a>
                                                     </h4>
                                                 </div>
                                                 <div id="${list.id}" class="panel-collapse ${(requestScope.categoryID == list.id)?"in height-auto":"collapse"}">
-                                                    <div class="panel-body">
-                                                        <ul>
-                                                            <c:forEach items="${list.listSubCategory}" var="listSub">
-                                                                <li><a href="productlist?subCategory=${listSub.id}&searchBy=${searchBy}&categoryID=${list.id}" ${(requestScope.subCategory == listSub.id)?"class=\"active-category\"":""} 
-                                                                       >${listSub.name} </a></li>                                                             
-                                                                </c:forEach>
-                                                        </ul>
+                                                        <div class="panel-body">
+                                                            <ul>
+                                                                <c:forEach items="${list.listSubCategory}" var="listSub">
+                                                                    <li><a href="productlist?subCategory=${listSub.id}&searchBy=${searchBy}&categoryID=${list.id}" ${(requestScope.subCategory == listSub.id)?"":"class=\"collapsed\""} 
+                                                                           >${listSub.name} </a></li> 
+                                                                    </c:forEach>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </c:if>
-                                    </c:forEach>
-                                </div><!--/category-products-->    
+                                            </c:if>
+                                        </c:forEach>
+                                    </div><!--/category-products-->    
                             </form>
 
 
@@ -137,18 +136,17 @@
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
                                                     </span>
                                                 </p>
-
-                                                <!--Btn to Buy-->
-                                                <a href="addcart?productID=${product.id}" class="btn btn-default add-to-cart"><i
-                                                        class="fa fa-shopping-cart"></i> Buy</a>
-                                                <!--Btn to See List Feedback-->
-                                                <a href="feedbackproduct?productID=${product.id}" class="btn btn-default  add-to-cart"><i
-                                                        class="glyphicon glyphicon-thumbs-up"></i> Feedback</a>
+                                                <a href="productdetails?productID=${product.id}" class="btn btn-default add-to-cart"><i
+                                                        class="fa fa-shopping-cart"></i> Buy & Feedback</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </c:forEach>
+
+
+
+
                         </div>
                     </div>
                     <!--END PRODCUT LIST-->

@@ -33,7 +33,8 @@ public class CartListControler extends HttpServlet {
         
         //get user Id
         User user = (User) session.getAttribute("user");
-        int userID = user.getId();
+//        int userID = user.getId();
+        int userID = 76;
         
         //get value from paramester;
         String page = request.getParameter("page");
@@ -51,9 +52,8 @@ public class CartListControler extends HttpServlet {
 
         ArrayList<Cart> listCarts = cartDBContext.getListCartByUserID(userID, pageindex, pagesize);
 
-        System.out.println(listCarts.size());
-        System.out.println(totalpage);
-        System.out.println(userID);
+        System.out.println("size list cart: " +listCarts.size());
+        System.out.println("user id: " + userID);
 
         //pass infomation jsp
         request.setAttribute("listCarts", listCarts);
@@ -74,6 +74,7 @@ public class CartListControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
     }
 
     /**
