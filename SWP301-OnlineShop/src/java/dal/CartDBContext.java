@@ -113,7 +113,7 @@ public class CartDBContext extends DBContext {
             cart.getCart_Products().addAll(cart_Products);
 
             connection.commit();
-            if(cart.getId() == 0){
+            if (cart.getId() == 0) {
                 return null;
             }
             return cart;
@@ -196,11 +196,8 @@ public class CartDBContext extends DBContext {
             ps.setInt(1, cart.getId());
             ps.executeUpdate();
 
-                        System.out.println("cart size: " +cart.getCart_Products().size());
+            System.out.println("cart size: " + cart.getCart_Products().size());
 
-            
-                        
-                        
             for (int i = 0; i < cart.getCart_Products().size(); i++) {
                 String sql2 = "INSERT INTO [dbo].[Cart_Product]\n"
                         + "           ([cartId]\n"
@@ -216,7 +213,7 @@ public class CartDBContext extends DBContext {
                 ps2.setInt(3, cart.getCart_Products().get(i).getQuantity());
                 ps2.executeUpdate();
             }
-            System.out.println("cart size : "+cart.getCart_Products().size());
+            System.out.println("cart size : " + cart.getCart_Products().size());
 //            String sql2 = "INSERT INTO [dbo].[Cart_Product]\n"
 //                        + "           ([cartId]\n"
 //                        + "           ,[productId]\n"
@@ -226,7 +223,6 @@ public class CartDBContext extends DBContext {
 //            for (int i = 0; i < cart.getCart_Products().size(); i++) {
 //                
 //            }
-                        
 
             connection.commit();
         } catch (SQLException ex) {
@@ -245,11 +241,61 @@ public class CartDBContext extends DBContext {
         }
     }
 
+    public Cart getCartByIndexAndUserId(int index, int sizePage, String productName, int userId) {
+        Cart cart = null;
+        UserDBContext userDb = new UserDBContext();
+        ProductDBContext productDb = new ProductDBContext();
+        ArrayList<Cart_Product> lstProduct = new ArrayList<>();
+        User userBuy = null;
+        Cart_Product cartProduct = null;
+        try {
+            String sql = "select cp.*,c.customerId, c.DateUpdated [CartUpdated], c.Status_Id from "
+                    + "[Cart] as c, [Cart_Product] cp where c.id = cp.cartId AND customerId = ?";
+            if (!productName.isEmpty()) {
+                sql += " AND LOWER(productName) like '%" + productName.toLowerCase() + "%'";
+            }
+            sql += " order by DateUpdated desc";
+            if (index != 0 && sizePage != 0) {
+                sql += " offset ? rows fetch next ? rows only;";
+            }
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, userId);
+            if (index != 0 && sizePage != 0) {
+                ps.setInt(2, ((index - 1) * 2));
+                ps.setInt(3, sizePage);
+            }
+            ResultSet rs = ps.executeQuery();
+            cart = new Cart();
+
+            while (rs.next()) {
+                cart.setId(rs.getInt("CartId"));
+                userBuy = userDb.getUserById(rs.getInt("customerId"));
+                cart.setCustomer(userBuy);
+         
+                cart.setDateUpdated(rs.getDate("CartUpdated"));
+                cart.setStatusId(rs.getInt("Status_id"));
+                int pid = 0;
+                cartProduct = new Cart_Product();
+                cartProduct.setCartId(rs.getInt("CartId"));
+                pid = rs.getInt("ProductId");
+                cartProduct.setProduct(productDb.getProductById(pid));
+                cartProduct.setQuantity(rs.getInt("Quantity"));
+       
+                cartProduct.setDateUpdated(rs.getDate("DateUpdated"));
+
+                lstProduct.add(cartProduct);
+                cart.setCart_Products(lstProduct);
+            }
+        } catch (SQLException ex) {
+
+        }
+        return cart;
+    }
+
     public static void main(String[] args) {
         CartDBContext db = new CartDBContext();
-        Cart cart = db.getCartByCustomerId(1);
-        //System.out.println(cart.toString());
-        System.out.println(cart==null);
+
 //        ArrayList<Cart_Product> arrayList = new ArrayList<>();
 //        arrayList.add(new Cart_Product(5, 9, 10));
 //        cart.getCart_Products().addAll(arrayList);
@@ -258,6 +304,11 @@ public class CartDBContext extends DBContext {
 //        db.addNewCartForNewCustomer(cart);
 //    Cart c = db.getCartByCustomerId(76);
 //        System.out.println(c.getId() + " " + c.getCustomer().getId() + " " + c.getCart_Products().get(0).getProductId()+ " " + c.getCart_Products().get(0).getQuantity());
-
+        Cart cart = db.getCartByIndexAndUserId(0, 0, "", 1);
+        //System.out.println(cart.getId());
+        for (Cart_Product c : cart.getCart_Products()) {
+            System.out.println(c.getProduct().getName());
+        }
     }
+
 }

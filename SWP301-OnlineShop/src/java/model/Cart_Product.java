@@ -4,16 +4,24 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author Admin
  */
 public class Cart_Product {
 
-    
     private int cartId;
     private int productId;
+    
+    private Product product;
     private int quantity;
+    private String sku;
+    private Date dateUpdated;
+
+
+    
 
     public Cart_Product() {
     }
@@ -47,6 +55,38 @@ public class Cart_Product {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+   
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    
+
+    public Date getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
+    }
+
+
+    
+    
     
     
     

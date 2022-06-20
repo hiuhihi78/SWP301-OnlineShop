@@ -5,6 +5,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -14,6 +15,11 @@ public class Cart {
     private int id;
     private User customer;
     private ArrayList<Cart_Product> cart_Products = new ArrayList<>();
+    
+    private Date dateUpdated;
+    private int statusId;
+    
+    
 
     public int getId() {
         return id;
@@ -38,6 +44,29 @@ public class Cart {
     public void setCart_Products(ArrayList<Cart_Product> cart_Products) {
         this.cart_Products = cart_Products;
     }
+
+
+
+    public Date getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
+    }
+
+    
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    
+    
 
     @Override
     public String toString() {
