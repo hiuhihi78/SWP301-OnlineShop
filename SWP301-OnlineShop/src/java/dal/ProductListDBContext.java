@@ -383,7 +383,6 @@ public class ProductListDBContext extends DBContext {
 //        }
 //        return listCarts;
 //    }
-
     public void editQuantityOrderOfCart(int quantityOrder, int productId, int userBuyId) {
         String spl1 = " UPDATE [dbo].[Cart]\n"
                 + "   SET [quantityOrder] = ? \n"
@@ -464,13 +463,44 @@ public class ProductListDBContext extends DBContext {
 //            }
 //        }
 //    }
-
     public static void main(String[] args) {
         ProductListDBContext bContext = new ProductListDBContext();
         System.out.println(bContext.getListFeedbackByProductID(9, 1, 5));
     }
 
     public ArrayList<Product> getListProductById(int[] listIdProduct, int idUser) {
-        return new ArrayList<>();
+        ArrayList<Product> listProduct = new ArrayList<>();
+        try {
+            String sql = "Select cart.*, Cart_Product.ProductId, Cart_Product.Quantity, product.thumbnail, Product.[name], product.sellerId, [User].fullname,\n"
+                    + "((Product.price - (product.price*product.discount/100))) as totalPrice\n"
+                    + "from cart join Cart_Product\n"
+                    + "on cart.id = Cart_Product.CartId\n"
+                    + "join Product on Product.id = Cart_Product.ProductId\n"
+                    + "join [User] on [User].id = product.sellerId\n"
+                    + "where cart.customerId = ? and Cart_Product.ProductId = ?";
+            for (int i : listIdProduct) {
+                PreparedStatement stm = connection.prepareCall(sql);
+                stm.setInt(1, idUser);
+                stm.setInt(2, i);
+                ResultSet rs = stm.executeQuery();
+                while (rs.next()) {
+                    Product product = new Product();
+                    product.setId(rs.getInt(5));
+                    product.setQuantity(rs.getInt(6));
+                    product.setThumbnail(rs.getString(7));
+                    product.setName(rs.getString(8));
+                    User user = new User();
+                    user.setId(rs.getInt(9));
+                    user.setFullname(rs.getString(10));
+                    product.setUser(user);
+                    product.setPrice(rs.getLong(11));
+                    listProduct.add(product);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listProduct;
     }
 }

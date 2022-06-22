@@ -47,11 +47,15 @@ public class CartCompletionController extends HttpServlet {
         int[] listIdProduct = new int[listIdProductCart_raw.length];
         for (int i = 0; i < listIdProductCart_raw.length; i++) {
             listIdProduct[i] = Integer.parseInt(listIdProductCart_raw[i].trim());
+            System.out.print(listIdProduct[i] + " ");
         }
+        ArrayList<Product> leastProduct = productDB.getListLeastProduct();
         User user = (User)request.getSession().getAttribute("user");
         ArrayList<Product> listProduct = productDB.getListProductById(listIdProduct, user.getId());
         request.setAttribute("listCategorys", listCategorys);
         request.setAttribute("subCategory", subCategory);
+        request.setAttribute("listProduct", listProduct);
+        request.setAttribute("leastProduct", leastProduct);
         request.getRequestDispatcher("view/public/CartCompletion.jsp").forward(request, response);
     }
 
