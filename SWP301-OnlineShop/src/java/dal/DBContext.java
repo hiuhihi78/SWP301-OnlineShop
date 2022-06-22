@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 public class DBContext {
 
     Connection connection;
-
     public DBContext() {
         try {
             String user = "dev";
@@ -31,10 +30,5 @@ public class DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public static void main(String[] args) {
-        DBContext bContext = new DBContext();
-        System.out.println(bContext.connection.toString());
     }
 }

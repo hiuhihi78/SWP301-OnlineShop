@@ -105,7 +105,11 @@ public class CartDetailsController extends HttpServlet {
         request.setAttribute("carts", cart.getCart_Products());
         //Send index 
         request.setAttribute("index", index);
+        
+        request.setAttribute("cartId", cart.getId());
+        
         request.setAttribute("listCategorys", listCategorys);
+        
         request.setAttribute("leastProduct", leastProduct);
         
         processRequest(request, response);
