@@ -39,48 +39,42 @@
                                         Customer Details Information
                                     </header>
                                     <div class="panel-body">
-                                        <form class="form-horizontal" role="form" action="" method="post">
+                                        <form class="form-horizontal" role="form">
                                         <c:set var="customer" value="${requestScope.customer}"></c:set>
+
                                             <div class="form-group">
+                                                <label for="inputName" class="col-lg-3 col-sm-2 control-label">Name: </label>
                                                 <div class="col-md-8">
-                                                    <input type="hidden" class="form-control" id="customerID" name="customerID" value="${customer.id}">
-                                                <input type="hidden" class="form-control" name="updateBy" value="${sessionScope.user.fullname}">
-                                            </div>
-                                        </div> 
-                                        <div class="form-group">
-                                            <label for="inputName" class="col-lg-3 col-sm-2 control-label">Name: </label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control" name="fullname" id="fullname" value="${customer.fullname}" pattern="^[a-z A-Z 0-9]+$" required>
+                                                    <input readonly class="form-control"value="${customer.fullname}">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputEmail" class="col-lg-3 col-sm-2 control-label">Email:</label>
                                             <div class="col-md-8">
-                                                <input type="email" class="form-control" name="email" id="email"  value="${customer.email}"  required>
+                                                <input readonly class="form-control"value="${customer.email}">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputMobile" class="col-lg-3 col-sm-2 control-label">Mobile: </label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" name="mobile" id="mobile"  value="${customer.mobile}" pattern="^[0-9]+$"  required
-                                                       title="Your phone must be number">
+                                                <input readonly class="form-control"value="${customer.mobile}">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputAdress"
                                                    class="col-lg-3 col-sm-2 control-label">Address: </label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" name="address" id="address" value="${customer.address}" required >
+                                                <input readonly class="form-control"value="${customer.address}">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputGender" class="col-lg-3 col-sm-2 control-label">Gender:</label>
                                             <div class="col-md-8">                                       
                                                 <label class="checkbox-inline">
-                                                    <input type="radio" name="gender" ${customer.gender?"checked='checked'":"" }value="male" required> Male 
+                                                    <input type="radio" name="gender" ${customer.gender?"checked='checked'":"" } disabled> Male 
                                                 </label>
                                                 <label class="checkbox-inline">
-                                                    <input type="radio" name="gender" ${!customer.gender?"checked='checked'":""}value="female" required> Female
+                                                    <input type="radio" name="gender" ${!customer.gender?"checked='checked'":""} disabled> Female
                                                 </label>
                                             </div>
                                         </div>
@@ -96,10 +90,9 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col-md-offset-9">
-                                                <button type="submit" type="button" class="btn btn-info"> Save </button>
-                                                <a href="../customer/list" class="btn btn-danger">Back</a>
-                                            </div>
+                                            <div class="col-md-12 ">
+                                                <a class="btn btn-danger pull-right" href="../customer/list">Back</a>
+                                            </div> 
                                         </div>
                                     </form>
                                 </div><!-- /.panel-body -->

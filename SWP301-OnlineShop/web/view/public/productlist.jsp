@@ -17,9 +17,11 @@
         <link href="../../assets/public/css/animate.css" rel="stylesheet">
         <link href="../../assets/public/css/main.css" rel="stylesheet">
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
-
+        <!-- font Awesome -->
+        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="../../assets/public/css/style.css" rel="stylesheet">
-
+        <link href="../../assets/css/admin/feedback.css" rel="stylesheet">
     </head>
     <!--/head-->
 
@@ -28,87 +30,7 @@
         <section>
             <div class="container">
                 <div class="row flex-justify">
-                    <div class="col-sm-3 box-shadow height-fit-content border-radius-2" >
-                        <div class="left-side"> <!-- left-sidebar -->
-                            <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
-                            <form action="productlist" method="get">
-                                <div class="panel-group category-products" id="accordian"><!--category-products-->
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-
-                                            <div class="search_box">
-                                                <!--<input id="search-box" type="text" placeholder="Search..." name="searchBy" value="${requestScope.searchBy}">-->
-                                                <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search"/>
-                                            </div>
-                                        </div>
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a href="productlist">
-                                                    <span class="badge pull-right"></span>
-                                                    All Category
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <c:forEach items="${requestScope.listCategorys}" var="list">
-                                        <c:if test="${ not empty list.listSubCategory }"> <!-- check empty of list subcategory with that category -->
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-
-                                                        <a data-toggle="collapse" data-parent="#accordian" href="#${list.id}">
-                                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                                ${list.name}
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="${list.id}" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        <ul>
-                                                            <c:forEach items="${list.listSubCategory}" var="listSub">
-                                                                <li><a href="productlist?subCategory=${listSub.id}&searchBy=${searchBy}">${listSub.name} </a></li> 
-                                                                </c:forEach>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </c:if>
-                                    </c:forEach>
-                                </div><!--/category-products-->    
-                            </form>
-
-
-                            <div class="panel-group category-products" id="accordian"><!-- 2 least product -->
-                                <h2 class="title text-center" style="border-bottom: solid 2px;">Latest Product</h2>
-                                <%--<c:set var="leat" value="" />--%>
-                                <c:if test="${requestScope.leastProduct != null}">
-                                    <c:forEach items="${requestScope.leastProduct}" var="leastProduct">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <a href="productdetails?productID=${leastProduct.id}">
-                                                        <img src="${leastProduct.thumbnail}" alt="" />
-                                                    </a>
-                                                    <h2 class="break-down-line">${leastProduct.name}</h2>
-                                                    <p class="break-down-line">${leastProduct.description}</p>
-                                                    <p>
-                                                        <span class="text-line-through">
-                                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${leastProduct.price}"/>
-                                                        </span>
-                                                        <span class="text-danger">
-                                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${leastProduct.priceDiscount}"/>
-                                                        </span>
-                                                    </p>
-                                                    <a href="productdetails?productID=${leastProduct.id}" class="btn btn-default add-to-cart">More Information</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                </c:if>
-                            </div><!-- end two least product --> 
-
-                        </div>                     
-                    </div>
+                    <jsp:include page="../home-template/sidebarForProductList.jsp"/>
                     <!--PRODUCT LIST-->
                     <div class="col-sm-9 padding-right">
                         <div class="features_items">
@@ -134,17 +56,23 @@
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
                                                     </span>
                                                 </p>
-                                                <a href="productdetails?productID=${product.id}" class="btn btn-default add-to-cart"><i
-                                                        class="fa fa-shopping-cart"></i> Buy & Feedback</a>
+
+                                                <button  class="btn btn-default add-to-cart" onclick="addToCartFunction(${product.id},${product.quantity},${sessionScope.user.id});" >
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                    Add to cart
+                                                </button>
+
+                                                <!--Btn to See List Feedback-->
+                                                <button class="btn btn-default  add-to-cart">
+                                                    <a style="color: black" href="productdetails?productID=${product.id}" >
+                                                        <i class="glyphicon glyphicon-thumbs-up"></i>
+                                                        Feedback</a>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </c:forEach>
-
-
-
-
                         </div>
                     </div>
                     <!--END PRODCUT LIST-->
@@ -164,9 +92,11 @@
                 </div>
 
             </div>
+            <div id="add-to-cart-alter"></div>
         </section>
 
         <jsp:include page="../home-template/footer.jsp"/>
+        <script src="../../assets/js/home/productList.js"></script>
         <script src="../../assets/public/js/jquery.js"></script>
         <script src="../../assets/public/js/bootstrap.min.js"></script>
         <script src="../../assets/public/js/jquery.scrollUp.min.js"></script>

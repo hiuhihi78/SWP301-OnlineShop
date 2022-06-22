@@ -145,6 +145,7 @@ public class ProductListDBContext extends DBContext {
                 product.setId(rs.getInt("id"));
                 product.setName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
+                product.setQuantity(rs.getInt("quantity"));
                 product.setPrice(rs.getLong("price"));
                 product.setDiscount(rs.getInt("discount"));
                 product.setThumbnail(rs.getString("thumbnail"));
@@ -467,5 +468,9 @@ public class ProductListDBContext extends DBContext {
     public static void main(String[] args) {
         ProductListDBContext bContext = new ProductListDBContext();
         System.out.println(bContext.getListFeedbackByProductID(9, 1, 5));
+    }
+
+    public ArrayList<Product> getListProductById(int[] listIdProduct, int idUser) {
+        return new ArrayList<>();
     }
 }

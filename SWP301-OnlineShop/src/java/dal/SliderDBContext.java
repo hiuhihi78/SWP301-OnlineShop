@@ -118,8 +118,7 @@ public class SliderDBContext extends DBContext {
         return lst;
     }
 
-
-    public ArrayList<Slider> getSliderByIndex(int index,int sizePage, int status, String search) {
+    public ArrayList<Slider> getSliderByIndex(int index, int sizePage, int status, String search) {
         ArrayList<Slider> lst = new ArrayList<>();
         try {
             String sql = "select s.*, u.[password], u.avatar, u.fullname, u.status "
@@ -184,8 +183,7 @@ public class SliderDBContext extends DBContext {
         }
         return slider;
     }
-    
-    
+
     public boolean addSlider(Slider s) {
         try {
             String sql = "insert into slider(title, image, backlink, status, Userid , notes)"
@@ -197,7 +195,6 @@ public class SliderDBContext extends DBContext {
             stm.setBoolean(4, s.isStatus());
             stm.setInt(5, s.getUser().getId());
             stm.setString(6, s.getNote());
-    
 
             return stm.executeUpdate() > 0;
         } catch (Exception ex) {
@@ -205,11 +202,11 @@ public class SliderDBContext extends DBContext {
         }
         return false;
     }
-    
+
     public boolean updateSlider(Slider s) {
         try {
             String sql = "update slider set title=?, image=?, backlink=?, status=?, userid=?, notes=? where id = ?";
-            
+
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, s.getTitle());
             stm.setString(2, s.getImage());
@@ -237,7 +234,7 @@ public class SliderDBContext extends DBContext {
 //            System.out.println(slider.getTitle());
 //        }
 
-boolean rs = false;
+        boolean rs = false;
 //Slider s = new Slider();
 //        s.setTitle("Hot Hot Hot");
 //        s.setImage("slider1.jpg");
@@ -247,7 +244,7 @@ boolean rs = false;
 //        User u = new User();
 //        u.setId(6);
 //        s.setUser(u);
-     
+
         Slider s = db.getSliderById(7);
         s.setNote("20%");
         rs = db.updateSlider(s);

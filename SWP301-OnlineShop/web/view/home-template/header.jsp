@@ -107,7 +107,7 @@
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="home" ${(requestScope.active == "home")?"class=\"active\"":""}>Home</a></li>
                             <li><a href="bloglist" ${(requestScope.active == "blog")?"class=\"active\"":""}>Blog</a></li>
-                            <li><a href="productlist" ${(requestScope.active == "productList")?"class=\"active\"":""}>Product List</a></li>
+                            <li><a href="productlist" ${(requestScope.active == "productList")?"class=\"active\"":""}>Products</a></li>
                         </ul>
                     </div>
                 </div>

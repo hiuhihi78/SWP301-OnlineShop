@@ -8,10 +8,9 @@ import dal.CustomerDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,12 +21,13 @@ import model.User_Update;
  *
  * @author Hoang Quang
  */
-public class CustomerDetailsControler extends BaseAuthController {
+@WebServlet(name = "CustomerViewDetailsControler", urlPatterns = {"/customer/viewdetails"})
+public class CustomerViewDetailsControler extends BaseAuthController {
 
-    @Override
+        @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            CustomerDBContext customerDBContext = new CustomerDBContext();
+                   CustomerDBContext customerDBContext = new CustomerDBContext();
             //get id from jsp, when user choice to Edit or View
             String raw_customerID = request.getParameter("id");
             String page = request.getParameter("page");
@@ -55,58 +55,19 @@ public class CustomerDetailsControler extends BaseAuthController {
             request.setAttribute("totalpage", totalpage);
             request.setAttribute("customer", customer);
             request.setAttribute("listHistoryUpdate", listHistoryUpdate);
-            request.getRequestDispatcher("/view/marketing/customerDetails.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/marketing/customerViewDetails.jsp").forward(request, response);
     }
 
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        //get value after choice Edit
-        String raw_id = request.getParameter("customerID");
-        String fullname = request.getParameter("fullname");
-        String email = request.getParameter("email");
-        String mobile = request.getParameter("mobile");
-        String address = request.getParameter("address");
-        String raw_gender = request.getParameter("gender");
-        String updateBy = request.getParameter("updateBy");
-//        String updateBy = "MrChekc";
-
-        //validate value
-        int customerID = Integer.parseInt(raw_id);
-        boolean gender = raw_gender.equals("male");
-
-        LocalDate updateDate_raw = java.time.LocalDate.now();
-        Date updateDate = Date.valueOf(updateDate_raw);
-
-        User customer = new User();
-        customer.setId(customerID);
-        customer.setEmail(email);
-        customer.setAddress(address);
-        customer.setFullname(fullname);
-        customer.setGender(gender);
-        customer.setMobile(mobile);
-        CustomerDBContext customerDBContext = new CustomerDBContext();
-        
-        
-        
-        
-        User_Update update = new User_Update();
-        update.setEmail(email);
-        update.setUpdateBy(updateBy);
-        update.setUpdateDate(updateDate);
-        update.setUserId(customerID);
-        update.setFullname(fullname);
-        update.setGender(gender);
-        update.setMobile(mobile);
-        update.setAddress(address);
-        customerDBContext.editCustomer(customer);
-        customerDBContext.addHistoryEditCustomer(update);
-        
-        response.sendRedirect("../customer/list");
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

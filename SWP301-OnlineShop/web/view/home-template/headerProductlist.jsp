@@ -19,7 +19,7 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="cartlist"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="cartDetails"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <c:if test="${sessionScope.user == null}">
                                 <li><a href="login" id="button"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>
@@ -100,7 +100,7 @@
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="home" ${(requestScope.active == "home")?"class=\"active\"":""}>Home</a></li>
                             <li><a href="bloglist" ${(requestScope.active == "blog")?"class=\"active\"":""}>Blog</a></li>
-                            <li><a href="productlist" ${(requestScope.active == "productList")?"class=\"active\"":""}>Product List</a></li>
+                            <li><a href="productlist" ${(requestScope.active == "productList")?"class=\"active\"":""}>Products</a></li>
                         </ul>
                     </div>
                 </div>

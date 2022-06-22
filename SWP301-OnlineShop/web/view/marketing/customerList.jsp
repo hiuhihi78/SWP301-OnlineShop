@@ -88,9 +88,8 @@
                                             <tbody>
                                                 <c:forEach items="${requestScope.listCustomer}" var="list">
                                                     <tr>
-                                                        <td>
-                                                            <a href="../../customer/details?id=${list.id}" style="text-decoration: none; color: black">${list.id}</a>
-                                                        </td>
+                                                        
+                                                        <td>${list.id}</td>
                                                         <td>${list.fullname}</td>
                                                         <td>${list.gender ==true ? "Male" : "Female"}</td>
                                                         <td>${list.mobile}</td>
@@ -115,6 +114,12 @@
                                                             <a href="../../customer/details?id=${list.id}" style="text-decoration: none; color:white">
                                                                 <button type="button" class="btn btn-primary">
                                                                     <i class="fa-solid fa-user-pen"></i>Edit
+                                                                </button>
+                                                            </a>
+                                                            <!--VIEW-->
+                                                            <a href="../../customer/viewdetails?id=${list.id}" style="text-decoration: none; color:white">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    <i class="fa-solid fa-user-pen"></i>View
                                                                 </button>
                                                             </a>
                                                         </td>
