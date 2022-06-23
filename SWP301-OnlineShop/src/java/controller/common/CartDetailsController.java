@@ -9,6 +9,7 @@ import dal.CartDBContext;
 import dal.ProductCategoryDBContext;
 import dal.ProductDBContext;
 import dal.ProductListDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -27,7 +28,7 @@ import model.User;
  *
  * @author Admin
  */
-public class CartDetailsController extends HttpServlet {
+public class CartDetailsController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,7 +55,7 @@ public class CartDetailsController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //Declare and initialize the initial value
         ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
@@ -128,7 +129,7 @@ public class CartDetailsController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CartDBContext cartDb = new CartDBContext();
         PrintWriter out = response.getWriter();

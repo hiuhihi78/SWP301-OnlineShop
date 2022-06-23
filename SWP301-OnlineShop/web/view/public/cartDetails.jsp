@@ -159,10 +159,10 @@
                                                                 <td class="cart_price">
 
                                                                     <span class="text-line-through">
-                                                                        <fmt:formatNumber type = "number" value = "${(i.product).price}"/>
+                                                                        <fmt:formatNumber type = "number" value = "${(i.product).price}"/> đ
                                                                     </span>
                                                                     <span class="text-danger">
-                                                                        <fmt:formatNumber type = "number" value = "${(i.product).getPriceDiscount()}"/>
+                                                                        <fmt:formatNumber type = "number" value = "${(i.product).getPriceDiscount()}"/> đ
                                                                     </span>
                                                                 </td>
 
@@ -179,7 +179,7 @@
                                                                     </div>
                                                                 </td>
                                                                 <td class="cart_total">
-                                                                    <p class="cart_total_price_${(i.product).id}">${i.quantity * (i.product).getPriceDiscount()}</p>
+                                                                    <b><p class="cart_total_price_${(i.product).id}"> ${i.quantity * (i.product).getPriceDiscount()}&nbsp;đ</p></b>
 
                                                                 </td>
                                                                 <td class="cart_delete">
@@ -203,7 +203,7 @@
                                                         <ul>
                                                             <li><input type="checkbox" name="all" id="checkall"> Select all (${carts.size()} products) <span><a class="delete-all-product" data-isAll="1" data-programid="-1" data-name="">Delete all</a></span></li>
 
-                                                            <li style="display: flex"><div >Total</div> <div class=total style="margin-left: auto"><span id="total">0</span></div></li>
+                                                            <li style="display: flex"><div >Total</div> <div class=total style="margin-left: auto"><span id="total">0</span></div>&nbsp;đ</li>
                                                         </ul>
 
                                                         <button class="btn btn-default check_out" id="btn-checkout">Check Out</button>
@@ -261,22 +261,24 @@
                                         </script>-->
                     <!--END PRODCUT LIST-->
                 </div>
-                <div class="pagging">
-                    <ul class="pagination pull-right">
+                <c:if test="${not empty carts}">
+                    <div class="pagging">
+                        <ul class="pagination pull-right">
 
-                        <c:if test="${index != 1}">
-                            <li class="page-item"><a class="page-link" href="/cartDetails?index=${1}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
-                            <li class="page-item"><a class="page-link" href="/cartDetails?index=${index-1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
-                                </c:if>   
-                                <c:forEach var = "i" begin = "1" end = "${lastPage}"> 
-                            <li class="page-item"><a class="page-link" href="/cartDetails?index=${i}">${i}</a></li>
-                            </c:forEach>
-                            <c:if test="${index != lastPage}">
-                            <li class="page-item"><a class="page-link" href="/cartDetails?index=${index+1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                            <li class="page-item"><a class="page-link" href="/cartDetails?index=${lastPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-                                </c:if>
-                    </ul>
-                </div>
+                            <c:if test="${index != 1}">
+                                <li class="page-item"><a class="page-link" href="/cartDetails?index=${1}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
+                                <li class="page-item"><a class="page-link" href="/cartDetails?index=${index-1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+                                    </c:if>   
+                                    <c:forEach var = "i" begin = "1" end = "${lastPage}"> 
+                                <li class="page-item"><a class="page-link" href="/cartDetails?index=${i}">${i}</a></li>
+                                </c:forEach>
+                                <c:if test="${index != lastPage}">
+                                <li class="page-item"><a class="page-link" href="/cartDetails?index=${index+1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                                <li class="page-item"><a class="page-link" href="/cartDetails?index=${lastPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                                    </c:if>
+                        </ul>
+                    </div>
+                </c:if>
 
             </div>
         </section> <!--/#cart_items-->
