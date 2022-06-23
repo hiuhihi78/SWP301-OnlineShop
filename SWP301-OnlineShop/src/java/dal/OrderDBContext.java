@@ -85,8 +85,10 @@ public class OrderDBContext extends DBContext {
         try {
             String sql = "WITH \n"
                     + "t as\n"
-                    + "(SELECT [Order].id as OrderID, [Order].[date], [Order].totalPrice, [Product].[name] as ProductName, [Order].[status] as OrderStatus\n"
-                    + "FROM [Order] inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
+                    + "(SELECT [Order].id as OrderID,[User].fullname as CustomerName, [Order].[date], [Order].totalPrice, [Product].[name] as ProductName, [Order].[status] as OrderStatus\n"
+                    + "FROM \n"
+                    + "[User] inner join [Order] on [User].id = [Order].userId\n"
+                    + "inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
                     + "inner join Product ON OrderDetail.productId = Product.id\n"
                     + "),\n"
                     + "b as\n"
@@ -108,7 +110,8 @@ public class OrderDBContext extends DBContext {
                     + "        WHERE   mi.OrderID = mo.OrderID\n"
                     + "        ) a\n"
                     + "		)\n"
-                    + "Select c.OrderID, c.[date], c.totalPrice, c.ProductName, c.OrderStatus, b.NumberOfProducts from c inner join b on c.OrderID = b.OrderID\n"
+                    + "Select c.OrderID,c.CustomerName, c.[date], c.totalPrice, c.ProductName, c.OrderStatus, b.NumberOfProducts from c inner join b on c.OrderID = b.OrderID\n"
+                    + "\n"
                     + "WHERE c.[date] between ? and ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, startDate);
@@ -123,7 +126,7 @@ public class OrderDBContext extends DBContext {
                 o.setTotalcost(rs.getDouble("totalPrice"));
                 o.setStatus(rs.getInt("OrderStatus"));
                 o.setNumproducts(rs.getInt("NumberOfProducts"));
-
+                o.setBuyer(rs.getString("CustomerName"));
                 ArrayList<Product> products = new ArrayList<>();
                 Product p = new Product();
                 p.setName(rs.getString("ProductName"));

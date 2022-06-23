@@ -74,7 +74,7 @@
                                 <tr>
                                     <td>${o.id}</td>
                                     <td><fmt:formatDate pattern="yyyy-MM-dd" value="${o.date}"/></td>
-                                    <td>Customer name</td>
+                                    <td>${o.buyer}</td>
                                     <td>${o.products[0].name}</td>
                                     <td>${o.numproducts}</td>
                                     <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${o.totalcost}"/></td>
