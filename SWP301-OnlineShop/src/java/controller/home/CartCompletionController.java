@@ -4,6 +4,7 @@
  */
 package controller.home;
 
+import dal.OrderDBContext;
 import dal.ProductCategoryDBContext;
 import dal.ProductListDBContext;
 import filter.BaseAuthController;
@@ -31,11 +32,11 @@ public class CartCompletionController extends BaseAuthController {
             throws ServletException, IOException {
         ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
         ProductListDBContext productDB = new ProductListDBContext();
-        
+
         //get Parameter value
         String[] listIdProductCart_raw = request.getParameterValues("id");
         String raw_subCategory = request.getParameter("subCategory");
-        
+
         //get list subcategory
         ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
 
@@ -47,10 +48,9 @@ public class CartCompletionController extends BaseAuthController {
         int[] listIdProduct = new int[listIdProductCart_raw.length];
         for (int i = 0; i < listIdProductCart_raw.length; i++) {
             listIdProduct[i] = Integer.parseInt(listIdProductCart_raw[i].trim());
-            System.out.print(listIdProduct[i] + " ");
         }
         ArrayList<Product> leastProduct = productDB.getListLeastProduct();
-        User user = (User)request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         ArrayList<Product> listProduct = productDB.getListProductById(listIdProduct, user.getId());
         long total = totalPrice(listProduct);
         request.setAttribute("listCategorys", listCategorys);
@@ -64,10 +64,53 @@ public class CartCompletionController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        // get info bank
+        String nameBank = getServletContext().getInitParameter("NameOfBank");
+        String ownerAccount = getServletContext().getInitParameter("OwnerAccount");
+        String accNumber = getServletContext().getInitParameter("AccountNumber");
+        System.out.println(nameBank + " " + ownerAccount + " " + accNumber);
+
+        // get ship info
+        String shipFullName = request.getParameter("ship-fullname").trim();
+        String shipPhone = request.getParameter("ship-phone").trim();
+        String shipAddress = request.getParameter("ship-address").trim();
+        String shipNote = request.getParameter("ship-note").trim();
+
+        // get method payment
+        String payment = request.getParameter("payment").trim();
+
+        /*
+            * isPayment:
+            * true: Payment on delivery
+            * false: Payment by bank
+         */
+        boolean isPayment = (payment.equalsIgnoreCase("delivery")) ? true : false;
+
+        // get product
+        String[] idProducts_raw = request.getParameterValues("pr-id");
+        String[] priceProducts_raw = request.getParameterValues("pr-price");
+        String[] quantityProducts_raw = request.getParameterValues("pr-quantity");
         
+        // handle type of value
+        int[] idProducts = new int[idProducts_raw.length];
+        long[] priceProducts = new long[priceProducts_raw.length];
+        int[] quantityProducts = new int[quantityProducts_raw.length];
+
+        for (int i = 0; i < idProducts_raw.length; i++) {
+            idProducts[i] = Integer.parseInt(idProducts_raw[i].trim());
+            priceProducts[i] = Long.parseLong(priceProducts_raw[i].trim());
+            quantityProducts[i] = Integer.parseInt(quantityProducts_raw[i].trim());
+        }
+        // total money
+        long total = Long.parseLong(request.getParameter("total"));
+        
+        OrderDBContext orderDB = new OrderDBContext();
+
     }
 
-   
     @Override
     public String getServletInfo() {
         return "Short description";
@@ -76,7 +119,7 @@ public class CartCompletionController extends BaseAuthController {
     private long totalPrice(ArrayList<Product> listProduct) {
         long sum = 0;
         for (Product product : listProduct) {
-            sum += product.getPrice();
+            sum += product.getPrice() * product.getQuantity();
         }
         return sum;
     }
