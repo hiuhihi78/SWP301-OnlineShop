@@ -7,8 +7,11 @@ package controller.common;
 import static configs.Security.SIZE_PAGE_CART_LIST;
 import dal.CartDBContext;
 import dal.ProductCategoryDBContext;
+import dal.ProductDBContext;
 import dal.ProductListDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -25,7 +28,7 @@ import model.User;
  *
  * @author Admin
  */
-public class CartDetailsController extends HttpServlet {
+public class CartDetailsController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,7 +55,7 @@ public class CartDetailsController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //Declare and initialize the initial value
         ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
@@ -61,30 +64,30 @@ public class CartDetailsController extends HttpServlet {
         String search = "";
         int index = 1;
         HttpSession session = request.getSession();
-        
+
         //Get user login from session
         User user = (User) session.getAttribute("user");
         int userID = user.getId();
-        
+
         //Get data from input search
         if (request.getParameter("txtSearch") != null) {
             search = request.getParameter("txtSearch").trim();
         }
-        
+
         //Get current page from view
         if (request.getParameter("index") != null) {
             index = Integer.parseInt(request.getParameter("index"));
         }
-        
+
         //Get list subcategory
         ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
-        
+
         //get least post
         ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
 
         //Get List Cart 
         Cart cart = cartDBContext.getCartByIndexAndUserId(0, 0, search, userID);
-        
+
         System.out.println(cart.getId());
         //Calculator Last page
         int sizeOfList = cart.getCart_Products().size();
@@ -92,7 +95,7 @@ public class CartDetailsController extends HttpServlet {
         if (sizeOfList % SIZE_PAGE_CART_LIST != 0) {
             lastPage++;
         }
-        
+
         //Set List Cart by current index
         cart = cartDBContext.getCartByIndexAndUserId(index, SIZE_PAGE_CART_LIST, search, userID);
 
@@ -105,13 +108,15 @@ public class CartDetailsController extends HttpServlet {
         request.setAttribute("carts", cart.getCart_Products());
         //Send index 
         request.setAttribute("index", index);
-        
+
         request.setAttribute("cartId", cart.getId());
-        
+
         request.setAttribute("listCategorys", listCategorys);
-        
+
         request.setAttribute("leastProduct", leastProduct);
         
+        
+
         processRequest(request, response);
     }
 
@@ -124,9 +129,25 @@ public class CartDetailsController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        CartDBContext cartDb = new CartDBContext();
+        PrintWriter out = response.getWriter();
+        int pid = Integer.parseInt(request.getParameter("pid"));
+        int isUp = Integer.parseInt(request.getParameter("isUp"));
+        int cid = Integer.parseInt(request.getParameter("cartId"));
+        int currentQuantity = cartDb.getCartProductByCidAndPid(cid, pid).getQuantity();
+        if (isUp == 1) {
+            currentQuantity += 1;
+        } else {
+            currentQuantity -= 1;
+        }
+
+        cartDb.setQuantityCartProduct(pid, cid, currentQuantity);
+        out.println("<input disabled=\"\" class=\"cart_quantity_input\" type=\"text\" value=\"" + currentQuantity + "\" autocomplete=\"off\" size=\"2\">");
+        
+      
+
     }
 
     /**

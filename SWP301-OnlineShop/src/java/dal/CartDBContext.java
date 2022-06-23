@@ -301,6 +301,33 @@ public class CartDBContext extends DBContext {
         return cart;
     }
 
+    public Cart_Product getCartProductByCidAndPid(int cid, int pid) {
+        Cart_Product cartProduct = null;
+
+        try {
+            String sql = "select * from Cart_Product where CartId = ? And ProductId = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, cid);
+            ps.setInt(2, pid);
+
+            ResultSet rs = ps.executeQuery();
+            cartProduct = new Cart_Product();
+
+            while (rs.next()) {
+
+                cartProduct.setCartId(rs.getInt("CartId"));
+                cartProduct.setProductId(rs.getInt("ProductId"));
+                cartProduct.setQuantity(rs.getInt("Quantity"));
+                cartProduct.setDateUpdated(rs.getTimestamp("DateUpdated"));
+
+            }
+        } catch (SQLException ex) {
+
+        }
+        return cartProduct;
+    }
+
     public boolean deleteCartProduct(int productId, int cartId, boolean isAll) {
 
         try {
@@ -330,7 +357,7 @@ public class CartDBContext extends DBContext {
         }
         return false;
     }
-    
+
     public boolean setCurrentDateForCart(int cartId) {
 
         try {
@@ -349,7 +376,7 @@ public class CartDBContext extends DBContext {
         }
         return false;
     }
-    
+
     public boolean setQuantityCartProduct(int productId, int cartId, int number) {
 
         try {
@@ -378,11 +405,12 @@ public class CartDBContext extends DBContext {
 //        db.addNewCartForNewCustomer(cart);
 //    Cart c = db.getCartByCustomerId(76);
 //        System.out.println(c.getId() + " " + c.getCustomer().getId() + " " + c.getCart_Products().get(0).getProductId()+ " " + c.getCart_Products().get(0).getQuantity());
-        Cart cart = db.getCartByIndexAndUserId(0, 0, "", 1);
-        //System.out.println(cart.getId());
-        for (Cart_Product c : cart.getCart_Products()) {
-            System.out.println(c.getProduct().getName());
-        }
+//        Cart cart = db.getCartByIndexAndUserId(0, 0, "", 1);
+//        //System.out.println(cart.getId());
+//        for (Cart_Product c : cart.getCart_Products()) {
+//            System.out.println(c.getProduct().getName());
+//        }
+        System.out.println(db.getCartProductByCidAndPid(17, 10).getQuantity());
     }
 
 }

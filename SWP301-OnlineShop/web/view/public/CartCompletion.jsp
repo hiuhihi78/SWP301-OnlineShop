@@ -32,9 +32,7 @@
                 <div class="row flex-justify">
                     <div class="col-sm-3 box-shadow height-fit-content border-radius-2" >
                         <div class="left-side"> <!-- left-sidebar -->
-                            <div class="search_box" style="margin-top: 10px;">
-                                <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search" style="width:100%; background-position: 188px;"/>
-                            </div>
+
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
                             <form action="productlist" method="get">
                                 <div class="panel-group category-products" id="accordian"><!--category-products-->
@@ -74,8 +72,15 @@
                                             </div>
                                         </c:if>
                                     </c:forEach>
-                                </div><!--/category-products-->    
+                                    <div class="search_box" style="margin-top: 10px;">
+                                        <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search" style="width: 83%;
+                                               margin: 0 0 0 7%;
+                                               background-position: 188px;"/>
+                                    </div>
+                                </div><!--/category-products--> 
+
                             </form>
+
                             <div class="panel-group category-products" id="accordian"><!-- 3 least product -->
                                 <h2 class="title text-center" style="border-bottom: solid 2px;">Latest Product</h2>
                                 <%--<c:set var="leat" value="" />--%>
@@ -109,25 +114,28 @@
                     </div>
                     <!--PRODUCT LIST-->
                     <div class="col-sm-9 padding-right">
-                        <section id="cart_items">
-                            <h2 class="title text-center" style="border-bottom: solid 3px;">Cart Completion</h2>
-
-                            <div class="table-responsive cart_info">
-                                <table class="table table-condensed">
-                                    <thead>
-                                        <tr class="cart_menu">
-                                            <td class="image">Item</td>
-                                            <td class="description"></td>
-                                            <td class="price">Price</td>
-                                            <td class="quantity">Quantity</td>
-                                            <td class="total">Total</td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${requestScope.listProduct}" var="i">
+                        <div id="cart_items">
+                            <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px;">Cart Completion</h2>
+                            <form action="cartCompletion" method="POST">
+                                <div class="table-responsive cart_info">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr class="cart_menu">
+                                                <td class="image">Item</td>
+                                                <td class="description"></td>
+                                                <td class="price">Price</td>
+                                                <td class="quantity">Quantity</td>
+                                                <td class="total">Total</td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${requestScope.listProduct}" var="i">
+                                            <input type="hidden" name="pr-id" value="${i.id}"/>
+                                            <input type="hidden" name="pr-price" value="${i.price}"/>
+                                            <input type="hidden" name="pr-quantity" value="${i.quantity}"/>
                                             <tr>
-                                                <td class="cart_product">
+                                                <td class="cart_product" style="margin-left: 0px;">
                                                     <a href="#"><img src="${i.thumbnail}" alt="" width="100px" height="auto"></a>
                                                 </td>
                                                 <td class="cart_description">
@@ -135,115 +143,76 @@
                                                     <p>Seller: ${i.user.fullname}</p>
                                                 </td>
                                                 <td class="cart_price">
-                                                    <p>${i.price}</p>
+                                                    <p><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price}"/></p>
                                                 </td>
                                                 <td class="cart_quantity">
-                                                    <div class="cart_quantity_button">
-                                                        <!--<a class="cart_quantity_up" href=""> + </a>-->
-                                                        <input class="cart_quantity_input" type="text" name="quantity" value="${i.quantity}" autocomplete="off" size="2" readonly>
-                                                        <!--<a class="cart_quantity_down" href=""> - </a>-->
-                                                    </div>
+                                                    <input style="margin-bottom: 12px; border: none; outline: none;" class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2" readonly>
                                                 </td>
                                                 <td class="cart_total">
-                                                    <p class="cart_total_price">${i.price*i.quantity}</p>
+                                                    <p class="cart_total_price"><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price*i.quantity}"/></p>
                                                 </td>
                                             </tr>
                                         </c:forEach>
-                                    <td colspan="4">&nbsp;</td>
-                                    <td colspan="2">
-                                        <table class="table table-condensed total-result">
-                                            <tr>
-                                                <td>Cart Sub Total</td>
-                                                <td>$59</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Exo Tax</td>
-                                                <td>$2</td>
-                                            </tr>
-                                            <tr class="shipping-cost">
-                                                <td>Shipping Cost</td>
-                                                <td>Free</td>										
-                                            </tr>
-                                            <tr>
-                                                <td>Total</td>
-                                                <td><span>$61</span></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="payment-options">
-                                <span>
-                                    <label><input type="checkbox"> Direct Bank Transfer</label>
-                                </span>
-                                <span>
-                                    <label><input type="checkbox"> Check Payment</label>
-                                </span>
-                                <span>
-                                    <label><input type="checkbox"> Paypal</label>
-                                </span> 
-                            </div>
-                            <div class="col-sm-8 clearfix">
-                                <div class="bill-to">
-                                    <p>Ship Information</p>
-                                    <div class="form-one">
-                                        <form>
-                                            <input type="text" placeholder="Company Name">
-                                            <input type="text" placeholder="Email*">
-                                            <input type="text" placeholder="Title">
-                                            <input type="text" placeholder="First Name *">
-                                            <input type="text" placeholder="Middle Name">
-                                            <input type="text" placeholder="Last Name *">
-                                            <input type="text" placeholder="Address 1 *">
-                                            <input type="text" placeholder="Address 2">
-                                        </form>
-                                    </div>
-                                    <div class="form-two">
-                                        <form>
-                                            <input type="text" placeholder="Zip / Postal Code *">
-                                            <select>
-                                                <option>-- Country --</option>
-                                                <option>United States</option>
-                                                <option>Bangladesh</option>
-                                                <option>UK</option>
-                                                <option>India</option>
-                                                <option>Pakistan</option>
-                                                <option>Ucrane</option>
-                                                <option>Canada</option>
-                                                <option>Dubai</option>
-                                            </select>
-                                            <select>
-                                                <option>-- State / Province / Region --</option>
-                                                <option>United States</option>
-                                                <option>Bangladesh</option>
-                                                <option>UK</option>
-                                                <option>India</option>
-                                                <option>Pakistan</option>
-                                                <option>Ucrane</option>
-                                                <option>Canada</option>
-                                                <option>Dubai</option>
-                                            </select>
-                                            <input type="text" placeholder="Phone *">
-                                            <input type="text" placeholder="Mobile Phone">
-                                            <input type="text" placeholder="Fax">
-                                        </form>
+                                        <tr>
+                                            <td colspan="4">&nbsp;</td>
+                                            <td colspan="2">
+                                                <table class="table table-condensed total-result">
+                                                    <tr>
+                                                        <td>Total</td>
+                                                        <td><span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${requestScope.total}"/></span></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" name="total" value="${requestScope.total}"/>
+                                </div>
+                                <div class="payment-options" style="padding-left: 15px;
+                                     margin-bottom: 30px;">
+                                    <span>
+                                        <label><input type="radio" name="payment" value="delivery" checked> Payment on delivery</label>
+                                    </span>
+                                    <span>
+                                        <label><input type="radio" name="payment" value="bank"> Payment by bank</label>
+                                    </span>
+                                </div>
+
+                                <div class="col-sm-8">
+                                    <div class="bill-to">
+                                        <p>Ship Information</p>
+                                        <div class="">
+                                            <input type="text" placeholder="FullName" name="ship-fullname" required style="background: #F0F0E9;
+                                                   border: 0 none;
+                                                   margin-bottom: 10px;
+                                                   padding: 10px;
+                                                   width: 100%;
+                                                   font-weight: 300;">
+                                            <input type="text" placeholder="Phone" name="ship-phone" required style="background: #F0F0E9;
+                                                   border: 0 none;
+                                                   margin-bottom: 10px;
+                                                   padding: 10px;
+                                                   width: 100%;
+                                                   font-weight: 300;">
+                                            <input type="text" placeholder="Address" name="ship-address" required style="background: #F0F0E9;
+                                                   border: 0 none;
+                                                   margin-bottom: 10px;
+                                                   padding: 10px;
+                                                   width: 100%;
+                                                   font-weight: 300;">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="order-message">
-                                    <p>Note</p>
-                                    <textarea name="message"  placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
-                                </div>	
-                            </div>	
-                        </section>
-                        <form action="/cartCompletion" method="POST">
-                            <button class="btn btn-primary">Complete</button>
-                        </form>
+                                <div class="col-sm-4">
+                                    <div class="order-message">
+                                        <p>Note</p>
+                                        <textarea name="ship-note" placeholder="Notes about your order, Special Notes for Delivery" rows="16" style="height: 140px;"></textarea>
+                                    </div>	
+                                </div>
+                                <input class="btn btn-primary" type="submit" value="Finish"/>
+                            </form>
+                        </div>
                     </div>
-                    <!--END PRODCUT LIST-->
 
                 </div>
             </div>
