@@ -127,7 +127,7 @@
                                     <tbody>
                                         <c:forEach items="${requestScope.listProduct}" var="i">
                                             <tr>
-                                                <td class="cart_product">
+                                                <td class="cart_product" style="margin-left: 0px;">
                                                     <a href="#"><img src="${i.thumbnail}" alt="" width="100px" height="auto"></a>
                                                 </td>
                                                 <td class="cart_description">
@@ -135,17 +135,13 @@
                                                     <p>Seller: ${i.user.fullname}</p>
                                                 </td>
                                                 <td class="cart_price">
-                                                    <p>${i.price}</p>
+                                                    <p><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price}"/></p>
                                                 </td>
                                                 <td class="cart_quantity">
-                                                    <div class="cart_quantity_button">
-                                                        <!--<a class="cart_quantity_up" href=""> + </a>-->
-                                                        <input class="cart_quantity_input" type="text" name="quantity" value="${i.quantity}" autocomplete="off" size="2" readonly>
-                                                        <!--<a class="cart_quantity_down" href=""> - </a>-->
-                                                    </div>
+                                                    <input style="margin-bottom: 12px;" class="cart_quantity_input" type="text" name="quantity" value="${i.quantity}" autocomplete="off" size="2" readonly>
                                                 </td>
                                                 <td class="cart_total">
-                                                    <p class="cart_total_price">${i.price*i.quantity}</p>
+                                                    <p class="cart_total_price"><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price*i.quantity}"/></p>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -153,20 +149,8 @@
                                     <td colspan="2">
                                         <table class="table table-condensed total-result">
                                             <tr>
-                                                <td>Cart Sub Total</td>
-                                                <td>$59</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Exo Tax</td>
-                                                <td>$2</td>
-                                            </tr>
-                                            <tr class="shipping-cost">
-                                                <td>Shipping Cost</td>
-                                                <td>Free</td>										
-                                            </tr>
-                                            <tr>
                                                 <td>Total</td>
-                                                <td><span>$61</span></td>
+                                                <td><span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${requestScope.total}"/></span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -176,58 +160,20 @@
                             </div>
                             <div class="payment-options">
                                 <span>
-                                    <label><input type="checkbox"> Direct Bank Transfer</label>
+                                    <label><input type="radio" name="payment" value="delivery" checked> Payment on delivery</label>
                                 </span>
                                 <span>
-                                    <label><input type="checkbox"> Check Payment</label>
+                                    <label><input type="radio" name="payment" value="bank"> Payment by bank</label>
                                 </span>
-                                <span>
-                                    <label><input type="checkbox"> Paypal</label>
-                                </span> 
                             </div>
-                            <div class="col-sm-8 clearfix">
+                            <div class="col-sm-8">
                                 <div class="bill-to">
                                     <p>Ship Information</p>
                                     <div class="form-one">
                                         <form>
-                                            <input type="text" placeholder="Company Name">
-                                            <input type="text" placeholder="Email*">
-                                            <input type="text" placeholder="Title">
-                                            <input type="text" placeholder="First Name *">
-                                            <input type="text" placeholder="Middle Name">
-                                            <input type="text" placeholder="Last Name *">
-                                            <input type="text" placeholder="Address 1 *">
-                                            <input type="text" placeholder="Address 2">
-                                        </form>
-                                    </div>
-                                    <div class="form-two">
-                                        <form>
-                                            <input type="text" placeholder="Zip / Postal Code *">
-                                            <select>
-                                                <option>-- Country --</option>
-                                                <option>United States</option>
-                                                <option>Bangladesh</option>
-                                                <option>UK</option>
-                                                <option>India</option>
-                                                <option>Pakistan</option>
-                                                <option>Ucrane</option>
-                                                <option>Canada</option>
-                                                <option>Dubai</option>
-                                            </select>
-                                            <select>
-                                                <option>-- State / Province / Region --</option>
-                                                <option>United States</option>
-                                                <option>Bangladesh</option>
-                                                <option>UK</option>
-                                                <option>India</option>
-                                                <option>Pakistan</option>
-                                                <option>Ucrane</option>
-                                                <option>Canada</option>
-                                                <option>Dubai</option>
-                                            </select>
-                                            <input type="text" placeholder="Phone *">
-                                            <input type="text" placeholder="Mobile Phone">
-                                            <input type="text" placeholder="Fax">
+                                            <input type="text" placeholder="FullName">
+                                            <input type="text" placeholder="Phone">
+                                            <input type="text" placeholder="Address">
                                         </form>
                                     </div>
                                 </div>
@@ -235,11 +181,11 @@
                             <div class="col-sm-4">
                                 <div class="order-message">
                                     <p>Note</p>
-                                    <textarea name="message"  placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
+                                    <textarea name="message" name="note" placeholder="Notes about your order, Special Notes for Delivery" rows="10"></textarea>
                                 </div>	
                             </div>	
                         </section>
-                        <form action="/cartCompletion" method="POST">
+                        <form action="cartCompletion" method="POST">
                             <button class="btn btn-primary">Complete</button>
                         </form>
                     </div>

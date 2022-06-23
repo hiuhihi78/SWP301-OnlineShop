@@ -4,9 +4,9 @@
  */
 package controller.home;
 
-import com.sun.javafx.geom.AreaOp;
 import dal.ProductCategoryDBContext;
 import dal.ProductListDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -24,10 +24,10 @@ import model.User;
  * @author DELL
  */
 @WebServlet(name = "CartCompletionController", urlPatterns = {"/cartCompletion"})
-public class CartCompletionController extends HttpServlet {
+public class CartCompletionController extends BaseAuthController {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
         ProductListDBContext productDB = new ProductListDBContext();
@@ -52,16 +52,19 @@ public class CartCompletionController extends HttpServlet {
         ArrayList<Product> leastProduct = productDB.getListLeastProduct();
         User user = (User)request.getSession().getAttribute("user");
         ArrayList<Product> listProduct = productDB.getListProductById(listIdProduct, user.getId());
+        long total = totalPrice(listProduct);
         request.setAttribute("listCategorys", listCategorys);
         request.setAttribute("subCategory", subCategory);
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("leastProduct", leastProduct);
+        request.setAttribute("total", total);
         request.getRequestDispatcher("view/public/CartCompletion.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
     }
 
    
@@ -69,5 +72,13 @@ public class CartCompletionController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private long totalPrice(ArrayList<Product> listProduct) {
+        long sum = 0;
+        for (Product product : listProduct) {
+            sum += product.getPrice();
+        }
+        return sum;
+    }
 
 }
