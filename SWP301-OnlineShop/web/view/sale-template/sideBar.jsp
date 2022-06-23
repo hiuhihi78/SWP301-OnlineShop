@@ -47,6 +47,14 @@
                         </a>
                     </li>
                 </c:if>
+                <c:if test="${s.key.url == '/sale/orderslist' && s.value == true}">
+                    <li id="nav-user-list">
+                        <a href="${s.key.url}">
+                            <i class="fa-solid fa-box-open"></i> <span>Orders List</span>
+
+                        </a>
+                    </li>
+                </c:if>
             </c:forEach>
     </section>
     <!-- /.sidebar -->
