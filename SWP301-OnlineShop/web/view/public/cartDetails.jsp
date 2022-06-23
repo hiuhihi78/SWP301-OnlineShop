@@ -263,15 +263,18 @@
                 </div>
                 <div class="pagging">
                     <ul class="pagination pull-right">
-                        <c:if test="${requestScope.totalpage > 1}">
-                            <li><a href="productlist?page=1&searchBy=${searchBy}&subCategory=${listSub.id}">Frist</a></li>
-                            </c:if>
-                            <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
-                            <li class="${pageindex == page ? "active =" : ""}" ><a href="productlist?page=${page}&searchBy=${searchBy}&subCategory=${listSub.id}">${page}</a></li>    
+
+                        <c:if test="${index != 1}">
+                            <li class="page-item"><a class="page-link" href="/cartDetails?index=${1}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
+                            <li class="page-item"><a class="page-link" href="/cartDetails?index=${index-1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+                                </c:if>   
+                                <c:forEach var = "i" begin = "1" end = "${lastPage}"> 
+                            <li class="page-item"><a class="page-link" href="/cartDetails?index=${i}">${i}</a></li>
                             </c:forEach>
-                            <c:if test="${requestScope.totalpage > 1}">
-                            <li><a href="productlist?page=${requestScope.totalpage}&searchBy=${searchBy}&subCategory=${listSub.id}">Last</a></li>
-                            </c:if>
+                            <c:if test="${index != lastPage}">
+                            <li class="page-item"><a class="page-link" href="/cartDetails?index=${index+1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                            <li class="page-item"><a class="page-link" href="/cartDetails?index=${lastPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                                </c:if>
                     </ul>
                 </div>
 
