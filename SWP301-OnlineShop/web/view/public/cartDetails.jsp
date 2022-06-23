@@ -205,8 +205,14 @@
 
                                                             <li style="display: flex"><div >Total</div> <div class=total style="margin-left: auto"><span id="total">0</span></div>&nbsp;đ</li>
                                                         </ul>
+                                                        <ul>
 
-                                                        <button class="btn btn-default check_out" id="btn-checkout">Check Out</button>
+                                                            <a class="btn btn-default update" href="/productlist">Choose More Product</a>
+                                                            <button class="btn btn-default check_out" id="btn-checkout">Check Out</button>
+
+                                                        </ul>
+
+
                                                     </div>
                                                 </div>
                                             </div>
