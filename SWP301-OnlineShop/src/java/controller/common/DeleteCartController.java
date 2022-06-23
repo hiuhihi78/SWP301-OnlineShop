@@ -74,6 +74,7 @@ public class DeleteCartController extends HttpServlet {
                 rs = cartDb.deleteCartProduct(pid, cid, false);
             } else {
                 rs = cartDb.deleteCartProduct(0, cid, true);
+               
             }
 
         } catch (Exception e) {
