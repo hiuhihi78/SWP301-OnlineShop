@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/css/cart/style.css</file>
             <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/LoginController.java</file>
             <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/CartDetailsController.java</file>
             <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/cartDetails.jsp</file>
+            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/DeleteCartController.java</file>
             <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/js/cart/script.js</file>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/model/Product.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/DBContext.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/RoleDBContext.java</file>
         </group>
     </open-files>
 </project-private>
