@@ -85,12 +85,11 @@ public class OrderDBContext extends DBContext {
         try {
             String sql = "WITH \n"
                     + "t as\n"
-                    + "(SELECT [Order].id as OrderID,[User].fullname as CustomerName, [Order].[date], [Order].totalPrice, [Product].[name] as ProductName, [Order].[status] as OrderStatus\n"
+                    + "(SELECT [Order].id as OrderID,[User].fullname as CustomerName,[User].id as CustomerID, [Order].[date], [Order].totalPrice, [Product].[name] as ProductName, [Order].[status] as OrderStatus, [Order].sellerId\n"
                     + "FROM \n"
                     + "[User] inner join [Order] on [User].id = [Order].userId\n"
                     + "inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
-                    + "inner join Product ON OrderDetail.productId = Product.id\n"
-                    + "),\n"
+                    + "inner join Product ON OrderDetail.productId = Product.id),\n"
                     + "b as\n"
                     + "(SELECT [Order].id as OrderID, COUNT(Product.id) as NumberOfProducts\n"
                     + "FROM [Order] inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
@@ -110,7 +109,9 @@ public class OrderDBContext extends DBContext {
                     + "        WHERE   mi.OrderID = mo.OrderID\n"
                     + "        ) a\n"
                     + "		)\n"
-                    + "Select c.OrderID,c.CustomerName, c.[date], c.totalPrice, c.ProductName, c.OrderStatus, b.NumberOfProducts from c inner join b on c.OrderID = b.OrderID\n"
+                    + "Select c.OrderID, c.[date], c.totalPrice, c.CustomerID, c.CustomerName, c.ProductName, c.OrderStatus, b.NumberOfProducts, c.sellerId, [User].fullname as SellerName\n"
+                    + "from c inner join b on c.OrderID = b.OrderID\n"
+                    + "left outer join [User] on c.sellerId = [User].id\n"
                     + "\n"
                     + "WHERE c.[date] between ? and ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -126,7 +127,18 @@ public class OrderDBContext extends DBContext {
                 o.setTotalcost(rs.getDouble("totalPrice"));
                 o.setStatus(rs.getInt("OrderStatus"));
                 o.setNumproducts(rs.getInt("NumberOfProducts"));
-                o.setBuyer(rs.getString("CustomerName"));
+                
+                User buyer = new User();
+                buyer.setId(rs.getInt("CustomerID"));
+                buyer.setFullname(rs.getString("CustomerName"));
+                
+                User seller = new User();
+                seller.setId(rs.getInt("sellerId"));
+                seller.setFullname(rs.getString("SellerName"));
+                
+                o.setBuyer(buyer);
+                o.setSale(seller);
+                        
                 ArrayList<Product> products = new ArrayList<>();
                 Product p = new Product();
                 p.setName(rs.getString("ProductName"));
