@@ -257,8 +257,11 @@ public class CartDBContext extends DBContext {
         User userBuy = null;
         Cart_Product cartProduct = null;
         try {
-            String sql = "select cp.*,c.customerId, c.DateUpdated [CartUpdated], c.Status_Id from "
-                    + "[Cart] as c, [Cart_Product] cp where c.id = cp.cartId AND customerId = ?";
+
+            String sql = "select cp.*,c.customerId, c.DateUpdated [CartUpdated], c.Status_Id, [Product].quantity as product_quantity\n"
+                    + "from [Cart] as c join [Cart_Product] cp on c.id = cp.cartId \n"
+                    + "	join Product on Product.id = cp.ProductId\n"
+                    + "where customerId = ?";
             if (!productName.isEmpty()) {
                 sql += " AND LOWER(productName) like '%" + productName.toLowerCase() + "%'";
             }
@@ -288,7 +291,18 @@ public class CartDBContext extends DBContext {
                 cartProduct.setCartId(rs.getInt("CartId"));
                 pid = rs.getInt("ProductId");
                 cartProduct.setProduct(productDb.getProductById(pid));
-                cartProduct.setQuantity(rs.getInt("Quantity"));
+                
+                //cartProduct.setQuantity(rs.getInt("Quantity"));
+                
+                int product_quantity = rs.getInt("product_quantity");
+                int order_quantity = rs.getInt("Quantity");
+                System.out.println("product quantity :"+product_quantity);
+                System.out.println("order quantity quantity :"+order_quantity);
+                if(order_quantity <= product_quantity){
+                    cartProduct.setQuantity(order_quantity);
+                }else{
+                    cartProduct.setQuantity(product_quantity);
+                }
 
                 cartProduct.setDateUpdated(rs.getTimestamp("DateUpdated"));
 

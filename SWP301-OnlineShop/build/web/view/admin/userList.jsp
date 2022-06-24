@@ -88,7 +88,7 @@
                             <option value="asc" ${requestScope.orderBy == "asc" ? "selected='selected'":""}>Asc</option>
                             <option value="desc" ${requestScope.orderBy == "desc" ? "selected='selected'":""}>Desc</option>
                         </select>
-                        <input type="text" id="search" name="search" value="${requestScope.search}" placeholder="Enter part of name, phone or email" style="width: 30rem" class="form-control"/>
+                        <input type="text" id="search" name="search" value="${requestScope.search}" placeholder="Enter part of name, phone or email" style="width: 25rem" class="form-control"/>
                     </form>
                     <form action="addNewUser" method="get"  id="formAddNewUser">
                         <input class="btn btn-primary" type="submit" value="Add new user">
@@ -109,6 +109,7 @@
                                     <th>Address</th>
                                     <th>Role</th>
                                     <th>Status</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -140,6 +141,13 @@
                                             <a href="editUserProfile?id=${u.id}" class="text-decoration-none text-white">
                                                 <button type="button" class="btn btn-primary">
                                                     <i class="fa-solid fa-user-pen"></i>Edit
+                                                </button>
+                                                </a>
+                                        </td>
+                                        <td>
+                                            <a href="viewUserProfile?id=${u.id}" class="text-decoration-none text-white">
+                                                <button type="button" class="btn btn-primary">
+                                                   <i class="fa-solid fa-eye" style="margin-right: 2px"></i>View
                                                 </button>
                                                 </a>
                                         </td>
