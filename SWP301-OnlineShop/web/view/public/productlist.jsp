@@ -87,7 +87,7 @@
                             </c:forEach>
                             <c:if test="${requestScope.totalpage > 1}">
                             <li><a href="productlist?page=${requestScope.totalpage}&searchBy=${searchBy}&subCategory=${listSub.id}">Last</a></li>
-                            </c:if>
+                        </c:if>
                     </ul>
                 </div>
 

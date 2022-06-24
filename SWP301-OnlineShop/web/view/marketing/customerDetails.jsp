@@ -21,10 +21,25 @@
     </head>
 
     <body class="skin-black">
+
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="../admin-layout/header.jsp"></jsp:include>
-            <div class="wrapper row-offcanvas row-offcanvas-left">
-                <!-- Left side column. contains the logo and sidebar -->
+        <c:if test="${requestScope.alert != null}">
+            <div class="fixed float-end t-55px" id="showAlter" style="    width: 21%;
+                 z-index: 1024;
+                 right: 36%;
+                 top: 5%;
+                 position: fixed;
+                 ">
+                <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="transform: rotate(90deg);">&times;</a>
+                    ${requestScope.alert}
+                </div>
+            </div>
+        </c:if>
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+
+            <!-- Left side column. contains the logo and sidebar -->
             <jsp:include page="../admin-layout/sideBar.jsp"></jsp:include>
 
                 <!-- Right side column. Contains the navbar and content of the page -->
@@ -32,14 +47,17 @@
 
                     <!-- Main content -->
                     <section class="content">
+
                         <div class="row">
-                            <div class="col-md-6">
+
+                            <div class="col-md-5">
                                 <div class="panel">
                                     <header class="panel-heading">
                                         Customer Details Information
                                     </header>
                                     <div class="panel-body">
-                                        <form class="form-horizontal" role="form" action="" method="post">
+
+                                        <form class="form-horizontal" role="form" action="/customer/details" method="post" id="editCustomer">
                                         <c:set var="customer" value="${requestScope.customer}"></c:set>
                                             <div class="form-group">
                                                 <div class="col-md-8">
@@ -97,7 +115,7 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="col-md-offset-9">
-                                                <button type="submit" type="button" class="btn btn-info"> Save </button>
+                                                <button type="button" onclick="submitForm()" class="btn btn-info"> Save </button>
                                                 <a href="../customer/list" class="btn btn-danger">Back</a>
                                             </div>
                                         </div>
@@ -108,7 +126,7 @@
 
 
                         </div><!-- /.col -->
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <div class="panel">
                                 <header class="panel-heading">
                                     Customer Edit History
@@ -140,9 +158,21 @@
 
                                                     </tr>
                                                 </c:forEach>
-
                                             </tbody>
                                         </table>
+                                        <div class="pagging">
+                                            <ul class="pagination pull-right">
+                                                <c:if test="${requestScope.totalpage > 1}">
+                                                    <li><a href="../customer/details?id=${customer.id}&page=1">Frist</a></li>
+                                                    </c:if>
+                                                    <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
+                                                    <li class="${pageindex == page ? "active =" : ""}" ><a href="../customer/details?id=${customer.id}&page=${page}">${page}</a></li>    
+                                                    </c:forEach>
+                                                    <c:if test="${requestScope.totalpage > 1}">
+                                                    <li><a href="../customer/details?id=${customer.id}&page=${requestScope.totalpage}">Last</a></li>
+                                                    </c:if>
+                                            </ul>
+                                        </div>
                                     </c:if>
                                     <c:if test="${empty requestScope.listHistoryUpdate}">
                                         <div style="text-align: center;">
@@ -159,6 +189,20 @@
         <div class="footer-main">
             Copyright &copy Director, 2014
         </div>
+
+        <script language="JavaScript" type="text/javascript">
+            function submitForm() {
+                var result = confirm("Are you sure to edit infomation of this Customer?");
+                if (result) {
+                    document.getElementById("editCustomer").submit();
+                }
+            }
+            setTimeout(function () {
+                const element = document.getElementById('showAlter');
+                element.remove();
+            }, 3000);
+        </script>
+
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../../assets/js/jquery.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->
