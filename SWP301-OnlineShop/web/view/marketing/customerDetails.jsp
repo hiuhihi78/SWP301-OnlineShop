@@ -115,7 +115,7 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="col-md-offset-9">
-                                                <button type="button" onclick="submitForm()" class="btn btn-info"> Save </button>
+                                                <button type="submit" onclick="return confirm('Are you sure to edit infomation of this user?')"  class="btn btn-info"> Save </button>
                                                 <a href="../customer/list" class="btn btn-danger">Back</a>
                                             </div>
                                         </div>

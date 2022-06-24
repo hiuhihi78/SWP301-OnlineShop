@@ -209,7 +209,7 @@
                             <div class="form-group">
                                 <label for="inputName" class="col-lg-3 col-sm-2 control-label">Name: </label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="fullname" value="${user.fullname}">
+                                    <input type="text" class="form-control" name="fullname" value="${user.fullname}" pattern="^[a-z A-Z 0-9]+$" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -223,30 +223,32 @@
                                 <label for="inputMobile"
                                        class="col-lg-3 col-sm-2 control-label">Mobile: </label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="mobile" value="${user.mobile}">
+                                    <input type="text" class="form-control" name="mobile" value="${user.mobile}" pattern="^[0-9]+$"  required
+                                                       title="Your phone must be number">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputAdress"
                                        class="col-lg-3 col-sm-2 control-label">Address: </label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="address" value="${user.address}">
+                                    <input type="text" class="form-control" name="address" value="${user.address}" required="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputGender" class="col-lg-3 col-sm-2 control-label">Gender:</label>
                                 <div class="col-md-8">                                       
                                     <label class="checkbox-inline">
-                                        <input type="radio" name="gender" ${user.gender?"checked='checked'":"" }value="male"> Male 
+                                        <input type="radio" name="gender" ${user.gender?"checked='checked'":"" }value="male" required=""> Male 
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input type="radio" name="gender" ${!user.gender?"checked='checked'":""}value="female"> Female
+                                        <input type="radio" name="gender" ${!user.gender?"checked='checked'":""}value="female" required=""> Female
                                     </label>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <div class="col-md-offset">
-                                    <button type="submit" class="btn btn-info">Save</button>
+                                    <button type="submit" onclick="return confirm('Are you sure to edit?')"  class="btn btn-info"> Save </button>
+                                    <!--<button type="submit" class="btn btn-info">Save</button>-->
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
