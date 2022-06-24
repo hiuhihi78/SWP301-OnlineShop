@@ -53,15 +53,104 @@
                     <section class="content ">
                         <!--Alter-->
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
-                        <!--Search, add and filter user-->
-                        <div class="row d-flex" id="searchfilter">
-                            <form action="userList" method="get"  class="form-inline" id="formFilter">
-                                <input type="hidden" name="action" value="all"/>
-                                <input type="hidden" name="xpage" value="1"/>
-                                <select name="roleId" id="roleId" class="form-control">
-                                    <option value="0" ${requestScope.roleId == 0 ? "selected='selected'":""} >All role</option>
-                                <c:forEach items="${requestScope.roles}" var="r">
-                                    <option  value="${r.id}" ${requestScope.roleId == r.id ? "selected='selected'":""}>${r.name}</option>
+                    <!--Search, add and filter user-->
+                    <div class="row d-flex" id="searchfilter">
+                        <form action="userList" method="get"  class="form-inline" id="formFilter">
+                            <input type="hidden" name="action" value="all"/>
+                            <input type="hidden" name="xpage" value="1"/>
+                        <select name="roleId" id="roleId" class="form-control">
+                            <option value="0" ${requestScope.roleId == 0 ? "selected='selected'":""} >All role</option>
+                            <c:forEach items="${requestScope.roles}" var="r">
+                                <option  value="${r.id}" ${requestScope.roleId == r.id ? "selected='selected'":""}>${r.name}</option>
+                            </c:forEach>
+                        </select>
+                        <select name="gender" id="gender" class="form-control">
+                            <option value="all" ${requestScope.gender == "all" ? "selected='selected'":""}>All gender</option>
+                            <option value="male" ${requestScope.gender == "male" ? "selected='selected'":""}>Male</option>
+                            <option value="female" ${requestScope.gender == "female" ? "selected='selected'":""}>Female</option>
+                        </select>
+                        <select name="status" id="status" class="form-control">
+                            <option value="all" ${requestScope.status == "all" ? "selected='selected'":""}>All status</option>
+                            <option value="active" ${requestScope.status == "active" ? "selected='selected'":""}>Active</option>
+                            <option value="unactive" ${requestScope.status == "unactive" ? "selected='selected'":""}>Deactive</option>
+                        </select>
+                        <span>Sort by</span>
+                        <select name="sort" id="sort" class="form-control">
+                            <option value="id" ${requestScope.sort == "id" ? "selected='selected'":""}>ID</option>
+                            <option value="fullname" ${requestScope.sort == "fullname" ? "selected='selected'":""}>Full name</option>
+                            <option value="gender" ${requestScope.sort == "gender" ? "selected='selected'":""}>Gender</option>
+                            <option value="email" ${requestScope.sort == "email" ? "selected='selected'":""}>Email</option>
+                            <option value="mobile" ${requestScope.sort == "mobile" ? "selected='selected'":""}>Mobile</option>
+                            <option value="status" ${requestScope.sort == "status" ? "selected='selected'":""}>Status</option>
+                        </select>
+                        <select name="orderBy" id="orderBy" class="form-control">
+                            <option value="asc" ${requestScope.orderBy == "asc" ? "selected='selected'":""}>Asc</option>
+                            <option value="desc" ${requestScope.orderBy == "desc" ? "selected='selected'":""}>Desc</option>
+                        </select>
+                        <input type="text" id="search" name="search" value="${requestScope.search}" placeholder="Enter part of name, phone or email" style="width: 25rem" class="form-control"/>
+                    </form>
+                    <form action="addNewUser" method="get"  id="formAddNewUser">
+                        <input class="btn btn-primary" type="submit" value="Add new user">
+                    </form>
+                </div><!--/Search, add and filter user-->
+
+                <!--Table list of user-->
+                <div class="row ">
+                    <div class="table-responsive">
+                        <table class="table table-hover ">
+                            <thead>
+                                <tr>
+                                    <th onclick="">Id</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Address</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${requestScope.users}" var="u">
+                                    <tr>
+                                        <td>${u.id}</td>
+                                        <td>${u.fullname}</td>
+                                        <td>${u.gender == true ? "Male" : "Female"}</td>
+                                        <td>${u.email}</td>
+                                        <td>${u.mobile}</td>
+                                        <td>${u.address}</td>
+                                        <td>${u.role.name}</td>
+                                        <td>
+                                            <form action="editUserStatus" id="changeStatus-${u.id}" method="get">
+                                                <input type="hidden" name="xpage" value="${page}">
+                                                <input type="hidden" name="id" value="${u.id}">
+                                                <c:if test="${!u.status}">
+                                                    <input type="hidden" name="newStatus" value="active">
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#active" onclick="openModal('changeStatus-${u.id}')">Unactive</button>
+                                                </c:if>
+                                                <c:if test="${u.status}">
+                                                    <input type="hidden" name="newStatus" value="unactive">
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#active" onclick="openModal('changeStatus-${u.id}')">Active</button>
+                                                </c:if>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a href="editUserProfile?id=${u.id}" class="text-decoration-none text-white">
+                                                <button type="button" class="btn btn-primary">
+                                                    <i class="fa-solid fa-user-pen"></i>Edit
+                                                </button>
+                                                </a>
+                                        </td>
+                                        <td>
+                                            <a href="viewUserProfile?id=${u.id}" class="text-decoration-none text-white">
+                                                <button type="button" class="btn btn-primary">
+                                                   <i class="fa-solid fa-eye" style="margin-right: 2px"></i>View
+                                                </button>
+                                                </a>
+                                        </td>
+                                    </tr>
                                 </c:forEach>
                             </select>
                             <select name="gender" id="gender" class="form-control">

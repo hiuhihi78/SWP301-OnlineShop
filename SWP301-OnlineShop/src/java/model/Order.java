@@ -12,13 +12,15 @@ import java.util.ArrayList;
  * @author hoan
  */
 public class Order {
+
     private int id;
     private Date date;
     private ArrayList<Product> products;
     private double totalcost;
     private int status;
     private int numproducts;
-    
+    private String buyer;
+
     public Order() {
     }
 
@@ -69,5 +71,13 @@ public class Order {
     public void setNumproducts(int numproducts) {
         this.numproducts = numproducts;
     }
-     
+
+    public String getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(String buyer) {
+        this.buyer = buyer;
+    }
+
 }

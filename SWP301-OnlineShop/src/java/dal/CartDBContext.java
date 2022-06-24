@@ -108,7 +108,7 @@ public class CartDBContext extends DBContext {
                 cart_Product.setProductId(rs1.getInt(2));
                 cart_Product.setQuantity(rs1.getInt(3));
                 cart_Product.setDateUpdated(rs1.getTimestamp("DateUpdated"));
-                
+
                 cart_Products.add(cart_Product);
             }
             cart.getCart_Products().addAll(cart_Products);
@@ -197,7 +197,7 @@ public class CartDBContext extends DBContext {
 
         try {
             connection.setAutoCommit(false);
-            
+
             String sql = "DELETE FROM [dbo].[Cart_Product]\n"
                     + "      WHERE cartId = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -257,8 +257,11 @@ public class CartDBContext extends DBContext {
         User userBuy = null;
         Cart_Product cartProduct = null;
         try {
-            String sql = "select cp.*,c.customerId, c.DateUpdated [CartUpdated], c.Status_Id from "
-                    + "[Cart] as c, [Cart_Product] cp where c.id = cp.cartId AND customerId = ?";
+
+            String sql = "select cp.*,c.customerId, c.DateUpdated [CartUpdated], c.Status_Id, [Product].quantity as product_quantity\n"
+                    + "from [Cart] as c join [Cart_Product] cp on c.id = cp.cartId \n"
+                    + "	join Product on Product.id = cp.ProductId\n"
+                    + "where customerId = ?";
             if (!productName.isEmpty()) {
                 sql += " AND LOWER(productName) like '%" + productName.toLowerCase() + "%'";
             }
@@ -280,7 +283,7 @@ public class CartDBContext extends DBContext {
                 cart.setId(rs.getInt("CartId"));
                 userBuy = userDb.getUserById(rs.getInt("customerId"));
                 cart.setCustomer(userBuy);
-         
+
                 cart.setDateUpdated(rs.getDate("CartUpdated"));
                 cart.setStatusId(rs.getInt("Status_id"));
                 int pid = 0;
@@ -288,8 +291,19 @@ public class CartDBContext extends DBContext {
                 cartProduct.setCartId(rs.getInt("CartId"));
                 pid = rs.getInt("ProductId");
                 cartProduct.setProduct(productDb.getProductById(pid));
-                cartProduct.setQuantity(rs.getInt("Quantity"));
-       
+                
+                //cartProduct.setQuantity(rs.getInt("Quantity"));
+                
+                int product_quantity = rs.getInt("product_quantity");
+                int order_quantity = rs.getInt("Quantity");
+                System.out.println("product quantity :"+product_quantity);
+                System.out.println("order quantity quantity :"+order_quantity);
+                if(order_quantity <= product_quantity){
+                    cartProduct.setQuantity(order_quantity);
+                }else{
+                    cartProduct.setQuantity(product_quantity);
+                }
+
                 cartProduct.setDateUpdated(rs.getTimestamp("DateUpdated"));
 
                 lstProduct.add(cartProduct);
@@ -299,6 +313,99 @@ public class CartDBContext extends DBContext {
 
         }
         return cart;
+    }
+
+    public Cart_Product getCartProductByCidAndPid(int cid, int pid) {
+        Cart_Product cartProduct = null;
+
+        try {
+            String sql = "select * from Cart_Product where CartId = ? And ProductId = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, cid);
+            ps.setInt(2, pid);
+
+            ResultSet rs = ps.executeQuery();
+            cartProduct = new Cart_Product();
+
+            while (rs.next()) {
+
+                cartProduct.setCartId(rs.getInt("CartId"));
+                cartProduct.setProductId(rs.getInt("ProductId"));
+                cartProduct.setQuantity(rs.getInt("Quantity"));
+                cartProduct.setDateUpdated(rs.getTimestamp("DateUpdated"));
+
+            }
+        } catch (SQLException ex) {
+
+        }
+        return cartProduct;
+    }
+
+    public boolean deleteCartProduct(int productId, int cartId, boolean isAll) {
+
+        try {
+            String sql = "DELETE FROM [dbo].[Cart_Product]\n Where 1 = 1";
+
+            if (isAll) {
+                sql += " And CartId = ?";
+                sql += "\n Delete from Cart Where id = ?";
+            } else {
+                sql += " And ProductId = ? And CartId = ?";
+
+            }
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            if (isAll) {
+                ps.setInt(1, cartId);
+                ps.setInt(2, cartId);
+            } else {
+                ps.setInt(1, productId);
+                ps.setInt(2, cartId);
+                setCurrentDateForCart(cartId);
+            }
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException ex) {
+
+        }
+        return false;
+    }
+
+    public boolean setCurrentDateForCart(int cartId) {
+
+        try {
+            long millis = System.currentTimeMillis();
+
+            // creating a new object of the class Date  
+            java.sql.Date date = new java.sql.Date(millis);
+            String sql = "Update Cart set DateUpdated = ? Where Id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setDate(1, date);
+            ps.setInt(2, cartId);
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException ex) {
+
+        }
+        return false;
+    }
+
+    public boolean setQuantityCartProduct(int productId, int cartId, int number) {
+
+        try {
+            String sql = "Update Cart_Product set quantity = ? Where ProductId = ? And CartId = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, number);
+            ps.setInt(2, productId);
+            ps.setInt(3, cartId);
+            setCurrentDateForCart(cartId);
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException ex) {
+
+        }
+        return false;
     }
 
     public static void main(String[] args) {
@@ -312,11 +419,12 @@ public class CartDBContext extends DBContext {
 //        db.addNewCartForNewCustomer(cart);
 //    Cart c = db.getCartByCustomerId(76);
 //        System.out.println(c.getId() + " " + c.getCustomer().getId() + " " + c.getCart_Products().get(0).getProductId()+ " " + c.getCart_Products().get(0).getQuantity());
-        Cart cart = db.getCartByIndexAndUserId(0, 0, "", 1);
-        //System.out.println(cart.getId());
-        for (Cart_Product c : cart.getCart_Products()) {
-            System.out.println(c.getProduct().getName());
-        }
+//        Cart cart = db.getCartByIndexAndUserId(0, 0, "", 1);
+//        //System.out.println(cart.getId());
+//        for (Cart_Product c : cart.getCart_Products()) {
+//            System.out.println(c.getProduct().getName());
+//        }
+        System.out.println(db.getCartProductByCidAndPid(17, 10).getQuantity());
     }
 
 }
