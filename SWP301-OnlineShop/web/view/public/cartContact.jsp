@@ -197,7 +197,7 @@
                                                 </div>
                                             </td>
                                             <td class="cart_total">
-                                                <b><p class="cart_total_price"> <fmt:formatNumber type = "number" value = "${i.quantity * (i.product).getPriceDiscount()}"/> &nbsp;đ</p></b>
+                                                <p class="cart_total_price"> <fmt:formatNumber type = "number" value = "${i.quantity * (i.product).getPriceDiscount()}"/> &nbsp;đ</p>
 
                                             </td>
                                             </tr>
@@ -205,21 +205,26 @@
 
                                         </c:forEach>
                                         <tr>
-                                            <td colspan="4">&nbsp;</td>
-                                            <td colspan="2">
+                                            <td colspan="3"><textarea name="txtNote"  placeholder="Notes about your order, Special Notes for Delivery" rows="5"></textarea></td>
+                                            <td colspan="2" >
                                                 <table class="table table-condensed total-result">
 
                                                     <tr>
-                                                        <td><b>Total:</b></td>
-                                                        <td><span><fmt:formatNumber type = "number" value = "${total}"/> &nbsp;đ </span></td>
+
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+           
+                                                        <td><b>Total:<p class="cart_total_price"> <fmt:formatNumber type = "number" value = "${total}"/> &nbsp;đ</p></b></td>
+                                                        
                                                     </tr>
                                                 </table>
                                             </td>
                                         </tr>
                                         <tr>
-                                           
+
                                             <td>
-                                                <button class="btn btn-default check_out" id="btn-checkout">Back</button>
+                                                
                                                 <button class="btn btn-default check_out" id="btn-checkout" type="submit">Submit</button>
                                             </td>
                                         </tr>
