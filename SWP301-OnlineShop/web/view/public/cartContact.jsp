@@ -127,27 +127,22 @@
                         <div class="features_items">
                             <!--features_items-->
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Cart Contact</h2>
-                            <div class="table-responsive cart_info">
-
-
-                                <div class="checkout-options">
-                                    <div class="register-req">
-
-                                        <h4><b>${user.fullname}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}<a id="change-id" href="#">Change</a></h4>
-                                        <input type="hidden" name="txtFullname" value="${user.fullname}"/>
-                                        <input type="hidden" name="txtGender" value="${user.gender}"/>
-                                        <input type="hidden" name="txtPhone" value="${user.mobile}"/>
-                                        <input type="hidden" name="txtAddress" value="${user.address}"/>
-                                    </div>
-
-                                </div><!--/checkout-options-->
-
-
-
-
-
-
+                            <form action="cartCompletion" method="post">
                                 <div class="table-responsive cart_info">
+
+
+                                    <div class="checkout-options">
+                                        <div class="register-req">
+
+                                            <h4><b>${user.fullname}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}<a id="change-id" href="#">Change</a></h4>
+                                            <input type="hidden" name="txtFullname" value="${user.fullname}"/>
+                                            <input type="hidden" name="txtGender" value="${user.gender}"/>
+                                            <input type="hidden" name="txtPhone" value="${user.mobile}"/>
+                                            <input type="hidden" name="txtAddress" value="${user.address}"/>
+                                        </div>
+
+                                    </div><!--/checkout-options-->
+
                                     <table class="table table-condensed">
                                         <thead>
                                             <tr class="cart_menu">
@@ -165,7 +160,7 @@
                                             <c:forEach var="i" items="${cartProduct}">
                                                 <tr>
 
-                                            <!--Get Data product here Start-->
+                                                    <!--Get Data product here Start-->
                                             <input type="hidden" name="hId" value="${(i.product).id}">
                                             <input type="hidden" name="hQuantity" value="${i.quantity}">
                                             <input type="hidden" name="hPrice" value="${(i.product).price}">
@@ -221,15 +216,17 @@
                                                 </table>
                                             </td>
                                         </tr>
+                                        <tr>
+                                           
+                                            <td>
+                                                <button class="btn btn-default check_out" id="btn-checkout">Back</button>
+                                                <button class="btn btn-default check_out" id="btn-checkout" type="submit">Submit</button>
+                                            </td>
+                                        </tr>
                                         </tbody>
-
                                     </table>
                                 </div>
-                                <!--</form>-->
-
-
-                            </div>
-
+                            </form>
                         </div>
 
 

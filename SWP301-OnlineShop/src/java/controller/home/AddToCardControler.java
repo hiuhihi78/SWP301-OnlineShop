@@ -33,66 +33,66 @@ public class AddToCardControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
-//        ProductListDBContext productListDBContext = new ProductListDBContext();
-//
-//        //get list subcategory
-//        ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
-//
-//        //get least post
-//        ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
-//
-//        //GET PRODUCT DETAILS, FEEDBACK OF THAT PRODUCT
-//        //get value from jsp
-//        String raw_productID = request.getParameter("productID");
-//
-//        // validate value
-//        int productID = Integer.parseInt(raw_productID);
-//        if ( ALERT.trim().length() > 0 || ALERT != "") {
-//            request.setAttribute("alert", "Add to cart successful!");
-//        }
-//        ALERT = "";
-//        //get product with that id
-//        Product productInfomation = productListDBContext.getProductByID(productID);
-//        //get all feedback of that product
-//        //pass to jsp
-//        request.setAttribute("productInfomation", productInfomation);
-//        request.setAttribute("listCategorys", listCategorys);
-//        request.setAttribute("leastProduct", leastProduct);
-//        request.getRequestDispatcher("/view/public/addToCart.jsp").forward(request, response);
+        ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
+        ProductListDBContext productListDBContext = new ProductListDBContext();
+
+        //get list subcategory
+        ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
+
+        //get least post
+        ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
+
+        //GET PRODUCT DETAILS, FEEDBACK OF THAT PRODUCT
+        //get value from jsp
+        String raw_productID = request.getParameter("productID");
+
+        // validate value
+        int productID = Integer.parseInt(raw_productID);
+        if ( ALERT.trim().length() > 0 || ALERT != "") {
+            request.setAttribute("alert", "Add to cart successful!");
+        }
+        ALERT = "";
+        //get product with that id
+        Product productInfomation = productListDBContext.getProductByID(productID);
+        //get all feedback of that product
+        //pass to jsp
+        request.setAttribute("productInfomation", productInfomation);
+        request.setAttribute("listCategorys", listCategorys);
+        request.setAttribute("leastProduct", leastProduct);
+        request.getRequestDispatcher("/view/public/addToCart.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        ProductListDBContext productListDBContext = new ProductListDBContext();
-//        HttpSession session = request.getSession();
-//        ALERT = "success";
-//        //get user Id
-//        User user = (User) session.getAttribute("user");
-////        int userBuyId = user.getId();
-//        int userBuyId = 76;
-//
-//        String productName = request.getParameter("productName");
-//        String raw_productId = request.getParameter("productId");
-//        String raw_quantity = request.getParameter("quantity");
-//        String raw_quantityOrder = request.getParameter("quantityOrder");
-//        String raw_price = request.getParameter("price");
-//        String raw_sellerId = request.getParameter("sellerId");
-//        String thumbnail = request.getParameter("thumbnail");
-//        String alert = request.getParameter("alert");
-//
-//        //validate value
-//        int productId = Integer.parseInt(raw_productId);
-//        int quantity = Integer.parseInt(raw_quantity);
-//        int quantityOrder = Integer.parseInt(raw_quantityOrder);
-//        long price = Integer.parseInt(raw_price);
-//        int sellerId = Integer.parseInt(raw_sellerId);
-//
-//        Product product = new Product();
-//        product.setId(productId);
-//        product.setName(productName);
-//
+        ProductListDBContext productListDBContext = new ProductListDBContext();
+        HttpSession session = request.getSession();
+        ALERT = "success";
+        //get user Id
+        User user = (User) session.getAttribute("user");
+//        int userBuyId = user.getId();
+        int userBuyId = 76;
+
+        String productName = request.getParameter("productName");
+        String raw_productId = request.getParameter("productId");
+        String raw_quantity = request.getParameter("quantity");
+        String raw_quantityOrder = request.getParameter("quantityOrder");
+        String raw_price = request.getParameter("price");
+        String raw_sellerId = request.getParameter("sellerId");
+        String thumbnail = request.getParameter("thumbnail");
+        String alert = request.getParameter("alert");
+
+        //validate value
+        int productId = Integer.parseInt(raw_productId);
+        int quantity = Integer.parseInt(raw_quantity);
+        int quantityOrder = Integer.parseInt(raw_quantityOrder);
+        long price = Integer.parseInt(raw_price);
+        int sellerId = Integer.parseInt(raw_sellerId);
+
+        Product product = new Product();
+        product.setId(productId);
+        product.setName(productName);
+
 //        Cart cart = new Cart();
 //        cart.setProduct(product);
 //        cart.setQuantityOrder(quantityOrder);
@@ -126,7 +126,7 @@ public class AddToCardControler extends HttpServlet {
 //        if (check) {
 //            productListDBContext.addNewCartInfomation(cart);
 //        }
-//        response.sendRedirect("addcart?productID=" + productId);
+        response.sendRedirect("addcart?productID=" + productId);
     }
 
     /**

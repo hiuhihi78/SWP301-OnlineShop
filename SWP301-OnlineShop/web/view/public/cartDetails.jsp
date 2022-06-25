@@ -156,7 +156,7 @@
                                                             </td>
                                                             <td class="cart_description">
                                                                 <h4><a href="">${(i.product).name}</a></h4>
-                                                                <p>${(i.product).description}</p>
+                                                               
                                                                 <b>Amount: ${(i.product).quantity}</b>
                                                             </td>
                                                             <td class="cart_price">
