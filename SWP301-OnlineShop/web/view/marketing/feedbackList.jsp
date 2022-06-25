@@ -140,7 +140,7 @@
                                             <td>${p.user.fullname}</td>
                                             <td>${p.product.name}</td>
                                             <td>
-                                                <c:forEach begin="0" end="${p.start}">
+                                                <c:forEach begin="1" end="${p.start}">
                                                     <span style=" font-size: 20px; color: #ffe500; opacity: 1; transform: rotateX(0deg);text-shadow: 0 0 30px #ffc;">★</span>
                                                 </c:forEach>
                                             </td>

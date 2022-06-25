@@ -468,7 +468,7 @@ public class ProductListDBContext extends DBContext {
         System.out.println(bContext.getListFeedbackByProductID(9, 1, 5));
     }
 
-    public ArrayList<Product> getListProductById(int[] listIdProduct, int idUser) {
+    public ArrayList<Product> getListProductById(Product[] listIdProduct, int idUser) {
         ArrayList<Product> listProduct = new ArrayList<>();
         try {
             String sql = "Select cart.*, Cart_Product.ProductId, Cart_Product.Quantity, product.thumbnail, Product.[name], product.sellerId, [User].fullname,\n"
@@ -478,10 +478,10 @@ public class ProductListDBContext extends DBContext {
                     + "join Product on Product.id = Cart_Product.ProductId\n"
                     + "join [User] on [User].id = product.sellerId\n"
                     + "where cart.customerId = ? and Cart_Product.ProductId = ?";
-            for (int i : listIdProduct) {
+            for (Product i : listIdProduct) {
                 PreparedStatement stm = connection.prepareCall(sql);
                 stm.setInt(1, idUser);
-                stm.setInt(2, i);
+                stm.setInt(2, i.getId());
                 ResultSet rs = stm.executeQuery();
                 while (rs.next()) {
                     Product product = new Product();

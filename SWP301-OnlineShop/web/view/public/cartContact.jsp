@@ -1,7 +1,7 @@
 <%-- 
-    Document   : CartCompletion
-    Created on : Jun 17, 2022, 8:54:10 AM
-    Author     : DELL
+    Document   : cartContact
+    Created on : Jun 24, 2022, 12:58:57 PM
+    Author     : ASUS
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,33 +11,43 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cart Completion | E-Shopper</title>
+
+        <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script data-require="bootstrap@*" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="../../assets/public/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="assets/img/lg.png" />
         <link href="../../assets/public/css/font-awesome.min.css" rel="stylesheet">
         <link href="../../assets/public/css/prettyPhoto.css" rel="stylesheet">
         <link href="../../assets/public/css/price-range.css" rel="stylesheet">
         <link href="../../assets/public/css/animate.css" rel="stylesheet">
         <link href="../../assets/public/css/main.css" rel="stylesheet">
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
-
         <link href="../../assets/public/css/style.css" rel="stylesheet">
+        <link href="../../assets/css/cart/style.css" rel="stylesheet">
+        <title>Cart | Contact</title>
     </head>
     <body>
         <jsp:include page="../home-template/headerProductlist.jsp"/>
-        <section>
+        <section id="cart_items">
             <div class="container">
                 <div class="row flex-justify">
                     <div class="col-sm-3 box-shadow height-fit-content border-radius-2" >
                         <div class="left-side"> <!-- left-sidebar -->
-
-                            <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
+                            <h2 class="title text-center border">Category</h2>
                             <form action="productlist" method="get">
                                 <div class="panel-group category-products" id="accordian"><!--category-products-->
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
+
+                                            <div class="search_box">
+                                                <!--<input id="search-box" type="text" placeholder="Search..." name="searchBy" value="${requestScope.searchBy}">-->
+                                                <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search"/>
+                                            </div>
                                         </div>
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
@@ -72,16 +82,11 @@
                                             </div>
                                         </c:if>
                                     </c:forEach>
-                                    <div class="search_box" style="margin-top: 10px;">
-                                        <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search" style="width: 83%;
-                                               margin: 0 0 0 7%;
-                                               background-position: 188px;"/>
-                                    </div>
-                                </div><!--/category-products--> 
-
+                                </div><!--/category-products-->    
                             </form>
 
-                            <div class="panel-group category-products" id="accordian"><!-- 3 least product -->
+
+                            <div class="panel-group category-products" id="accordian"><!-- 2 least product -->
                                 <h2 class="title text-center" style="border-bottom: solid 2px;">Latest Product</h2>
                                 <%--<c:set var="leat" value="" />--%>
                                 <c:if test="${requestScope.leastProduct != null}">
@@ -112,114 +117,182 @@
 
                         </div>                     
                     </div>
+
+
+
                     <!--PRODUCT LIST-->
+
+
                     <div class="col-sm-9 padding-right">
-                        <div id="cart_items">
-                            <h2 class="title text-center" style="margin-top: 10px;">Your order has been successfully placed</h2>
-                            <form action="cartCompletion" method="POST">
+                        <div class="features_items">
+                            <!--features_items-->
+                            <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Cart Contact</h2>
+                            <form action="cartCompletion" method="post">
                                 <div class="table-responsive cart_info">
+
+
+                                    <div class="checkout-options">
+                                        <div class="register-req">
+
+                                            <h4><b>${user.fullname}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}<a id="change-id" href="#">Change</a></h4>
+                                            <input type="hidden" name="txtFullname" value="${user.fullname}"/>
+                                            <input type="hidden" name="txtGender" value="${user.gender}"/>
+                                            <input type="hidden" name="txtPhone" value="${user.mobile}"/>
+                                            <input type="hidden" name="txtAddress" value="${user.address}"/>
+                                        </div>
+
+                                    </div><!--/checkout-options-->
+
                                     <table class="table table-condensed">
                                         <thead>
                                             <tr class="cart_menu">
+
                                                 <td class="image">Item</td>
                                                 <td class="description"></td>
                                                 <td class="price">Price</td>
                                                 <td class="quantity">Quantity</td>
-                                                <td class="total">Total</td>
-                                                <td></td>
+                                                <td>Total</td>
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${requestScope.listProduct}" var="i">
-<!--                                            <input type="hidden" name="pr-id" value="${i.id}"/>
-                                            <input type="hidden" name="pr-price" value="${i.price}"/>
-                                            <input type="hidden" name="pr-discount" value="${i.discount}"/>
-                                            <input type="hidden" name="pr-quantity" value="${i.quantity}"/>-->
-                                            <tr>
-                                                <td class="cart_product" style="margin-left: 0px;">
-                                                    <a href="#"><img src="${i.thumbnail}" alt="" width="100px" height="auto"></a>
-                                                </td>
-                                                <td class="cart_description">
-                                                    <h4><a href="#">${i.name}</a></h4>
-                                                    <p>Seller: ${i.user.fullname}</p>
-                                                </td>
-                                                <td class="cart_price">
-                                                    <p><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price}"/></p>
-                                                </td>
-                                                <td class="cart_quantity">
-                                                    <input style="margin-bottom: 12px; border: none; outline: none;" class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2" readonly>
-                                                </td>
-                                                <td class="cart_total">
-                                                    <p class="cart_total_price"><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price*i.quantity}"/></p>
-                                                </td>
+
+                                            <c:forEach var="i" items="${cartProduct}">
+                                                <tr>
+
+                                                    <!--Get Data product here Start-->
+                                            <input type="hidden" name="pr-id" value="${(i.product).id}">
+                                            <input type="hidden" name="pr-quantity" value="${i.quantity}">
+                                            <input type="hidden" name="pr-price" value="${(i.product).price}">
+                                            <input type="hidden" name="pr-discount" value="${(i.product).getPriceDiscount()}">
+                                            <!--Get Data product here End-->
+
+
+                                            <td class="cart_product" style="width: 180px">
+                                                <a href=""><img src="${(i.product).thumbnail}" alt="" width="100px" height="auto"></a>
+                                            </td>
+                                            <td class="cart_description">
+                                                <h4><a href="">${(i.product).name}</a></h4>
+
+
+                                            </td>
+                                            <td class="cart_price">
+
+
+                                                <span class="text-danger">
+                                                    <fmt:formatNumber type = "number" value = "${(i.product).getPriceDiscount()}"/> đ
+                                                </span>
+                                            </td>
+
+
+                                            <td class="cart_quantity">
+                                                <div class="cart_quantity_button">
+
+
+
+                                                    <div id="show-quantity"><input disabled="" class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2"></div>
+
+
+
+                                                </div>
+                                            </td>
+                                            <td class="cart_total">
+                                                <p class="cart_total_price"> <fmt:formatNumber type = "number" value = "${i.quantity * (i.product).getPriceDiscount()}"/> &nbsp;đ</p>
+
+                                            </td>
                                             </tr>
+
+
                                         </c:forEach>
                                         <tr>
-                                            <td colspan="4">&nbsp;</td>
-                                            <td colspan="2">
+                                            <td colspan="3"><textarea name="txtNote"  placeholder="Notes about your order, Special Notes for Delivery" rows="5"></textarea></td>
+                                            <td colspan="2" >
                                                 <table class="table table-condensed total-result">
+
                                                     <tr>
-                                                        <td>Total</td>
-                                                        <td><span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${requestScope.total}"/></span></td>
+
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+           
+                                                        <td><b>Total:<p class="cart_total_price"> <fmt:formatNumber type = "number" value = "${total}"/> &nbsp;đ</p></b></td>
+                                                        
                                                     </tr>
                                                 </table>
                                             </td>
                                         </tr>
+                                        <tr>
+
+                                            <td>
+                                                
+                                                <button class="btn btn-default check_out" id="btn-checkout" type="submit">Submit</button>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
-                                    <!--<input type="hidden" name="total" value="${requestScope.total}"/>-->
                                 </div>
-<!--                                <div class="payment-options" style="padding-left: 15px;
-                                     margin-bottom: 30px;">
-                                    <span>
-                                        <label><input type="radio" name="payment" value="delivery" checked> Payment on delivery</label>
-                                    </span>
-                                    <span>
-                                        <label><input type="radio" name="payment" value="bank"> Payment by bank</label>
-                                    </span>
-                                </div>-->
-
-<!--                                <div class="col-sm-8">
-                                    <div class="bill-to">
-                                        <p>Ship Information</p>
-                                        <div class="">
-                                            <input type="text" placeholder="FullName" name="txtFullname" required style="background: #F0F0E9;
-                                                   border: 0 none;
-                                                   margin-bottom: 10px;
-                                                   padding: 10px;
-                                                   width: 100%;
-                                                   font-weight: 300;">
-                                            <input type="text" placeholder="Phone" name="txtPhone" required style="background: #F0F0E9;
-                                                   border: 0 none;
-                                                   margin-bottom: 10px;
-                                                   padding: 10px;
-                                                   width: 100%;
-                                                   font-weight: 300;">
-                                            <input type="text" placeholder="Address" name="txtAddress" required style="background: #F0F0E9;
-                                                   border: 0 none;
-                                                   margin-bottom: 10px;
-                                                   padding: 10px;
-                                                   width: 100%;
-                                                   font-weight: 300;">
-                                        </div>
-                                    </div>
-                                </div>-->
-<!--                                <div class="col-sm-4">
-                                    <div class="order-message">
-                                        <p>Note</p>
-                                        <textarea name="txtNote" placeholder="Notes about your order, Special Notes for Delivery" rows="16" style="height: 140px;"></textarea>
-                                    </div>	
-                                </div>-->
-                                <!--<input class="btn btn-primary" type="submit" value="Finish"/>-->
                             </form>
                         </div>
-                    </div>
 
+
+                    </div>
                 </div>
             </div>
         </section>
 
+
+
+
+
+
+
+
+        <!--    This is start delete modal dialog-->
+
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p id="cfm"></p>
+                        <p>Do you want to proceed?</p>
+                        <p class="debug-url"></p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-danger btn-ok">Delete</a>
+                    </div>
+                    <input type="hidden" value="" id="app_id"/>
+                    <input type="hidden" value="" id="app_isAll"/>
+                    <input type="hidden" value="${cartId}" id="app_cid"/>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!--                    <script type="text/javascript">
+                                
+                            </script>-->
+        <!--END PRODCUT LIST-->
+
+
+        <!--/#cart_items-->
+        <!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
+
+
+
         <jsp:include page="../home-template/footer.jsp"/>
+
+
+
+        <script src="../../assets/js/cart/script.js"></script>
         <script src="../../assets/public/js/jquery.js"></script>
         <script src="../../assets/public/js/bootstrap.min.js"></script>
         <script src="../../assets/public/js/jquery.scrollUp.min.js"></script>
@@ -227,5 +300,7 @@
         <script src="../../assets/public/js/jquery.prettyPhoto.js"></script>
         <script src="../../assets/public/js/main.js"></script>
         <script src="../../assets/js/home/home.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js" integrity="sha512-FOhq9HThdn7ltbK8abmGn60A/EMtEzIzv1rvuh+DqzJtSGq8BRdEN0U+j0iKEIffiw/yEtVuladk6rsG4X6Uqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </body>
 </html>

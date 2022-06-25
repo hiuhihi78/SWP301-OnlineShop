@@ -124,102 +124,114 @@
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Cart</h2>
                             <!--Show product-->
                             <!--<form action="/cartCompletion" method="GET" id="submitCart">-->
-                            <c:choose>
-                                <c:when test="${not empty carts}">
-                                    <div class="table-responsive cart_info">
-                                        <table class="table table-condensed">
-                                            <thead>
-                                                <tr class="cart_menu">
-                                                    <td></td>
-                                                    <td class="image">Item</td>
-                                                    <td class="description"></td>
-                                                    <td class="price">Price</td>
-                                                    <td class="quantity">Quantity</td>
-                                                    <td>Total</td>
-                                                    <td></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                            <form action="/cartContact" method="get">
+                                <c:choose>
 
-                                                <c:forEach var="i" items="${carts}">
-                                                    <tr id="div-product-${(i.product).id}" class="delete-all">
-
-                                                        <td class="cart_description"><div id="calculator"><input name="cboproduct" id="cbo-${(i.product).id}" type="checkbox" value="${(i.product).id}" data-price="${i.quantity * (i.product).getPriceDiscount()}" class="cb-element">
-
-
-
-                                                                <td class="cart_product" style="width: 180px">
-                                                                    <a href=""><img src="${(i.product).thumbnail}" alt="" width="100px" height="auto"></a>
-                                                                </td>
-                                                                <td class="cart_description">
-                                                                    <h4><a href="">${(i.product).name}</a></h4>
-                                                                    <p>${(i.product).description}</p>
-                                                                    <b>Amount: ${(i.product).quantity}</b>
-                                                                </td>
-                                                                <td class="cart_price">
-
-                                                                    <span class="text-line-through">
-                                                                        <fmt:formatNumber type = "number" value = "${(i.product).price}"/> đ
-                                                                    </span>
-                                                                    <span class="text-danger">
-                                                                        <fmt:formatNumber type = "number" value = "${(i.product).getPriceDiscount()}"/> đ
-                                                                    </span>
-                                                                </td>
-
-
-                                                                <td class="cart_quantity">
-                                                                    <div class="cart_quantity_button">
-
-                                                                        <input type="button" class="cart_quantity_down" ${i.quantity==1?"disabled":""} is-up="0"  id="id-down-${(i.product).id}" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="-" data-min="1"/>
-
-                                                                        <div id="show-quantity-${(i.product).id}"><input class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2"></div>
-                                                                        <input id="input-${(i.product).id}" class="cart_quantity_input" type="hidden" value="${i.quantity}" autocomplete="off" size="2" data-price-1="${(i.product).getPriceDiscount()}">
-
-                                                                        <input type="button" id="id-up-${(i.product).id}" ${i.quantity==(i.product).quantity?"disabled":""} class="cart_quantity_up" is-up="1" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="+" data-max="${(i.product).quantity}"/>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="cart_total">
-                                                                    <b><p class="cart_total_price_${(i.product).id}"> ${i.quantity * (i.product).getPriceDiscount()}&nbsp;đ</p></b>
-
-                                                                </td>
-                                                                <td class="cart_delete">
-                                                                    <a class="cart_quantity_delete" data-programid="${(i.product).id}" data-name="${(i.product).name}" data-isAll="0">
-                                                                        <i class="fa fa-times"></i></a>
-                                                                </td>
+                                    <c:when test="${not empty carts}">
+                                        <div class="table-responsive cart_info">
+                                            <table class="table table-condensed">
+                                                <thead>
+                                                    <tr class="cart_menu">
+                                                        <td></td>
+                                                        <td class="image">Item</td>
+                                                        <td class="description"></td>
+                                                        <td class="price">Price</td>
+                                                        <td class="quantity">Quantity</td>
+                                                        <td>Total</td>
+                                                        <td></td>
                                                     </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <c:forEach var="i" items="${carts}">
+                                                        <tr id="div-product-${(i.product).id}" class="delete-all">
+
+                                                            <td class="cart_description"><div id="calculator"><input name="cboproduct" id="cbo-${(i.product).id}" type="checkbox" value="${(i.product).id}" data-price="${i.quantity * (i.product).getPriceDiscount()}" class="cb-element"></div>
+                                                                <input type="hidden" name="hCartId" value="${cartId}"/>
 
 
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!--</form>-->
-                                    <section id="do_action">
-                                        <div class="container">
 
-                                            <div class="row">
-                                                <div class="col-sm-9">
-                                                    <div class="total_area">
-                                                        <ul>
-                                                            <li><input type="checkbox" name="all" id="checkall"> Select all (${carts.size()} products) <span><a class="delete-all-product" data-isAll="1" data-programid="-1" data-name="">Delete all</a></span></li>
+                                                            <td class="cart_product" style="width: 180px">
+                                                                <a href=""><img src="${(i.product).thumbnail}" alt="" width="100px" height="auto"></a>
+                                                            </td>
+                                                            <td class="cart_description">
+                                                                <h4><a href="">${(i.product).name}</a></h4>
+                                                               
+                                                                <b>Amount: ${(i.product).quantity}</b>
+                                                            </td>
+                                                            <td class="cart_price">
 
-                                                            <li style="display: flex"><div >Total</div> <div class=total style="margin-left: auto"><span id="total">0</span></div>&nbsp;đ</li>
-                                                        </ul>
+                                                                <span class="text-line-through">
+                                                                    <fmt:formatNumber type = "number" value = "${(i.product).price}"/> đ
+                                                                </span>
+                                                                <span class="text-danger">
+                                                                    <fmt:formatNumber type = "number" value = "${(i.product).getPriceDiscount()}"/> đ
+                                                                </span>
+                                                            </td>
 
-                                                        <button class="btn btn-default check_out" id="btn-checkout">Check Out</button>
+
+                                                            <td class="cart_quantity">
+                                                                <div class="cart_quantity_button">
+
+                                                                    <input type="button" class="cart_quantity_down" ${i.quantity==1?"disabled":""} is-up="0"  id="id-down-${(i.product).id}" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="-" data-min="1"/>
+
+                                                                    <div id="show-quantity-${(i.product).id}"><input class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2"></div>
+                                                                    <input id="input-${(i.product).id}" class="cart_quantity_input" type="hidden" value="${i.quantity}" autocomplete="off" size="2" data-price-1="${(i.product).getPriceDiscount()}">
+
+                                                                    <input type="button" id="id-up-${(i.product).id}" ${i.quantity==(i.product).quantity?"disabled":""} class="cart_quantity_up" is-up="1" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="+" data-max="${(i.product).quantity}"/>
+                                                                </div>
+                                                            </td>
+                                                            <td class="cart_total">
+                                                                <b><p class="cart_total_price_${(i.product).id}"> ${i.quantity * (i.product).getPriceDiscount()}&nbsp;đ</p></b>
+
+                                                            </td>
+                                                            <td class="cart_delete">
+                                                                <a class="cart_quantity_delete" data-programid="${(i.product).id}" data-name="${(i.product).name}" data-isAll="0">
+                                                                    <i class="fa fa-times"></i></a>
+                                                            </td>
+                                                        </tr>
+
+
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--</form>-->
+                                        <section id="do_action">
+                                            <div class="container">
+
+                                                <div class="row">
+                                                    <div class="col-sm-9">
+                                                        <div class="total_area">
+                                                            <ul>
+                                                                <li><input type="checkbox" name="all" id="checkall"> Select all (${carts.size()} products) <span><a class="delete-all-product" data-isAll="1" data-programid="-1" data-name="">Delete all</a></span></li>
+
+                                                                <li style="display: flex"><div >Total</div> <div class=total style="margin-left: auto"><span id="total">0</span></div>&nbsp;đ</li>
+                                                            </ul>
+                                                            <ul>
+
+                                                                <a class="btn btn-default update" href="/productlist">Choose More Product</a>
+                                                                <button class="btn btn-default check_out" id="btn-checkout" type="submit">Check Out</button>
+
+                                                            </ul>
+
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </section>
-                                </c:when>
-                                <c:otherwise>
+                                        </section>
 
-                                    <div class="alert alert-danger" role="alert">
-                                        <h4 id="empty-cart">There are no products in the shopping cart.</h4>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>                                    
+                                    </c:when>
+
+                                    <c:otherwise>
+
+                                        <div class="alert alert-danger" role="alert">
+                                            <h4 id="empty-cart">There are no products in the shopping cart.</h4>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </form>                                    
                         </div>
                     </div>
 

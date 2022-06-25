@@ -37,7 +37,13 @@ function addToCartFunction() {
     var quantityOrder = document.getElementById('quantityOrder').value;
     var quantityProduct = document.getElementById('productQuantity').value;
     
+    
     var divAlterQuantityOrder = document.getElementById('alter_quantityOrder');
+    
+//    if(typeof (quantityOrder) === 'string'){
+//        divAlterQuantityOrder.innerHTML = "<div class='alert alert-danger' style='padding: 10px;width: 75%;'>Quantity must be a number! </div>";
+//        return ;
+//    }
     if (customerId === -1) {
         window.location.href = "/login";
         window.location.assign("http://localhost:8080/login");
@@ -47,10 +53,8 @@ function addToCartFunction() {
         divAlterQuantityOrder.innerHTML = "<div class='alert alert-danger' style='padding: 10px;width: 75%;'>Quantity must be greater than 1! </div>";
         return ;
     }
-    
-    
 
-    if(quantityOrder > quantityProduct){
+    if(quantityOrder - 0 > quantityProduct - 0){
         divAlterQuantityOrder.innerHTML = "<div class='alert alert-danger' style='padding: 10px;width: 75%;'>Quantity must be less than " + quantityProduct + "!"+"</div>";
         return ;
     }

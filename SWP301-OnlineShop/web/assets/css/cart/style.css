@@ -32,3 +32,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #empty-cart {
     text-align: center;
 }
+
+.border {
+    border-bottom: solid 2px; 
+    margin-top: 10px;
+}
+
+#change-id {
+    margin-left: 54%;
+}

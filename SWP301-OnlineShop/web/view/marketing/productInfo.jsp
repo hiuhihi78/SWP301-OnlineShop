@@ -56,14 +56,14 @@
                         <!--/alter-->
                     <div class="mb-10" >
                         
-                        <form action="editProductInfo" method="POST" enctype="multipart/form-data" >
+                        <form action="editProductInfo" method="POST" enctype="multipart/form-data" id="editProductInfo" >
                             
                             <input type="hidden" name="id" value="${requestScope.product.id}"/>
                             
                             <!--Thumbnail-->
                             <div class="form-group w-70-percent mx-auto">
                                 <label for="thumbnail">Thumbnail</label>
-                                <div  class="w-35percent image-input-layout display-flex" style="position: relative">
+                                <div  class="w-35percent image-input-layout display-flex" style="position: relative; width: fit-content;">
                                     <div id="closeBtn-thumbnailBoxImg" class="close-btn-not-hide" onclick="closeImgage('thumbnailBoxImg','closeBtn-thumbnailBoxImg','thumbnail');"> <i class="fa-solid fa-xmark close-btn"></i></div>
                                     <img id="thumbnailBoxImg" src="${requestScope.product.thumbnail}" alt="your image" style="height:100%; width:100%;" class="boder-radius  image-thumbnail"/>
                                 </div>
@@ -76,14 +76,14 @@
                                 <label >Attached image</label>
                                 <div class="display-flex">
                                     <div>
-                                        <div  class="w-100percent image-input-layout display-flex" style="position: relative">
+                                        <div  class="w-100percent image-input-layout display-flex" style="position: relative;width: fit-content;">
                                             <div id="closeBtn-attachedBoxImg-1" class="close-btn-not-hide" onclick="closeImgage('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1');"> <i class="fa-solid fa-xmark close-btn"></i></div>
                                             <img id="attachedBoxImg-1" src="<%= attchedImg.get(0).getImage() %>" alt="your image" style="height:100%; width:100%;" class="boder-radius image-thumbnail"/>
                                         </div>
                                         <input type="file" name="attachedImg1" id="attachedImg1" accept="image/*" onchange="showAttachedImg('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1')"/>
                                     </div>
                                     <div>
-                                        <div  class="w-100percent image-input-layout ml-2percent" style="position: relative">
+                                        <div  class="w-100percent image-input-layout ml-2percent" style="position: relative;width: fit-content;">
                                             <div id="closeBtn-attachedBoxImg-2" class="close-btn-not-hide" onclick="closeImgage('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2');"> <i class="fa-solid fa-xmark close-btn"></i></div>
                                             <img id="attachedBoxImg-2" src="<%= attchedImg.get(1).getImage() %>" alt="your image" style="height:100%; width:100%;" class="boder-radius image-thumbnail"/>
                                         </div>
@@ -115,8 +115,9 @@
                                     <input type="text" class="form-control" value="${requestScope.product.user.email}" id="seller"  disabled="" />
                                     <button type="button" onclick="handleSearchSellerInfo()" class="btn btn-primary ml-2percent ">Info</button>
                                 </div>
-                                <div id="rowShowSeller"></div>
                             </div>
+                                    
+                            <div class="form-group w-70-percent mx-auto mt-10" id="rowShowSeller"></div>
                             <!--/Seller-->
                             
                             <!--Category-->
@@ -200,8 +201,8 @@
                                 </div>
                            </div>
                             <!-- / Status-->
-                            <div class="form-group w-70-percent mx-auto">
-                                <input type="submit" class="btn btn-success"  value="Save" />
+                            <div class="form-group w-70-percent mx-auto mt-10">
+                                <button type="button" class="btn btn-success  " data-toggle="modal" data-target="#saveEdit">Save</button>
                             </div>
                         </form>
                     </div>
@@ -254,6 +255,28 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSaveSubcategory()">Save</button>
+                        <!--<button type="button" class="btn btn-primary" onclick="document.getElementById('saveAddNewCategory').submit();">Save</button>-->
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Modal for Save button-->
+        <div class="modal fade" id="saveEdit" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <!--<h4 class="modal-title">Modal Header</h4>-->
+                    </div>
+                    <div class="modal-body">
+                         Are you sure to update ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="document.getElementById('editProductInfo').submit()">Save</button>
                         <!--<button type="button" class="btn btn-primary" onclick="document.getElementById('saveAddNewCategory').submit();">Save</button>-->
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
