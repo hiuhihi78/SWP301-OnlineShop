@@ -6,6 +6,7 @@ package controller.common;
 
 import dal.CartDBContext;
 import dal.ProductDBContext;
+import dal.UserDBContext;
 import filter.BaseAuthController;
 import java.io.Console;
 import java.io.IOException;
@@ -99,8 +100,35 @@ public class CartContactController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        UserDBContext userDb = new UserDBContext();
+        PrintWriter out = response.getWriter();
+        User user = null;
+        boolean rs = false;
+        String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
+        String mobile = request.getParameter("mobile");
+        String address = request.getParameter("address");
+        user = userDb.getUserByEmail(email);
+        if (user != null) {
+            //Set inf for user
+            user.setFullname(fullName);
+            user.setMobile(mobile);
+            
+            user.setAddress(address);
+            
+            //Update user
+            rs = userDb.updateUserInf(user);
+        }
+        
+        if (rs) {
+            out.println("<b>"+ fullName +"&nbsp;&nbsp;" + mobile +"</b>&nbsp;&nbsp;&nbsp;&nbsp;" + address +"");
+        }
+        
+       
+        
+        
 
-        processRequest(request, response);
     }
 
     /**

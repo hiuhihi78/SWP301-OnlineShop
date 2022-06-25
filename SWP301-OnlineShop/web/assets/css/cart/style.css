@@ -39,5 +39,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 #change-id {
-    margin-left: 54%;
+   
+}
+
+#info-user-id {
+    display: flex;
+}
+
+#address-id {
+    width: 90%;
 }

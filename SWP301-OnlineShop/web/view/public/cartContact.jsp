@@ -118,11 +118,7 @@
                         </div>                     
                     </div>
 
-
-
                     <!--PRODUCT LIST-->
-
-
                     <div class="col-sm-9 padding-right">
                         <div class="features_items">
                             <!--features_items-->
@@ -133,8 +129,12 @@
 
                                     <div class="checkout-options">
                                         <div class="register-req">
+                                            <b><h4><p><i class="fa fa-location-arrow" aria-hidden="true"></i> Address</p></h4></b>
+                                            <div id="info-user-id">
+                                                <p id="address-id"><b>${user.fullname}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}</p>
+                                                <a id="change-id" href="#" >Change</a>
+                                            </div>
 
-                                            <h4><b>${user.fullname}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}<a id="change-id" href="#">Change</a></h4>
                                             <input type="hidden" name="txtFullname" value="${user.fullname}"/>
                                             <input type="hidden" name="txtGender" value="${user.gender}"/>
                                             <input type="hidden" name="txtPhone" value="${user.mobile}"/>
@@ -159,41 +159,26 @@
 
                                             <c:forEach var="i" items="${cartProduct}">
                                                 <tr>
-
                                                     <!--Get Data product here Start-->
                                             <input type="hidden" name="hId" value="${(i.product).id}">
                                             <input type="hidden" name="hQuantity" value="${i.quantity}">
                                             <input type="hidden" name="hPrice" value="${(i.product).price}">
                                             <input type="hidden" name="hDiscount" value="${(i.product).getPriceDiscount()}">
                                             <!--Get Data product here End-->
-
-
                                             <td class="cart_product" style="width: 180px">
                                                 <a href=""><img src="${(i.product).thumbnail}" alt="" width="100px" height="auto"></a>
                                             </td>
                                             <td class="cart_description">
                                                 <h4><a href="">${(i.product).name}</a></h4>
-
-
                                             </td>
                                             <td class="cart_price">
-
-
                                                 <span class="text-danger">
                                                     <fmt:formatNumber type = "number" value = "${(i.product).getPriceDiscount()}"/> đ
                                                 </span>
                                             </td>
-
-
                                             <td class="cart_quantity">
                                                 <div class="cart_quantity_button">
-
-
-
                                                     <div id="show-quantity"><input disabled="" class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2"></div>
-
-
-
                                                 </div>
                                             </td>
                                             <td class="cart_total">
@@ -201,8 +186,6 @@
 
                                             </td>
                                             </tr>
-
-
                                         </c:forEach>
                                         <tr>
                                             <td colspan="3"><textarea name="txtNote"  placeholder="Notes about your order, Special Notes for Delivery" rows="5"></textarea></td>
@@ -214,17 +197,15 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-           
+
                                                         <td><b>Total:<p class="cart_total_price"> <fmt:formatNumber type = "number" value = "${total}"/> &nbsp;đ</p></b></td>
-                                                        
+
                                                     </tr>
                                                 </table>
                                             </td>
                                         </tr>
                                         <tr>
-
-                                            <td>
-                                                
+                                            <td>                                              
                                                 <button class="btn btn-default check_out" id="btn-checkout" type="submit">Submit</button>
                                             </td>
                                         </tr>
@@ -234,63 +215,65 @@
                             </form>
                         </div>
 
-
                     </div>
                 </div>
             </div>
         </section>
 
-
-
-
-
-
-
-
         <!--    This is start delete modal dialog-->
 
-        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="confirm-change" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                        <h4 class="modal-title" id="myModalLabel">Edit address</h4>
                     </div>
 
                     <div class="modal-body">
-                        <p id="cfm"></p>
-                        <p>Do you want to proceed?</p>
-                        <p class="debug-url"></p>
+                        <form class="form-horizontal" role="form" action="" method="post" id="">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Email</label>
+                                <div class="col-sm-12">
+                                    <input type="email" placeholder="Enter email address" class="form-control" disabled="" autofocus value="${user.email}" >
+                                    <input type="hidden" id="iEmail" placeholder="Enter email address" class="form-control" autofocus value="${user.email}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Full Name</label>
+
+                                <div class="col-sm-12">
+                                    <input type="text" id="iFullName" name="" placeholder="Enter full name" class="form-control" value="${user.fullname}" autofocus required=""/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Mobile </label>
+                                <div class="col-sm-12">
+                                    <input type="text" id="iMobile" name="" placeholder="Enter your mobile" class="form-control" value="${user.mobile}" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Address </label>
+                                <div class="col-sm-12">
+                                    <textarea id="iAddress" class="form-control" rows="2" placeholder="Enter your address" >${user.address}</textarea>
+                                </div>
+                            </div>
+
+                        </form> 
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-danger btn-ok">Delete</a>
+                        <a class="btn btn-danger btn-update">Update</a>
                     </div>
-                    <input type="hidden" value="" id="app_id"/>
-                    <input type="hidden" value="" id="app_isAll"/>
-                    <input type="hidden" value="${cartId}" id="app_cid"/>
+
                 </div>
             </div>
         </div>
 
-
-
-        <!--                    <script type="text/javascript">
-                                
-                            </script>-->
-        <!--END PRODCUT LIST-->
-
-
-        <!--/#cart_items-->
-        <!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
-
-
-
         <jsp:include page="../home-template/footer.jsp"/>
-
-
 
         <script src="../../assets/js/cart/script.js"></script>
         <script src="../../assets/public/js/jquery.js"></script>
