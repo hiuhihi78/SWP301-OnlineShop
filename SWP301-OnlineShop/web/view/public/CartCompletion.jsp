@@ -115,7 +115,7 @@
                     <!--PRODUCT LIST-->
                     <div class="col-sm-9 padding-right">
                         <div id="cart_items">
-                            <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px;">Cart Completion</h2>
+                            <h2 class="title text-center" style="margin-top: 10px;">Your order has been successfully placed</h2>
                             <form action="cartCompletion" method="POST">
                                 <div class="table-responsive cart_info">
                                     <table class="table table-condensed">
@@ -131,9 +131,10 @@
                                         </thead>
                                         <tbody>
                                             <c:forEach items="${requestScope.listProduct}" var="i">
-                                            <input type="hidden" name="pr-id" value="${i.id}"/>
+<!--                                            <input type="hidden" name="pr-id" value="${i.id}"/>
                                             <input type="hidden" name="pr-price" value="${i.price}"/>
-                                            <input type="hidden" name="pr-quantity" value="${i.quantity}"/>
+                                            <input type="hidden" name="pr-discount" value="${i.discount}"/>
+                                            <input type="hidden" name="pr-quantity" value="${i.quantity}"/>-->
                                             <tr>
                                                 <td class="cart_product" style="margin-left: 0px;">
                                                     <a href="#"><img src="${i.thumbnail}" alt="" width="100px" height="auto"></a>
@@ -166,9 +167,9 @@
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <input type="hidden" name="total" value="${requestScope.total}"/>
+                                    <!--<input type="hidden" name="total" value="${requestScope.total}"/>-->
                                 </div>
-                                <div class="payment-options" style="padding-left: 15px;
+<!--                                <div class="payment-options" style="padding-left: 15px;
                                      margin-bottom: 30px;">
                                     <span>
                                         <label><input type="radio" name="payment" value="delivery" checked> Payment on delivery</label>
@@ -176,25 +177,25 @@
                                     <span>
                                         <label><input type="radio" name="payment" value="bank"> Payment by bank</label>
                                     </span>
-                                </div>
+                                </div>-->
 
-                                <div class="col-sm-8">
+<!--                                <div class="col-sm-8">
                                     <div class="bill-to">
                                         <p>Ship Information</p>
                                         <div class="">
-                                            <input type="text" placeholder="FullName" name="ship-fullname" required style="background: #F0F0E9;
+                                            <input type="text" placeholder="FullName" name="txtFullname" required style="background: #F0F0E9;
                                                    border: 0 none;
                                                    margin-bottom: 10px;
                                                    padding: 10px;
                                                    width: 100%;
                                                    font-weight: 300;">
-                                            <input type="text" placeholder="Phone" name="ship-phone" required style="background: #F0F0E9;
+                                            <input type="text" placeholder="Phone" name="txtPhone" required style="background: #F0F0E9;
                                                    border: 0 none;
                                                    margin-bottom: 10px;
                                                    padding: 10px;
                                                    width: 100%;
                                                    font-weight: 300;">
-                                            <input type="text" placeholder="Address" name="ship-address" required style="background: #F0F0E9;
+                                            <input type="text" placeholder="Address" name="txtAddress" required style="background: #F0F0E9;
                                                    border: 0 none;
                                                    margin-bottom: 10px;
                                                    padding: 10px;
@@ -202,14 +203,14 @@
                                                    font-weight: 300;">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-4">
+                                </div>-->
+<!--                                <div class="col-sm-4">
                                     <div class="order-message">
                                         <p>Note</p>
-                                        <textarea name="ship-note" placeholder="Notes about your order, Special Notes for Delivery" rows="16" style="height: 140px;"></textarea>
+                                        <textarea name="txtNote" placeholder="Notes about your order, Special Notes for Delivery" rows="16" style="height: 140px;"></textarea>
                                     </div>	
-                                </div>
-                                <input class="btn btn-primary" type="submit" value="Finish"/>
+                                </div>-->
+                                <!--<input class="btn btn-primary" type="submit" value="Finish"/>-->
                             </form>
                         </div>
                     </div>

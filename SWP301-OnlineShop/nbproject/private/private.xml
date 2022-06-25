@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/cartContact.jsp</file>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/LoginController.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/register1.jsp</file>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/UserDBContext.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/js/cart/script.js</file>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/model/User.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/CartContactController.java</file>
+            <file>file:/C:/Users/DELL/Desktop/dev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/cartDetails.jsp</file>
+            <file>file:/C:/Users/DELL/Desktop/dev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/HomeController.java</file>
+            <file>file:/C:/Users/DELL/Desktop/dev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/home/CartCompletionController.java</file>
+            <file>file:/C:/Users/DELL/Desktop/dev/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/ProductListDBContext.java</file>
+            <file>file:/C:/Users/DELL/Desktop/dev/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/CartCompletion.jsp</file>
         </group>
     </open-files>
 </project-private>

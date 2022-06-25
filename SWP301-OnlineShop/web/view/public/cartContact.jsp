@@ -160,10 +160,10 @@
                                             <c:forEach var="i" items="${cartProduct}">
                                                 <tr>
                                                     <!--Get Data product here Start-->
-                                            <input type="hidden" name="hId" value="${(i.product).id}">
-                                            <input type="hidden" name="hQuantity" value="${i.quantity}">
-                                            <input type="hidden" name="hPrice" value="${(i.product).price}">
-                                            <input type="hidden" name="hDiscount" value="${(i.product).getPriceDiscount()}">
+                                            <input type="hidden" name="pr-id" value="${(i.product).id}">
+                                            <input type="hidden" name="pr-quantity" value="${i.quantity}">
+                                            <input type="hidden" name="pr-price" value="${(i.product).price}">
+                                            <input type="hidden" name="pr-discount" value="${(i.product).getPriceDiscount()}">
                                             <!--Get Data product here End-->
                                             <td class="cart_product" style="width: 180px">
                                                 <a href=""><img src="${(i.product).thumbnail}" alt="" width="100px" height="auto"></a>

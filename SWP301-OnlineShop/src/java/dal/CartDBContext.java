@@ -430,4 +430,35 @@ public class CartDBContext extends DBContext {
         System.out.println(db.getCartProductByCidAndPid(17, 10).getQuantity());
     }
 
+    public int getIdCartOfCustomer(int id) {
+        try {
+            String sql = "select id from Cart\n"
+                    + "where customerId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CartDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public void deleteProductOrdered(Product[] productsOrder, int idCart) {
+        try {
+            String sql = "DELETE FROM [dbo].[Cart_Product]\n"
+                    + "      WHERE CartId = ? and ProductId = ?";
+            for (Product product : productsOrder) {
+                PreparedStatement stm = connection.prepareStatement(sql);
+                stm.setInt(1, idCart);
+                stm.setInt(2, product.getId());
+                stm.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CartDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
