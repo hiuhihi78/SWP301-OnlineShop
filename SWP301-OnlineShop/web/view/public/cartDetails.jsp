@@ -143,7 +143,7 @@
                                                 </thead>
                                                 <tbody>
 
-                                                    <c:forEach var="i" items="${carts}">
+                                                    <c:forEach var="i" items="${carts}">    
                                                         <tr id="div-product-${(i.product).id}" class="delete-all">
 
                                                             <td class="cart_description"><div id="calculator"><input name="cboproduct" id="cbo-${(i.product).id}" type="checkbox" value="${(i.product).id}" data-price="${i.quantity * (i.product).getPriceDiscount()}" class="cb-element"></div>
@@ -206,12 +206,12 @@
                                                             <ul>
                                                                 <li><input type="checkbox" name="all" id="checkall"> Select all (${carts.size()} products) <span><a class="delete-all-product" data-isAll="1" data-programid="-1" data-name="">Delete all</a></span></li>
 
-                                                                <li style="display: flex"><div >Total</div> <div class=total style="margin-left: auto"><span id="total">0</span></div>&nbsp;đ</li>
+                                                                <li style="display: flex"><div >Total</div> <div class=total style="margin-left: auto"><b><span id="total">0</span></b></div>&nbsp;đ</li>
                                                             </ul>
                                                             <ul>
 
                                                                 <a class="btn btn-default update" href="/productlist">Choose More Product</a>
-                                                                <button class="btn btn-default check_out" id="btn-checkout" type="submit">Check Out</button>
+                                                                <button class="btn btn-default check_out" id="btn-checkout-1" type="submit">Check Out</button>
 
                                                             </ul>
 

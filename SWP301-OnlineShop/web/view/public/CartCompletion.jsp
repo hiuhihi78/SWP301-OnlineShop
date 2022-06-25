@@ -141,7 +141,6 @@
                                                 </td>
                                                 <td class="cart_description">
                                                     <h4><a href="#">${i.name}</a></h4>
-                                                    <p>Seller: ${i.user.fullname}</p>
                                                 </td>
                                                 <td class="cart_price">
                                                     <p><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price}"/></p>

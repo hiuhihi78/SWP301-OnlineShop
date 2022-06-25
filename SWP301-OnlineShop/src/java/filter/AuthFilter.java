@@ -95,11 +95,15 @@ public class AuthFilter implements Filter {
         //if user logged in
         if (u != null) {
             if (checkUserPermission(requestPath, u)) {
+                request.setCharacterEncoding("UTF-8");
+                response.setCharacterEncoding("UTF-8");
                 chain.doFilter(request, response);
             } else {
                 wrappedResponse.sendRedirect("/401.html");
             }
         } else {
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
             chain.doFilter(request, response);
         }
     }

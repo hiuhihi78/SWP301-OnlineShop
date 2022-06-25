@@ -4,6 +4,7 @@
  */
 package controller.home;
 
+import configs.SendMail;
 import dal.CartDBContext;
 import dal.OrderDBContext;
 import dal.ProductCategoryDBContext;
@@ -13,6 +14,8 @@ import dal.UserDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -77,38 +80,44 @@ public class CartCompletionController extends BaseAuthController {
         String shipPhone = request.getParameter("txtPhone").trim();
         String shipAddress = request.getParameter("txtAddress").trim();
         String shipNote = request.getParameter("txtNote").trim();
-
+        User infoCustomer = new User();
+        infoCustomer.setFullname(shipFullName);
+        infoCustomer.setMobile(shipPhone);
+        infoCustomer.setAddress(shipAddress);
         // get method payment
-//        String payment = request.getParameter("payment").trim();
+        String payment = request.getParameter("payment").trim();
 
         /*
             * isPayment:
             * 0: Payment on delivery
             * 1: Payment by bank
          */
-//        int idPayment = (payment.equalsIgnoreCase("delivery")) ? 0 : 1;
-        int idPayment = 0;
+        int idPayment = (payment.equalsIgnoreCase("delivery")) ? 0 : 1;
+        
         // get product
         String[] idProducts_raw = request.getParameterValues("pr-id");
         String[] priceProducts_raw = request.getParameterValues("pr-price");
         String[] discountProducts_raw = request.getParameterValues("pr-discount");
         String[] quantityProducts_raw = request.getParameterValues("pr-quantity");
+        String[] nameProducts_raw = request.getParameterValues("pr-name");
         Product[] productsOrder = new Product[idProducts_raw.length];
         for (int i = 0; i < productsOrder.length; i++) {
             Product pro = new Product();
             pro.setId(Integer.parseInt(idProducts_raw[i].trim()));
+            pro.setName(nameProducts_raw[i].trim());
             pro.setPrice(Long.parseLong(priceProducts_raw[i].trim()));
             pro.setDiscount(Integer.parseInt(discountProducts_raw[i].trim()));
             pro.setQuantity(Integer.parseInt(quantityProducts_raw[i].trim()));
 
             productsOrder[i] = pro;
+            System.out.println("Quantity: " + productsOrder[i].getQuantity());
         }
         // list Product Order
         ArrayList<Product> listProduct = productListDB.getListProductById(productsOrder, user.getId());
 
         // total money
         long total = totalPrice(listProduct);
-        
+
         // get last seller receive order
         OrderDBContext orderDB = new OrderDBContext();
         CartDBContext cartDB = new CartDBContext();
@@ -131,22 +140,23 @@ public class CartCompletionController extends BaseAuthController {
         int idCart = cartDB.getIdCartOfCustomer(user.getId());
         int idOrder = orderDB.addOrder(productsOrder, total, user.getId(), user.getEmail(), shipFullName, shipAddress, shipPhone, shipNote, idPayment, idNextSeller);
         if (idOrder > 0) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+            LocalDate localDate = LocalDate.now();
+            SendMail.sendMailOrder(user.getEmail(), idOrder, idPayment, productsOrder, infoCustomer, total, dtf.format(localDate), nameBank, accNumber, ownerAccount);
             productDB.updateQuantityProductAvailable(productsOrder);
             cartDB.deleteProductOrdered(productsOrder, idCart);
             // send mail
+            System.out.println("success");
+            request.setAttribute("listCategorys", listCategorys);
+            request.setAttribute("subCategory", subCategory);
+            request.setAttribute("listProduct", listProduct);
+            request.setAttribute("leastProduct", leastProduct);
+            request.setAttribute("total", total);
 
-            System.out.println("Success");
+            request.getRequestDispatcher("view/public/CartCompletion.jsp").forward(request, response);
         } else {
-            System.out.println("error");
+            request.getRequestDispatcher("404.html").forward(request, response);
         }
-
-        request.setAttribute("listCategorys", listCategorys);
-        request.setAttribute("subCategory", subCategory);
-        request.setAttribute("listProduct", listProduct);
-        request.setAttribute("leastProduct", leastProduct);
-        request.setAttribute("total", total);
-
-        request.getRequestDispatcher("view/public/CartCompletion.jsp").forward(request, response);
 
     }
 
