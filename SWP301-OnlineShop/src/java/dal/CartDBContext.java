@@ -303,6 +303,7 @@ public class CartDBContext extends DBContext {
 
     public Cart_Product getCartProductByCidAndPid(int cid, int pid) {
         Cart_Product cartProduct = null;
+        ProductDBContext productDb =  new ProductDBContext();
 
         try {
             String sql = "select * from Cart_Product where CartId = ? And ProductId = ?";
@@ -318,6 +319,8 @@ public class CartDBContext extends DBContext {
 
                 cartProduct.setCartId(rs.getInt("CartId"));
                 cartProduct.setProductId(rs.getInt("ProductId"));
+                int productId = rs.getInt("ProductId");
+                cartProduct.setProduct(productDb.getProductById(productId));
                 cartProduct.setQuantity(rs.getInt("Quantity"));
                 cartProduct.setDateUpdated(rs.getTimestamp("DateUpdated"));
 
