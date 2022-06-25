@@ -187,6 +187,21 @@
                                             </td>
                                             </tr>
                                         </c:forEach>
+                                        
+                                        <tr>
+                                            <td colspan="3"><textarea name="txtNote"  placeholder="Notes about your order, Special Notes for Delivery" rows="4"></textarea></td>
+                                            <td colspan="2" id="pay-id">
+                                                
+                                                    <span>
+                                                        <label><input type="radio" name="payment" value="delivery" checked> Payment on delivery</label>
+                                                    </span>
+                                                <br>
+                                                    <span>
+                                                        <label><input type="radio" name="payment" value="bank"> Payment by bank</label>
+                                                    </span>
+                                                
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td colspan="3"></td>
                                             <td colspan="2" >
@@ -204,20 +219,6 @@
                                                 </table>
                                             </td>
 
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"><textarea name="txtNote"  placeholder="Notes about your order, Special Notes for Delivery" rows="5"></textarea></td>
-                                            <td colspan="2" id="pay-id">
-                                                
-                                                    <span>
-                                                        <label><input type="radio" name="payment" value="delivery" checked> Payment on delivery</label>
-                                                    </span>
-                                                <br>
-                                                    <span>
-                                                        <label><input type="radio" name="payment" value="bank"> Payment by bank</label>
-                                                    </span>
-                                                
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>                                              
