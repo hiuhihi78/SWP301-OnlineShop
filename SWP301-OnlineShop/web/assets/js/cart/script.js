@@ -10,7 +10,9 @@ $(document).ready(function () {
             var price = $(this).attr('data-price');
             priceTotal += parseInt(price);
         });
-        $('#total').html(priceTotal);
+        var output = parseInt(priceTotal).toLocaleString();
+        $('#total').html(output);
+        
     });
 
 });
@@ -22,7 +24,8 @@ $('#checkall').change(function () {
         var price = $(this).attr('data-price');
         priceTotal += parseInt(price);
     });
-    $('#total').html(priceTotal);
+     var output = parseInt(priceTotal).toLocaleString();
+    $('#total').html(output);
 });
 
 $('.cart_quantity_delete, .delete-all-product').on('click', function (e) {
@@ -131,6 +134,7 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
     $('#input-' + pid).val(changeQ);
     
     //Set value total price
+    var output = parseInt(priceTotal).toLocaleString();
     $('.cart_total_price_' + pid).text(priceTotal);
     
     $('#cbo-'+ pid).attr('data-price', priceTotal);

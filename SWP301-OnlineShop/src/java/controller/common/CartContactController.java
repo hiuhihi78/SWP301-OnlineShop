@@ -5,7 +5,9 @@
 package controller.common;
 
 import dal.CartDBContext;
+import dal.ProductCategoryDBContext;
 import dal.ProductDBContext;
+import dal.ProductListDBContext;
 import dal.UserDBContext;
 import filter.BaseAuthController;
 import java.io.Console;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Cart_Product;
+import model.Category;
 import model.Product;
 import model.User;
 
@@ -57,35 +60,45 @@ public class CartContactController extends BaseAuthController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-            User user = null;
-            long total = 0;
-            HttpSession session = request.getSession();
-            CartDBContext cartDb = new CartDBContext();
-            String[] productId = request.getParameterValues("cboproduct");
-            int cartId = Integer.parseInt(request.getParameter("hCartId"));
-            ArrayList<Cart_Product> cartProduct = new ArrayList<Cart_Product>();
-            for (int i = 0; i < productId.length; i++) {
-                Cart_Product cartP = cartDb.getCartProductByCidAndPid(cartId, Integer.parseInt(productId[i]));
-                if (cartP != null) {
-                    total += (cartP.getProduct().getPriceDiscount() * cartP.getQuantity());
-                    cartProduct.add(cartP);
-                }
-
+        ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
+        ProductListDBContext productListDBContext = new ProductListDBContext();
+        User user = null;
+        long total = 0;
+        HttpSession session = request.getSession();
+        CartDBContext cartDb = new CartDBContext();
+        String[] productId = request.getParameterValues("cboproduct");
+        int cartId = Integer.parseInt(request.getParameter("hCartId"));
+        ArrayList<Cart_Product> cartProduct = new ArrayList<Cart_Product>();
+        for (int i = 0; i < productId.length; i++) {
+            Cart_Product cartP = cartDb.getCartProductByCidAndPid(cartId, Integer.parseInt(productId[i]));
+            if (cartP != null) {
+                total += (cartP.getProduct().getPriceDiscount() * cartP.getQuantity());
+                cartProduct.add(cartP);
             }
 
-            //Get user login from session
-            user = (User) session.getAttribute("user");
-            int userID = user.getId();
+        }
 
-            request.setAttribute("user", user);
+        //Get list subcategory
+        ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
 
-            request.setAttribute("cartProduct", cartProduct);
-            
-            request.setAttribute("total", total);
+        //get least post
+        ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
 
-            processRequest(request, response);
+        //Get user login from session
+        user = (User) session.getAttribute("user");
+        int userID = user.getId();
+
+        request.setAttribute("user", user);
+
+        request.setAttribute("cartProduct", cartProduct);
+
+        request.setAttribute("total", total);
         
+        request.setAttribute("listCategorys", listCategorys);
+
+        request.setAttribute("leastProduct", leastProduct);
+
+        processRequest(request, response);
 
     }
 
@@ -114,20 +127,16 @@ public class CartContactController extends BaseAuthController {
             //Set inf for user
             user.setFullname(fullName);
             user.setMobile(mobile);
-            
+
             user.setAddress(address);
-            
+
             //Update user
             rs = userDb.updateUserInf(user);
         }
-        
+
         if (rs) {
-            out.println("<b>"+ fullName +"&nbsp;&nbsp;" + mobile +"</b>&nbsp;&nbsp;&nbsp;&nbsp;" + address +"");
+            out.println("<b>" + fullName + "&nbsp;&nbsp;" + mobile + "</b>&nbsp;&nbsp;&nbsp;&nbsp;" + address + "");
         }
-        
-       
-        
-        
 
     }
 

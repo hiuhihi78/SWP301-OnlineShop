@@ -49,3 +49,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #address-id {
     width: 90%;
 }
+
+#pay-id {
+    padding-left: 40px;
+}
