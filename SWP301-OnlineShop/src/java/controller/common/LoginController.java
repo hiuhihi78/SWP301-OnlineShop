@@ -87,6 +87,11 @@ public class LoginController extends HttpServlet {
         User user = null;
         UserDBContext userDb = new UserDBContext();
         HttpSession session = request.getSession();
+        
+        if(session.getAttribute("user") != null){
+            session.setAttribute("user", null);
+        }
+        
         check = request.getParameter("cboSigned");
         email = request.getParameter("txtEmail").toLowerCase();
         password = request.getParameter("txtPassword");

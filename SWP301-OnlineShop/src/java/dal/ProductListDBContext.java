@@ -503,8 +503,7 @@ public class ProductListDBContext extends DBContext {
         }
         return listProduct;
     }
-    
-    
+
     public double getStartPercent(int productID) {
         int PERCENT_PER_STAR = 20;
         int total = 0;
@@ -557,9 +556,10 @@ public class ProductListDBContext extends DBContext {
 
     public int getTotalQuantityProductSolded(int productID) {
         try {
-            String sql = "select count(*)\n"
-                    + "from OrderDetail\n"
-                    + "where productId = ?";
+            String sql = "select Count([OrderDetail].quantity)\n"
+                    + "from \n"
+                    + "OrderDetail join [Order] on  [Order].id = OrderDetail.orderId\n"
+                    + "where [Order].[status] = 1 and OrderDetail.productId = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, productID);
             ResultSet rs = ps.executeQuery();
