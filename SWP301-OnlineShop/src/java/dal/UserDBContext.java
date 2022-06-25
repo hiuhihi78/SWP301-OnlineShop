@@ -292,6 +292,22 @@ public class UserDBContext extends DBContext {
         return false;
     }
 
+    public boolean updateUserInf(User user) {
+        try {
+            String sql = "update [User] set fullname =?, mobile=?, address=? where email = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getFullname());
+            stm.setString(2, user.getMobile());
+            stm.setString(3, user.getAddress());
+            stm.setString(4, user.getEmail());
+
+            return stm.executeUpdate() > 0;
+        } catch (Exception ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     public boolean addUser(User user) {
         try {
             String sql = "insert into [User]([password], email, fullname, gender, mobile, address, [Status], roleId, avatar)"
@@ -1228,7 +1244,12 @@ public class UserDBContext extends DBContext {
 //        }
 //        User user = db.getUserByEmail("Nguyenhieuskynett@gmail.com");
 //        System.out.println(user.getEmail());
-        System.out.println(db.getUserById(1).toString());
+//        System.out.println(db.getUserById(1).toString());
+        User user = db.getUserByEmail("hieunvhe153769@fpt.edu.vn");
+        System.out.println(user.getFullname());
+        user.setFullname("Nguyen Van Hieu");
+        db.updateUserInf(user);
+        System.out.println(user.getFullname());
 
     }
 

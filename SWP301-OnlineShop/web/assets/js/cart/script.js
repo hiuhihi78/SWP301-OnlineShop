@@ -157,3 +157,40 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
 });
 
 
+$('#change-id').click(function () {
+    jQuery.noConflict();
+    $('#confirm-change').modal('show');
+
+});
+
+$('.btn-update').on('click', function () {
+
+    var fullName = $('#iFullName').val();
+    var email = $('#iEmail').val();
+    var mobile = $('#iMobile').val();
+    var address = $('#iAddress').val();
+    
+
+
+    $.ajax({
+        url: "/cartContact",
+        type: "post", //send it through get method
+        data: {
+            fullName: fullName,
+            email: email,
+            mobile: mobile,
+            address: address
+        },
+        success: function (response) {
+            //Do Something
+            $('#confirm-change').modal('toggle');
+            $('#address-id').html(response);
+
+        },
+        error: function (xhr) {
+          
+        }
+    });
+});
+
+
