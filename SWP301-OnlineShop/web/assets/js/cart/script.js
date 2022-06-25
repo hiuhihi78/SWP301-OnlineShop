@@ -30,6 +30,7 @@ $('.cart_quantity_delete, .delete-all-product').on('click', function (e) {
     var name = $(e.target).attr('data-name');
     var isAll = $(e.target).attr('data-isAll');
 
+
     $('#app_id').val(pid);
     $('#app_isAll').val(isAll);
     if ($(e.target).attr('class') == 'delete-all-product') {
@@ -63,6 +64,7 @@ $('.btn-ok').on('click', function () {
 //                                    $('#content').html(response);
             if (isAll == 1) {
                 $('.delete-all').remove();
+                location.reload();
             } else {
                 $('#div-product-' + pid).remove();
             }
@@ -95,12 +97,63 @@ $('#btn-checkout').click(function () {
     }
 
 });
-//$('.cb-element').change(function () {
-//    if ($('.cb-element:checked').length == $('.cb-element').length) {
-//        $('#checkall').prop('checked', true);
-//    } else {
-//        $('#checkall').prop('checked', false);
-//    }
-//});
+
+
+$('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
+    var pid = $(e.target).attr('id-product-quantity');
+    var isUp = $(e.target).attr('is-up');
+    var cartId = $(e.target).attr('cart-id');
+    var currentQ = $('#input-' + pid).val();
+    var price = parseFloat($('#input-' + pid).attr('data-price-1'));
+    var priceTotal = parseFloat($('.cart_total_price_' + pid).text());
+
+    if ($(e.target).attr('class') == 'cart_quantity_up') {
+        changeQ = parseInt(currentQ) + 1;
+        priceTotal += price;
+        if (changeQ == $('#id-up-' + pid).data('max')) {
+            $('#id-up-' + pid).prop('disabled', true);
+        } else {
+            $('#id-down-' + pid).prop('disabled', false);
+            $('#id-up-' + pid).prop('disabled', false);
+        }
+    } else {
+        changeQ = parseInt(currentQ) - 1;
+        priceTotal -= price;
+        if (changeQ == $('#id-down-' + pid).data('min')) {
+            $('#id-down-' + pid).prop('disabled', true);
+        } else {
+            $('#id-up-' + pid).prop('disabled', false);
+            $('#id-down-' + pid).prop('disabled', false);
+        }
+    }
+    
+    //Set value for input hidden
+    $('#input-' + pid).val(changeQ);
+    
+    //Set value total price
+    $('.cart_total_price_' + pid).text(priceTotal);
+    
+    $('#cbo-'+ pid).attr('data-price', priceTotal);
+    
+
+    $.ajax({
+        url: "/cartDetails",
+        type: "post", //send it through get method
+        data: {
+            pid: pid,
+            isUp: isUp,
+            cartId: cartId
+        },
+        success: function (response) {
+            //Do Something
+            $('#show-quantity-' + pid).html(response);
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+            console.log("xhr");
+        }
+    });
+
+});
 
 

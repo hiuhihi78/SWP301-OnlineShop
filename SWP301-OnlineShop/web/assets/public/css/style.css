@@ -33,7 +33,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     top: 0;
     right: 14px;
     font-size: 42px;
-    transform: rotate(45deg);
+/*    transform: rotate(45deg);*/
     cursor: pointer;
 }
 

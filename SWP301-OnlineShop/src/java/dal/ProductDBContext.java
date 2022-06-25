@@ -59,6 +59,7 @@ public class ProductDBContext extends DBContext {
         }
         return listProduct;
     }
+
     public ArrayList<KeyValuePair> getProductsTrend(Date from, Date to) {
         ArrayList<KeyValuePair> list = new ArrayList<>();
         try {
@@ -102,8 +103,7 @@ public class ProductDBContext extends DBContext {
         }
         return list;
     }
-    
-    
+
     public ArrayList<Product> getProductsBySliderId(int sid) {
         ArrayList<Product> list = new ArrayList<>();
         try {
@@ -149,7 +149,7 @@ public class ProductDBContext extends DBContext {
         }
         return productNumber;
     }
-    
+
     public static void main(String[] args) {
         ProductDBContext db = new ProductDBContext();
         ArrayList<Product> list = db.getProductsBySliderId(1);
@@ -378,14 +378,14 @@ public class ProductDBContext extends DBContext {
                 paramProductName[0] = String.class.getName();
                 paramProductName[1] = "%" + search + "%";
                 params.put(paramIndex, paramProductName);
-                
+
                 int id;
                 try {
                     id = Integer.parseInt(search);
                 } catch (Exception e) {
                     id = -1;
                 }
-                
+
                 paramIndex++;
                 Object[] paramProductId = new Object[2];
                 paramProductId[0] = Integer.class.getName();
@@ -403,7 +403,6 @@ public class ProductDBContext extends DBContext {
                     + "	WHEN @Col_Name = 'status' THEN CAST([status]  AS SQL_VARIANT)\n"
                     + "END " + sort;
 
-            
             PreparedStatement ps = connection.prepareStatement(sql);
             for (Map.Entry<Integer, Object[]> entry : params.entrySet()) {
                 Integer index = entry.getKey();
@@ -450,7 +449,7 @@ public class ProductDBContext extends DBContext {
     public ArrayList<Product> getListProductByPage(ArrayList<Product> list, int start, int end) {
         ArrayList<Product> arr = new ArrayList<>();
         int totalRecord = list.size();
-        if(totalRecord < end){
+        if (totalRecord < end) {
             arr.addAll(list);
             return arr;
         }
@@ -593,8 +592,6 @@ public class ProductDBContext extends DBContext {
         }
     }
 
-   
-
     public void updateProduct(int id, String name, String description, int sellerId, int subCategoryId, long price, int discount, long quantity, boolean featured, boolean status) {
         try {
             connection.setAutoCommit(false);
@@ -628,7 +625,6 @@ public class ProductDBContext extends DBContext {
             ps.setInt(11, id);
             ps.executeUpdate();
 
-
             connection.commit();
         } catch (SQLException ex) {
             try {
@@ -647,7 +643,7 @@ public class ProductDBContext extends DBContext {
     }
 
     public ArrayList<Product> getListProductFilterBySaleId(int categoryId, int subCategoryId, String status, String featured, String search, String orderBy, String sort, int sellerId) {
-        
+
         ArrayList<Product> products = new ArrayList<>();
         try {
             String sql = "DECLARE @Col_Name VARCHAR(128) = " + "'" + orderBy + "'" + "\n";
@@ -715,14 +711,14 @@ public class ProductDBContext extends DBContext {
                 paramProductName[0] = String.class.getName();
                 paramProductName[1] = "%" + search + "%";
                 params.put(paramIndex, paramProductName);
-                
+
                 int id;
                 try {
                     id = Integer.parseInt(search);
                 } catch (Exception e) {
                     id = -1;
                 }
-                
+
                 paramIndex++;
                 Object[] paramProductId = new Object[2];
                 paramProductId[0] = Integer.class.getName();
@@ -782,12 +778,33 @@ public class ProductDBContext extends DBContext {
         }
         return products;
     }
-    
-//    public static void main(String[] args) {
-//        ProductDBContext productDB = new ProductDBContext();
-//        System.out.println(productDB.getProductById(13).getImage().get(0).getImage());
-////        productDB.getProductById(1);
-////        int categoryId, int subCategoryId, String status, String featured, String search, String orderBy, String sort
-////        System.out.println(new ProductDBContext().getListProductFilter(1, 1, "active", "active", "", "id", "asc").size());
-//    }
+
+    public void updateQuantityProductAvailable(Product[] productsOrder) {
+        try {
+            String sqlGetProducts = "select id, quantity from Product\n"
+                    + "where id = ? ";
+            for (Product product : productsOrder) {
+                PreparedStatement stm = connection.prepareStatement(sqlGetProducts);
+                stm.setInt(1, product.getId());
+                ResultSet rs = stm.executeQuery();
+                if (rs.next()) {
+                    long quantity = product.getQuantity();
+                    product.setQuantity(rs.getLong(2) - quantity);
+                }
+            }
+            String sqlUpdateQuantityProduct = "UPDATE [dbo].[Product]\n"
+                    + "   SET [quantity] = ?\n"
+                    + " WHERE id = ?";
+            for (Product product : productsOrder) {
+                PreparedStatement stm2 = connection.prepareStatement(sqlUpdateQuantityProduct);
+                stm2.setLong(1, product.getQuantity());
+                stm2.setInt(2, product.getId());
+                stm2.executeUpdate();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }
