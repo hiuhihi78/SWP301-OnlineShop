@@ -12,9 +12,7 @@
 
                         <div class="search_box">
                             <!--<input id="search-box" type="text" placeholder="Search..." name="searchBy" value="${requestScope.searchBy}">-->
-                            <input type="text" style="    width: 220px;
-                                   background-position: 190px;" 
-                                   name="searchBy" value="${requestScope.searchBy}"  placeholder="Search"/>
+                            <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search"/>
                         </div>
                     </div>
                     <div class="panel-heading">
@@ -68,7 +66,7 @@
                                     <img src="${leastProduct.thumbnail}" alt="" />
                                 </a>
                                 <h2 class="break-down-line">${leastProduct.name}</h2>
-                                <p class="break-down-line">${leastProduct.description}</p>
+                                <!--<p class="break-down-line">${leastProduct.description}</p>-->
                                 <p>
                                     <span class="text-line-through">
                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${leastProduct.price}"/>

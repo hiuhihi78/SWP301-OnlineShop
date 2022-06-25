@@ -503,4 +503,72 @@ public class ProductListDBContext extends DBContext {
         }
         return listProduct;
     }
+    
+    
+    public double getStartPercent(int productID) {
+        int PERCENT_PER_STAR = 20;
+        int total = 0;
+        int count = 0;
+        double average = 0;
+        try {
+            String sql = "SELECT \n"
+                    + "      [start]\n"
+                    + "  FROM [Feedback] join Product on Feedback.productId = Product.id\n"
+                    + "  Where [Feedback].[status] = 1 \n"
+                    + "  and Product.id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, productID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                total += rs.getInt(1);
+                count++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (total == 0 || count == 0) {
+            average = 0;
+        } else {
+            average = total / count;
+        }
+
+        return average;
+    }
+
+    public int getTotalFeedback(int productID) {
+        try {
+            String sql = "SELECT \n"
+                    + "      Count(*)\n"
+                    + "  FROM [Feedback] join Product on Feedback.productId = Product.id\n"
+                    + "  Where [Feedback].[status] = 1 \n"
+                    + "  and Product.id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, productID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getTotalQuantityProductSolded(int productID) {
+        try {
+            String sql = "select count(*)\n"
+                    + "from OrderDetail\n"
+                    + "where productId = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, productID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 }
