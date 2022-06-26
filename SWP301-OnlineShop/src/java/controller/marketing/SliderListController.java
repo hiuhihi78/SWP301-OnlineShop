@@ -103,21 +103,27 @@ public class SliderListController extends BaseAuthController {
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String isChange = "", strId = "";
+            
+            boolean rs = false;
+            String status = "", strId = "";
             SliderDBContext sliderDb = new SliderDBContext();
             int id = 0;
-            isChange = request.getParameter("checkbox");
+            status = request.getParameter("status");
             strId = request.getParameter("id");
             id = Integer.parseInt(strId);
-            if (isChange != "" && isChange != null) {
-                sliderDb.changeStatus(id, Security.SHOW_STATUS);
+            boolean s = Boolean.parseBoolean(status);
+            if (s == false) {
+                rs = sliderDb.changeStatus(id, Security.SHOW_STATUS);
             } else {
-                sliderDb.changeStatus(id, Security.HIDE_STATUS);
+                rs = sliderDb.changeStatus(id, Security.HIDE_STATUS);
             }
+            
+            System.out.println(rs);
         } catch (Exception e) {
         }
 
-        processRequest(request, response);
+        
+//        processRequest(request, response);
 
     }
 
