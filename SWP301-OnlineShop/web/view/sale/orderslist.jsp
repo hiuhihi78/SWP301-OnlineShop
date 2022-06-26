@@ -109,7 +109,7 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${requestScope.orders}" var="o">
-                                <tr>
+                                <tr id="row-orderid${o.id}">
                                     <td>${o.id}</td>
                                     <td><fmt:formatDate pattern="yyyy-MM-dd" value="${o.date}"/></td>
                                     <td>${o.buyer.fullname}</td>
@@ -117,23 +117,28 @@
                                     <td>${o.numproducts}</td>
                                     <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${o.totalcost}"/></td>
                                     <c:if test="${o.status == 0}">
-                                        <td>
+                                        <td id="tblStatus">
                                             <span class="label label-default">Cancelled</span>
                                         </td>
                                     </c:if>
                                     <c:if test="${o.status == 1}">
-                                        <td>
+                                        <td id="tblStatus">
                                             <span class="label label-warning">Waiting for process</span>
                                         </td>
                                     </c:if>
                                     <c:if test="${o.status == 2}">
-                                        <td>
+                                        <td id="tblStatus">
                                             <span class="label label-info">Processing</span>
                                         </td>
                                     </c:if>
                                     <c:if test="${o.status == 3}">
-                                        <td>
-                                            <span class="label label-success">Finished</span>
+                                        <td id="tblStatus">
+                                            <span class="label label-primary">Shipping</span>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${o.status == 4}">
+                                        <td id="tblStatus">
+                                            <span class="label label-success">Completed</span>
                                         </td>
                                     </c:if>
                                     <c:if test="${o.sale != null}">

@@ -147,12 +147,22 @@
                                             </c:if>
                                             <c:if test="${o.status == 1}">
                                                 <td>
-                                                    <span class="label label-info">Processing</span>
+                                                    <span class="label label-warning">Submitted</span>
                                                 </td>
                                             </c:if>
                                             <c:if test="${o.status == 2}">
                                                 <td>
-                                                    <span class="label label-success">Finished</span>
+                                                    <span class="label label-info">Processing</span>
+                                                </td>
+                                            </c:if>
+                                            <c:if test="${o.status == 3}">
+                                                <td>
+                                                    <span class="label label-primary">Shipping</span>
+                                                </td>
+                                            </c:if>
+                                            <c:if test="${o.status == 4}">
+                                                <td>
+                                                    <span class="label label-success">Completed</span>
                                                 </td>
                                             </c:if>
                                         </tr>

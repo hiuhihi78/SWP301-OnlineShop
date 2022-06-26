@@ -71,11 +71,11 @@ $(document).ready(function () {
         var url = '/sale/order/updatestatus';
         //set status = 2 mean processing
         $.post(url, {orderid: orderid, status: 2}, function () {
-            $('#alertSuccessInfo').html("Delete match order successfully");
+            $('#row-orderid' + orderid + ' td#tblStatus').html("<span class='label label-info'>Processing</span>");
+            $('#row-orderid' + orderid + ' .confirm-process').hide();
         })
                 .fail(function () {
 
-                    $('#alertErrorInfo').html("Delete match order failed");
                 });
     });
 });
