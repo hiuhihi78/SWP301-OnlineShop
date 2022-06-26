@@ -13,15 +13,25 @@
         <meta charset="UTF-8">
         <title>Slider | List</title>
         <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <!-- bootstrap 3.0.2 -->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        <!--font Awesome--> 
+        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+        <!--Theme style--> 
         <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+        <!--css-->
+        <link href="../../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/css/admin/main.css" rel="stylesheet" type="text/css"/>
         <link href="../assets/css/marketing/style.css" rel="stylesheet" type="text/css" />
+
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity=
-              "sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin=
-              "anonymous" referrerpolicy="no-referrer" />
+
+
         <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css">
+
+        <!--active button nav in sidebar-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
     </head>
@@ -36,6 +46,9 @@
                 <aside class="right-side">
                     <!-- Main content -->
                     <section class="content">
+                        <!--Alter-->
+                    <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
+                        <!--Alter-->
                         <div class="app-title">
                             <div>
                                 <h1><i class="fa fa-list-ul" aria-hidden="true"></i> Slider List</h1>
@@ -103,11 +116,11 @@
 
                                                 <li><a href="/marketing/sliderDetail?id=${s.id}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Details</a></li>
                                                 <li>
-                                                                                           
-                                                        <button id="btn-status-${s.id}" data-id="${s.id}" data-status="${(s.status)}" type="button" class="btn ${(s.status)?"btn-success":"btn-danger"} btn-id">
-                                                            ${(s.status)?"Show":"Hide"}
-                                                        </button>
-                                                                              
+
+                                                    <button id="btn-status-${s.id}" data-id="${s.id}" data-status="${(s.status)}" type="button" class="btn ${(s.status)?"btn-danger":"btn-success"} btn-id">
+                                                        ${(s.status)?"Hide":"Show"}
+                                                    </button>
+
 
                                                 </li>
                                             </ul>
@@ -130,7 +143,7 @@
                             <c:if test="${index != lastPage}">
                             <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${index+1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                             <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${lastPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-                            </c:if>
+                                </c:if>
                     </ul>
                 </section>
             </aside>
