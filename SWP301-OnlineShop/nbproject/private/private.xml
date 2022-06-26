@@ -4,6 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/sale/productList.jsp</file>
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/sale/UpdateOrderStatusController.java</file>
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/sale/ProductListController.java</file>
@@ -21,6 +22,15 @@
             <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/sale/OrderListController.java</file>
             <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/productList.jsp</file>
             <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/user/UserOrdersController.java</file>
+>>>>>>> origin/dev
+=======
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/addToCart.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/customerDetails.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/CustomerListControler.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/home.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/user/CancelOrderController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/web/view/public/orderInfor.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/GitNew1/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/CustomerDetailsControler.java</file>
 >>>>>>> origin/dev
         </group>
     </open-files>

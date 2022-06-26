@@ -153,7 +153,7 @@
                                                         <input style="margin-bottom: 12px; border: none; outline: none;" class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2" readonly>
                                                     </td>
                                                     <td class="cart_total">
-                                                        <p class="cart_total_price"><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.getPriceDiscount()}"/></p>
+                                                        <p class="cart_total_price"><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.getPriceDiscount() * i.quantity}"/></p>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
