@@ -66,6 +66,7 @@ public class CartCompletionController extends BaseAuthController {
 //        for (int i = 0; i < listIdProductCart_raw.length; i++) {
 //            listIdProduct[i] = Integer.parseInt(listIdProductCart_raw[i].trim());
 //        }
+        // latest product
         ArrayList<Product> leastProduct = productListDB.getListLeastProduct();
         User user = (User) request.getSession().getAttribute("user");
 
@@ -138,15 +139,29 @@ public class CartCompletionController extends BaseAuthController {
         int idNextSeller = userDB.getIdNextSeller(indexNextSellerReceiveOrder);
 
         int idCart = cartDB.getIdCartOfCustomer(user.getId());
+        
         int idOrder = orderDB.addOrder(productsOrder, total, user.getId(), user.getEmail(), shipFullName, shipAddress, shipPhone, shipNote, idPayment, idNextSeller);
+        
         if (idOrder > 0) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu");
             LocalDate localDate = LocalDate.now();
-            SendMail.sendMailOrder(user.getEmail(), idOrder, idPayment, productsOrder, infoCustomer, total, dtf.format(localDate), nameBank, accNumber, ownerAccount);
-            productDB.updateQuantityProductAvailable(productsOrder);
-            cartDB.deleteProductOrdered(productsOrder, idCart);
+            
             // send mail
+            SendMail.sendMailOrder(user.getEmail(), idOrder, idPayment, productsOrder, infoCustomer, total, dtf.format(localDate), nameBank, accNumber, ownerAccount);
+            
+            // update quantity product available
+            productDB.updateQuantityProductAvailable(productsOrder);
+            
+            // delete product ordered in cart
+            cartDB.deleteProductOrdered(productsOrder, idCart);
+            
+            
             System.out.println("success");
+            request.setAttribute("payment", idPayment);
+            request.setAttribute("fullname", shipFullName);
+            request.setAttribute("mobile", shipPhone);
+            request.setAttribute("address", shipAddress);
+            request.setAttribute("note", shipNote);
             request.setAttribute("listCategorys", listCategorys);
             request.setAttribute("subCategory", subCategory);
             request.setAttribute("listProduct", listProduct);
@@ -168,7 +183,7 @@ public class CartCompletionController extends BaseAuthController {
     private long totalPrice(ArrayList<Product> listProduct) {
         long sum = 0;
         for (Product product : listProduct) {
-            sum += product.getPrice() * product.getQuantity();
+            sum += product.getPriceDiscount() * product.getQuantity();
         }
         return sum;
     }
