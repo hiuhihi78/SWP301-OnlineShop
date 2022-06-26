@@ -3,6 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
+$('#btn-checkout-1').click(function (e) {
+    var priceTotal = 0;
+    $("#calculator input[type='checkbox']:checked").each(function () {
+        var price = $(this).attr('data-price');
+        priceTotal += parseInt(price);
+    });
+    if (priceTotal == 0) {
+        jQuery.noConflict();
+        $('#confirm-choose-checkbox').modal('show');
+    } else {
+        $('#form-cart-id').submit();
+    }
+});
+
+$('.btn-ok-choose').click(function () {
+    $('#confirm-choose-checkbox').modal('toggle');
+});
+
 $(document).ready(function () {
     $("input[type='checkbox']").click(function () {
         var priceTotal = 0;
@@ -12,7 +30,7 @@ $(document).ready(function () {
         });
         var output = parseInt(priceTotal).toLocaleString();
         $('#total').html(output);
-        
+        $('#total-hidden').val(priceTotal);
     });
 
 });
@@ -24,7 +42,7 @@ $('#checkall').change(function () {
         var price = $(this).attr('data-price');
         priceTotal += parseInt(price);
     });
-     var output = parseInt(priceTotal).toLocaleString();
+    var output = parseInt(priceTotal).toLocaleString();
     $('#total').html(output);
 });
 
@@ -129,16 +147,16 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
             $('#id-down-' + pid).prop('disabled', false);
         }
     }
-    
+
     //Set value for input hidden
     $('#input-' + pid).val(changeQ);
-    
+
     //Set value total price
     var output = parseInt(priceTotal).toLocaleString();
     $('.cart_total_price_' + pid).text(priceTotal);
-    
-    $('#cbo-'+ pid).attr('data-price', priceTotal);
-    
+
+    $('#cbo-' + pid).attr('data-price', priceTotal);
+
 
     $.ajax({
         url: "/cartDetails",
@@ -173,7 +191,7 @@ $('.btn-update').on('click', function () {
     var email = $('#iEmail').val();
     var mobile = $('#iMobile').val();
     var address = $('#iAddress').val();
-    
+
 
 
     $.ajax({
@@ -192,7 +210,7 @@ $('.btn-update').on('click', function () {
 
         },
         error: function (xhr) {
-          
+
         }
     });
 });

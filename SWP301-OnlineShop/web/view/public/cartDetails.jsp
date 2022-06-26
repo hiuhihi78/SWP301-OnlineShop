@@ -124,7 +124,7 @@
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Cart</h2>
                             <!--Show product-->
                             <!--<form action="/cartCompletion" method="GET" id="submitCart">-->
-                            <form action="/cartContact" method="get">
+                            <form action="/cartContact" method="get" id="form-cart-id">
                                 <c:choose>
 
                                     <c:when test="${not empty carts}">
@@ -156,7 +156,7 @@
                                                             </td>
                                                             <td class="cart_description">
                                                                 <h4><a href="">${(i.product).name}</a></h4>
-                                                               
+
                                                                 <b>Amount: ${(i.product).quantity}</b>
                                                             </td>
                                                             <td class="cart_price">
@@ -207,11 +207,13 @@
                                                                 <li><input type="checkbox" name="all" id="checkall"> Select all (${carts.size()} products) <span><a class="delete-all-product" data-isAll="1" data-programid="-1" data-name="">Delete all</a></span></li>
 
                                                                 <li style="display: flex"><div >Total</div> <div class=total style="margin-left: auto"><b><span id="total">0</span></b></div>&nbsp;đ</li>
+                                                                <input type="hidden" id="total-hidden" value="0"/>
                                                             </ul>
                                                             <ul>
 
                                                                 <a class="btn btn-default update" href="/productlist">Choose More Product</a>
-                                                                <button class="btn btn-default check_out" id="btn-checkout-1" type="submit">Check Out</button>
+                                                                 <a class="btn btn-default update" id="btn-checkout-1">Check Out</a>
+<!--                                                                <button class="btn btn-default check_out" id="btn-checkout-1" type="submit">Check Out</button>-->
 
                                                             </ul>
 
@@ -265,13 +267,33 @@
                             </div>
                         </div>
                     </div>
+                     <!--    This is end delete modal dialog-->
+                     
+                     <!--    This is start Choose cart product modal dialog-->
+
+                    <div class="modal fade" id="confirm-choose-checkbox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    
+                                    <h4 class="modal-title" id="myModalLabel">Confirm Choose</h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <p>You haven't selected any products to buy yet!</p>
+                                    <p class="debug-url"></p>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <a class="btn btn-danger btn-ok-choose">OK</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!--    This is end Choose cart product modal dialog-->
 
 
-
-                    <!--                    <script type="text/javascript">
-                                            
-                                        </script>-->
-                    <!--END PRODCUT LIST-->
                 </div>
                 <c:if test="${not empty carts}">
                     <div class="pagging">
