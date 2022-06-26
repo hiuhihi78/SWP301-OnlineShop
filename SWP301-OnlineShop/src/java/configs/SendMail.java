@@ -8,6 +8,8 @@ package configs;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
+import model.Product;
+import model.User;
 
 /**
  *
@@ -59,7 +61,7 @@ public class SendMail {
     }
 
     public static void setContent(String username, String code, String email) {
-        String subject = "[Doctris] Please verify your email.";
+        String subject = "[OnlineShop] Please verify your email.";
         String message = "<!DOCTYPE html>\n"
                 + "<html lang=\"en\">\n "
                 + "\n"
@@ -73,6 +75,111 @@ public class SendMail {
                 + "    <div>Nếu bạn cần trợ giúp hoặc có câu hỏi, hãy gửi email đến doctris.care@gmail.com bất cứ lúc nào.</div>\n"
                 + "    <h3 style=\"color: blue;\">Trân trọng!</h3>\n"
                 + "\n"
+                + "</body>\n"
+                + "\n"
+                + "</html>";
+        SendMail.send(email, subject, message, Security.USERNAME, Security.PASSWORD);
+    }
+
+    public static void sendMailOrder(String email, int idOrder, int idPayment,
+            Product[] productsOrder, String[] priceDiscountVnd, User inforCustomer, String total, String dateOrder,
+            String nameBank, String accNumber, String ownerAccount) {
+        String payment = (idPayment == 0) ? "Payment on delivery" : "Bank payment";
+        String subject = "[OnlineShop] Order Has Been Sucessfully.";
+        String message = "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n"
+                + "\n"
+                + "<head>\n"
+                + "</head>\n"
+                + "\n"
+                + "<body>\n"
+                + "    <div>Hello You!</div>\n"
+                + "    <div>Your order #"+idOrder+" was successfully ordered on "+dateOrder+".</div>\n"
+                + "    <h3>Order Information</h3>\n"
+                + "    <table>\n"
+                + "        <tr>\n"
+                + "            <td>Code Order: </td>\n"
+                + "            <td>#" + idOrder + "</td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td>Name Customer: </td>\n"
+                + "            <td>" + inforCustomer.getFullname() + "</td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td>Order Date: </td>\n"
+                + "            <td>" + dateOrder + "</td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td>Phone: </td>\n"
+                + "            <td>" + inforCustomer.getMobile() + "</td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td>Address: </td>\n"
+                + "            <td>" + inforCustomer.getAddress() + "</td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td>Payment methods: </td>\n"
+                + "            <td>" + payment + "</td>\n"
+                + "        </tr>\n"
+                + "\n"
+                + "    </table>\n";
+        message += "<table style=\"margin-top: 10px;\">\n";
+        for (int i = 0; i < productsOrder.length; i++) {
+            message += "       <tr>\n"
+                    + "            <td colspan=\"2\">" + (i+1) + ". " + productsOrder[i].getName()+ "</td>\n"
+                    + "        </tr>\n"
+                    + "        <tr>\n"
+                    + "            <td>Quantity: </td>\n"
+                    + "            <td>" + productsOrder[i].getQuantity() + "</td>\n"
+                    + "        </tr>\n"
+                    + "        <tr>\n"
+                    + "            <td>Price: </td>\n"
+                    + "            <td>" + priceDiscountVnd[i]  + "</td>\n"
+                    + "        </tr>\n";
+        }
+        message += "</table>\n"
+                + "    <br/>\n"
+                + "    <div style=\"font-weight: bold;\">Total Amount: " + total + "</div>\n"
+                + "    <br/>\n"
+                + "    <table>\n";
+        if (idPayment == 1) {
+            message += "<tr>\n"
+                    + "            <td colspan=\"2\" style=\"font-weight: bold; font-size: 18px; color: red;\">Please follow the instructions below to pay for your order:</td>\n"
+                    + "        </tr>\n"
+                    + "        <tr>\n"
+                    + "            <td>Bank Name: </td>\n"
+                    + "            <td>"+nameBank+"</td>\n"
+                    + "        </tr>\n"
+                    + "        <tr>\n"
+                    + "            <td>Account Number: </td>\n"
+                    + "            <td>"+accNumber+"</td>\n"
+                    + "        </tr>\n"
+                    + "        <tr>\n"
+                    + "            <td>Owner Account: </td>\n"
+                    + "            <td>"+ownerAccount+"</td>\n"
+                    + "        </tr>\n"
+                    + "        <tr>\n"
+                    + "            <td>Amount: </td>\n"
+                    + "            <td>"+ total +"</td>\n"
+                    + "        </tr>\n"
+                    + "        <tr>\n"
+                    + "            <td>Money transfer content: </td>\n"
+                    + "            <td>Payment of order code #"+idOrder+"</td>\n"
+                    + "        </tr>\n"
+                    + "        <tr>\n"
+                    + "            <td></td>\n"
+                    + "            <td><div style=\"padding-top: 38px; font-weight: bold; font-size: 17px;\">Thank you!</div></td>\n"
+                    + "        </tr>\n";
+        } else {
+            message += "        <tr>\n"
+                    + "            <td colspan=\"2\" style=\"font-weight: bold; font-size: 18px; color: red;\">Your order will be paid when you receive it.</td>\n"
+                    + "        </tr>\n"
+                    + "        <tr>\n"
+                    + "            <td></td>\n"
+                    + "            <td><div style=\"padding-top: 38px; font-weight: bold; font-size: 17px;\">Thank you!</div></td>\n"
+                    + "        </tr>\n";
+        }
+        message += "</table>\n"
                 + "</body>\n"
                 + "\n"
                 + "</html>";

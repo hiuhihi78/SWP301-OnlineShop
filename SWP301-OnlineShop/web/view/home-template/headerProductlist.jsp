@@ -33,7 +33,7 @@
                                     </a>
                                     <ul role="menu" class="sub-menu">
                                         <li>
-                                            <a href="user/profile" class="text-none-underline">Profile</a>
+                                               <a href="#" class="text-none-underline" data-toggle="modal" data-target="#myModalProfilfe">Profile</a>
                                         </li>
 
                                         <c:if test="${sessionScope.user.role.id == 1}">
@@ -145,6 +145,84 @@
                             <div class="btn-modal flex-justify-end-wrap">
                                 <button type="button" class="btn btn-primary bg-darkgray-radius" data-dismiss="modal">Close</button>
                                 <button type="button" class="btn btn-primary mg-l-3percent-radius" id="saveNewPassword">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal User Profile -->
+    <div class="modal fade" id="myModalProfilfe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog w-30percent" role="document"">
+            <div class="modal-content pd-20px">
+                <div class="modal-header text-center" >
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                    <h4 class="modal-title fw-bolder-fz-20" id="myModalLabel">User Profile</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form action="../user/profile" class="form-horizontal" method="post">
+                            <c:set var="customer" value="${requestScope.user}"></c:set>
+                                <div class="form-group">
+                                    <label for="avata" class="col-lg-2 col-sm-2 control-label"> </label>
+                                    <div class="col-md-8 text-center">
+                                        <img src="https://www.peynirdiyarim.com/yeppanel/yep/yep_comments/user-5f5f8f9bf1829.png" class="rounded-circle" style="width: 120px;" alt="Avatar" />
+                                        <h6>Upload a different photo...</h6> 
+                                        <input type="file" class="form-control text-center" style="width: 50%; display: inline-block;">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-8">
+                                        <input type="hidden" class="form-control" name="id" value="${user.id}">
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label for="inputName" class="col-lg-3 col-sm-2 control-label">Name: </label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="fullname" value="${user.fullname}" pattern="^[a-z A-Z 0-9]+$" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-lg-3 col-sm-2 control-label">Email: </label>
+                                <div class="col-md-8">
+                                    <input type="text" readonly class="form-control" name="email" value="${user.email}">
+                                    <h6>You can't change email</h6> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputMobile"
+                                       class="col-lg-3 col-sm-2 control-label">Mobile: </label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="mobile" value="${user.mobile}" pattern="^[0-9]+$"  required
+                                                       title="Your phone must be number">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAdress"
+                                       class="col-lg-3 col-sm-2 control-label">Address: </label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="address" value="${user.address}" required="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputGender" class="col-lg-3 col-sm-2 control-label">Gender:</label>
+                                <div class="col-md-8">                                       
+                                    <label class="checkbox-inline">
+                                        <input type="radio" name="gender" ${user.gender?"checked='checked'":"" }value="male" required=""> Male 
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="radio" name="gender" ${!user.gender?"checked='checked'":""}value="female" required=""> Female
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="col-md-offset">
+                                    <button type="submit" onclick="return confirm('Are you sure to edit?')"  class="btn btn-info"> Save </button>
+                                    <!--<button type="submit" class="btn btn-info">Save</button>-->
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </form>
                     </div>

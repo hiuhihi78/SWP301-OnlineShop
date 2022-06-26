@@ -88,7 +88,7 @@
                                             <tbody>
                                                 <c:forEach items="${requestScope.listCustomer}" var="list">
                                                     <tr>
-                                                        
+
                                                         <td>${list.id}</td>
                                                         <td>${list.fullname}</td>
                                                         <td>${list.gender ==true ? "Male" : "Female"}</td>
@@ -135,12 +135,16 @@
 
                             <div class="pagging">
                                 <ul class="pagination pull-right">
-
+                                    <c:if test="${requestScope.totalpage > 1}">
+                                        
                                     <li><a href="list?page=1&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Frist</a></li>
+                                    </c:if>
                                         <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
                                         <li class="${pageindex == page ? "active =" : ""}" ><a href="list?page=${page}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">${page}</a></li>    
                                         </c:forEach>
+                                        <c:if test="${requestScope.totalpage > 1}">
                                     <li><a href="list?page=${requestScope.totalpage}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Last</a></li>
+                                        </c:if>
                                 </ul>
                             </div>
 

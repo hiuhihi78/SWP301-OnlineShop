@@ -417,18 +417,18 @@ public class CustomerDBContext extends DBContext {
 
     public ArrayList<User_Update> getListHistoryUpdate(int customerID, int pagesize, int pageindex) {
         ArrayList<User_Update> listHistoryUpdate = new ArrayList<>();
-        String sql1 = "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (ORDER BY uid desc) as row_index FROM [UserUpdate]) historyUpdate\n"
-                + "   WHERE row_index >= (? - 1)* ? +1 AND row_index <= ? * ?\n"
-                + "   AND userId = ?";
+        String sql1 = " with x as (select ROW_NUMBER() OVER (ORDER BY uid desc) as r\n"
+                + "                    		, * from [UserUpdate] where userId = ? )\n"
+                + "SElECT* FROM x where r between (? - 1)* ? +1 and ? * ? ";
 
         try {
             PreparedStatement ps = connection.prepareStatement(sql1);
             //check status is empty or not
-            ps.setInt(1, pageindex);
-            ps.setInt(2, pagesize);
-            ps.setInt(3, pageindex);
-            ps.setInt(4, pagesize);
-            ps.setInt(5, customerID);
+            ps.setInt(1, customerID);
+            ps.setInt(2, pageindex);
+            ps.setInt(3, pagesize);
+            ps.setInt(4, pageindex);
+            ps.setInt(5, pagesize);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User_Update update = new User_Update();
@@ -506,88 +506,88 @@ public class CustomerDBContext extends DBContext {
         String sql2 = "";
         //check status is empty or not
         if (!statusBy.isEmpty()) {
-            if(sortBy.equals("fullname")){
+            if (sortBy.equals("fullname")) {
                 sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY fullname ) as r\n"
-                    + "		, * from [User] where roleId = ? AND \n"
-                    + "                               (fullname like ?\n"
-                    + "                                OR email LIKE ?\n"
-                    + "                                OR mobile LIKE ?)\n"
-                    + "								AND status = ?)\n"
-                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
-            }else if(sortBy.equals("mobile")){
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								AND status = ?)\n"
+                        + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            } else if (sortBy.equals("mobile")) {
                 sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY mobile desc) as r\n"
-                    + "		, * from [User] where roleId = ? AND \n"
-                    + "                               (fullname like ?\n"
-                    + "                                OR email LIKE ?\n"
-                    + "                                OR mobile LIKE ?)\n"
-                    + "								AND status = ?)\n"
-                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
-            }else if(sortBy.equals("email")){
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								AND status = ?)\n"
+                        + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            } else if (sortBy.equals("email")) {
                 sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY email desc) as r\n"
-                    + "		, * from [User] where roleId = ? AND \n"
-                    + "                               (fullname like ?\n"
-                    + "                                OR email LIKE ?\n"
-                    + "                                OR mobile LIKE ?)\n"
-                    + "								AND status = ?)\n"
-                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
-            }else if(sortBy.equals("status")){
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								AND status = ?)\n"
+                        + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            } else if (sortBy.equals("status")) {
                 sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY status desc) as r\n"
-                    + "		, * from [User] where roleId = ? AND \n"
-                    + "                               (fullname like ?\n"
-                    + "                                OR email LIKE ?\n"
-                    + "                                OR mobile LIKE ?)\n"
-                    + "								AND status = ?)\n"
-                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
-            } else if(sortBy.equals("")){
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								AND status = ?)\n"
+                        + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            } else if (sortBy.equals("")) {
                 sql1 = "with x as (select ROW_NUMBER() OVER (ORDER BY id desc) as r\n"
-                    + "		, * from [User] where roleId = ? AND \n"
-                    + "                               (fullname like ?\n"
-                    + "                                OR email LIKE ?\n"
-                    + "                                OR mobile LIKE ?)\n"
-                    + "								AND status = ?)\n"
-                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								AND status = ?)\n"
+                        + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
             }
         } else {
-            if(sortBy.equals("fullname")){
+            if (sortBy.equals("fullname")) {
                 sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY fullname ) as r\n"
-                    + "		, * from [User] where roleId = ? AND \n"
-                    + "                               (fullname like ?\n"
-                    + "                                OR email LIKE ?\n"
-                    + "                                OR mobile LIKE ?)\n"
-                    + "								)\n"
-                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
-            }else if(sortBy.equals("mobile")){
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								)\n"
+                        + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            } else if (sortBy.equals("mobile")) {
                 sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY mobile desc) as r\n"
-                    + "		, * from [User] where roleId = ? AND \n"
-                    + "                               (fullname like ?\n"
-                    + "                                OR email LIKE ?\n"
-                    + "                                OR mobile LIKE ?)\n"
-                    + "								)\n"
-                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
-            }else if(sortBy.equals("email")){
-                 sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY email desc) as r\n"
-                    + "		, * from [User] where roleId = ? AND \n"
-                    + "                               (fullname like ?\n"
-                    + "                                OR email LIKE ?\n"
-                    + "                                OR mobile LIKE ?)\n"
-                    + "								)\n"
-                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
-            }else if(sortBy.equals("status")){
-               sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY status desc) as r\n"
-                    + "		, * from [User] where roleId = ? AND \n"
-                    + "                               (fullname like ?\n"
-                    + "                                OR email LIKE ?\n"
-                    + "                                OR mobile LIKE ?)\n"
-                    + "								)\n"
-                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
-            } else if(sortBy.equals("")){
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								)\n"
+                        + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            } else if (sortBy.equals("email")) {
+                sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY email desc) as r\n"
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								)\n"
+                        + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            } else if (sortBy.equals("status")) {
+                sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY status desc) as r\n"
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								)\n"
+                        + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+            } else if (sortBy.equals("")) {
                 sql2 = "		with x as (select ROW_NUMBER() OVER (ORDER BY id desc) as r\n"
-                    + "		, * from [User] where roleId = ? AND \n"
-                    + "                               (fullname like ?\n"
-                    + "                                OR email LIKE ?\n"
-                    + "                                OR mobile LIKE ?)\n"
-                    + "								)\n"
-                    + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
+                        + "		, * from [User] where roleId = ? AND \n"
+                        + "                               (fullname like ?\n"
+                        + "                                OR email LIKE ?\n"
+                        + "                                OR mobile LIKE ?)\n"
+                        + "								)\n"
+                        + "		SElECT* FROM x where r between (? - 1)* ? +1 and ? * ?";
             }
         }
         PreparedStatement ps = null;
@@ -634,8 +634,7 @@ public class CustomerDBContext extends DBContext {
         }
         return listCustomer;
     }
-    
-    
+
     public int count(int userRole) {
         int number = 0;
         try {
@@ -653,7 +652,7 @@ public class CustomerDBContext extends DBContext {
         }
         return number;
     }
-    
+
     public static void main(String[] args) {
         CustomerDBContext db = new CustomerDBContext();
         System.out.println(db.count(4));

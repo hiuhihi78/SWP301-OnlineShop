@@ -66,7 +66,7 @@
                                     <img src="${leastProduct.thumbnail}" alt="" />
                                 </a>
                                 <h2 class="break-down-line">${leastProduct.name}</h2>
-                                <p class="break-down-line">${leastProduct.description}</p>
+                                <!--<p class="break-down-line">${leastProduct.description}</p>-->
                                 <p>
                                     <span class="text-line-through">
                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${leastProduct.price}"/>

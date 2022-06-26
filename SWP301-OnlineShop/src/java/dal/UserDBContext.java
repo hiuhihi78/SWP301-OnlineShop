@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Product;
 import model.Role;
 import model.User;
 
@@ -283,6 +284,22 @@ public class UserDBContext extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, user.getPassword());
             stm.setString(2, user.getEmail());
+
+            return stm.executeUpdate() > 0;
+        } catch (Exception ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean updateUserInf(User user) {
+        try {
+            String sql = "update [User] set fullname =?, mobile=?, address=? where email = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getFullname());
+            stm.setString(2, user.getMobile());
+            stm.setString(3, user.getAddress());
+            stm.setString(4, user.getEmail());
 
             return stm.executeUpdate() > 0;
         } catch (Exception ex) {
@@ -1246,7 +1263,103 @@ public class UserDBContext extends DBContext {
 //        }
 //        User user = db.getUserByEmail("Nguyenhieuskynett@gmail.com");
 //        System.out.println(user.getEmail());
-        System.out.println(db.getUserById(1).toString());
+//        System.out.println(db.getUserById(1).toString());
+        User user = db.getUserByEmail("hieunvhe153769@fpt.edu.vn");
+        System.out.println(user.getFullname());
+        user.setFullname("Nguyen Van Hieu");
+        db.updateUserInf(user);
+        System.out.println(user.getFullname());
 
+    }
+
+    public ArrayList<User> getIdSellersProduct(Product[] productsOrder) {
+        ArrayList<User> listSeller = new ArrayList<>();
+        try {
+            String sql = "select distinct sellerId from product\n"
+                    + "where ";
+            for (int i = 0; i < productsOrder.length; i++) {
+                if (i == productsOrder.length - 1) {
+                    sql += " Product.id = ? ";
+                } else {
+                    sql += " or Product.id = ? ";
+                }
+            }
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt(1));
+                listSeller.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listSeller;
+    }
+
+    public int getLastSellerReceiveOrder() {
+        try {
+            String sql = "select top 1 sellerid from [order]\n"
+                    + "order by id desc";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int countNumberSeller() {
+        try {
+            String sql = "Select count(id) as total \n"
+                    + "from [User] where roleId = 3 and status = 1";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getindexSellerReceiveOrder(int lastSellerReceiveOrder) {
+        try {
+            String sql = "Select * from \n"
+                    + "( Select id, ROW_NUMBER() over(order by id asc) as row_index from [User] \n"
+                    + "where roleId = 3 and status = 1) indexSeller\n"
+                    + "where id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, lastSellerReceiveOrder);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(2);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getIdNextSeller(int indexNextSellerReceiveOrder) {
+        try {
+            String sql = "Select * from \n"
+                    + "( Select id, ROW_NUMBER() over(order by id asc) as row_index from [User] \n"
+                    + "where roleId = 3 and status = 1) indexSeller\n"
+                    + "where row_index = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, indexNextSellerReceiveOrder);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }

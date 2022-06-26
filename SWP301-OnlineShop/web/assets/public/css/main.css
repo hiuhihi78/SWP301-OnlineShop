@@ -671,7 +671,6 @@ ul.sub-menu {
     background: #FE980F;
 }
 
- /*dm no bi an cai item cua carousel*/
 .item {
     padding-left: 0px;
 }
@@ -1336,8 +1335,8 @@ h2.title {
 
 .product-information span {
     display: inline-block;
-    margin-bottom: 8px;
-    margin-top: 18px;
+/*    margin-bottom: 8px;
+    margin-top: 18px;*/
 }
 
 .product-information span span {

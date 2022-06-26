@@ -50,7 +50,7 @@
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.price - (i.price*i.discount/100)}"/>
                                                     </span>
                                                 </p>
-                                                <a href="#${i.id}" class="btn btn-default add-to-cart">Show</a>
+                                                <a href="productdetails?productID=${i.id}" class="btn btn-default add-to-cart">Show</a>
                                             </div>
                                         </div>
                                     </div>

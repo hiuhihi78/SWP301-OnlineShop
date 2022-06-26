@@ -234,7 +234,6 @@ public class SliderDBContext extends DBContext {
 //            System.out.println(slider.getTitle());
 //        }
 
-        boolean rs = false;
 //Slider s = new Slider();
 //        s.setTitle("Hot Hot Hot");
 //        s.setImage("slider1.jpg");
@@ -245,10 +244,11 @@ public class SliderDBContext extends DBContext {
 //        u.setId(6);
 //        s.setUser(u);
 
-        Slider s = db.getSliderById(7);
-        s.setNote("20%");
-        rs = db.updateSlider(s);
-        System.out.println(rs);
+//        Slider s = db.getSliderById(7);
+//        s.setNote("20%");
+//        rs = db.updateSlider(s);
+//        System.out.println(rs);
+          db.changeStatus(1, false);
     }
 
 }
