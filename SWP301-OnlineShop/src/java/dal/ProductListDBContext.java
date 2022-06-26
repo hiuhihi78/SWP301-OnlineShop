@@ -335,7 +335,7 @@ public class ProductListDBContext extends DBContext {
                 feedback.setComment(rs.getString("comment"));
                 feedback.setStart(rs.getInt("start"));
                 if (rs.getDate("date") != null) {
-                    feedback.setDate(rs.getDate("date"));
+                    feedback.setDate(rs.getTimestamp("date"));
                 }
 
                 ArrayList<Image> images = new ArrayList<>();
