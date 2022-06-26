@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -19,13 +20,13 @@ public class Feedback {
     private String comment;
     private ArrayList<Image> image = new ArrayList<>();
     private boolean status;
-    private Date date;
+    private Timestamp date;
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

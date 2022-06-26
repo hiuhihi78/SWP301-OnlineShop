@@ -129,10 +129,14 @@
                                     <div class="flex flex-column product-details-price">
                                         <div class="flex items-center">
                                             <div class="flex items-center X1ceUd">
-                                                <div class="product-details-price__original_price">₫<fmt:formatNumber  maxFractionDigits = "3" value = "${product.price}"/></div>
+                                                <c:if test="${product.discount > 0}">
+                                                    <div class="product-details-price__original_price">₫<fmt:formatNumber  maxFractionDigits = "3" value = "${product.price}"/></div>
+                                                </c:if>
                                                 <div class="flex items-center">
                                                     <div class="product-details-price__sale_price">₫<fmt:formatNumber  maxFractionDigits = "3" value = "${product.priceDiscount}"/></div>
-                                                    <div class="product-details-price__product_discount">${product.discount}% OFF</div>
+                                                    <c:if test="${product.discount > 0}">
+                                                        <div class="product-details-price__product_discount">${product.discount}% OFF</div>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,6 +149,7 @@
                                                    min="1" max="${product.quantity}" value = "1" required>
                                             <span>${product.quantity} pieces available</span>
                                         </div>
+                                        
                                         <div id="alter_quantityOrder" style="margin-bottom: 20px;"> </div>
                                     
                                         <div>
