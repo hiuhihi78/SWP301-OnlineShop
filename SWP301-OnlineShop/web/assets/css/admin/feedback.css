@@ -7,7 +7,89 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Admin
 */
 
+.product-details-chose_quantity{
+    margin-top: 20px;
+    
+}
 
+.w-90-percent{
+    width: 90%;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.product-details-price{
+    
+    padding: 15px 20px;
+    background: #fafafa;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.product-details-price__original_price{
+    font-size: 1rem;
+    text-decoration: line-through;
+    color: #929292;
+    margin-right: 10px;
+}
+
+.product-details-price__sale_price{
+    font-size: 1.875rem;
+    font-weight: 500;
+    color: #ee4d2d;
+}
+
+.product-details-price__product_discount{
+    margin-left: 15px;
+    font-size: .75rem;
+    color: #fff;
+    text-transform: uppercase;
+    background: #ee4d2d;
+    border-radius: 2px;
+    padding: 2px 4px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+
+.m-l-5{
+    margin-left: 10px;
+}
+
+.feedback-detail-product{
+    height: 33px;
+}
+.display-flex{
+    display: flex;
+}
+    
+.mt-5{
+    margin-top: 5px;
+}
+.mr-3{
+    margin-right: 3px;
+}
+
+.border-solid-r-1{
+    border-right: 1px solid #bdbdbd;
+    padding-right: 10px;
+}
 .cursor-zoom{
     cursor: zoom-out;
 }
@@ -187,4 +269,66 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .feedback-img:hover{
     cursor:  zoom-in;
+}
+
+
+
+/*.star-ratings {
+  unicode-bidi: bidi-override;
+  color: #ccc;
+  font-size: 64px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  .fill-ratings {
+    color: #e7711b;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    
+    span {
+      display: inline-block;
+    }
+  }
+  .empty-ratings {
+    padding: 0;
+    display: block;
+    z-index: 0;
+  }
+}*/
+
+
+
+.star-ratings {
+    unicode-bidi: bidi-override;
+    color: #ccc;
+    font-size: 20px;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.star-ratings .fill-ratings{
+    color: #e7711b;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.star-ratings .fill-ratings span{
+    display: inline-block;
+}
+
+.star-ratings .empty-ratings{
+    padding: 0;
+    display: block;
+    z-index: 0;
 }

@@ -104,43 +104,76 @@
                                         <label>Seller: </label>
                                         <span> ${product.user.fullname}</span> 
                                     </p>
-                                    <p> 
-                                        <label>Description: </label>
-                                        <span> ${product.description}</span> 
-                                    </p>
-                                    <p>
-                                        <label>Price: </label>
-                                        <span class="text-line-through">
-                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
-                                        </span>
-                                        <span class="text-danger">
-                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
-                                        </span>
-                                    </p>
-                                    <p> <label>Total Quantity: ${product.quantity}</label> </p>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <p> 
-                                                <label>Choice Your Quantity: </label>
-                                                <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;"  class="chose-quantity"
-                                                       min="1" max="${product.quantity}" value = "1" required>
-                                            </p>
-
-                                            <div id="alter_quantityOrder">
-
+                                    <div class="display-flex feedback-detail-product">
+                                        <div class="border-solid-r-1 display-flex">
+                                            <span class="mt-5 mr-3">${requestScope.total_start_percent}</span>
+                                            <div class="star-ratings" >
+                                                <div class="fill-ratings" style="width: ${requestScope.total_start_percent * 20}%;">
+                                                    <span>★★★★★</span>
+                                                </div>
+                                                <div class="empty-ratings">
+                                                    <span>★★★★★</span>
+                                                </div>
                                             </div>
-
-                                            <button  style="width: 10em; " class="form-control add-to-cart" onclick="addToCartFunction();" >
-                                                <i class="fa fa-shopping-cart"></i>
-                                                Add to cart
-                                            </button>
-                                            </form>    
                                         </div>
-                                    </div><!-- comment -->
+                                        <div class="border-solid-r-1 display-flex m-l-5">
+                                            <span class="mt-5 mr-3">${requestScope.total_feedback}</span>
+                                            <span class="mt-5 mr-3">Ratings</span>
+                                        </div>
+                                        <div class="border-solid-r-1 display-flex m-l-5">
+                                            <span class="mt-5 mr-3">${requestScope.total_product_quantity_solded}</span>
+                                            <span class="mt-5 mr-3">Sold</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-column product-details-price">
+                                        <div class="flex items-center">
+                                            <div class="flex items-center X1ceUd">
+                                                <c:if test="${product.discount > 0}">
+                                                    <div class="product-details-price__original_price">₫<fmt:formatNumber  maxFractionDigits = "3" value = "${product.price}"/></div>
+                                                </c:if>
+                                                <div class="flex items-center">
+                                                    <div class="product-details-price__sale_price">₫<fmt:formatNumber  maxFractionDigits = "3" value = "${product.priceDiscount}"/></div>
+                                                    <c:if test="${product.discount > 0}">
+                                                        <div class="product-details-price__product_discount">${product.discount}% OFF</div>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                
+                                    <c:if  test="${product.quantity > 0}">
+                                        <div class="product-details-chose_quantity"> 
+                                            <label>Quantity: </label>
+                                            <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;"  class="text-center"
+                                                   min="1" max="${product.quantity}" value = "1" required>
+                                            <span>${product.quantity} pieces available</span>
+                                        </div>
+                                        
+                                        <div id="alter_quantityOrder" style="margin-bottom: 20px;"> </div>
+                                    
+                                        <div>
+                                            <button  style="width: 10em; " class="form-control add-to-cart" onclick="addToCartFunction();" >
+                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                            </button>
+                                        </div>
+                                    </c:if>
+                                    
+                                    <c:if  test="${product.quantity <= 0}">
+                                        <div class="alert alert-danger w-90-percent" style="width: 90%" >Product is sold out!</div>
+                                    </c:if>
+                                    
                                 </div><!--/product-information-->
                             </div>
                         </div>
+                        <!-- Description -->
+                        <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px; padding-top: 10px;">Description</h2>
+                        <div class="category-tab shop-details-tab">
+                            <c:forEach items="${requestScope.product_description}" var="s">
+                                <p>${s}</p>
+                            </c:forEach>
+                        </div>
+                        <!-- Description -->
 
                         <c:if test="${not empty requestScope.listFeedbacks }">
                             <!-- FEEDBACK -->

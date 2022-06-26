@@ -8,6 +8,8 @@ import dal.ProductCategoryDBContext;
 import dal.ProductListDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -62,6 +64,11 @@ public class ProductDetailsControler extends HttpServlet {
 
         //get product with that id
         Product productInfomation = productListDBContext.getProductById(productID);
+        
+        //get all feedback
+        double total_start_percent = productListDBContext.getStartPercent(productID);
+        int total_feedback = productListDBContext.getTotalFeedback(productID);
+        int total_product_quantity_solded = productListDBContext.getTotalQuantityProductSolded(productID);
         //get all feedback of that product
         ArrayList<Feedback> listFeedbacks = productListDBContext.getListFeedbackByProductID(productID, pageindex, pagesize);
 
@@ -69,7 +76,14 @@ public class ProductDetailsControler extends HttpServlet {
         System.out.println(numofrecords);
         System.out.println(listFeedbacks.size());
 
+        String[] product_description = productInfomation.getDescription().split("\n");
+
+
         //pass to jsp
+        request.setAttribute("total_product_quantity_solded", total_product_quantity_solded);
+        request.setAttribute("total_feedback", total_feedback);
+        request.setAttribute("total_start_percent", total_start_percent);
+        request.setAttribute("product_description", product_description);
         request.setAttribute("productInfomation", productInfomation);
         request.setAttribute("listCategorys", listCategorys);
         request.setAttribute("listFeedbacks", listFeedbacks);

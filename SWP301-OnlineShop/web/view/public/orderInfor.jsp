@@ -57,7 +57,7 @@
                                             </p>
                                             <p>
                                                 <label> Status: </label>
-                                                <td><span class="label label-success">completed</span></td>
+                                            <td><span class="label label-success">completed</span></td>
                                             </p>
                                         </div>
 
@@ -98,19 +98,16 @@
                                                             <td>10/10/2014</td>
                                                             <td>10/10S/2014</td>
                                                         </tr>
-                                                       
+
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
                             </section>
                         </div>
                     </div>
-                    <!--END PRODCUT LIST-->
                 </div>
 
             </div>

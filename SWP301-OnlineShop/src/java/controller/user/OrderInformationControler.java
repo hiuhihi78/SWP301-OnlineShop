@@ -37,16 +37,18 @@ public class OrderInformationControler extends HttpServlet {
 
         ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
         ProductListDBContext productListDBContext = new ProductListDBContext();
+
+        //GET SIDER INFOR
         //get list subcategory
         ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
         //get least post
         ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
 
-        //GET SIDER INFOR
-        //GET ORDER ID, ORDER DATE
-        //GET RECIVER INFOR OF USER
-        //GET LIST ORDER BY ORDER ID
+        //GET ORDER ID, ORDER DATE, Total, status
         
+        //GET RECIVER INFOR OF USER
+        
+        //GET LIST ORDERED BY ORDER ID
         
         request.setAttribute("listCategorys", listCategorys);
         request.setAttribute("leastProduct", leastProduct);
