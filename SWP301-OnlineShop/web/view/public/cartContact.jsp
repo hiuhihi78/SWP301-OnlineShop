@@ -161,9 +161,10 @@
                                                 <tr>
                                                     <!--Get Data product here Start-->
                                             <input type="hidden" name="pr-id" value="${(i.product).id}">
+                                            <input type="hidden" name="pr-name" value="${(i.product).name}">
                                             <input type="hidden" name="pr-quantity" value="${i.quantity}">
                                             <input type="hidden" name="pr-price" value="${(i.product).price}">
-                                            <input type="hidden" name="pr-discount" value="${(i.product).getPriceDiscount()}">
+                                            <input type="hidden" name="pr-discount" value="${(i.product).discount}">
                                             <!--Get Data product here End-->
                                             <td class="cart_product" style="width: 180px">
                                                 <a href=""><img src="${(i.product).thumbnail}" alt="" width="100px" height="auto"></a>

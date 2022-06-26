@@ -335,7 +335,7 @@ public class ProductListDBContext extends DBContext {
                 feedback.setComment(rs.getString("comment"));
                 feedback.setStart(rs.getInt("start"));
                 if (rs.getDate("date") != null) {
-                    feedback.setDate(rs.getDate("date"));
+                    feedback.setDate(rs.getTimestamp("date"));
                 }
 
                 ArrayList<Image> images = new ArrayList<>();
@@ -472,7 +472,8 @@ public class ProductListDBContext extends DBContext {
         ArrayList<Product> listProduct = new ArrayList<>();
         try {
             String sql = "Select cart.*, Cart_Product.ProductId, Cart_Product.Quantity, product.thumbnail, Product.[name], product.sellerId, [User].fullname,\n"
-                    + "((Product.price - (product.price*product.discount/100))) as totalPrice\n"
+//                    + "((Product.price - (product.price*product.discount/100))) as totalPrice\n"
+                    + "Product.price, product.discount \n"
                     + "from cart join Cart_Product\n"
                     + "on cart.id = Cart_Product.CartId\n"
                     + "join Product on Product.id = Cart_Product.ProductId\n"
@@ -494,6 +495,7 @@ public class ProductListDBContext extends DBContext {
                     user.setFullname(rs.getString(10));
                     product.setUser(user);
                     product.setPrice(rs.getLong(11));
+                    product.setDiscount(rs.getInt(12));
                     listProduct.add(product);
                 }
             }

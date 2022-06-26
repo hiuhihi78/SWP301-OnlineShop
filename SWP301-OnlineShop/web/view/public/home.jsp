@@ -44,7 +44,7 @@
                                 <div class="carousel-inner slider-height-400">
                                     <c:set scope="request" var="count_item" value="0"/>
                                     <c:forEach items="${requestScope.listSliderActive}" var="i">
-                                        <div class="item ${(count_item == 0) ? "active":""}">
+                                        <div class="item ${(count_item == 0) ? "active":""}" style="padding-left: 100px;">
                                             <div class="col-sm-6">
                                                 <h1 class="text-size-35"><span>${i.title}</span></h1>
                                                 <!--<h2>super sale at midnight</h2>-->
