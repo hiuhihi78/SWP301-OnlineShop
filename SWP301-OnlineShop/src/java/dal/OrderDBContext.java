@@ -330,21 +330,50 @@ public class OrderDBContext extends DBContext {
                 product.setQuantity(rs.getLong("quantity"));
                 product.setDiscount(rs.getInt("discount"));
                 product.setPrice(rs.getLong("price"));
-                
+
                 Category category = new Category();
                 category.setName(rs.getString("categoryName"));
-                
+
                 SubCategory subCategory = new SubCategory();
                 subCategory.setCategory(category);
-                
+
                 product.setSubCategory(subCategory);
-                
+
                 listProduct.add(product);
             }
         } catch (SQLException ex) {
             Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listProduct;
+    }
+
+    public void editStatusOrder(int orderID) {
+        String spl1 = " UPDATE [dbo].[Order]\n"
+                + "SET [status] = 0 \n"
+                + "WHERE id = ? ";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(spl1);
+            stm.setInt(1, orderID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 
 }

@@ -29,6 +29,19 @@
         <c:set var="orderInfor" value="${requestScope.informationOrder}"/>
         <c:set var="userBuyInfor" value="${requestScope.userOrderInfioramtion}"/>
         <jsp:include page="../home-template/headerProductlist.jsp"/>
+        <c:if test="${requestScope.alter != null}">
+            <div class="fixed float-end t-55px" id="showAlter" style="    width: 21%;
+                 z-index: 1024;
+                 right: 36%;
+                 top: 6%;
+                 position: fixed;
+                 ">
+                <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="transform: rotate(90deg); top: 8%;">&times;</a>
+                    ${requestScope.alter}
+                </div>
+            </div>
+        </c:if>
         <section>
             <div class="container">
                 <div class="row flex-justify">
@@ -76,6 +89,7 @@
                                                 <td><span class="label label-success">Completed</span></td>
                                             </c:if>
                                             </p>
+
                                         </div>
 
                                         <div class="col-md-6 form-group">
@@ -112,7 +126,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <div style="height: 100px; width: fit-content">
-                                                                    <img style="width: 100%; height: 100%; object-fit: contain" src="${listOrder.thumbnail}" alt="alt"/>
+                                                                        <img style="width: 100%; height: 100%; object-fit: contain" src="${listOrder.thumbnail}" alt="alt"/>
                                                                     </div>
                                                                 </td>
                                                                 <td>${listOrder.name}</td>
@@ -126,9 +140,23 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button></button>
                                 </div>
                             </section>
+                            <div class="row" >
+                                <div class="col-md-6 pull-left" >
+                                    <c:if test="${orderInfor.status == 1}">
+                                        <a  href="#" onclick="deleteStudent(${orderInfor.id})"  class="btn btn-info"> Feedback </a>
+                                        <a  href="#" onclick="deleteStudent(${orderInfor.id})"  class="btn btn-info"> Rebuy </a>
+                                    </c:if>
+                                </div>
+                                <div class="col-md-6 pull-right ">
+                                    <c:if test="${orderInfor.status == 1}">
+                                        <a  href="#" onclick="deleteStudent(${orderInfor.id})"  class="btn btn-info"> Update </a>
+                                        <a  href="#" onclick="deleteStudent(${orderInfor.id})"  class="btn btn-info"> Cancel </a>
+                                    </c:if>
+                                    <a href="../myorders"  class="btn btn-danger ">Back</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -138,6 +166,18 @@
         </section>
 
         <jsp:include page="../home-template/footer.jsp"/>
+        <script>
+            function deleteStudent(id) {
+                var result = confirm("Are you sure to cancel this order?");
+                if (result) {
+                    window.location.href = "cancelOrder?orderID=" + id
+                }
+            }
+            setTimeout(function () {
+                const element = document.getElementById('showAlter');
+                element.remove();
+            }, 3000);
+        </script>
         <script src="../../assets/js/home/productList.js"></script>
         <script src="../../assets/public/js/jquery.js"></script>
         <script src="../../assets/public/js/bootstrap.min.js"></script>
