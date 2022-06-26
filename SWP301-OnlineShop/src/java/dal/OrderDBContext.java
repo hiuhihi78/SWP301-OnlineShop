@@ -13,9 +13,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Category;
 import model.Order;
 import model.Product;
 import model.Role;
+import model.SubCategory;
 import model.User;
 
 /**
@@ -260,4 +262,89 @@ public class OrderDBContext extends DBContext {
         }
         return null;
     }
+
+    public Order getInformationOfOrderByID(int orderID) {
+        try {
+            String sql = " select DISTINCT  od.id, od.date, od.status, od.totalPrice\n"
+                    + "from\n"
+                    + "[Order] od WHERE od.id = ? ";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Order order = new Order();
+                order.setId(rs.getInt("id"));
+                order.setDate(rs.getDate("date"));
+                order.setStatus(rs.getInt("status"));
+                order.setTotalcost(rs.getDouble("totalPrice"));
+                return order;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public User getUserOrderInformation(int orderID) {
+        try {
+            String sql = " select DISTINCT  s.fullname, u.gender, s.email, s.phone\n"
+                    + "from\n"
+                    + "[Order] od\n"
+                    + " INNER JOIN  ShipInfo s ON od.idShip = s.id\n"
+                    + " INNER JOIN [User] u on od.userId = u.id\n"
+                    + "WHERE od.id = ? ";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setFullname(rs.getString("fullname"));
+                user.setGender(rs.getBoolean("gender"));
+                user.setEmail(rs.getString("email"));
+                user.setMobile(rs.getString("phone"));
+                return user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Product> getListOrderProductOfUser(int orderID) {
+        ArrayList<Product> listProduct = new ArrayList<>();
+        String sql = " select p.thumbnail, p.name as pname, c.name as categoryName, o.quantity, o.discount, o.price\n"
+                + "from\n"
+                + "Product p\n"
+                + " INNER JOIN OrderDetail o ON o.productId = p.id\n"
+                + " INNER JOIN SubCategory sub ON p.subCategoryId = sub.id\n"
+                + " INNER JOIN Category c ON sub.categoryId = c.id\n"
+                + "WHERE o.orderId = ? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setThumbnail(rs.getString("thumbnail"));
+                product.setName(rs.getString("pname"));
+                product.setQuantity(rs.getLong("quantity"));
+                product.setDiscount(rs.getInt("discount"));
+                product.setPrice(rs.getLong("price"));
+                
+                Category category = new Category();
+                category.setName(rs.getString("categoryName"));
+                
+                SubCategory subCategory = new SubCategory();
+                subCategory.setCategory(category);
+                
+                product.setSubCategory(subCategory);
+                
+                listProduct.add(product);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listProduct;
+    }
+
 }

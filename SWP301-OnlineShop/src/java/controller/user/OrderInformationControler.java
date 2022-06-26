@@ -4,6 +4,7 @@
  */
 package controller.user;
 
+import dal.OrderDBContext;
 import dal.ProductCategoryDBContext;
 import dal.ProductListDBContext;
 import java.io.IOException;
@@ -14,7 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Category;
+import model.Order;
 import model.Product;
+import model.User;
 
 /**
  *
@@ -37,7 +40,11 @@ public class OrderInformationControler extends HttpServlet {
 
         ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
         ProductListDBContext productListDBContext = new ProductListDBContext();
-
+        OrderDBContext orderDBContext = new OrderDBContext();
+        //get value from request
+        String raw_orderID = request.getParameter("orderID");
+        //validate value
+        int orderID = Integer.parseInt(raw_orderID);
         //GET SIDER INFOR
         //get list subcategory
         ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
@@ -45,11 +52,17 @@ public class OrderInformationControler extends HttpServlet {
         ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
 
         //GET ORDER ID, ORDER DATE, Total, status
-        
+        Order informationOrder = orderDBContext.getInformationOfOrderByID(orderID);
         //GET RECIVER INFOR OF USER
-        
+        User userOrderInfioramtion = orderDBContext.getUserOrderInformation(orderID);
         //GET LIST ORDERED BY ORDER ID
+        ArrayList<Product> listOrderProductOfUser = orderDBContext.getListOrderProductOfUser(orderID);
         
+        System.out.println("1");
+        System.out.println(listOrderProductOfUser.size());
+        request.setAttribute("listOrderProductOfUser", listOrderProductOfUser);
+        request.setAttribute("informationOrder", informationOrder);
+        request.setAttribute("userOrderInfioramtion", userOrderInfioramtion);
         request.setAttribute("listCategorys", listCategorys);
         request.setAttribute("leastProduct", leastProduct);
         request.getRequestDispatcher("/view/public/orderInfor.jsp").forward(request, response);

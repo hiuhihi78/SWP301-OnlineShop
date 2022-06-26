@@ -26,6 +26,8 @@
     <!--/head-->
 
     <body>
+        <c:set var="orderInfor" value="${requestScope.informationOrder}"/>
+        <c:set var="userBuyInfor" value="${requestScope.userOrderInfioramtion}"/>
         <jsp:include page="../home-template/headerProductlist.jsp"/>
         <section>
             <div class="container">
@@ -45,36 +47,51 @@
                                         <div class="col-md-6 form-group">
                                             <p>
                                                 <label>ID Order: </label>
-                                                <span> 123</span> 
+                                                <span>${orderInfor.id}</span> 
                                             </p>
                                             <p>
                                                 <label> Order Date: </label>
-                                                <span> xx/xx/xxxx</span> 
+                                                <span>${orderInfor.date}</span> 
                                             </p>
                                             <p>
                                                 <label> Total: </label>
-                                                <span> 100000000d</span> 
+                                                <span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${orderInfor.totalcost}"/></span> 
                                             </p>
                                             <p>
                                                 <label> Status: </label>
-                                            <td><span class="label label-success">completed</span></td>
+
+                                                <c:if test="${orderInfor.status == 0}">
+                                                <td><span class="label label-danger">Cancelled</span></td>
+                                            </c:if>
+                                            <c:if test="${orderInfor.status == 1}">
+                                                <td><span class="label label-success">Submitted</span></td>
+                                            </c:if>
+                                            <c:if test="${orderInfor.status == 2}">
+                                                <td><span class="label label-success">Processing</span></td>
+                                            </c:if>
+                                            <c:if test="${orderInfor.status == 3}">
+                                                <td><span class="label label-success">Shipping</span></td>
+                                            </c:if>
+                                            <c:if test="${orderInfor.status == 4}">
+                                                <td><span class="label label-success">Completed</span></td>
+                                            </c:if>
                                             </p>
                                         </div>
 
                                         <div class="col-md-6 form-group">
                                             <p>
                                                 <label>Full Name: </label>
-                                                <span> abc</span> 
+                                                <span> ${userBuyInfor.fullname}</span> 
                                             </p><p>
                                                 <label> Gender: </label>
-                                                <span> Male</span> 
+                                                <span> ${userBuyInfor.gender == true ? "Male" : "Female"}</span> 
                                             </p>
                                             <p>
                                                 <label>Email: </label>
-                                                <span> abc@gmail.com</span> 
+                                                <span> ${userBuyInfor.email}</span> 
                                             </p><p>
                                                 <label> Mobile: </label>
-                                                <span> 123 </span> 
+                                                <span> ${userBuyInfor.mobile} </span> 
                                             </p>
                                         </div>
 
@@ -91,19 +108,25 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>Facebook</td>
-                                                            <td>Mark</td>
-                                                            <td>10/10/2014</td>
-                                                            <td>10/10S/2014</td>
-                                                        </tr>
-
+                                                        <c:forEach items="${requestScope.listOrderProductOfUser}" var="listOrder">
+                                                            <tr>
+                                                                <td>
+                                                                    <div style="height: 100px; width: fit-content">
+                                                                    <img style="width: 100%; height: 100%; object-fit: contain" src="${listOrder.thumbnail}" alt="alt"/>
+                                                                    </div>
+                                                                </td>
+                                                                <td>${listOrder.name}</td>
+                                                                <td>${listOrder.subCategory.category.name}</td>
+                                                                <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${listOrder.getUnitPrice()}"/></td>
+                                                                <td>${listOrder.quantity}</td>
+                                                            </tr>
+                                                        </c:forEach>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
+                                    <button></button>
                                 </div>
                             </section>
                         </div>

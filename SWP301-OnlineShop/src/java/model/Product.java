@@ -27,6 +27,8 @@ public class Product {
     private ArrayList<Image> image = new ArrayList<>();
     private Date date;
     private SubCategory subCategory;
+    private String categoryname;
+    
 
     public long getPriceDiscount() {
         return price - ((price * discount) / 100);
@@ -34,6 +36,22 @@ public class Product {
 
     public void setPriceDiscount(long priceDiscount) {
         this.priceDiscount = priceDiscount;
+    }
+
+    public long getUnitPrice() {
+        return (price - ((price * discount) / 100)) * quantity;
+    }
+
+    public void setUnitPrice(long priceDiscount) {
+        this.priceDiscount = priceDiscount;
+    }
+
+    public String getCategoryname() {
+        return categoryname;
+    }
+
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname;
     }
 
     public boolean isStatus() {
@@ -147,7 +165,5 @@ public class Product {
     public String toString() {
         return "Product{" + "id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", discount=" + discount + ", priceDiscount=" + priceDiscount + ", user=" + user + ", status=" + status + ", quantity=" + quantity + ", featured=" + featured + ", thumbnail=" + thumbnail + ", image=" + image.get(0).getImage() + ", date=" + date + ", subCategory=" + subCategory + '}';
     }
-    
-    
 
 }
