@@ -82,7 +82,7 @@ public class SendMail {
     }
 
     public static void sendMailOrder(String email, int idOrder, int idPayment,
-            Product[] productsOrder, User inforCustomer, long total, String dateOrder,
+            Product[] productsOrder, String[] priceDiscountVnd, User inforCustomer, String total, String dateOrder,
             String nameBank, String accNumber, String ownerAccount) {
         String payment = (idPayment == 0) ? "Payment on delivery" : "Bank payment";
         String subject = "[OnlineShop] Order Has Been Sucessfully.";
@@ -134,12 +134,12 @@ public class SendMail {
                     + "        </tr>\n"
                     + "        <tr>\n"
                     + "            <td>Price: </td>\n"
-                    + "            <td>" + productsOrder[i].getPriceDiscount() + "đ" + "</td>\n"
+                    + "            <td>" + priceDiscountVnd[i]  + "</td>\n"
                     + "        </tr>\n";
         }
         message += "</table>\n"
                 + "    <br/>\n"
-                + "    <div>Total Amount: " + total + "đ</div>\n"
+                + "    <div style=\"font-weight: bold;\">Total Amount: " + total + "</div>\n"
                 + "    <br/>\n"
                 + "    <table>\n";
         if (idPayment == 1) {
@@ -160,7 +160,7 @@ public class SendMail {
                     + "        </tr>\n"
                     + "        <tr>\n"
                     + "            <td>Amount: </td>\n"
-                    + "            <td>"+ total +"đ</td>\n"
+                    + "            <td>"+ total +"</td>\n"
                     + "        </tr>\n"
                     + "        <tr>\n"
                     + "            <td>Money transfer content: </td>\n"

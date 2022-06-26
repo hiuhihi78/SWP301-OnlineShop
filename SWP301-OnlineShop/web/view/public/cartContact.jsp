@@ -164,6 +164,7 @@
                                             <input type="hidden" name="pr-name" value="${(i.product).name}">
                                             <input type="hidden" name="pr-quantity" value="${i.quantity}">
                                             <input type="hidden" name="pr-price" value="${(i.product).price}">
+                                            <input type="hidden" name="pr-priceDiscountVnd" value="<fmt:formatNumber maxFractionDigits = "3" type = "currency" value = "${i.quantity * (i.product).getPriceDiscount()}"/>">
                                             <input type="hidden" name="pr-discount" value="${(i.product).discount}">
                                             <!--Get Data product here End-->
                                             <td class="cart_product" style="width: 180px">
@@ -215,6 +216,7 @@
                                                      
 
                                                         <td><b>Total:<p class="cart_total_price"> <fmt:formatNumber type = "number" value = "${total}"/> &nbsp;đ</p></b></td>
+                                                        <input type="hidden" name="totalPriceVnd" value="<fmt:formatNumber maxFractionDigits = "3" type = "currency" value = "${total}"/>">
 
                                                     </tr>
                                                 </table>
