@@ -425,7 +425,7 @@ public class UserDBContext extends DBContext {
 
     }
 
-    public User getUserById(int id)  {
+    public User getUserById(int id) {
         String sql = "SELECT [fullname]\n"
                 + "	  ,[gender]\n"
                 + "      ,[avatar]\n"
@@ -475,7 +475,7 @@ public class UserDBContext extends DBContext {
                 u.setRole(role);
                 u.setStatus(rs.getBoolean(9));
                 u.setId(id);
-                
+
                 System.out.println(u);
                 return u;
 
@@ -1211,6 +1211,25 @@ public class UserDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listUserMarketing;
+    }
+
+    public ArrayList<User> getSaleUser() {
+        ArrayList<User> sales = new ArrayList<>();
+        try {
+            String sql = "Select [User].id, [User].fullname from [User] \n"
+                    + "Where roleId = 3";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt(1));
+                user.setFullname(rs.getString(2));
+                sales.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sales;
     }
 
     public static void main(String[] args) {

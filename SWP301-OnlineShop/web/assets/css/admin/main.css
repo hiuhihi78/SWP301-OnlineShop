@@ -229,6 +229,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-bottom: 10px;
 }
 
+#customToolbar.form-control {
+    display: inline-block !important; 
+  }
 
 /*
 #formFilter{

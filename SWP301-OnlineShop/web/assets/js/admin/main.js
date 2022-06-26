@@ -23,21 +23,21 @@ $(document).ready(function () {
     $(function () {
         var start = moment();
         var end = moment();
-        function cb(start, end) {
-            const params = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-            });
-            var startTime = params.startTime;
-            var endTime = params.endTime;
-            if (startTime == null || endTime == null)
-            {
-                $('#reportrange span').html(start.format('YYYY-MM-DD') + ' -> ' + end.format('YYYY-MM-DD'));
-            } else
-            {
-                console.log()
-                $('#reportrange span').html(startTime + ' -> ' + endTime);
-            }
-
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+        var startTime = params.startTime;
+        var endTime = params.endTime;
+        if (startTime === null || endTime === null)
+        {
+            $('#startTime').prop('value', start.format('YYYY-MM-DD'));
+            $('#endTime').prop('value', end.format('YYYY-MM-DD'));
+            $('#reportrange span').html(start.format('YYYY-MM-DD') + ' -> ' + end.format('YYYY-MM-DD'));
+        } else
+        {
+            $('#startTime').prop('value', startTime);
+            $('#endTime').prop('value', endTime);
+            $('#reportrange span').html(startTime + ' -> ' + endTime);
         }
         $('#reportrange').daterangepicker({
             startDate: start,
@@ -50,11 +50,32 @@ $(document).ready(function () {
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
                 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             }
-        }, cb);
-        cb(start, end);
+        });
     });
 
     $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-        window.location.href = window.location.pathname + "?" + $.param({'startTime': picker.startDate.format('YYYY-MM-DD'), 'endTime': picker.endDate.format('YYYY-MM-DD')})
+        const startTime = picker.startDate.format('YYYY-MM-DD');
+        const endTime = picker.endDate.format('YYYY-MM-DD');
+        $('#startTime').prop('value', startTime);
+        $('#endTime').prop('value', endTime);
+        $('#reportrange span').html(startTime + ' -> ' + endTime);
+    });
+
+    $('.confirm-process').on('click', function () {
+        var orderid = $(this).data("orderid");
+        $("#myModal").data('orderid', orderid).modal('show');
+    });
+
+    $('#btnConfirmProcessOrder').on('click', function () {
+        var orderid = $('#myModal').data("orderid");
+        var url = '/sale/order/updatestatus';
+        //set status = 2 mean processing
+        $.post(url, {orderid: orderid, status: 2}, function () {
+            $('#alertSuccessInfo').html("Delete match order successfully");
+        })
+                .fail(function () {
+
+                    $('#alertErrorInfo').html("Delete match order failed");
+                });
     });
 });

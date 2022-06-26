@@ -42,36 +42,72 @@
             <jsp:include page="../sale-template/sideBar.jsp"></jsp:include>
 
                 <aside class="right-side">
-                    <div id ="customToolbar">
-                        <span>Please set date range to view your data:</span></br>
-                        <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                            <i class="fa fa-calendar"></i>&nbsp;
-                            <span></span> <i class="fa fa-caret-down"></i>
+                    <div id ="customToolbar"> 
+                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+                            <span class="glyphicon glyphicon-cog"></span> Filter
+                        </button>
+                        <div id="filter-panel" class="collapse filter-panel">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form class="form-inline" action="/sale/orderslist" method="GET">
+                                        <div class="form-group">
+                                            <input name="startTime" type="hidden" id="startTime">
+                                            <input name="endTime" type="hidden" id="endTime">
+                                            <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                                <i class="fa fa-calendar"></i>&nbsp;
+                                                <span></span> <i class="fa fa-caret-down"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Sale: </label>
+                                            <select name="sale-filter" id="salefilter" class="form-control">
+                                                <option value="0" ${param["sale-filter"] == 0 ? "selected" : ""}>All sales</option>
+                                            <c:forEach items="${requestScope.sales}" var="s">
+                                                <option value="${s.id}" ${param["sale-filter"] == s.id ? "selected" : ""}>${s.fullname}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Status: </label>
+                                        <select name="status-filter" id="statusfilter" class="form-control">
+                                            <option value="5" ${param["status-filter"] == 5 ? "selected" : ""}>All status</option>
+                                            <option value="0" ${param["status-filter"] == 0 ? "selected" : ""}>Cancelled</option>
+                                            <option value="1" ${param["status-filter"] == 1 ? "selected" : ""}>Waiting for process</option>
+                                            <option value="2" ${param["status-filter"] == 2 ? "selected" : ""}>Processing</option>
+                                            <option value="3" ${param["status-filter"] == 3 ? "selected" : ""}>Shipping</option>
+                                            <option value="4" ${param["status-filter"] == 4 ? "selected" : ""}>Completed</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-default">Apply filter</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <!-- Main content -->
-                    <section class="content ">
-                        <table
-                            data-toggle="table"
-                            data-pagination="true"
-                            data-sortable="true"
-                            data-search="true"
-                            data-toolbar="#customToolbar">
+                </div>
 
-                            <thead>
-                                <tr>
-                                    <th data-sortable="false">Order ID</th>
-                                    <th data-sortable="true">Ordered Date</th>
-                                    <th data-sortable="true">Customer name</th>
-                                    <th data-sortable="false">Product (First product name)</th>
-                                    <th data-sortable="false">Number of products</th>
-                                    <th data-sortable="true">Total cost</th>
-                                    <th data-sortable="true" data-align="center">Status</th>
-                                    <th data-sortable="false" data-align="center">Assigned to</th>
-                                    <th data-sortable="false">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                <!-- Main content -->
+                <section class="content ">
+                    <table
+                        data-toggle="table"
+                        data-pagination="true"
+                        data-sortable="true"
+                        data-search="true"
+                        data-toolbar="#customToolbar">
+
+                        <thead>
+                            <tr>
+                                <th data-sortable="false">Order ID</th>
+                                <th data-sortable="true">Ordered Date</th>
+                                <th data-sortable="true">Customer name</th>
+                                <th data-sortable="false">Product (First product name)</th>
+                                <th data-sortable="false">Number of products</th>
+                                <th data-sortable="true">Total cost</th>
+                                <th data-sortable="true" data-align="center">Status</th>
+                                <th data-sortable="false" data-align="center">Assigned to</th>
+                                <th data-sortable="false">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <c:forEach items="${requestScope.orders}" var="o">
                                 <tr>
                                     <td>${o.id}</td>
@@ -114,8 +150,8 @@
                                     </c:if>
                                     <td>
                                         <button type="button" class="btn btn-primary" id="${o.id}">View</button>
-                                        <c:if test="${o.status == 1}">
-                                            <button type="button" class="btn btn-warning confirm-process btn-sm" id="${o.id}" data-toggle="modal" data-target="#myModal">Process order</button>
+                                        <c:if test="${o.status == 1 && o.sale.id == sessionScope.user.id}">
+                                            <button type="button" class="btn btn-warning confirm-process btn-sm" data-orderid="${o.id}" data-toggle="modal" data-target="#myModal">Process order</button>
                                         </c:if>
                                     </td>
                                 </tr>
@@ -126,7 +162,6 @@
                     <!-- Modal -->
                     <div id="myModal" class="modal fade" role="dialog">
                         <div class="modal-dialog">
-
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -138,9 +173,24 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button id ="btnConfirmProcessOrder" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
+
+                    <!--success notification-->
+                    <div class="fixed float-end" id="showAlterSuccess">
+                        <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        </div>
+                    </div>
+                    <!--fail notification-->
+                    <div class="fixed float-end" id="showAlterFail">
+                        <div class="alert alert-danger alert-dismissible fade in" id="alterfade">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            ${requestScope.alterFail}
                         </div>
                     </div>
                 </section> <!--/ Main content -->
