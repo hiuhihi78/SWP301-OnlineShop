@@ -53,3 +53,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #pay-id {
     padding-left: 40px;
 }
+
+.disabledbutton {
+    pointer-events: none;
+    background-color: lightgray;
+    opacity: 0.4;
+}

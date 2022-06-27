@@ -2,7 +2,8 @@ function addToCartFunction2(id, quantity, customer) {
     var customerId = customer;
     var productId = id;
     var quantityOrder = 1;
-    var quantityProduct = 999;
+//    var quantityProduct = 999;
+//    
 //    var divAlterQuantityOrder = document.getElementById('alter_quantityOrder');
 
 //    if(typeof (quantityOrder) === 'string'){

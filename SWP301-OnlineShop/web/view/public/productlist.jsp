@@ -47,7 +47,7 @@
                                                 </a>
 
                                                 <h2 class="break-down-line">${product.name}</h2>
-                                                <p class="break-down-line">${product.description}</p>
+                                                <!--<p class="break-down-line">${product.description}</p>-->
                                                 <p>
                                                     <span class="text-line-through">
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>

@@ -55,10 +55,10 @@
                                                 <a id="change-id" href="#" >Change</a>
                                             </div>
 
-                                            <input type="hidden" name="txtFullname" value="${user.fullname}"/>
-                                            <input type="hidden" name="txtGender" value="${user.gender}"/>
-                                            <input type="hidden" name="txtPhone" value="${user.mobile}"/>
-                                            <input type="hidden" name="txtAddress" value="${user.address}"/>
+                                                <input type="hidden" id="name-id-h" name="txtFullname" value="${user.fullname}"/>
+                                                <input type="hidden" id="gender-id" name="txtGender" value="${user.gender}"/>
+                                                <input type="hidden" id="phone-id-h" name="txtPhone" value="${user.mobile}"/>
+                                                <input type="hidden" id="address-id-h" name="txtAddress" value="${user.address}"/>
                                         </div>
 
                                     </div><!--/checkout-options-->
