@@ -21,6 +21,8 @@ public class Order {
     private int numproducts;
     private User buyer;
     private User sale;
+    private String customernote;
+    private String salenote;
 
     public Order() {
     }
@@ -88,5 +90,22 @@ public class Order {
 
     public void setSale(User sale) {
         this.sale = sale;
-    }    
+    }
+
+    public String getCustomernote() {
+        return customernote;
+    }
+
+    public void setCustomernote(String customernote) {
+        this.customernote = customernote;
+    }
+
+    public String getSalenote() {
+        return salenote;
+    }
+
+    public void setSalenote(String salenote) {
+        this.salenote = salenote;
+    }
+    
 }

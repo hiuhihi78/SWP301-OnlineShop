@@ -351,7 +351,7 @@ public class OrderDBContext extends DBContext {
 
     public Order getInformationOfOrderByID(int orderID) {
         try {
-            String sql = " select DISTINCT  od.id, od.date, od.status, od.totalPrice, od.sellerid, [User].fullname as sellerName\n"
+            String sql = " select DISTINCT  od.id, od.date, od.status, od.totalPrice, od.sellerid, [User].fullname as sellerName, od.note as CustomerNote, od.sellernote as SaleNote\n"
                     + "from\n"
                     + "[Order] od inner join [User] on od.sellerid = [User].id"
                     + " WHERE od.id = ? ";
@@ -364,7 +364,8 @@ public class OrderDBContext extends DBContext {
                 order.setDate(rs.getDate("date"));
                 order.setStatus(rs.getInt("status"));
                 order.setTotalcost(rs.getDouble("totalPrice"));
-                
+                order.setCustomernote(rs.getString("CustomerNote"));
+                order.setSalenote(rs.getString("SaleNote"));
                 User sale = new User();
                 sale.setId(rs.getInt("sellerid"));
                 sale.setFullname(rs.getString("sellerName"));

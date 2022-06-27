@@ -193,7 +193,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #alterfade {
     animation: fadeOut 2s forwards;
     animation-delay: 2s;
-    
+    height: 75px;
+    top: -198px;
 }
 
 
@@ -202,12 +203,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     width: 20%;
     left: 78%;
     z-index: 1024;
-    
 }
 
 #showAlterSuccess{
     position: absolute;
-    width: 80%;
+    width: 20%;
     left: 78%;
     z-index: 1024;
 }
@@ -235,6 +235,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     display: inline-block !important; 
   }
 
+  #toolbar {
+      margin-bottom: 10px;
+  }
+  
+  .mg-10px {
+      display: inline-block !important;
+      margin-bottom: 10px;
+  }
 /*
 #formFilter{
     width: 70%;

@@ -24,7 +24,7 @@
         <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
         <!--css-->
         <link href="../../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/css/admin/main.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/css/cart/main.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
 
         <!--active button nav in sidebar-->
@@ -60,115 +60,129 @@
                 <section class="content ">
                     <div class ="row d-flex justify-content-center">
                         <h2 class="title text-center">Order Information</h2>
-                        <section class="panel">
+                    </div>
+                    <div class="mg-10px" id="toolBar">
+                        <label>Action: </label>
+                        <button type="button" class="btn btn-info" data-orderid="${orderInfor.id}" data-toggle="modal" data-target="#myModal">Update order status</button>
+                        <button type="button" class="btn btn-info">Update note</button>
+                    </div>
+                    <section class="panel">
+                        <div class="panel-body">
 
-                            <div class="panel-body">
+                            <div class="row">
 
-                                <div class="row">
+                                <div class="col-md-4">
+                                    <p>
+                                        <label>ID Order: </label>
+                                        <span>${orderInfor.id}</span> 
+                                    </p>
+                                    <p>
+                                        <label> Order Date: </label>
+                                        <span>${orderInfor.date}</span> 
+                                    </p>
+                                    <p>
+                                        <label> Total: </label>
+                                        <span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${orderInfor.totalcost}"/></span> 
+                                    </p>
+                                    <p>
+                                        <label> Assigned for sale: </label>
+                                        <c:if test="${orderInfor.sale.id == sessionScope.user.id}">
+                                            <span>${orderInfor.sale.fullname} (You)</span>
+                                        </c:if>
+                                        <c:if test="${orderInfor.sale.id != sessionScope.user.id}">
+                                            <span>${orderInfor.sale.fullname}</span>
+                                        </c:if> 
+                                    </p>
+                                    <p>
+                                        <label> Status: </label>
+                                        <c:if test="${orderInfor.status == 0}">
+                                        <td id="tblStatus">
+                                            <span class="label label-default">Cancelled</span>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${orderInfor.status == 1}">
+                                        <td id="tblStatus">
+                                            <span class="label label-warning">Waiting for process</span>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${orderInfor.status == 2}">
+                                        <td id="tblStatus">
+                                            <span class="label label-info">Processing</span>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${orderInfor.status == 3}">
+                                        <td id="tblStatus">
+                                            <span class="label label-primary">Shipping</span>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${orderInfor.status == 4}">
+                                        <td id="tblStatus">
+                                            <span class="label label-success">Completed</span>
+                                        </td>
+                                    </c:if>
+                                    </p>
 
-                                    <div class="col-md-6 form-group">
-                                        <p>
-                                            <label>ID Order: </label>
-                                            <span>${orderInfor.id}</span> 
-                                        </p>
-                                        <p>
-                                            <label> Order Date: </label>
-                                            <span>${orderInfor.date}</span> 
-                                        </p>
-                                        <p>
-                                            <label> Total: </label>
-                                            <span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${orderInfor.totalcost}"/></span> 
-                                        </p>
-                                        <p>
-                                            <label> Assigned for sale: </label>
-                                            <c:if test="${orderInfor.sale.id == sessionScope.user.id}">
-                                                <span>${orderInfor.sale.fullname} (You)</span>
-                                            </c:if>
-                                            <c:if test="${orderInfor.sale.id != sessionScope.user.id}">
-                                                <span>${orderInfor.sale.fullname}</span>
-                                            </c:if> 
-                                        </p>
-                                        <p>
-                                            <label> Status: </label>
-                                            <c:if test="${orderInfor.status == 0}">
-                                            <td id="tblStatus">
-                                                <span class="label label-default">Cancelled</span>
-                                            </td>
-                                        </c:if>
-                                        <c:if test="${orderInfor.status == 1}">
-                                            <td id="tblStatus">
-                                                <span class="label label-warning">Waiting for process</span>
-                                            </td>
-                                        </c:if>
-                                        <c:if test="${orderInfor.status == 2}">
-                                            <td id="tblStatus">
-                                                <span class="label label-info">Processing</span>
-                                            </td>
-                                        </c:if>
-                                        <c:if test="${orderInfor.status == 3}">
-                                            <td id="tblStatus">
-                                                <span class="label label-primary">Shipping</span>
-                                            </td>
-                                        </c:if>
-                                        <c:if test="${orderInfor.status == 4}">
-                                            <td id="tblStatus">
-                                                <span class="label label-success">Completed</span>
-                                            </td>
-                                        </c:if>
-                                        </p>
+                                </div>
 
+                                <div class="col-md-4">
+                                    <p>
+                                        <label>Full Name: </label>
+                                        <span> ${userBuyInfor.fullname}</span> 
+                                    </p><p>
+                                        <label> Gender: </label>
+                                        <span> ${userBuyInfor.gender == true ? "Male" : "Female"}</span> 
+                                    </p>
+                                    <p>
+                                        <label>Email: </label>
+                                        <span> ${userBuyInfor.email}</span> 
+                                    </p><p>
+                                        <label> Mobile: </label>
+                                        <span> ${userBuyInfor.mobile} </span> 
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Customer note:</label>
+                                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" disabled>${orderInfor.customernote}</textarea>
                                     </div>
-
-                                    <div class="col-md-6 form-group">
-                                        <p>
-                                            <label>Full Name: </label>
-                                            <span> ${userBuyInfor.fullname}</span> 
-                                        </p><p>
-                                            <label> Gender: </label>
-                                            <span> ${userBuyInfor.gender == true ? "Male" : "Female"}</span> 
-                                        </p>
-                                        <p>
-                                            <label>Email: </label>
-                                            <span> ${userBuyInfor.email}</span> 
-                                        </p><p>
-                                            <label> Mobile: </label>
-                                            <span> ${userBuyInfor.mobile} </span> 
-                                        </p>
+                                    <div class="form-group">
+                                        <label>Sale note:</label>
+                                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" disabled>${orderInfor.salenote}</textarea>
                                     </div>
-
-                                    <div class="col-md-12 form-group">
-                                        <div class="panel-body table-responsive">
-                                            <table class="table table-hover">
-                                                <thead>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="panel-body table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Thumbnail</th>
+                                                    <th>Product Name</th>
+                                                    <th>Category</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${requestScope.listOrderProductOfUser}" var="listOrder">
                                                     <tr>
-                                                        <th>Thumbnail</th>
-                                                        <th>Product Name</th>
-                                                        <th>Category</th>
-                                                        <th>Unit Price</th>
-                                                        <th>Quantity</th>
+                                                        <td>
+                                                            <div style="height: 100px; width: fit-content">
+                                                                <img style="width: 100%; height: 100%; object-fit: contain" src="${listOrder.thumbnail}" alt="alt"/>
+                                                            </div>
+                                                        </td>
+                                                        <td>${listOrder.name}</td>
+                                                        <td>${listOrder.subCategory.category.name}</td>
+                                                        <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${listOrder.getUnitPrice()}"/></td>
+                                                        <td>${listOrder.quantity}</td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${requestScope.listOrderProductOfUser}" var="listOrder">
-                                                        <tr>
-                                                            <td>
-                                                                <div style="height: 100px; width: fit-content">
-                                                                    <img style="width: 100%; height: 100%; object-fit: contain" src="${listOrder.thumbnail}" alt="alt"/>
-                                                                </div>
-                                                            </td>
-                                                            <td>${listOrder.name}</td>
-                                                            <td>${listOrder.subCategory.category.name}</td>
-                                                            <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${listOrder.getUnitPrice()}"/></td>
-                                                            <td>${listOrder.quantity}</td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                        </div>
+                    </section>
                     </div>
 
                     <!-- Modal -->
@@ -178,10 +192,26 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Confirm process order</h4>
+                                    <h4 class="modal-title">Edit order status</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Do you want to process this order?</p>
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Status: </label>
+                                            <select name="status-filter" id="statusorder" class="form-control">
+                                                <option value="" selected disabled hidden>Please set a status</option>
+                                                <option value="0" ${param["status-filter"] == 0 ? "selected" : ""}>Cancelled</option>
+                                                <option value="1" ${param["status-filter"] == 1 ? "selected" : ""}>Waiting for process</option>
+                                                <option value="2" ${param["status-filter"] == 2 ? "selected" : ""}>Processing</option>
+                                                <option value="3" ${param["status-filter"] == 3 ? "selected" : ""}>Shipping</option>
+                                                <option value="4" ${param["status-filter"] == 4 ? "selected" : ""}>Completed</option>
+                                            </select>
+                                        </div> 
+                                        <div class="form-group" id="txtAreaReason">
+                                            <label>Please enter the reason:</label>
+                                            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="5"></textarea>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

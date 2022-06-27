@@ -21,6 +21,7 @@ setTimeout(function () {
 
 $(document).ready(function () {
     $(function () {
+        $('#txtAreaReason').hide();
         var start = moment();
         var end = moment();
         const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -77,5 +78,17 @@ $(document).ready(function () {
                 .fail(function () {
 
                 });
+    });
+    
+    $('#statusorder').on("change", function() {
+       var selected = $(this).val();
+       if(selected == 0)
+       {
+           $('#txtAreaReason').show();
+       }
+       else
+       {
+           $('#txtAreaReason').hide();
+       }
     });
 });

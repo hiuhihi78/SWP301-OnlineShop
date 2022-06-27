@@ -23,8 +23,7 @@
         <!-- Theme style -->
         <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
         <!--css-->
-        <link href="../../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/css/admin/main.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/css/cart/main.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
 
         <!--active button nav in sidebar-->
@@ -186,13 +185,13 @@
                     </div>
 
                     <!--success notification-->
-                    <div class="fixed float-end" id="showAlterSuccess">
+                    <div class="fixed float-end d-none" id="showAlterSuccess">
                         <div class="alert alert-success alert-dismissible fade in" id="alterfade">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         </div>
                     </div>
                     <!--fail notification-->
-                    <div class="fixed float-end" id="showAlterFail">
+                    <div class="fixed float-end d-none" id="showAlterFail">
                         <div class="alert alert-danger alert-dismissible fade in" id="alterfade">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             ${requestScope.alterFail}
