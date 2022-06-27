@@ -44,6 +44,7 @@
         <jsp:include page="../marketing-template/header.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
+                
             <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
 
                 <!-- Right side. contains main content -->
