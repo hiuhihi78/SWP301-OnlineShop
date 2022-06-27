@@ -74,6 +74,8 @@ public class CartCompletionController extends BaseAuthController {
 
         // get ship info
         String shipFullName = request.getParameter("txtFullname").trim();
+        boolean shipGender = (request.getParameter("txtGender").trim().equalsIgnoreCase("true"))?true:false;
+        System.out.println(request.getParameter("txtGender") + " " + shipGender);
         String shipPhone = request.getParameter("txtPhone").trim();
         String shipAddress = request.getParameter("txtAddress").trim();
         String shipNote = request.getParameter("txtNote").trim();
@@ -81,6 +83,7 @@ public class CartCompletionController extends BaseAuthController {
         infoCustomer.setFullname(shipFullName);
         infoCustomer.setMobile(shipPhone);
         infoCustomer.setAddress(shipAddress);
+        infoCustomer.setGender(shipGender);
         // get method payment
         String payment = request.getParameter("payment").trim();
 

@@ -98,6 +98,9 @@ public class User {
     public void setGender(boolean gender) {
         this.gender = gender;
     }
+    public String getNameGender() {
+        return gender?"Male":"Female";
+    }
 
     public String getMobile() {
         return mobile;
