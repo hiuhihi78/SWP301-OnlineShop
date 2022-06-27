@@ -219,7 +219,38 @@ $('.btn-update').on('click', function () {
 });
 
 $('.cart_quantity_input').on('change', function () {
-    var quantity = $(this).val();
+    var quantityInput = $(this).val();
+    var pid = $(this).data('product-id');
+    var productQuantity = $(this).data('max');
+    var cid = $('#id-down-' + pid).attr('cart-id');
+
+
+    if (quantityInput < 1) {
+        quantityInput = 1;
+    } else if (quantityInput > productQuantity) {
+        quantityInput = productQuantity;
+    } else if (isNaN(quantityInput)) {
+        quantityInput = 1;
+    }
+
+    $.ajax({
+        url: "/cartDetails",
+        type: "post", //send it through get method
+        data: {
+            pid: pid,
+            isUp: -1,
+            cartId: cid,
+            quantity: quantityInput
+        },
+        success: function (response) {
+            //Do Something
+            location.reload();
+            $('#show-quantity-' + pid).html(response);
+        },
+        error: function (xhr) {
+        }
+    });
+
 });
 
 
