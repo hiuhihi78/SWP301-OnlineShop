@@ -57,7 +57,7 @@
                                                     </span>
                                                 </p>
 
-                                                <button  class="btn btn-default add-to-cart" onclick="addToCartFunction(${product.id},${product.quantity},${sessionScope.user.id});" >
+                                                <button  class="btn btn-default add-to-cart" onclick="addToCartFunction2(${product.id},${product.quantity},${sessionScope.user.id});" >
                                                     <i class="fa fa-shopping-cart"></i>
                                                     Add to cart
                                                 </button>

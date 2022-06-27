@@ -6,7 +6,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Product List</title>
+        <title>Order Information</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,7 +23,6 @@
         <link href="../../assets/public/css/style.css" rel="stylesheet">
         <link href="../../assets/css/admin/feedback.css" rel="stylesheet">
     </head>
-    <!--/head-->
 
     <body>
         <c:set var="orderInfor" value="${requestScope.informationOrder}"/>
@@ -67,20 +66,20 @@
                                                 <span>${orderInfor.date}</span> 
                                             </p>
                                             <p>
-                                                <label> Total: </label>
+                                                <label> Total Cost: </label>
                                                 <span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${orderInfor.totalcost}"/></span> 
                                             </p>
                                             <p>
                                                 <label> Status: </label>
 
                                                 <c:if test="${orderInfor.status == 0}">
-                                                <td><span class="label label-danger">Cancelled</span></td>
+                                                <td><span class="label label-default">Cancelled</span></td>
                                             </c:if>
                                             <c:if test="${orderInfor.status == 1}">
                                                 <td><span class="label label-success">Submitted</span></td>
                                             </c:if>
                                             <c:if test="${orderInfor.status == 2}">
-                                                <td><span class="label label-success">Processing</span></td>
+                                                <td><span class="label label-info">Processing</span></td>
                                             </c:if>
                                             <c:if test="${orderInfor.status == 3}">
                                                 <td><span class="label label-success">Shipping</span></td>
@@ -133,6 +132,18 @@
                                                                 <td>${listOrder.subCategory.category.name}</td>
                                                                 <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${listOrder.getUnitPrice()}"/></td>
                                                                 <td>${listOrder.quantity}</td>
+                                                                <td><div class="col-md-offset-0" >
+                                                                        <c:if test="${orderInfor.status == 4}">
+                                                                            <button class="btn btn-success ">
+                                                                                Feedback
+                                                                            </button>
+                                                                            <button class="btn btn-info " onclick="addToCartFunction2(${listOrder.id},${listOrder.quantity},${sessionScope.user.id});">
+                                                                                ReBuy 
+                                                                            </button>
+                                                                            
+                                                                        </c:if>
+                                                                    </div>
+                                                                </td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
@@ -142,35 +153,37 @@
                                     </div>
                                 </div>
                             </section>
-                            <div class="row" style="display: flex;">
-                                <div class="col-md-6 pull-left" style="left: 2%;"  >
-                                    <c:if test="${orderInfor.status == 4}">
-                                        <a  href="#"  class="btn btn-info"> Feedback </a>
-                                        <a  href="#" class="btn btn-info"> Re Buy </a>
-                                    </c:if>
-                                </div>
-                                <div class="col-md-6 pull-right " style="left: 22%;">
-                                    <c:if test="${orderInfor.status == 1}">
-                                        <a  href="#" onclick="deleteStudent(${orderInfor.id})"  class="btn btn-info"> Update </a>
-                                        <a  href="#" onclick="deleteStudent(${orderInfor.id})"  class="btn btn-info"> Cancel </a>
-                                    </c:if>
-                                    <a href="../myorders" ${orderInfor.status != 1 ? "style=\"margin-left: 38%;\"" : ""} class="btn btn-danger ">Back</a>
-                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-offset-1 pull-right " >
+                                <c:if test="${orderInfor.status == 1}">
+                                    <a  href="#" onclick="updateOrder(${orderInfor.id})"  class="btn btn-danger"> Update </a>
+                                    <a  href="#" onclick="cancelOrder(${orderInfor.id})"  class="btn btn-danger"> Cancel </a>
+                                </c:if>
+                                <a href="../myorders"  class="btn btn-danger">Back</a>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
             </div>
-
+            <div id="add-to-cart-alter"></div>
         </section>
 
         <jsp:include page="../home-template/footer.jsp"/>
         <script>
-            function deleteStudent(id) {
+            function cancelOrder(id) {
                 var result = confirm("Are you sure to cancel this order?");
                 if (result) {
                     window.location.href = "cancelOrder?orderID=" + id
+                }
+            }
+            function updateOrder(id) {
+                var currentUrl = window.location.pathname;
+                var result = confirm("Are you sure to update this Order?");
+                if (result) {
+                    window.location.href = "updateOrder?orderID=" + id + "&currentUrl=" + currentUrl
                 }
             }
             setTimeout(function () {
@@ -178,6 +191,8 @@
                 element.remove();
             }, 3000);
         </script>
+
+        <jsp:include page="../home-template/footer.jsp"/>
         <script src="../../assets/js/home/productList.js"></script>
         <script src="../../assets/public/js/jquery.js"></script>
         <script src="../../assets/public/js/bootstrap.min.js"></script>
