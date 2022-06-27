@@ -116,6 +116,7 @@ public class CartContactController extends BaseAuthController {
         response.setContentType("text/html;charset=UTF-8");
         UserDBContext userDb = new UserDBContext();
         PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
         User user = null;
         boolean rs = false;
         String fullName = request.getParameter("fullName");
@@ -135,6 +136,7 @@ public class CartContactController extends BaseAuthController {
         }
 
         if (rs) {
+            
             out.println("<b>" + fullName + "&nbsp;&nbsp;" + mobile + "</b>&nbsp;&nbsp;&nbsp;&nbsp;" + address + "");
         }
 

@@ -84,6 +84,7 @@ public class CartCompletionController extends BaseAuthController {
         infoCustomer.setMobile(shipPhone);
         infoCustomer.setAddress(shipAddress);
         infoCustomer.setGender(shipGender);
+        infoCustomer.setEmail(user.getEmail());
         // get method payment
         String payment = request.getParameter("payment").trim();
 
@@ -155,6 +156,8 @@ public class CartCompletionController extends BaseAuthController {
             // update quantity product available
             productDB.updateQuantityProductAvailable(productsOrder);
             
+            //update new information user
+            userDB.updateUserInf(infoCustomer);
             // delete product ordered in cart
 //            cartDB.deleteProductOrdered(productsOrder, idCart);
             
@@ -172,7 +175,7 @@ public class CartCompletionController extends BaseAuthController {
             request.setAttribute("email", user.getEmail());
             request.setAttribute("total", total);
 
-            request.getRequestDispatcher("view/public/cartCompletion.jsp").forward(request, response);
+            request.getRequestDispatcher("view/public/CartCompletion.jsp").forward(request, response);
         } else {
             System.out.println("error");
             request.getRequestDispatcher("404.html").forward(request, response);
