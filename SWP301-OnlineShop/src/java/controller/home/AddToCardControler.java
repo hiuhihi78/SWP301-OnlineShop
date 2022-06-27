@@ -48,7 +48,7 @@ public class AddToCardControler extends HttpServlet {
 
         // validate value
         int productID = Integer.parseInt(raw_productID);
-        if ( ALERT.trim().length() > 0 || ALERT != "") {
+        if (ALERT.trim().length() > 0 || ALERT != "") {
             request.setAttribute("alert", "Add to cart successful!");
         }
         ALERT = "";
@@ -126,7 +126,7 @@ public class AddToCardControler extends HttpServlet {
 //        if (check) {
 //            productListDBContext.addNewCartInfomation(cart);
 //        }
-        response.sendRedirect("addcart?productID=" + productId);
+//        response.sendRedirect("addcart?productID=" + productId);
     }
 
     /**

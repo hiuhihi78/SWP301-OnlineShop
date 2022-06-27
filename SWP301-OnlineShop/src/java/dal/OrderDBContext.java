@@ -312,19 +312,21 @@ public class OrderDBContext extends DBContext {
 
     public ArrayList<Product> getListOrderProductOfUser(int orderID) {
         ArrayList<Product> listProduct = new ArrayList<>();
-        String sql = " select p.thumbnail, p.name as pname, c.name as categoryName, o.quantity, o.discount, o.price\n"
-                + "from\n"
-                + "Product p\n"
-                + " INNER JOIN OrderDetail o ON o.productId = p.id\n"
-                + " INNER JOIN SubCategory sub ON p.subCategoryId = sub.id\n"
-                + " INNER JOIN Category c ON sub.categoryId = c.id\n"
-                + "WHERE o.orderId = ? ";
+        String sql = " select p.id as productID, p.thumbnail, p.name as pname, c.name as categoryName, o.quantity, o.discount, o.price, od.userId\n"
+                + "               from\n"
+                + "               [Order] od\n"
+                + "                INNER JOIN OrderDetail o ON o.orderId = od.id\n"
+                + "                INNER JOIN Product p ON o.productId = p.id\n"
+                + "                INNER JOIN SubCategory sub ON p.subCategoryId = sub.id\n"
+                + "                INNER JOIN Category c ON sub.categoryId = c.id\n"
+                + "                WHERE o.orderId = ?  ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, orderID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Product product = new Product();
+                product.setId(rs.getInt("productID"));
                 product.setThumbnail(rs.getString("thumbnail"));
                 product.setName(rs.getString("pname"));
                 product.setQuantity(rs.getLong("quantity"));
@@ -373,6 +375,62 @@ public class OrderDBContext extends DBContext {
                     Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }
+    }
+
+    public ArrayList<Order> getListProductOrderByID(int orderID) {
+        ArrayList<Order> listOrder = new ArrayList<>();
+        String sql = " select * from [OrderDetail] where orderId = ?  ";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderID);
+//            ps.setInt(2, userBuyID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setId(rs.getInt("orderId"));
+
+                Product product = new Product();
+                product.setId(rs.getInt("productId"));
+
+                ArrayList<Product> listProduct = new ArrayList<>();
+
+                listProduct.add(product);
+
+                order.setProducts(listProduct);
+
+                listOrder.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listOrder;
+    }
+
+    public void deleteOrderDetailsByID(int orderID) {
+        String spl1 = " DELETE FROM [dbo].[OrderDetail]\n"
+                + "      WHERE orderId = ? ";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(spl1);
+            stm.setInt(1, orderID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteOrderByID(int orderID) {
+        String spl1 = " DELETE FROM [dbo].[Order]\n"
+                + "      WHERE id = ? ";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(spl1);
+            stm.setInt(1, orderID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
