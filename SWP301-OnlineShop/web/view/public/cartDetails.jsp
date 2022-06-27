@@ -190,8 +190,6 @@
                                                                     <i class="fa fa-times"></i></a>
                                                             </td>
                                                         </tr>
-
-
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
