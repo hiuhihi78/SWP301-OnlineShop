@@ -127,7 +127,7 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
     var cartId = $(e.target).attr('cart-id');
     var currentQ = $('#input-' + pid).val();
     var price = parseFloat($('#input-' + pid).attr('data-price-1'));
-    var priceTotal = parseFloat($('.cart_total_price_' + pid).text());
+    var priceTotal = parseFloat($('.h_cart_total_price_' + pid).val());
 
     if ($(e.target).attr('class') == 'cart_quantity_up') {
         changeQ = parseInt(currentQ) + 1;
@@ -154,7 +154,8 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
 
     //Set value total price
     var output = parseInt(priceTotal).toLocaleString();
-    $('.cart_total_price_' + pid).text(priceTotal);
+    $('.cart_total_price_' + pid).text(output);
+    $('.h_cart_total_price_' + pid).val(priceTotal);
 
     $('#cbo-' + pid).attr('data-price', priceTotal);
 

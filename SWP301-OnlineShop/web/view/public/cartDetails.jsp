@@ -102,7 +102,8 @@
                                                                 </div>
                                                             </td>
                                                             <td class="cart_total">
-                                                                <b><p class="cart_total_price_${(i.product).id}"> ${i.quantity * (i.product).getPriceDiscount()}&nbsp;đ</p></b>
+                                                                <b style="display: flex;"><p class="cart_total_price_${(i.product).id}"> <fmt:formatNumber type = "number" value = "${i.quantity * (i.product).getPriceDiscount()}"/></p>&nbsp;đ</b>
+                                                                <input type="hidden" class="h_cart_total_price_${(i.product).id}" value="${i.quantity * (i.product).getPriceDiscount()}"/>
 
                                                             </td>
                                                             <td class="cart_delete">
