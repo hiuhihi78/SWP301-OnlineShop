@@ -48,9 +48,22 @@ public class DBContext {
     }
 //    public DBContext() {
 //        try {
+//            String user = "vailon";
+//            String pass = "daucatmoi123!";
+//            String url = "jdbc:sqlserver://103.9.158.241:1433;databaseName=OnlineShop2";
+//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            connection = DriverManager.getConnection(url, user, pass);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//    public DBContext() {
+//        try {
 //            String user = "se1610";
 //            String pass = "123456";
-//            String url = "jdbc:sqlserver://QUANG:1433;databaseName=OnlineShop8";
+//            String url = "jdbc:sqlserver://QUANG:1433;databaseName=OnlineShop2";
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 //            connection = DriverManager.getConnection(url, user, pass);
 //        } catch (ClassNotFoundException ex) {
