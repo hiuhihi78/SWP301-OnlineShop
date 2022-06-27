@@ -352,8 +352,9 @@ public class OrderDBContext extends DBContext {
     public Order getInformationOfOrderByID(int orderID) {
         try {
             String sql = " select DISTINCT  od.id, od.date, od.status, od.totalPrice, od.sellerid, [User].fullname as sellerName, od.note as CustomerNote, od.sellernote as SaleNote\n"
+                    + ", od.cancelledReason\n"
                     + "from\n"
-                    + "[Order] od inner join [User] on od.sellerid = [User].id"
+                    + "[Order] od inner join [User] on od.sellerid = [User].id\n"
                     + " WHERE od.id = ? ";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, orderID);
@@ -366,6 +367,7 @@ public class OrderDBContext extends DBContext {
                 order.setTotalcost(rs.getDouble("totalPrice"));
                 order.setCustomernote(rs.getString("CustomerNote"));
                 order.setSalenote(rs.getString("SaleNote"));
+                order.setCancelreason(rs.getString("cancelledReason"));
                 User sale = new User();
                 sale.setId(rs.getInt("sellerid"));
                 sale.setFullname(rs.getString("sellerName"));
@@ -557,6 +559,22 @@ public class OrderDBContext extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, status);
             stm.setInt(2, orderid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateOrderStatus(int orderid, int status, String cancelledReason) {
+        try {
+            String sql = "UPDATE [dbo].[Order]\n"
+                    + "   SET [status] = ?\n"
+                    + "   ,[cancelledReason] = ?\n"
+                    + " WHERE [Order].id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, status);
+            stm.setInt(3, orderid);
+            stm.setString(2, cancelledReason);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);

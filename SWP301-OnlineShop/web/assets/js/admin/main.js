@@ -79,16 +79,37 @@ $(document).ready(function () {
 
                 });
     });
-    
-    $('#statusorder').on("change", function() {
-       var selected = $(this).val();
-       if(selected == 0)
-       {
-           $('#txtAreaReason').show();
-       }
-       else
-       {
-           $('#txtAreaReason').hide();
-       }
+
+    $('#statusorder').on("change", function () {
+        var selected = $(this).val();
+        if (selected == 0)
+        {
+            $('#txtAreaReason').show();
+        } else
+        {
+            $('#txtAreaReason').hide();
+        }
+    });
+
+    $('#btnUpdateOrder').on('click', function () {
+        var orderid = $(this).data("orderid");
+        $("#myModal").data('orderid', orderid).modal('show');
+    });
+
+    $('#btnConfirmUpdateStatus').on('click', function () {
+        var orderid = $('#myModal').data('orderid');
+        var status = $('#statusorder :selected').val();
+        var cancelledReason = null;
+        var url = '/sale/order/updatestatus';
+        if (status == 0)
+        {
+            cancelledReason = $('#txtcancelReason').val();
+        }
+        $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason}, function () {
+            location.reload();
+        })
+                .fail(function () {
+
+                });
     });
 });

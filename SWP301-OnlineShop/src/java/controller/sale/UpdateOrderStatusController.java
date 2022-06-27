@@ -14,6 +14,7 @@ import dal.UserDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +62,7 @@ public class UpdateOrderStatusController extends BaseAuthController {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.sql.SQLException
      */
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
@@ -69,7 +71,12 @@ public class UpdateOrderStatusController extends BaseAuthController {
             OrderDBContext orderDB = new OrderDBContext();
             int orderid = Integer.parseInt(request.getParameter("orderid"));
             int status = Integer.parseInt(request.getParameter("status"));
-            orderDB.updateOrderStatus(orderid, status);
+            String cancelledReason = request.getParameter("cancelledReason");
+            if (status != 0) {
+                orderDB.updateOrderStatus(orderid, status, "NULL");
+            } else {
+                orderDB.updateOrderStatus(orderid, status, cancelledReason);
+            }         
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject json = new JsonObject();
             json.addProperty("code", 200);

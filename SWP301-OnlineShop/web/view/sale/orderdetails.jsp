@@ -63,14 +63,11 @@
                     </div>
                     <div class="mg-10px" id="toolBar">
                         <label>Action: </label>
-                        <button type="button" class="btn btn-info" data-orderid="${orderInfor.id}" data-toggle="modal" data-target="#myModal">Update order status</button>
-                        <button type="button" class="btn btn-info">Update note</button>
+                        <button type="button" class="btn btn-info" data-orderid="${orderInfor.id}" data-toggle="modal" data-target="#myModal" id="btnUpdateOrder">Update order status</button>
                     </div>
                     <section class="panel">
                         <div class="panel-body">
-
                             <div class="row">
-
                                 <div class="col-md-4">
                                     <p>
                                         <label>ID Order: </label>
@@ -85,7 +82,7 @@
                                         <span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${orderInfor.totalcost}"/></span> 
                                     </p>
                                     <p>
-                                        <label> Assigned for sale: </label>
+                                        <label>Assigned for sale: </label>
                                         <c:if test="${orderInfor.sale.id == sessionScope.user.id}">
                                             <span>${orderInfor.sale.fullname} (You)</span>
                                         </c:if>
@@ -121,7 +118,12 @@
                                         </td>
                                     </c:if>
                                     </p>
-
+                                    <c:if test="${orderInfor.status == 0}">
+                                    <p>
+                                        <label>Reason: </label>
+                                        <span>${orderInfor.cancelreason}</span> 
+                                    </p>
+                                    </c:if>
                                 </div>
 
                                 <div class="col-md-4">
@@ -198,7 +200,7 @@
                                     <form>
                                         <div class="form-group">
                                             <label>Status: </label>
-                                            <select name="status-filter" id="statusorder" class="form-control">
+                                            <select name="status" id="statusorder" class="form-control">
                                                 <option value="" selected disabled hidden>Please set a status</option>
                                                 <option value="0" ${param["status-filter"] == 0 ? "selected" : ""}>Cancelled</option>
                                                 <option value="1" ${param["status-filter"] == 1 ? "selected" : ""}>Waiting for process</option>
@@ -209,13 +211,13 @@
                                         </div> 
                                         <div class="form-group" id="txtAreaReason">
                                             <label>Please enter the reason:</label>
-                                            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="5"></textarea>
+                                            <textarea class="form-control rounded-0" id="txtcancelReason" rows="5" name="cancelReason"></textarea>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button id ="btnConfirmProcessOrder" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                                    <button id ="btnConfirmUpdateStatus" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
                                 </div>
                             </div>
 
