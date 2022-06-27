@@ -22,6 +22,7 @@ setTimeout(function () {
 $(document).ready(function () {
     $(function () {
         $('#txtAreaReason').hide();
+
         var start = moment();
         var end = moment();
         const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -106,6 +107,32 @@ $(document).ready(function () {
             cancelledReason = $('#txtcancelReason').val();
         }
         $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason}, function () {
+            location.reload();
+        })
+                .fail(function () {
+
+                });
+    });
+
+    $('#btnEditSaleNote').on('click', function () {
+        $('#txtSaleNote').prop("disabled", false);
+        $(this).addClass("display-none"); //hide Edit button
+        $('#btnCancelSaleNoteSave').removeClass('display-none'); //show cancel button
+        $('#btnSaveSaleNote').removeClass('display-none'); // show save button
+    });
+
+    $('#btnCancelSaleNoteSave').on('click', function () {
+        $('#txtSaleNote').prop("disabled", true); //disable sale note textarea
+        $(this).addClass("display-none"); //hide cancel button
+        $('#btnSaveSaleNote').addClass('display-none'); //hide save button
+        $('#btnEditSaleNote').removeClass("display-none"); //show edit button
+    });
+
+    $('#btnSaveSaleNote').on('click', function () {
+        var orderid = $(this).data('orderid');
+        var note = $('#txtSaleNote').val();
+        var url = '/sale/order/updatenote';
+        $.post(url, {orderid: orderid, note: note}, function () {
             location.reload();
         })
                 .fail(function () {

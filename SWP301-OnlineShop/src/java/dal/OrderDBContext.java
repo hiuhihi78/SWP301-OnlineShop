@@ -647,4 +647,18 @@ public class OrderDBContext extends DBContext {
         }
     }
 
+    public void updateSaleNote(int orderid, String note) {
+        try {
+            String sql = "UPDATE [dbo].[Order]\n"
+                    + "   SET [sellernote] = ?\n"
+                    + " WHERE [Order].id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, note);
+            stm.setInt(2, orderid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

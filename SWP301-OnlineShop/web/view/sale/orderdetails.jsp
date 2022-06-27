@@ -62,7 +62,6 @@
                         <h2 class="title text-center">Order Information</h2>
                     </div>
                     <div class="mg-10px" id="toolBar">
-                        <label>Action: </label>
                         <button type="button" class="btn btn-info" data-orderid="${orderInfor.id}" data-toggle="modal" data-target="#myModal" id="btnUpdateOrder">Update order status</button>
                     </div>
                     <section class="panel">
@@ -145,12 +144,16 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Customer note:</label>
-                                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" disabled>${orderInfor.customernote}</textarea>
+                                        <textarea class="form-control rounded-0" id="txtCustomerNote" rows="3" disabled>${orderInfor.customernote}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Sale note:</label>
-                                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" disabled>${orderInfor.salenote}</textarea>
+                                        <textarea class="form-control rounded-0" id="txtSaleNote" rows="3" disabled>${orderInfor.salenote}</textarea>
+                                        <button type="button" class="btn btn-warning" id="btnEditSaleNote">Edit</button>
+                                        <button type="button" class="btn btn-default display-none" id="btnCancelSaleNoteSave">Cancel</button>
+                                        <button type="button" class="btn btn-primary display-none" id="btnSaveSaleNote" data-orderid="${orderInfor.id}">Save</button>
                                     </div>
+                                    
                                 </div>
                                 <div class="col-md-12">
                                     <div class="panel-body table-responsive">
