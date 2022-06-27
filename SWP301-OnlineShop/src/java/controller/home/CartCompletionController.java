@@ -51,7 +51,6 @@ public class CartCompletionController extends BaseAuthController {
         ProductDBContext productDB = new ProductDBContext();
 
         //get Parameter value
-//        String[] listIdProductCart_raw = request.getParameterValues("id");
         String raw_subCategory = request.getParameter("subCategory");
 
         //get list subcategory
@@ -62,10 +61,7 @@ public class CartCompletionController extends BaseAuthController {
             raw_subCategory = "0";
         }
         int subCategory = Integer.parseInt(raw_subCategory);
-//        int[] listIdProduct = new int[listIdProductCart_raw.length];
-//        for (int i = 0; i < listIdProductCart_raw.length; i++) {
-//            listIdProduct[i] = Integer.parseInt(listIdProductCart_raw[i].trim());
-//        }
+
         // latest product
         ArrayList<Product> leastProduct = productListDB.getListLeastProduct();
         User user = (User) request.getSession().getAttribute("user");
@@ -74,7 +70,6 @@ public class CartCompletionController extends BaseAuthController {
         String nameBank = getServletContext().getInitParameter("NameOfBank");
         String ownerAccount = getServletContext().getInitParameter("OwnerAccount");
         String accNumber = getServletContext().getInitParameter("AccountNumber");
-        System.out.println(nameBank + " " + ownerAccount + " " + accNumber);
 
         // get ship info
         String shipFullName = request.getParameter("txtFullname").trim();
@@ -100,7 +95,10 @@ public class CartCompletionController extends BaseAuthController {
         String[] priceProducts_raw = request.getParameterValues("pr-price");
         String[] discountProducts_raw = request.getParameterValues("pr-discount");
         String[] quantityProducts_raw = request.getParameterValues("pr-quantity");
+        String[] priceDiscountVnd = request.getParameterValues("pr-priceDiscountVnd");
         String[] nameProducts_raw = request.getParameterValues("pr-name");
+        String totalVnd = request.getParameter("totalPriceVnd");
+        
         Product[] productsOrder = new Product[idProducts_raw.length];
         for (int i = 0; i < productsOrder.length; i++) {
             Product pro = new Product();
@@ -111,13 +109,13 @@ public class CartCompletionController extends BaseAuthController {
             pro.setQuantity(Integer.parseInt(quantityProducts_raw[i].trim()));
 
             productsOrder[i] = pro;
-            System.out.println("Quantity: " + productsOrder[i].getQuantity());
         }
         // list Product Order
         ArrayList<Product> listProduct = productListDB.getListProductById(productsOrder, user.getId());
 
         // total money
         long total = totalPrice(listProduct);
+        
 
         // get last seller receive order
         OrderDBContext orderDB = new OrderDBContext();
@@ -131,9 +129,10 @@ public class CartCompletionController extends BaseAuthController {
 
         // get next seller receive order
         int indexNextSellerReceiveOrder = 0;
-        if (numberSeller == indexSellerReceiveOrder) {
+        if (numberSeller == indexSellerReceiveOrder || indexSellerReceiveOrder == 0) {
             indexNextSellerReceiveOrder = 1;
-        } else {
+        }
+        else {
             indexNextSellerReceiveOrder = indexSellerReceiveOrder + 1;
         }
         int idNextSeller = userDB.getIdNextSeller(indexNextSellerReceiveOrder);
@@ -147,7 +146,7 @@ public class CartCompletionController extends BaseAuthController {
             LocalDate localDate = LocalDate.now();
             
             // send mail
-            SendMail.sendMailOrder(user.getEmail(), idOrder, idPayment, productsOrder, infoCustomer, total, dtf.format(localDate), nameBank, accNumber, ownerAccount);
+            SendMail.sendMailOrder(user.getEmail(), idOrder, idPayment, productsOrder, priceDiscountVnd,infoCustomer, totalVnd, dtf.format(localDate), nameBank, accNumber, ownerAccount);
             
             // update quantity product available
             productDB.updateQuantityProductAvailable(productsOrder);

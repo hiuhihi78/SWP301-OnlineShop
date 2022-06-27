@@ -1296,7 +1296,7 @@ public class UserDBContext extends DBContext {
     public int countNumberSeller() {
         try {
             String sql = "Select count(id) as total \n"
-                    + "from [User] where roleId = 3";
+                    + "from [User] where roleId = 3 and status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
@@ -1312,7 +1312,7 @@ public class UserDBContext extends DBContext {
         try {
             String sql = "Select * from \n"
                     + "( Select id, ROW_NUMBER() over(order by id asc) as row_index from [User] \n"
-                    + "where roleId = 3) indexSeller\n"
+                    + "where roleId = 3 and status = 1) indexSeller\n"
                     + "where id = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, lastSellerReceiveOrder);
@@ -1330,7 +1330,7 @@ public class UserDBContext extends DBContext {
         try {
             String sql = "Select * from \n"
                     + "( Select id, ROW_NUMBER() over(order by id asc) as row_index from [User] \n"
-                    + "where roleId = 3) indexSeller\n"
+                    + "where roleId = 3 and status = 1) indexSeller\n"
                     + "where row_index = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, indexNextSellerReceiveOrder);

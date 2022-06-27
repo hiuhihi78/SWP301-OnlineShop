@@ -135,7 +135,7 @@
                                 <tbody>
                                     <c:forEach items="${requestScope.orders}" var="o">
                                         <tr>
-                                            <td>${o.id}</td>
+                                            <td><a href="orderInfor?orderID=${o.id}" style="color: black">${o.id}</a></td>
                                             <td><fmt:formatDate pattern="yyyy-MM-dd" value="${o.date}"/></td>
                                             <td>${o.products[0].name}</td>
                                             <td>${o.numproducts}</td>

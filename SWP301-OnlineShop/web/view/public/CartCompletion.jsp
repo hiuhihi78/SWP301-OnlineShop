@@ -115,7 +115,7 @@
                     <!--PRODUCT LIST-->
                     <div class="col-sm-9 padding-right">
                         <div id="cart_items">
-                            <h2 class="title text-center" style="margin-top: 10px;">Your order has been successfully placed</h2>
+                            <h2 class="title text-center" style="margin-top: 10px;">Your order has been successfully</h2>
                             <form action="cartCompletion" method="POST">
                                 <div class="table-responsive cart_info">
                                     <div class="checkout-options">
@@ -140,11 +140,11 @@
                                         <tbody>
                                             <c:forEach items="${requestScope.listProduct}" var="i">
                                                 <tr>
-                                                    <td class="cart_product" style="margin-left: 0px;">
+                                                    <td class="cart_product" style="width: 180px;">
                                                         <a href="#"><img src="${i.thumbnail}" alt="" width="100px" height="auto"></a>
                                                     </td>
                                                     <td class="cart_description">
-                                                        <h4><a href="#">${i.name}</a></h4>
+                                                        <h4 style="padding-bottom: 18px;"><a href="#" style="text-decoration: none;">${i.name}</a></h4>
                                                     </td>
                                                     <td class="cart_price">
                                                         <p><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.getPriceDiscount()}"/></p>
@@ -153,7 +153,7 @@
                                                         <input style="margin-bottom: 12px; border: none; outline: none;" class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2" readonly>
                                                     </td>
                                                     <td class="cart_total">
-                                                        <p class="cart_total_price"><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.getPriceDiscount()}"/></p>
+                                                        <p class="cart_total_price"><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${i.getPriceDiscount() * i.quantity}"/></p>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -176,7 +176,7 @@
                                                 <td colspan="2">
                                                     <table class="table table-condensed total-result">
                                                         <tr>
-                                                            <td>Total</td>
+                                                            <td style="font-weight: bold;">Total</td>
                                                             <td><span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${requestScope.total}"/></span></td>
                                                         </tr>
                                                     </table>
