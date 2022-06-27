@@ -47,9 +47,9 @@ $('#checkall').change(function () {
 });
 
 $('.cart_quantity_delete, .delete-all-product').on('click', function (e) {
-    var pid = $(e.target).attr('data-programid');
-    var name = $(e.target).attr('data-name');
-    var isAll = $(e.target).attr('data-isAll');
+    var pid = $(this).attr('data-programid');
+    var name = $(this).attr('data-name');
+    var isAll = $(this).attr('data-isAll');
 
 
     $('#app_id').val(pid);
@@ -88,6 +88,7 @@ $('.btn-ok').on('click', function () {
                 location.reload();
             } else {
                 $('#div-product-' + pid).remove();
+                location.reload();
             }
 
         },
