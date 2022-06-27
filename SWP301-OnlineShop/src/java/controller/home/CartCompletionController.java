@@ -166,9 +166,10 @@ public class CartCompletionController extends BaseAuthController {
             request.setAttribute("subCategory", subCategory);
             request.setAttribute("listProduct", listProduct);
             request.setAttribute("leastProduct", leastProduct);
+            request.setAttribute("email", user.getEmail());
             request.setAttribute("total", total);
 
-            request.getRequestDispatcher("view/public/CartCompletion.jsp").forward(request, response);
+            request.getRequestDispatcher("view/public/cartCompletion.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("404.html").forward(request, response);
         }

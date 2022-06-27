@@ -116,6 +116,9 @@
                     <div class="col-sm-9 padding-right">
                         <div id="cart_items">
                             <h2 class="title text-center" style="margin-top: 10px;">Your order has been successfully</h2>
+                            <div style="text-align: center;">
+                                <p style="color: red;">Check Your Email To See Payment Guides</p>
+                            </div>
                             <form action="cartCompletion" method="POST">
                                 <div class="table-responsive cart_info">
                                     <div class="checkout-options">
@@ -182,11 +185,12 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td colspan="2"> <a class="btn btn-primary" href="productlist" style="border-radius: 8px; padding: 8px 8px;">Continue Shopping</a></td>
+                                            </tr>
                                         </tbody>
                                     </table>
-
                                 </div>
-
                             </form>
                         </div>
                     </div>
