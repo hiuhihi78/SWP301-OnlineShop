@@ -90,21 +90,30 @@
                                         </p>
                                         <p>
                                             <label> Status: </label>
-
                                             <c:if test="${orderInfor.status == 0}">
-                                            <td><span class="label label-danger">Cancelled</span></td>
+                                            <td id="tblStatus">
+                                                <span class="label label-default">Cancelled</span>
+                                            </td>
                                         </c:if>
                                         <c:if test="${orderInfor.status == 1}">
-                                            <td><span class="label label-success">Submitted</span></td>
+                                            <td id="tblStatus">
+                                                <span class="label label-warning">Waiting for process</span>
+                                            </td>
                                         </c:if>
                                         <c:if test="${orderInfor.status == 2}">
-                                            <td><span class="label label-success">Processing</span></td>
+                                            <td id="tblStatus">
+                                                <span class="label label-info">Processing</span>
+                                            </td>
                                         </c:if>
                                         <c:if test="${orderInfor.status == 3}">
-                                            <td><span class="label label-success">Shipping</span></td>
+                                            <td id="tblStatus">
+                                                <span class="label label-primary">Shipping</span>
+                                            </td>
                                         </c:if>
                                         <c:if test="${orderInfor.status == 4}">
-                                            <td><span class="label label-success">Completed</span></td>
+                                            <td id="tblStatus">
+                                                <span class="label label-success">Completed</span>
+                                            </td>
                                         </c:if>
                                         </p>
 
