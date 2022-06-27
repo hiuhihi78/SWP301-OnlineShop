@@ -61,6 +61,7 @@ $('#checkall').change(function () {
     });
     var output = parseInt(priceTotal).toLocaleString();
     $('#total').html(output);
+    $('#total-hidden').val(priceTotal);
 });
 
 $('.cart_quantity_delete, .delete-all-product').on('click', function (e) {
@@ -145,6 +146,7 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
     var currentQ = $('#input-' + pid).val();
     var price = parseFloat($('#input-' + pid).attr('data-price-1'));
     var priceTotal = parseFloat($('.h_cart_total_price_' + pid).val());
+    var priceTotal1 = parseFloat($('.h_cart_total_price_' + pid).val());
 
     if ($(e.target).attr('class') == 'cart_quantity_up') {
         changeQ = parseInt(currentQ) + 1;
@@ -175,6 +177,19 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
     $('.h_cart_total_price_' + pid).val(priceTotal);
 
     $('#cbo-' + pid).attr('data-price', priceTotal);
+    if ($('#cbo-' + pid+ ':checked')) {
+        var totalLast  = parseFloat($('#total-hidden').val());
+
+        if (totalLast > 0) {
+            totalLast = (totalLast - priceTotal1) + priceTotal;
+        }
+        
+        var output = parseInt(totalLast).toLocaleString();
+        $('#total').html(output);
+        $('#total-hidden').val(totalLast);        
+
+        
+    }
 
 
     $.ajax({

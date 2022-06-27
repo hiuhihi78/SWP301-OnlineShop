@@ -125,7 +125,7 @@
                                                             <ul>
                                                                 <li><input type="checkbox" name="all" id="checkall"> Select all <span><a class="delete-all-product" data-isAll="1" data-programid="-1" data-name="">Delete all</a></span></li>
 
-                                                                <li style="display: flex"><div >Total</div> <div class=total style="margin-left: auto"><b><span id="total">0</span></b></div>&nbsp;đ</li>
+                                                                <li style="display: flex"><div>Total</div> <div style="margin-left: auto"><b><span id="total">0</span></b></div>&nbsp;đ</li>
                                                                 <input type="hidden" id="total-hidden" value="0"/>
                                                             </ul>
                                                             <ul>
