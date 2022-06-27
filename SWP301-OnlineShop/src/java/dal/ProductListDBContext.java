@@ -107,14 +107,14 @@ public class ProductListDBContext extends DBContext {
 
         if (subCategory > 0) {
             sql1 = " with x as (select ROW_NUMBER() OVER (ORDER BY date desc, id desc) as r\n"
-                    + "                    		, * from [Product] where status = 1 and  quantity >0 and subCategoryId = ? \n"
+                    + "                    		, * from [Product] where status = 1 and subCategoryId = ? \n"
                     + "					AND (name like ? \n"
                     + "					 OR description like ? ))\n"
                     + "                    		SElECT* FROM x where r between (?  - 1)* ? +1 and ? * ? ";
         }
         if (subCategory == 0) {
             sql1 = " with x as (select ROW_NUMBER() OVER (ORDER BY date desc, id desc) as r\n"
-                    + "                    		, * from [Product] where status = 1 and  quantity >0 \n"
+                    + "                    		, * from [Product] where status = 1 \n"
                     + "					AND (name like ? \n"
                     + "					 OR description like ? ))\n"
                     + "                    		SElECT* FROM x where r between (?  - 1)* ? +1 and ? * ? ";
@@ -561,7 +561,7 @@ public class ProductListDBContext extends DBContext {
             String sql = "select Count([OrderDetail].quantity)\n"
                     + "from \n"
                     + "OrderDetail join [Order] on  [Order].id = OrderDetail.orderId\n"
-                    + "where [Order].[status] = 1 and OrderDetail.productId = ?";
+                    + "where [Order].[status] = 4 and OrderDetail.productId = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, productID);
             ResultSet rs = ps.executeQuery();

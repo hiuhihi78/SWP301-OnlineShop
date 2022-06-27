@@ -58,7 +58,7 @@ function addToCartFunction() {
         window.location.assign("http://localhost:8080/login");
         return ;
     }
-    if(quantityOrder < 0){
+    if(quantityOrder <= 0){
         divAlterQuantityOrder.innerHTML = "<div class='alert alert-danger' style='padding: 10px;width: 75%;'>Quantity must be greater than 1! </div>";
         return ;
     }

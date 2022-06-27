@@ -33,7 +33,11 @@
         <!--active button nav in sidebar-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
+        <style>
+            .left-side {
+                min-height: 1096px !important;
+            }
+        </style>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
