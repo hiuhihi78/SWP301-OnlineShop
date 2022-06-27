@@ -40,13 +40,128 @@
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
             <jsp:include page="../sale-template/sideBar.jsp"></jsp:include>
-
                 <aside class="right-side">
- 
-
+                <c:set var="orderInfor" value="${requestScope.informationOrder}"/>
+                <c:set var="userBuyInfor" value="${requestScope.userOrderInfioramtion}"/>
+                <c:if test="${requestScope.alter != null}">
+                    <div class="fixed float-end t-55px" id="showAlter" style="    width: 21%;
+                         z-index: 1024;
+                         right: 36%;
+                         top: 6%;
+                         position: fixed;
+                         ">
+                        <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="transform: rotate(90deg); top: 8%;">&times;</a>
+                            ${requestScope.alter}
+                        </div>
+                    </div>
+                </c:if>
                 <!-- Main content -->
                 <section class="content ">
-                    
+                    <div class ="row d-flex justify-content-center">
+                        <h2 class="title text-center">Order Information</h2>
+                        <section class="panel">
+
+                            <div class="panel-body">
+
+                                <div class="row">
+
+                                    <div class="col-md-6 form-group">
+                                        <p>
+                                            <label>ID Order: </label>
+                                            <span>${orderInfor.id}</span> 
+                                        </p>
+                                        <p>
+                                            <label> Order Date: </label>
+                                            <span>${orderInfor.date}</span> 
+                                        </p>
+                                        <p>
+                                            <label> Total: </label>
+                                            <span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${orderInfor.totalcost}"/></span> 
+                                        </p>
+                                        <p>
+                                            <label> Assigned for sale: </label>
+                                            <c:if test="${orderInfor.sale.id == sessionScope.user.id}">
+                                                <span>${orderInfor.sale.fullname} (You)</span>
+                                            </c:if>
+                                            <c:if test="${orderInfor.sale.id != sessionScope.user.id}">
+                                                <span>${orderInfor.sale.fullname}</span>
+                                            </c:if> 
+                                        </p>
+                                        <p>
+                                            <label> Status: </label>
+
+                                            <c:if test="${orderInfor.status == 0}">
+                                            <td><span class="label label-danger">Cancelled</span></td>
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 1}">
+                                            <td><span class="label label-success">Submitted</span></td>
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 2}">
+                                            <td><span class="label label-success">Processing</span></td>
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 3}">
+                                            <td><span class="label label-success">Shipping</span></td>
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 4}">
+                                            <td><span class="label label-success">Completed</span></td>
+                                        </c:if>
+                                        </p>
+
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+                                        <p>
+                                            <label>Full Name: </label>
+                                            <span> ${userBuyInfor.fullname}</span> 
+                                        </p><p>
+                                            <label> Gender: </label>
+                                            <span> ${userBuyInfor.gender == true ? "Male" : "Female"}</span> 
+                                        </p>
+                                        <p>
+                                            <label>Email: </label>
+                                            <span> ${userBuyInfor.email}</span> 
+                                        </p><p>
+                                            <label> Mobile: </label>
+                                            <span> ${userBuyInfor.mobile} </span> 
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-12 form-group">
+                                        <div class="panel-body table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Thumbnail</th>
+                                                        <th>Product Name</th>
+                                                        <th>Category</th>
+                                                        <th>Unit Price</th>
+                                                        <th>Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${requestScope.listOrderProductOfUser}" var="listOrder">
+                                                        <tr>
+                                                            <td>
+                                                                <div style="height: 100px; width: fit-content">
+                                                                    <img style="width: 100%; height: 100%; object-fit: contain" src="${listOrder.thumbnail}" alt="alt"/>
+                                                                </div>
+                                                            </td>
+                                                            <td>${listOrder.name}</td>
+                                                            <td>${listOrder.subCategory.category.name}</td>
+                                                            <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${listOrder.getUnitPrice()}"/></td>
+                                                            <td>${listOrder.quantity}</td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
                     <!-- Modal -->
                     <div id="myModal" class="modal fade" role="dialog">
                         <div class="modal-dialog">

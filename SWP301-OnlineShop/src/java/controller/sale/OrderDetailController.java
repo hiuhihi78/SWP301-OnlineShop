@@ -49,44 +49,26 @@ public class OrderDetailController extends BaseAuthController {
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-//        try {
-////            OrderDBContext orderDB = new OrderDBContext();
-////            UserDBContext userDB = new UserDBContext();
-////            ArrayList<Order> orders = null;
-////            rawStartTime = request.getParameter("startTime");
-////            rawEndTime = request.getParameter("endTime");
-////            rawSaleId = Integer.parseInt(request.getParameter("sale-filter"));
-////            rawStatus = Integer.parseInt(request.getParameter("status-filter"));
-////            //If user choose filter sale & status = all
-////            if (rawSaleId == 0 && rawStatus == 5) {
-////                orders = orderDB.getOrders(rawStartTime, rawEndTime);
-////            }
-////            //Filter Saleid & status = all
-////            if (rawSaleId != 0 && rawStatus == 5) {
-////                orders = orderDB.getOrders(rawStartTime, rawEndTime, rawSaleId);
-////            }
-////            //Not filter all
-////            if (rawSaleId != 0 && rawStatus != 5) {
-////                orders = orderDB.getOrders(rawStartTime, rawEndTime, rawSaleId, rawStatus);
-////            }
-////            if (rawSaleId == 0 && rawStatus != 5) {
-////                orders = orderDB.getOrdersByStatus(rawStartTime, rawEndTime, rawStatus);
-////            }
-////            ArrayList<User> sales = userDB.getSaleUser();
-////            request.setAttribute("orders", orders);
-////            request.setAttribute("sales", sales);
-//        } catch (Exception e) {
-//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//            Date date = new Date();
-//            String currentDate = formatter.format(date);
-//            OrderDBContext orderDB = new OrderDBContext();
-//            UserDBContext userDB = new UserDBContext();
-//            ArrayList<User> sales = userDB.getSaleUser();
-//            request.setAttribute("sales", sales);
-//            ArrayList<Order> orders = orderDB.getOrders(currentDate, currentDate);
-//            request.setAttribute("orders", orders);
-//            request.setAttribute("sales", sales);
-//        }
+        try {
+            OrderDBContext orderDBContext = new OrderDBContext();
+            //validate value
+            int orderID = Integer.parseInt(request.getParameter("id"));
+
+            //GET ORDER ID, ORDER DATE, Total, status
+            Order informationOrder = orderDBContext.getInformationOfOrderByID(orderID);
+            //GET RECIVER INFOR OF USER
+            User userOrderInfioramtion = orderDBContext.getUserOrderInformation(orderID);
+            //GET LIST ORDERED BY ORDER ID
+            ArrayList<Product> listOrderProductOfUser = orderDBContext.getListOrderProductOfUser(orderID);
+
+            String alter = request.getParameter("alter");
+            request.setAttribute("alter", alter);
+            request.setAttribute("listOrderProductOfUser", listOrderProductOfUser);
+            request.setAttribute("informationOrder", informationOrder);
+            request.setAttribute("userOrderInfioramtion", userOrderInfioramtion);
+        } catch (Exception e) {
+
+        }
         request.getRequestDispatcher("../view/sale/orderdetails.jsp").forward(request, response);
 
     }

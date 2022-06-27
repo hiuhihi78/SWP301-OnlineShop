@@ -154,7 +154,7 @@
                                         </td>
                                     </c:if>
                                     <td>
-                                        <button type="button" class="btn btn-primary" id="${o.id}">View</button>
+                                        <a type="button" class="btn btn-primary" href="/sale/orderdetails?id=${o.id}">View</a>
                                         <c:if test="${o.status == 1 && o.sale.id == sessionScope.user.id}">
                                             <button type="button" class="btn btn-warning confirm-process btn-sm" data-orderid="${o.id}" data-toggle="modal" data-target="#myModal">Process order</button>
                                         </c:if>

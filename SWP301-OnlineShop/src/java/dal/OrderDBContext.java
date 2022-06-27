@@ -345,11 +345,16 @@ public class OrderDBContext extends DBContext {
             return orders;
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public Order getInformationOfOrderByID(int orderID) {
         try {
-            String sql = " select DISTINCT  od.id, od.date, od.status, od.totalPrice\n"
+            String sql = " select DISTINCT  od.id, od.date, od.status, od.totalPrice, od.sellerid, [User].fullname as sellerName\n"
                     + "from\n"
-                    + "[Order] od WHERE od.id = ? ";
+                    + "[Order] od inner join [User] on od.sellerid = [User].id"
+                    + " WHERE od.id = ? ";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, orderID);
             ResultSet rs = ps.executeQuery();
@@ -359,6 +364,11 @@ public class OrderDBContext extends DBContext {
                 order.setDate(rs.getDate("date"));
                 order.setStatus(rs.getInt("status"));
                 order.setTotalcost(rs.getDouble("totalPrice"));
+                
+                User sale = new User();
+                sale.setId(rs.getInt("sellerid"));
+                sale.setFullname(rs.getString("sellerName"));
+                order.setSale(sale);
                 return order;
             }
         } catch (SQLException ex) {
@@ -436,6 +446,10 @@ public class OrderDBContext extends DBContext {
             return orders;
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public User getUserOrderInformation(int orderID) {
         try {
             String sql = " select DISTINCT  s.fullname, u.gender, s.email, s.phone\n"
@@ -547,6 +561,7 @@ public class OrderDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public ArrayList<Product> getListOrderProductOfUser(int orderID) {
         ArrayList<Product> listProduct = new ArrayList<>();
         String sql = " select p.thumbnail, p.name as pname, c.name as categoryName, o.quantity, o.discount, o.price\n"
