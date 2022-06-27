@@ -142,19 +142,19 @@
                                     </div>
                                 </div>
                             </section>
-                            <div class="row" >
-                                <div class="col-md-6 pull-left" >
-                                    <c:if test="${orderInfor.status == 1}">
-                                        <a  href="#" onclick="deleteStudent(${orderInfor.id})"  class="btn btn-info"> Feedback </a>
-                                        <a  href="#" onclick="deleteStudent(${orderInfor.id})"  class="btn btn-info"> Rebuy </a>
+                            <div class="row" style="display: flex;">
+                                <div class="col-md-6 pull-left" style="left: 2%;"  >
+                                    <c:if test="${orderInfor.status == 4}">
+                                        <a  href="#"  class="btn btn-info"> Feedback </a>
+                                        <a  href="#" class="btn btn-info"> Re Buy </a>
                                     </c:if>
                                 </div>
-                                <div class="col-md-6 pull-right ">
+                                <div class="col-md-6 pull-right " style="left: 22%;">
                                     <c:if test="${orderInfor.status == 1}">
                                         <a  href="#" onclick="deleteStudent(${orderInfor.id})"  class="btn btn-info"> Update </a>
                                         <a  href="#" onclick="deleteStudent(${orderInfor.id})"  class="btn btn-info"> Cancel </a>
                                     </c:if>
-                                    <a href="../myorders"  class="btn btn-danger ">Back</a>
+                                    <a href="../myorders" ${orderInfor.status != 1 ? "style=\"margin-left: 38%;\"" : ""} class="btn btn-danger ">Back</a>
                                 </div>
                             </div>
                         </div>
