@@ -193,7 +193,6 @@ $('.btn-update').on('click', function () {
     var address = $('#iAddress').val();
 
 
-
     $.ajax({
         url: "/cartContact",
         type: "post", //send it through get method
@@ -205,6 +204,10 @@ $('.btn-update').on('click', function () {
         },
         success: function (response) {
             //Do Something
+            alert(fullName);
+            $('#name-id-h').val(fullName);
+            $('#phone-id-h').val(mobile);
+            $('#address-id-h').val(address);
             $('#confirm-change').modal('toggle');
             $('#address-id').html(response);
 
@@ -213,6 +216,10 @@ $('.btn-update').on('click', function () {
 
         }
     });
+});
+
+$('.cart_quantity_input').on('change', function () {
+    var quantity = $(this).val();
 });
 
 

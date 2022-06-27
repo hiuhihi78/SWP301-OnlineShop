@@ -175,7 +175,7 @@
 
                                                                     <input type="button" class="cart_quantity_down" ${i.quantity==1?"disabled":""} is-up="0"  id="id-down-${(i.product).id}" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="-" data-min="1"/>
 
-                                                                    <div id="show-quantity-${(i.product).id}"><input class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2"></div>
+                                                                    <div id="show-quantity-${(i.product).id}"><input id="quantity-id" class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2"></div>
                                                                     <input id="input-${(i.product).id}" class="cart_quantity_input" type="hidden" value="${i.quantity}" autocomplete="off" size="2" data-price-1="${(i.product).getPriceDiscount()}">
 
                                                                     <input type="button" id="id-up-${(i.product).id}" ${i.quantity==(i.product).quantity?"disabled":""} class="cart_quantity_up" is-up="1" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="+" data-max="${(i.product).quantity}"/>
