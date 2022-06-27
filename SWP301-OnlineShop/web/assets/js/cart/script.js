@@ -24,10 +24,20 @@ $('.btn-ok-choose').click(function () {
 $(document).ready(function () {
     $("input[type='checkbox']").click(function () {
         var priceTotal = 0;
+        var priceTotal2 = 0;
         $("#calculator input[type='checkbox']:checked").each(function () {
             var price = $(this).attr('data-price');
             priceTotal += parseInt(price);
         });
+        $("#calculator input[type='checkbox']").each(function () {
+            var price = $(this).attr('data-price');
+            priceTotal2 += parseInt(price);
+        });
+        if (priceTotal == priceTotal2) {
+            $('#checkall').prop("checked", true);
+        } else {
+            $('#checkall').prop("checked", false);
+        }
         var output = parseInt(priceTotal).toLocaleString();
         $('#total').html(output);
         $('#total-hidden').val(priceTotal);
@@ -36,7 +46,14 @@ $(document).ready(function () {
 });
 
 $('#checkall').change(function () {
-    $('.cb-element').prop('checked', this.checked);
+    if (this.checked) {
+        $('.cb-element').prop('checked', false);
+        $('#checkall').prop('checked', false);
+    } else {
+        $('.cb-element').prop('checked', true);
+        $('#checkall').prop('checked', true);
+    }
+//    $('.cb-element').prop('checked', this.checked);
     var priceTotal = 0;
     $("#calculator input[type='checkbox']:checked").each(function () {
         var price = $(this).attr('data-price');
@@ -254,5 +271,7 @@ $('.cart_quantity_input').on('change', function () {
     });
 
 });
+
+
 
 
