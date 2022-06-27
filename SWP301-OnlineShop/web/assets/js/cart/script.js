@@ -204,7 +204,7 @@ $('.btn-update').on('click', function () {
         },
         success: function (response) {
             //Do Something
-            alert(fullName);
+
             $('#name-id-h').val(fullName);
             $('#phone-id-h').val(mobile);
             $('#address-id-h').val(address);
