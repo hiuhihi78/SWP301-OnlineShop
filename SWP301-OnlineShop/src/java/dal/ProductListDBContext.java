@@ -561,7 +561,7 @@ public class ProductListDBContext extends DBContext {
             String sql = "select Count([OrderDetail].quantity)\n"
                     + "from \n"
                     + "OrderDetail join [Order] on  [Order].id = OrderDetail.orderId\n"
-                    + "where [Order].[status] = 1 and OrderDetail.productId = ?";
+                    + "where [Order].[status] = 4 and OrderDetail.productId = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, productID);
             ResultSet rs = ps.executeQuery();

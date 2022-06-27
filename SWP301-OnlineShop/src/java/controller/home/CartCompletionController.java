@@ -70,6 +70,7 @@ public class CartCompletionController extends BaseAuthController {
         String nameBank = getServletContext().getInitParameter("NameOfBank");
         String ownerAccount = getServletContext().getInitParameter("OwnerAccount");
         String accNumber = getServletContext().getInitParameter("AccountNumber");
+        System.out.println(nameBank + " " + ownerAccount +" "+ accNumber);
 
         // get ship info
         String shipFullName = request.getParameter("txtFullname").trim();
