@@ -508,8 +508,8 @@ public class ProductListDBContext extends DBContext {
 
     public double getStartPercent(int productID) {
         int PERCENT_PER_STAR = 20;
-        int total = 0;
-        int count = 0;
+        double total = 0;
+        double count = 0;
         double average = 0;
         try {
             String sql = "SELECT \n"
