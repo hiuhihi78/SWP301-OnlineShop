@@ -360,22 +360,23 @@ public class OrderDBContext extends DBContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
         }
+//        finally {
+//            if (stm != null) {
+//                try {
+//                    stm.close();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            if (connection != null) {
+//                try {
+//                    connection.close();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        }
     }
 
     public ArrayList<Order> getListProductOrderByID(int orderID) {
@@ -431,6 +432,36 @@ public class OrderDBContext extends DBContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addReasionToCancel(int orderID, String reasionCancel) {
+        String spl1 = " UPDATE [dbo].[Order]\n"
+                + "   SET [cancelledReason] = ? \n"
+                + " WHERE id = ? ";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(spl1);
+            stm.setString(1, reasionCancel);
+            stm.setInt(2, orderID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

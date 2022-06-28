@@ -22,7 +22,7 @@
         <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        
+
         <!--css-->
         <link href="../assets/css/admin/userProfile.css" rel="stylesheet" type="text/css"/>
         <!--javascrip-->
@@ -31,16 +31,16 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="../admin-layout/header.jsp"></jsp:include>
-        <div class="wrapper row-offcanvas row-offcanvas-left">
-            <!-- Left side column. contains the logo and sidebar -->
+            <div class="wrapper row-offcanvas row-offcanvas-left">
+                <!-- Left side column. contains the logo and sidebar -->
             <jsp:include page="../admin-layout/sideBar.jsp"></jsp:include>
-            <!-- Right side. contains main content -->
-            <aside class="right-side">
-                <!-- Main content -->
-                <section class="content">
-                    <div id="content">
-                        <h3>User details</h3>
-                        <div class="row">
+                <!-- Right side. contains main content -->
+                <aside class="right-side">
+                    <!-- Main content -->
+                    <section class="content">
+                        <div id="content">
+                            <h3>User details</h3>
+                            <div class="row">
                             <c:if test="${requestScope.user.avatar != null}">
                                 <img src="${user.avatar}"  class="img-circle user-img" alt="User img"> 
                             </c:if>
@@ -54,7 +54,7 @@
                                 <input type="text" class="form-control" id="name" value="${requestScope.user.fullname}" disabled>
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <label for="gender" class="col-sm-2 col-form-label">Gender</label>
                             <div class="col-sm-2">
@@ -64,28 +64,28 @@
                                 <input type="radio"  id="gender" ${!requestScope.user.gender?"checked='checked'":""} disabled=""/> Female
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
-                                <label for="email" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="email" value="${requestScope.user.email}" disabled>
-                                </div>
+                            <label for="email" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="email" value="${requestScope.user.email}" disabled>
+                            </div>
                         </div>
-                                
+
                         <div class="row mb-3">
-                                <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="mobile" value="${requestScope.user.mobile}" disabled>
-                                </div>
+                            <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="mobile" value="${requestScope.user.mobile}" disabled>
+                            </div>
                         </div>
-                        
+
                         <div class="row mb-3">
-                                <label for="address" class="col-sm-2 col-form-label">Address</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="name" value="${requestScope.user.address}" disabled>
-                                </div>
+                            <label for="address" class="col-sm-2 col-form-label">Address</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" value="${requestScope.user.address}" disabled>
+                            </div>
                         </div>
-                                
+
                         <form action="editUserProfile" method="POST" id="changeStatus">
                             <input type="hidden" name="id" value="${requestScope.user.id}">
                             <div class="row mb-3">
@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="radio"  name="status"  id="status" value="unactive" ${!requestScope.user.status?"checked='checked'":""}/> Deactive
-                               </div>
+                                </div>
                             </div> 
                             <div class="row mb-3">
                                 <div class="col-sm-2"></div>
@@ -141,14 +141,13 @@
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </div>
-      
+
                 </div>
             </div>
             <!--/Modal-->
         </div>
-                               
-                               
-         <script src="../../assets/js/admin/main.js" type="text/javascript"></script>                      
+
+        <script src="../../assets/js/admin/main.js" type="text/javascript"></script>                      
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../js/jquery.min.js" type="text/javascript"></script>

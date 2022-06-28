@@ -64,6 +64,7 @@ public class PostListController extends BaseAuthController {
 
         CategoryPostDBContext categoryPostDB = new CategoryPostDBContext();
         ArrayList<CategoryPost> listCateogry = categoryPostDB.getAllCategoryPost();
+        
         ArrayList<Post> listPosts = postDB.getAllPostFiltered(idCategory, -1, idStatus, searchBy, sortBy, orderBy);
         int numbersRowPerPage = 5;
         int totalPage = ((listPosts.size() % numbersRowPerPage) == 0)

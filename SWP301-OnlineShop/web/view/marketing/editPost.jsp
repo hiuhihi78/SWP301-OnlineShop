@@ -44,10 +44,13 @@
                     <!-- Main content -->
                     <section class="content ">
                         <h2 class="title text-center">Edit A Post</h2>
+
                         <div class="mb-10" >
                             <form action="./editPost" method="POST" class="dflex-column" enctype="multipart/form-data">
+
                                 <input type="hidden" name="id" value="${requestScope.post.id}"/>
-                            <input type="hidden" name="thumbnailOld" value="${requestScope.post.thumbnail}"/>
+                                <input type="hidden" name="thumbnailOld" value="${requestScope.post.thumbnail}"/>
+
                             <div class="form-group w-70-percent">
                                 <div id="preview-box" class="preview-img-edit" style="height: 300px; width: fit-content">
                                     <img class="img-fit" id="previewImage" src="${requestScope.post.thumbnail}" style="width: 100%; height: 100%;"/>
@@ -55,6 +58,7 @@
                                 <label for="thumbnail">Thumbnail</label>
                                 <input type="file" class="form-control" name="file" id="file"  onchange="checkFileInput(this)" accept="image/*"/>
                             </div>
+
                             <div class="form-group w-70-percent">
                                 <label for="title">Title</label>
                                 <input type="text" class="form-control" name="title" id="title" placeholder="Enter title of post" value="${requestScope.post.title}" required=""/>
