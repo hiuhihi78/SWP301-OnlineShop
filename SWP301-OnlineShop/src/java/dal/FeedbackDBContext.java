@@ -208,7 +208,7 @@ public class FeedbackDBContext extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, feedbackId);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Image image = new Image();
                 image.setImage(rs.getString(1));
                 images.add(image);
@@ -218,7 +218,55 @@ public class FeedbackDBContext extends DBContext {
         }
         return images;
     }
-    
+
+    public Feedback getFeedbackById(int fid) {
+        String sql = "SELECT [Feedback].id\n"
+                + ",[User].[fullname] as CustomerName\n"
+                + ",[User].id as [uid]\n"
+                + ",[User].mobile as UserMobile\n"
+                + ",[User].email as UserEmail\n"
+                + ",[Product].[name] as ProductName\n"
+                + ",[Product].id as ProductId\n"
+                + ",[Product].thumbnail as ProductThumbnail\n"
+                + ",[start]\n"
+                + ",[comment]\n"
+                + ",[Feedback].[date]\n"
+                + ",[Feedback].[status]\n"
+                + "FROM [dbo].[Feedback] join [User] on [User].id = Feedback.userId\n"
+                + "join Product on Product.id = Feedback.productId\n"
+                + "join SubCategory on Product.subCategoryId = SubCategory.id\n"
+                + "join Category on Category.id =SubCategory.categoryId\n"
+                + "WHERE [Feedback].id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, fid);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Feedback f = new Feedback();
+                f.setId(rs.getInt("id"));
+                User u = new User();
+                u.setId(rs.getInt("uid"));
+                u.setEmail(rs.getString("UserEmail"));
+                u.setMobile(rs.getString("UserMobile"));
+                u.setFullname(rs.getString("CustomerName"));
+                f.setUser(u);
+                Product p = new Product();
+                p.setId(rs.getInt("ProductId"));
+                p.setName(rs.getString("ProductName"));
+                p.setThumbnail(rs.getString("ProductThumbnail"));
+                f.setProduct(p);
+                f.setStart(rs.getInt("start"));
+                f.setComment(rs.getString("comment"));
+                f.setDate(rs.getTimestamp("date"));
+                f.setStatus(rs.getBoolean("status"));
+                return f;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedbackDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         FeedbackDBContext db = new FeedbackDBContext();
         System.err.println(db.getFeedbackImage(5).size());
