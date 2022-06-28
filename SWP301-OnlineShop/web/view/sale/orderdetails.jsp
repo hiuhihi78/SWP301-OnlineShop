@@ -43,27 +43,16 @@
                 <aside class="right-side">
                 <c:set var="orderInfor" value="${requestScope.informationOrder}"/>
                 <c:set var="userBuyInfor" value="${requestScope.userOrderInfioramtion}"/>
-                <c:if test="${requestScope.alter != null}">
-                    <div class="fixed float-end t-55px" id="showAlter" style="    width: 21%;
-                         z-index: 1024;
-                         right: 36%;
-                         top: 6%;
-                         position: fixed;
-                         ">
-                        <div class="alert alert-success alert-dismissible fade in" id="alterfade">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="transform: rotate(90deg); top: 8%;">&times;</a>
-                            ${requestScope.alter}
-                        </div>
-                    </div>
-                </c:if>
                 <!-- Main content -->
                 <section class="content ">
                     <div class ="row d-flex justify-content-center">
                         <h2 class="title text-center">Order Information</h2>
                     </div>
-                    <div class="mg-10px" id="toolBar">
-                        <button type="button" class="btn btn-info" data-orderid="${orderInfor.id}" data-toggle="modal" data-target="#myModal" id="btnUpdateOrder">Update order status</button>
-                    </div>
+                    <c:if test="${sessionScope.user.id == orderInfor.sale.id}">
+                        <div class="mg-10px" id="toolBar">
+                            <button type="button" class="btn btn-info" data-orderid="${orderInfor.id}" data-toggle="modal" data-target="#myModal" id="btnUpdateOrder">Update order status</button>
+                        </div>
+                    </c:if>
                     <section class="panel">
                         <div class="panel-body">
                             <div class="row">
@@ -118,10 +107,10 @@
                                     </c:if>
                                     </p>
                                     <c:if test="${orderInfor.status == 0}">
-                                    <p>
-                                        <label>Reason: </label>
-                                        <span>${orderInfor.cancelreason}</span> 
-                                    </p>
+                                        <p>
+                                            <label>Reason: </label>
+                                            <span>${orderInfor.cancelreason}</span> 
+                                        </p>
                                     </c:if>
                                 </div>
 
@@ -149,11 +138,13 @@
                                     <div class="form-group">
                                         <label>Sale note:</label>
                                         <textarea class="form-control rounded-0" id="txtSaleNote" rows="3" disabled>${orderInfor.salenote}</textarea>
-                                        <button type="button" class="btn btn-warning" id="btnEditSaleNote">Edit</button>
-                                        <button type="button" class="btn btn-default display-none" id="btnCancelSaleNoteSave">Cancel</button>
-                                        <button type="button" class="btn btn-primary display-none" id="btnSaveSaleNote" data-orderid="${orderInfor.id}">Save</button>
+                                        <c:if test="${sessionScope.user.id == orderInfor.sale.id}">
+                                            <button type="button" class="btn btn-warning" id="btnEditSaleNote">Edit</button>
+                                            <button type="button" class="btn btn-default display-none" id="btnCancelSaleNoteSave">Cancel</button>
+                                            <button type="button" class="btn btn-primary display-none" id="btnSaveSaleNote" data-orderid="${orderInfor.id}">Save</button>
+                                        </c:if>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="col-md-12">
                                     <div class="panel-body table-responsive">
