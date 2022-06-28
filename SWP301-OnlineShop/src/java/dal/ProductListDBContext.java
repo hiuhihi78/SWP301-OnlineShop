@@ -558,7 +558,7 @@ public class ProductListDBContext extends DBContext {
 
     public int getTotalQuantityProductSolded(int productID) {
         try {
-            String sql = "select Count([OrderDetail].quantity)\n"
+            String sql = "select Sum([OrderDetail].quantity)\n"
                     + "from \n"
                     + "OrderDetail join [Order] on  [Order].id = OrderDetail.orderId\n"
                     + "where [Order].[status] = 4 and OrderDetail.productId = ?";
