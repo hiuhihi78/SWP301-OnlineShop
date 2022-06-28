@@ -139,4 +139,11 @@ $(document).ready(function () {
 
                 });
     });
+
+    $('#btnShowThumbnail').on('click', function () {
+        var thumbnail = $(this).data("thumbnail");
+        $('.imagepreview').attr('src', thumbnail);
+        $("#myModal").modal('show');
+    });
+    
 });

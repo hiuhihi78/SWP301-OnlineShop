@@ -84,6 +84,8 @@
                                     <p>
                                         <label>Product: </label>
                                         <span>${requestScope.feedback.product.name}</span> 
+                                        <span>(ID: ${requestScope.feedback.product.id} - <a id="btnShowThumbnail" href="#" data-thumbnail="${requestScope.feedback.product.thumbnail}">Click here to show product thumbnail</a>)</span> 
+
                                     </p>
                                     <p>
                                         <label>Rated star: </label>
@@ -95,18 +97,15 @@
                                     </p>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Customer note:</label>
-                                        <textarea class="form-control rounded-0" id="txtCustomerNote" rows="3" disabled>${orderInfor.customernote}</textarea>
+                                    <div>
+                                        <label>Feedback Images:</label>
+                                        <c:if test="${requestScope.feedback.image.size() == 0}">
+                                            <span>No images given!</span>
+                                        </c:if>
+                                        <c:if test="${requestScope.feedback.image.size() != 0}">
+                                            <span>have image</span>
+                                        </c:if>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Sale note:</label>
-                                        <textarea class="form-control rounded-0" id="txtSaleNote" rows="3" disabled>${orderInfor.salenote}</textarea>
-                                        <button type="button" class="btn btn-warning" id="btnEditSaleNote">Edit</button>
-                                        <button type="button" class="btn btn-default display-none" id="btnCancelSaleNoteSave">Cancel</button>
-                                        <button type="button" class="btn btn-primary display-none" id="btnSaveSaleNote" data-orderid="${orderInfor.id}">Save</button>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
@@ -120,31 +119,14 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Edit order status</h4>
+                                    <h4 class="modal-title">Product thumbnail</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label>Status: </label>
-                                            <select name="status" id="statusorder" class="form-control">
-                                                <option value="" selected disabled hidden>Please set a status</option>
-                                                <option value="0" ${param["status-filter"] == 0 ? "selected" : ""}>Cancelled</option>
-                                                <option value="1" ${param["status-filter"] == 1 ? "selected" : ""}>Waiting for process</option>
-                                                <option value="2" ${param["status-filter"] == 2 ? "selected" : ""}>Processing</option>
-                                                <option value="3" ${param["status-filter"] == 3 ? "selected" : ""}>Shipping</option>
-                                                <option value="4" ${param["status-filter"] == 4 ? "selected" : ""}>Completed</option>
-                                            </select>
-                                        </div> 
-                                        <div class="form-group" id="txtAreaReason">
-                                            <label>Please enter the reason:</label>
-                                            <textarea class="form-control rounded-0" id="txtcancelReason" rows="5" name="cancelReason"></textarea>
-                                        </div>
-                                    </form>
+                                    <img src="" class="imagepreview" style="width: 100%;" >
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button id ="btnConfirmUpdateStatus" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
-                                </div>
+                                <!--                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>-->
                             </div>
 
                         </div>

@@ -219,7 +219,7 @@ public class FeedbackDBContext extends DBContext {
         return images;
     }
 
-    public Feedback getFeedbackById(int fid) {
+    public Feedback getFeedbackById(int fid) throws SQLException {
         String sql = "SELECT [Feedback].id\n"
                 + ",[User].[fullname] as CustomerName\n"
                 + ",[User].id as [uid]\n"
@@ -239,6 +239,7 @@ public class FeedbackDBContext extends DBContext {
                 + "WHERE [Feedback].id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
+            connection.setAutoCommit(false);
             ps.setInt(1, fid);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -259,10 +260,19 @@ public class FeedbackDBContext extends DBContext {
                 f.setComment(rs.getString("comment"));
                 f.setDate(rs.getTimestamp("date"));
                 f.setStatus(rs.getBoolean("status"));
+                ArrayList<Image> images = this.getFeedbackImage(fid);
+                f.setImage(images);
                 return f;
             }
+            connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(FeedbackDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            connection.rollback();
+        }
+        finally
+        {
+            connection.setAutoCommit(true);
+            connection.close();
         }
         return null;
     }
