@@ -158,4 +158,17 @@ $(document).ready(function () {
                     toastr.error(obj.msg, 'Update status error');
                 });
     });
+
+    $('#btnConfirmUpdateSale').on('click', function () {
+        var sid = $('#salename').val();
+        var oid = $('#btnChangeSale').data('orderid');
+        var url = '/sale/order/updateseller';
+        $.post(url, {sid: sid, oid: oid}, function () {
+            location.reload();
+        })
+                .fail(function (e) {
+                    var obj = JSON.parse(e.responseText);
+                    toastr.error(obj.msg, 'Update status error');
+                });
+    }); 
 });

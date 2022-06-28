@@ -4,6 +4,9 @@
  */
 package controller.sale;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import dal.OrderDBContext;
 import dal.ProductCategoryDBContext;
 import dal.ProductListDBContext;
@@ -11,6 +14,7 @@ import dal.UserDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,13 +32,8 @@ import model.User;
  *
  * @author Admin
  */
-@WebServlet(name = "OrderDetailController", urlPatterns = {"/sale/orderdetails"})
-public class OrderDetailController extends BaseAuthController {
-
-    private static int rawSaleId = 0;
-    private static int rawStatus = 5;
-    private static String rawStartTime = getCurrentDate();
-    private static String rawEndTime = getCurrentDate();
+@WebServlet(name = "UpdateOrderSaleController", urlPatterns = {"/sale/order/updateseller"})
+public class UpdateOrderSaleController extends BaseAuthController {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -48,29 +47,12 @@ public class OrderDetailController extends BaseAuthController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try {
-            OrderDBContext orderDBContext = new OrderDBContext();
-            UserDBContext userDB = new UserDBContext();
-            //validate value
-            int orderID = Integer.parseInt(request.getParameter("id"));
-
-            //GET ORDER ID, ORDER DATE, Total, status
-            Order informationOrder = orderDBContext.getInformationOfOrderByID(orderID);
-            //GET RECIVER INFOR OF USER
-            User userOrderInfioramtion = orderDBContext.getUserOrderInformation(orderID);
-            //GET LIST ORDERED BY ORDER ID
-            ArrayList<Product> listOrderProductOfUser = orderDBContext.getListOrderProductOfUser(orderID);
-            ArrayList<User> sales = userDB.getSaleUser();
-            request.setAttribute("listOrderProductOfUser", listOrderProductOfUser);
-            request.setAttribute("informationOrder", informationOrder);
-            request.setAttribute("sales", sales);
-            request.setAttribute("userOrderInfioramtion", userOrderInfioramtion);
-        } catch (Exception e) {
-
-        }
-        request.getRequestDispatcher("../view/sale/orderdetails.jsp").forward(request, response);
-
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonObject json = new JsonObject();
+        json.addProperty("code", 500);
+        json.addProperty("msg", "GET method does not allow on this API endpoint!");
+        response.setStatus(500);
+        response.getWriter().println(gson.toJson(json).toString());
     }
 
     /**
@@ -80,10 +62,30 @@ public class OrderDetailController extends BaseAuthController {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.sql.SQLException
      */
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            OrderDBContext orderDB = new OrderDBContext();
+            int orderid = Integer.parseInt(request.getParameter("oid"));
+            int userid = Integer.parseInt(request.getParameter("sid"));
+            orderDB.updateSale(orderid, userid);
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonObject json = new JsonObject();
+            json.addProperty("code", 200);
+            json.addProperty("msg", "Order sale updated successfully!");
+            response.setStatus(200);
+            response.getWriter().println(gson.toJson(json).toString());
+        } catch (Exception e) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonObject json = new JsonObject();
+            json.addProperty("code", 500);
+            json.addProperty("msg", "An error occurred when update order sale!");
+            response.setStatus(500);
+            response.getWriter().println(gson.toJson(json).toString());
+        }
     }
 
     /**
@@ -96,9 +98,4 @@ public class OrderDetailController extends BaseAuthController {
         return "Short description";
     }// </editor-fold>
 
-    public static String getCurrentDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        return formatter.format(date);
-    }
 }

@@ -48,9 +48,14 @@
                     <div class ="row d-flex justify-content-center">
                         <h2 class="title text-center">Order Information</h2>
                     </div>
-                    <c:if test="${sessionScope.user.id == orderInfor.sale.id}">
+                    <c:if test="${sessionScope.user.id == orderInfor.sale.id || sessionScope.user.role.name == 'SaleManager'}">
                         <div class="mg-10px" id="toolBar">
                             <button type="button" class="btn btn-info" data-orderid="${orderInfor.id}" data-toggle="modal" data-target="#myModal" id="btnUpdateOrder">Update order status</button>
+                        </div>
+                    </c:if>
+                    <c:if test="${sessionScope.user.role.name == 'SaleManager'}">
+                        <div class="mg-10px" id="toolBar">
+                            <button type="button" class="btn btn-info" data-orderid="${orderInfor.id}" data-toggle="modal" data-target="#myModal2" id="btnChangeSale">Change Sale</button>
                         </div>
                     </c:if>
                     <section class="panel">
@@ -138,7 +143,7 @@
                                     <div class="form-group">
                                         <label>Sale note:</label>
                                         <textarea class="form-control rounded-0" id="txtSaleNote" rows="3" disabled>${orderInfor.salenote}</textarea>
-                                        <c:if test="${sessionScope.user.id == orderInfor.sale.id}">
+                                        <c:if test="${sessionScope.user.id == orderInfor.sale.id || sessionScope.user.role.name == 'SaleManager'}">
                                             <button type="button" class="btn btn-warning" id="btnEditSaleNote">Edit</button>
                                             <button type="button" class="btn btn-default display-none" id="btnCancelSaleNoteSave">Cancel</button>
                                             <button type="button" class="btn btn-primary display-none" id="btnSaveSaleNote" data-orderid="${orderInfor.id}">Save</button>
@@ -212,6 +217,38 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     <button id ="btnConfirmUpdateStatus" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                                            
+                    <div id="myModal2" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Change sale</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Sale: </label>
+                                            <select name="sale" id="salename" class="form-control">
+                                                <option value="" selected disabled hidden>Please choose a sale</option>
+                                                <c:forEach items="${requestScope.sales}" var="s">
+                                                    <c:if test="${s.id != orderInfor.sale.id}">
+                                                        <option value="${s.id}">${s.fullname}</option>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </select>
+                                        </div> 
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button id ="btnConfirmUpdateSale" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
                                 </div>
                             </div>
 

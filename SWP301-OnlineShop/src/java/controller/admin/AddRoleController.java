@@ -41,12 +41,12 @@ public class AddRoleController extends BaseAuthController {
         RoleDBContext roleDB = new RoleDBContext();
         ArrayList<Feature> adminFeatures = roleDB.getFeatureByGroup("Admin");
         ArrayList<Feature> marketingFeatures = roleDB.getFeatureByGroup("Marketing");
+        ArrayList<Feature> SalesFeatures = roleDB.getFeatureByGroup("Sales");
 
-        if (adminFeatures != null || marketingFeatures != null) {
-            request.setAttribute("adminFeatures", adminFeatures);
-            request.setAttribute("marketingFeatures", marketingFeatures);
-            request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
-        }
+        request.setAttribute("adminFeatures", adminFeatures);
+        request.setAttribute("marketingFeatures", marketingFeatures);
+        request.setAttribute("SalesFeatures", SalesFeatures);
+        request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
     }
 
     /**
@@ -66,7 +66,7 @@ public class AddRoleController extends BaseAuthController {
             RoleDBContext roleDB = new RoleDBContext();
             roleDB.insertNewRole(roles, roleName);
             request.setAttribute("ater", "Add new role successfully");
-            response.sendRedirect("/admin/addRole");
+            //response.sendRedirect("/admin/addRole");
             request.setAttribute("message", "Add user's role success!");
             request.setAttribute("error", false);
             request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);

@@ -662,7 +662,21 @@ public class OrderDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    public void updateSale(int orderid, int saleid) {
+        try {
+            String sql = "UPDATE [dbo].[Order]\n"
+                    + "   SET [sellerid] = ?\n"
+                    + " WHERE [Order].id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, saleid);
+            stm.setInt(2, orderid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public ArrayList<Order> getListProductOrderByID(int orderID) {
         ArrayList<Order> listOrder = new ArrayList<>();
         String sql = " select * from [OrderDetail] where orderId = ?  ";
