@@ -5,27 +5,22 @@
 package controller.user;
 
 import dal.OrderDBContext;
-import dal.ProductCategoryDBContext;
-import dal.ProductListDBContext;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Category;
 import model.Order;
-import model.Product;
-import model.User;
 
 /**
  *
  * @author Hoang Quang
  */
-@WebServlet(name = "OrderInformationControler", urlPatterns = {"/orderInfor"})
-public class OrderInformationControler extends HttpServlet {
+@WebServlet(name = "UpdateOrderController", urlPatterns = {"/updateOrder"})
+public class UpdateOrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,44 +33,29 @@ public class OrderInformationControler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
-        ProductListDBContext productListDBContext = new ProductListDBContext();
-        OrderDBContext orderDBContext = new OrderDBContext();
-        
-        User user = (User) session.getAttribute("user");
-        int userBuyId = user.getId();
-//        int userBuyId = 38;
-        System.out.println(userBuyId);
-        //get value from request
+        OrderDBContext orderDB = new OrderDBContext();
         String raw_orderID = request.getParameter("orderID");
-        //validate value
         int orderID = Integer.parseInt(raw_orderID);
-        
-        //GET SIDER INFOR
-        //get list subcategory
-        ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
-        //get least post
-        ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
 
-        //GET ORDER ID, ORDER DATE, Total, status
-        Order informationOrder = orderDBContext.getInformationOfOrderByID(orderID);
-        //GET RECIVER INFOR OF USER
-        User userOrderInfioramtion = orderDBContext.getUserOrderInformation(orderID);
-        //GET LIST ORDERED BY ORDER ID
-        ArrayList<Product> listOrderProductOfUser = orderDBContext.getListOrderProductOfUser(orderID);
+        ArrayList<Order> listOrder = orderDB.getListProductOrderByID(orderID);
 
-        String alter = request.getParameter("alter");
-        request.setAttribute("alter", alter);
-        request.setAttribute("listOrderProductOfUser", listOrderProductOfUser);
-        request.setAttribute("informationOrder", informationOrder);
-        request.setAttribute("userOrderInfioramtion", userOrderInfioramtion);
-        request.setAttribute("listCategorys", listCategorys);
-        request.setAttribute("leastProduct", leastProduct);
-        request.getRequestDispatcher("/view/public/orderInfor.jsp").forward(request, response);
+//            int productID = listOrder.get(i).getProducts().get(i).getId();
+//            int orderID = listOrder.get(i).getId();
+        orderDB.deleteOrderDetailsByID(orderID);
+        orderDB.deleteOrderByID(orderID);
+
+        response.sendRedirect("/cartDetails");
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

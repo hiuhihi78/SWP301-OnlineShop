@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
@@ -21,7 +21,7 @@
         <link href="../../assets/public/css/style.css" rel="stylesheet">
 
     </head>
-    <!--/head-->
+    /head
 
     <body>
         <c:set value="${requestScope.productInfomation}" var="product"/>
@@ -47,15 +47,15 @@
                 <div class="row flex-justify">
 
                     <div class="col-sm-3 box-shadow height-fit-content border-radius-2" >
-                        <div class="left-side"> <!-- left-sidebar -->
+                        <div class="left-side">  left-sidebar 
                             <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px;">Category</h2>
                             <form action="productlist" method="get">
-                                <div class="panel-group category-products" id="accordian"><!--category-products-->
+                                <div class="panel-group category-products" id="accordian">category-products
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
 
                                             <div class="search_box">
-                                                <!--<input id="search-box" type="text" placeholder="Search..." name="searchBy" value="${requestScope.searchBy}">-->
+                                                <input id="search-box" type="text" placeholder="Search..." name="searchBy" value="${requestScope.searchBy}">
                                                 <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search"/>
                                             </div>
                                         </div>
@@ -69,7 +69,7 @@
                                         </div>
                                     </div>
                                     <c:forEach items="${requestScope.listCategorys}" var="list">
-                                        <c:if test="${ not empty list.listSubCategory }"> <!-- check empty of list subcategory with that category -->
+                                        <c:if test="${ not empty list.listSubCategory }">  check empty of list subcategory with that category 
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
@@ -93,10 +93,10 @@
                                             </div>
                                         </c:if>
                                     </c:forEach>
-                                </div><!--/category-products-->    
+                                </div>/category-products    
                             </form>
 
-                            <div class="panel-group category-products" id="accordian"><!-- 3 least product -->
+                            <div class="panel-group category-products" id="accordian"> 3 least product 
                                 <h2 class="title text-center" style="border-bottom: solid 2px;">Latest Product</h2>
                                 <%--<c:set var="leat" value="" />--%>
                                 <c:if test="${requestScope.leastProduct != null}">
@@ -123,24 +123,24 @@
                                         </div>
                                     </c:forEach>
                                 </c:if>
-                            </div><!-- end two least product --> 
+                            </div> end two least product  
 
                         </div>                     
                     </div>
-                    <!--PRODUCT DETAILS-->
+                    PRODUCT DETAILS
                     <div class="col-sm-9 padding-right">
                         <h2 class="title text-center" style="border-bottom: solid 2px;">Product Details</h2>
-                        <div class="product-details"><!--product-details-->
+                        <div class="product-details">product-details
                             <div class="col-sm-5">
-                                <!--thumbnail-->
+                                thumbnail
                                 <div class="view-product">
                                     <img src="${product.thumbnail}" alt="" />
-                                    <!--<h3>ZOOM</h3>-->
+                                    <h3>ZOOM</h3>
                                 </div>
                             </div>
-                            <!--ADD TO CART-->
+                            ADD TO CART
                             <div class="col-sm-7">
-                                <div class="product-information"><!--/product-information-->
+                                <div class="product-information">/product-information
                                     <form action="addcart" method="post"  id="addcart">
                                         <input type="hidden" value="${product.id}" name="productId">
                                         <input type="hidden" value="${product.name}" name="productName">
@@ -177,13 +177,13 @@
                                                     Add to cart
                                                 </button> 
                                             </div>
-                                        </div><!-- comment -->
+                                        </div> comment 
                                     </form>
-                                </div><!--/product-information-->
-                            </div><!-- END ADD TO CART -->
+                                </div>/product-information
+                            </div> END ADD TO CART 
                         </div>
                     </div>
-                    <!--END PRODCUT DETAILS-->
+                    END PRODCUT DETAILS
                 </div>
             </div>
         </section>
@@ -211,4 +211,4 @@
         <script src="../../assets/js/home/home.js"></script>
     </body>
 
-</html>
+</html>-->

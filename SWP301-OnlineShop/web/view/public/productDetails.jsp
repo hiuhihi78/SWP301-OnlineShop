@@ -97,13 +97,13 @@
                             <div class="col-sm-6">
                                 <div class="product-information"><!--/product-information-->
 
-                                    <h2><b>${product.name}</b></h2>
+                                    <h2 class="mb-20"><b>${product.name}</b></h2>
 
 
-                                    <p>
+<!--                                    <p>
                                         <label>Seller: </label>
                                         <span> ${product.user.fullname}</span> 
-                                    </p>
+                                    </p>-->
                                     <div class="display-flex feedback-detail-product">
                                         <div class="border-solid-r-1 display-flex">
                                             <span class="mt-5 mr-3">${requestScope.total_start_percent}</span>
