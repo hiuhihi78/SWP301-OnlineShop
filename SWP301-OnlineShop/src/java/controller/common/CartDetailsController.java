@@ -133,18 +133,24 @@ public class CartDetailsController extends BaseAuthController {
             throws ServletException, IOException {
         CartDBContext cartDb = new CartDBContext();
         PrintWriter out = response.getWriter();
+        int quantity = 0;
         int pid = Integer.parseInt(request.getParameter("pid"));
         int isUp = Integer.parseInt(request.getParameter("isUp"));
         int cid = Integer.parseInt(request.getParameter("cartId"));
+        if (request.getParameter("quantity") != null) {
+            quantity = Integer.parseInt(request.getParameter("quantity"));
+        }
         int currentQuantity = cartDb.getCartProductByCidAndPid(cid, pid).getQuantity();
         if (isUp == 1) {
             currentQuantity += 1;
-        } else {
+        } else if (isUp == 0) {
             currentQuantity -= 1;
+        } else if (quantity != 0) {
+            currentQuantity = quantity;
         }
 
         cartDb.setQuantityCartProduct(pid, cid, currentQuantity);
-        out.println("<input disabled=\"\" class=\"cart_quantity_input\" type=\"text\" value=\"" + currentQuantity + "\" autocomplete=\"off\" size=\"2\">");
+        out.println("<input class=\"cart_quantity_input\" type=\"text\" value=\"" + currentQuantity + "\" autocomplete=\"off\" size=\"2\">");
         
       
 

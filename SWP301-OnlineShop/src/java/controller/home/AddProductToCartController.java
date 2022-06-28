@@ -64,6 +64,7 @@ public class AddProductToCartController extends HttpServlet {
 
             ArrayList<Cart_Product> cart_Products = new ArrayList<>();
             Cart_Product cart_Product = new Cart_Product();
+            
             cart_Product.setProductId(productId);
             cart_Product.setQuantity(quantityOrder);
             cart_Products.add(cart_Product);

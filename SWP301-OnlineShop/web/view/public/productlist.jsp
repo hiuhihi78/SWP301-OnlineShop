@@ -47,7 +47,7 @@
                                                 </a>
 
                                                 <h2 class="break-down-line">${product.name}</h2>
-                                                <p class="break-down-line">${product.description}</p>
+                                                <!--<p class="break-down-line">${product.description}</p>-->
                                                 <p>
                                                     <span class="text-line-through">
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
@@ -57,7 +57,7 @@
                                                     </span>
                                                 </p>
 
-                                                <button  class="btn btn-default add-to-cart" onclick="addToCartFunction(${product.id},${product.quantity},${sessionScope.user.id});" >
+                                                <button  class="btn btn-default add-to-cart" onclick="addToCartFunction2(${product.id},${product.quantity},${sessionScope.user.id});" >
                                                     <i class="fa fa-shopping-cart"></i>
                                                     Add to cart
                                                 </button>
