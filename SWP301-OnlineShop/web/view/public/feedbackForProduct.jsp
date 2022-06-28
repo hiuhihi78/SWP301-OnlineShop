@@ -122,7 +122,7 @@
                                                                     <div id="closeBtn-attachedBoxImg-1" class="close-btn" onclick="closeImg('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1');"> </div>
                                                                     <img id="attachedBoxImg-1" src="#" alt="your image" style="height:150px;" class="boder-radius display-none image-thumbnail"/>
                                                                 </div>
-                                                                <input type="file" name="attachedImg1" id="attachedImg1" onchange="showAttachedImg('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1')" />
+                                                                <input type="file" name="attachedImg1" id="attachedImg1" onchange="showAttachedImg('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1')" required=""/>
                                                             </div>
                                                         </div>
                                                     </div>

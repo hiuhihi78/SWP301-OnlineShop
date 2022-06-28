@@ -95,14 +95,15 @@
 
                                                                     <input type="button" class="cart_quantity_down" ${i.quantity==1?"disabled":""} is-up="0"  id="id-down-${(i.product).id}" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="-" data-min="1"/>
 
-                                                                    <div id="show-quantity-${(i.product).id}"><input id="quantity-id" class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2"></div>
+                                                                    <div id="show-quantity-${(i.product).id}"><input id="quantity-id-${(i.product).id}" data-product-id="${(i.product).id}" class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2" data-max="${(i.product).quantity}"></div>
                                                                     <input id="input-${(i.product).id}" class="cart_quantity_input" type="hidden" value="${i.quantity}" autocomplete="off" size="2" data-price-1="${(i.product).getPriceDiscount()}">
 
                                                                     <input type="button" id="id-up-${(i.product).id}" ${i.quantity==(i.product).quantity?"disabled":""} class="cart_quantity_up" is-up="1" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="+" data-max="${(i.product).quantity}"/>
                                                                 </div>
                                                             </td>
                                                             <td class="cart_total">
-                                                                <b><p class="cart_total_price_${(i.product).id}"> ${i.quantity * (i.product).getPriceDiscount()}&nbsp;đ</p></b>
+                                                                <b style="display: flex;"><p class="cart_total_price_${(i.product).id}"> <fmt:formatNumber type = "number" value = "${i.quantity * (i.product).getPriceDiscount()}"/></p>&nbsp;đ</b>
+                                                                <input type="hidden" class="h_cart_total_price_${(i.product).id}" value="${i.quantity * (i.product).getPriceDiscount()}"/>
 
                                                             </td>
                                                             <td class="cart_delete">
@@ -124,14 +125,14 @@
                                                             <ul>
                                                                 <li><input type="checkbox" name="all" id="checkall"> Select all <span><a class="delete-all-product" data-isAll="1" data-programid="-1" data-name="">Delete all</a></span></li>
 
-                                                                <li style="display: flex"><div >Total</div> <div class=total style="margin-left: auto"><b><span id="total">0</span></b></div>&nbsp;đ</li>
+                                                                <li style="display: flex"><div>Total</div> <div style="margin-left: auto"><b><span id="total">0</span></b></div>&nbsp;đ</li>
                                                                 <input type="hidden" id="total-hidden" value="0"/>
                                                             </ul>
                                                             <ul>
 
                                                                 <a class="btn btn-default update" href="/productlist">Choose More Product</a>
-                                                                 <a class="btn btn-default update" id="btn-checkout-1">Check Out</a>
-<!--                                                                <button class="btn btn-default check_out" id="btn-checkout-1" type="submit">Check Out</button>-->
+                                                                <a class="btn btn-default update" id="btn-checkout-1">Check Out</a>
+                                                                <!--                                                                <button class="btn btn-default check_out" id="btn-checkout-1" type="submit">Check Out</button>-->
 
                                                             </ul>
 
@@ -185,16 +186,16 @@
                             </div>
                         </div>
                     </div>
-                     <!--    This is end delete modal dialog-->
-                     
-                     <!--    This is start Choose cart product modal dialog-->
+                    <!--    This is end delete modal dialog-->
+
+                    <!--    This is start Choose cart product modal dialog-->
 
                     <div class="modal fade" id="confirm-choose-checkbox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
                                 <div class="modal-header">
-                                    
+
                                     <h4 class="modal-title" id="myModalLabel">Confirm Choose</h4>
                                 </div>
 
@@ -209,7 +210,7 @@
                             </div>
                         </div>
                     </div>
-                     <!--    This is end Choose cart product modal dialog-->
+                    <!--    This is end Choose cart product modal dialog-->
 
 
                 </div>
