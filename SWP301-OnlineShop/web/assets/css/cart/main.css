@@ -7,9 +7,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Admin
 */
 .span-rated-star{
-    font-size: 20px; 
-    color: #ffe500; 
-    opacity: 1; 
+    font-size: 20px;
+    color: #ffe500;
+    opacity: 1;
     transform: rotateX(0deg);
     text-shadow: 0 0 30px #ffc;
 }
@@ -232,17 +232,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 #customToolbar.form-control {
-    display: inline-block !important; 
-  }
+    display: inline-block !important;
+}
 
-  #toolbar {
-      margin-bottom: 10px;
-  }
-  
-  .mg-10px {
-      display: inline-block !important;
-      margin-bottom: 10px;
-  }
+#toolbar {
+    margin-bottom: 10px;
+}
+
+.mg-10px {
+    display: inline-block !important;
+    margin-bottom: 10px;
+}
+
+.img-contain {
+    width: 200px;
+    height: 300px;
+    object-fit: contain;
+}
+
+#feedbackImg {
+    display: flex;
+}
+#feedbackImg img:nth-child(n+1) {
+    margin-left: 2%;
+}
+#feedbackImg img:nth-child(1) {
+    margin-left: 0%;
+}
 /*
 #formFilter{
     width: 70%;

@@ -163,7 +163,6 @@
                         </tbody>
                     </table>
                     <!-- Modal -->
-                    <!-- Modal -->
                     <div id="myModal" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
@@ -181,20 +180,6 @@
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
-
-                    <!--success notification-->
-                    <div class="fixed float-end d-none" id="showAlterSuccess">
-                        <div class="alert alert-success alert-dismissible fade in" id="alterfade">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        </div>
-                    </div>
-                    <!--fail notification-->
-                    <div class="fixed float-end d-none" id="showAlterFail">
-                        <div class="alert alert-danger alert-dismissible fade in" id="alterfade">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            ${requestScope.alterFail}
                         </div>
                     </div>
                 </section> <!--/ Main content -->

@@ -145,5 +145,17 @@ $(document).ready(function () {
         $('.imagepreview').attr('src', thumbnail);
         $("#myModal").modal('show');
     });
-    
+
+    $('#btnConfirmUpdateStatus').on('click', function () {
+        var fid = $('#btnUpdateFBStatus').data('passing').fid;
+        var status = $('#btnUpdateFBStatus').data('passing').status;
+        var url = '/marketing/feedback/updatestatus';
+        $.post(url, {fid: fid, status: status}, function (response) {
+            location.reload();
+        })
+                .fail(function (e) {
+                    var obj = JSON.parse(e.responseText);
+                    toastr.error(obj.msg, 'Update status error');
+                });
+    });
 });
