@@ -72,12 +72,15 @@ $(document).ready(function () {
         var orderid = $('#myModal').data("orderid");
         var url = '/sale/order/updatestatus';
         //set status = 2 mean processing
-        $.post(url, {orderid: orderid, status: 2}, function () {
+        $.post(url, {orderid: orderid, status: 2}, function (response) {
             $('#row-orderid' + orderid + ' td#tblStatus').html("<span class='label label-info'>Processing</span>");
             $('#row-orderid' + orderid + ' .confirm-process').hide();
+            var obj = JSON.parse(response);
+            toastr.success(obj.msg, 'Update status');
         })
-                .fail(function () {
-
+                .fail(function (e) {
+                    var obj = JSON.parse(e.responseText);
+                    toastr.error(e.msg, 'Update status')
                 });
     });
 
@@ -132,11 +135,19 @@ $(document).ready(function () {
         var orderid = $(this).data('orderid');
         var note = $('#txtSaleNote').val();
         var url = '/sale/order/updatenote';
-        $.post(url, {orderid: orderid, note: note}, function () {
-            location.reload();
+        $.post(url, {orderid: orderid, note: note}, function (response) {
+            var obj = JSON.parse(response);
+            //location.reload();
+            $('#txtSaleNote').val(note);
+            $('#txtSaleNote').prop("disabled", true); //disable sale note textarea
+            $('#btnCancelSaleNoteSave').addClass("display-none"); //hide cancel button
+            $('#btnSaveSaleNote').addClass('display-none'); //hide save button
+            $('#btnEditSaleNote').removeClass("display-none"); //show edit button
+            toastr.success(obj.msg, 'Update Note');
         })
-                .fail(function () {
-
+                .fail(function (e) {
+                    var obj = JSON.parse(e.responseText);
+                    toastr.error(obj.msg, 'Update Note');
                 });
     });
 
@@ -170,5 +181,5 @@ $(document).ready(function () {
                     var obj = JSON.parse(e.responseText);
                     toastr.error(obj.msg, 'Update status error');
                 });
-    }); 
+    });
 });
