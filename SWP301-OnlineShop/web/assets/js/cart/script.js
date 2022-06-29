@@ -106,7 +106,19 @@ $('.btn-ok').on('click', function () {
                 location.reload();
             } else {
                 $('#div-product-' + pid).remove();
-               
+
+                var priceTotal = 0;
+                $("#calculator input[type='checkbox']:checked").each(function () {
+                    var price = $(this).attr('data-price');
+                    priceTotal += parseInt(price);
+                });
+                var output = parseInt(priceTotal).toLocaleString();
+                $('#total').html(output);
+                $('#total-hidden').val(priceTotal);
+
+
+
+
             }
 
         },
@@ -177,18 +189,18 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
     $('.h_cart_total_price_' + pid).val(priceTotal);
 
     $('#cbo-' + pid).attr('data-price', priceTotal);
-    if ($('#cbo-' + pid+ ':checked')) {
-        var totalLast  = parseFloat($('#total-hidden').val());
+    if ($('#cbo-' + pid + ':checked')) {
+        var totalLast = parseFloat($('#total-hidden').val());
 
         if (totalLast > 0) {
             totalLast = (totalLast - priceTotal1) + priceTotal;
         }
-        
+
         var output = parseInt(totalLast).toLocaleString();
         $('#total').html(output);
-        $('#total-hidden').val(totalLast);        
+        $('#total-hidden').val(totalLast);
 
-        
+
     }
 
 
@@ -225,6 +237,15 @@ $('.btn-update').on('click', function () {
     var email = $('#iEmail').val();
     var mobile = $('#iMobile').val();
     var address = $('#iAddress').val();
+    if (fullName.length == 0) {
+        return false;
+    }
+    if (mobile.length == 0) {
+        return false;
+    }
+    if (address.length == 0) {
+        return false;
+    }
 
 
     $.ajax({
@@ -286,6 +307,25 @@ $('.cart_quantity_input').on('change', function () {
     });
 
 });
+
+$('#back-cart-detail').click(function () {
+    window.history.back();
+});
+
+//$().ready(function () {
+//    $("#form-change-inf").validate({
+//        onfocusout: false,
+//        onkeyup: false,
+//        onclick: false,
+//        rules: {
+//
+//            "txtNameInf": {
+//                required: true,
+//               
+//            }
+//        }
+//    });
+//});
 
 
 

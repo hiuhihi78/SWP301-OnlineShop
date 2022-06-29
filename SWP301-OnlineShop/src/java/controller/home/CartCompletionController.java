@@ -75,7 +75,6 @@ public class CartCompletionController extends BaseAuthController {
         // get ship info
         String shipFullName = request.getParameter("txtFullname").trim();
         boolean shipGender = (request.getParameter("txtGender").trim().equalsIgnoreCase("true"))?true:false;
-        System.out.println(request.getParameter("txtGender") + " " + shipGender);
         String shipPhone = request.getParameter("txtPhone").trim();
         String shipAddress = request.getParameter("txtAddress").trim();
         String shipNote = request.getParameter("txtNote").trim();

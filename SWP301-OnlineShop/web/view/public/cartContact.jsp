@@ -144,7 +144,9 @@
 
                                         </tr>
                                         <tr>
-                                            <td>                                              
+                                            
+                                            <td>      
+                                                <a class="btn btn-default update" id="back-cart-detail">Back</a>
                                                 <button class="btn btn-default check_out" id="btn-checkout" type="submit">Submit</button>
                                             </td>
                                         </tr>
@@ -171,7 +173,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form" action="" method="post" id="">
+                        <form class="form-horizontal" role="form" action="" method="post" id="form-change-inf">
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">Email</label>
                                 <div class="col-sm-12">
@@ -183,20 +185,20 @@
                                 <label class="col-sm-2 control-label">Full Name</label>
 
                                 <div class="col-sm-12">
-                                    <input type="text" id="iFullName" name="" placeholder="Enter full name" class="form-control" value="${user.fullname}" autofocus required=""/>
+                                    <input type="text" id="iFullName" name="txtNameInf" placeholder="Enter full name" class="form-control" value="${user.fullname}"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">Mobile </label>
                                 <div class="col-sm-12">
-                                    <input type="text" id="iMobile" name="" placeholder="Enter your mobile" class="form-control" value="${user.mobile}" >
+                                    <input type="text" id="iMobile" placeholder="Enter your mobile" class="form-control" value="${user.mobile}" required="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">Address </label>
                                 <div class="col-sm-12">
-                                    <textarea id="iAddress" class="form-control" rows="2" placeholder="Enter your address" >${user.address}</textarea>
+                                    <textarea id="iAddress" class="form-control" rows="2" placeholder="Enter your address" required="">${user.address}</textarea>
                                 </div>
                             </div>
 
