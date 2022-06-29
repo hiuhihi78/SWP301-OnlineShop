@@ -11,7 +11,7 @@
 <html>
     <head>  
         <meta charset="UTF-8">
-        <title>Sale | Orders list</title>
+        <title>Sale | Orders details</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -26,6 +26,7 @@
         <link href="../../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/css/cart/main.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
         <!--active button nav in sidebar-->
 
@@ -271,5 +272,6 @@
         <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     </body>
 </html>
