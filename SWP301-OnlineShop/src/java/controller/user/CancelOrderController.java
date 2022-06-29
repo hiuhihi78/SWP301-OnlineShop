@@ -33,12 +33,15 @@ public class CancelOrderController extends HttpServlet {
             throws ServletException, IOException {
         //get value form parameter
         String raw_orderID = request.getParameter("orderID");
+        String reasionCancel = request.getParameter("cancel");
+        System.out.println(reasionCancel);
         String alert = "sussces";
         //validate value
         int orderID = Integer.parseInt(raw_orderID);
         //update status for order
         OrderDBContext orderDBContext = new OrderDBContext();
         orderDBContext.editStatusOrder(orderID);
+        orderDBContext.addReasionToCancel(orderID, reasionCancel);
         //go to order infor with that information
         response.sendRedirect("orderInfor?orderID=" + orderID +  "&alter=Cancel sucesslly!");
     }

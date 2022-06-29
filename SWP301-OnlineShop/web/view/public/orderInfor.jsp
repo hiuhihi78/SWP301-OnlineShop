@@ -134,13 +134,13 @@
                                                                 <td>${listOrder.quantity}</td>
                                                                 <td><div class="col-md-offset-0" >
                                                                         <c:if test="${orderInfor.status == 4}">
-                                                                            <button class="btn btn-success ">
+                                                                            <button class="btn btn-success " onclick="feedbackProdcut(${orderInfor.id},${listOrder.id},${sessionScope.user.id});">
                                                                                 Feedback
                                                                             </button>
                                                                             <button class="btn btn-info " onclick="addToCartFunction2(${listOrder.id},${listOrder.quantity},${sessionScope.user.id});">
                                                                                 ReBuy 
                                                                             </button>
-                                                                            
+
                                                                         </c:if>
                                                                     </div>
                                                                 </td>
@@ -158,7 +158,8 @@
                             <div class="col-md-offset-1 pull-right " >
                                 <c:if test="${orderInfor.status == 1}">
                                     <a  href="#" onclick="updateOrder(${orderInfor.id})"  class="btn btn-danger"> Update </a>
-                                    <a  href="#" onclick="cancelOrder(${orderInfor.id})"  class="btn btn-danger"> Cancel </a>
+                                    <!--<a  href="#" onclick="cancelOrder(${orderInfor.id})"  class="btn btn-danger"> Cancel </a>-->
+                                    <a href="#"  class="btn btn-danger" data-toggle="modal" data-target="#myModalCancel">Cancel</a>
                                 </c:if>
                                 <a href="../myorders"  class="btn btn-danger">Back</a>
                             </div>
@@ -170,6 +171,39 @@
             </div>
             <div id="add-to-cart-alter"></div>
         </section>
+        <!-- Modal User Profile -->
+        <div class="modal fade" id="myModalCancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog w-30percent" role="document"">
+                <div class="modal-content pd-20px">
+                    <div class="modal-header text-center" >
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                        <h4 class="modal-title fw-bolder-fz-20" id="myModalLabel">Enter reasions why do you Cancel this Order?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <form action="/cancelOrder" class="form-horizontal" method="post">
+                                <input type="hidden" value="${orderInfor.id}" name="orderID">
+                                <div class="form-group">
+                                    <label for="Reasions"
+                                           class="col-lg-3 col-sm-2 control-label">My Reasions: </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="cancel" required="">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="col-md-offset">
+                                        <button type="submit" onclick="return confirm('Are you sure Cancel?')"  class="btn btn-info"> Save </button>
+                                        <!--<button type="submit" class="btn btn-info">Save</button>-->
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>                   
+
 
         <jsp:include page="../home-template/footer.jsp"/>
         <script>
@@ -184,6 +218,12 @@
                 var result = confirm("Are you sure to update this Order?");
                 if (result) {
                     window.location.href = "updateOrder?orderID=" + id + "&currentUrl=" + currentUrl
+                }
+            }
+            function feedbackProdcut(orderID, productID, userID) {
+                var result = confirm("Are you sure to feedback for this product?");
+                if (result) {
+                    window.location.href = "feedbackProduct?orderID=" + orderID + "&productID=" + productID + "&userID=" + userID
                 }
             }
             setTimeout(function () {
