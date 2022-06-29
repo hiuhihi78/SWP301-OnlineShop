@@ -47,7 +47,7 @@
                                                 </a>
 
                                                 <h2 class="break-down-line">${product.name}</h2>
-                                                <p class="break-down-line">${product.description}</p>
+                                                <!--<p class="break-down-line">${product.description}</p>-->
                                                 <p>
                                                     <span class="text-line-through">
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
@@ -56,12 +56,12 @@
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
                                                     </span>
                                                 </p>
-
-                                                <button  class="btn btn-default add-to-cart" onclick="addToCartFunction(${product.id},${product.quantity},${sessionScope.user.id});" >
+                                                <c:if test="${product.quantity > 0}">
+                                                <button  class="btn btn-default add-to-cart"  onclick="addToCartFunction2(${product.id},${product.quantity},${sessionScope.user.id});" >
                                                     <i class="fa fa-shopping-cart"></i>
                                                     Add to cart
                                                 </button>
-
+                                                </c:if>
                                                 <!--Btn to See List Feedback-->
                                                 <button class="btn btn-default  add-to-cart">
                                                     <a style="color: black" href="productdetails?productID=${product.id}" >
@@ -87,7 +87,7 @@
                             </c:forEach>
                             <c:if test="${requestScope.totalpage > 1}">
                             <li><a href="productlist?page=${requestScope.totalpage}&searchBy=${searchBy}&subCategory=${listSub.id}">Last</a></li>
-                            </c:if>
+                        </c:if>
                     </ul>
                 </div>
 

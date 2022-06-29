@@ -98,6 +98,9 @@ public class User {
     public void setGender(boolean gender) {
         this.gender = gender;
     }
+    public String getNameGender() {
+        return gender?"Male":"Female";
+    }
 
     public String getMobile() {
         return mobile;
@@ -135,4 +138,5 @@ public class User {
     public String toString() {
         return "User{" + "id=" + id + ", password=" + password + ", avatar=" + avatar + ", email=" + email + ", fullname=" + fullname + ", gender=" + gender + ", mobile=" + mobile + ", address=" + address + ", status=" + status + ", role=" + role + '}';
     }
+
 }

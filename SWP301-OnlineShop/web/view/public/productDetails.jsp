@@ -48,7 +48,7 @@
 
     <body>
         <c:set value="${requestScope.productInfomation}" var="product"/>
-        
+
         <jsp:include page="../home-template/headerProductlist.jsp"/>
         <section>
             <div class="container">
@@ -63,84 +63,125 @@
                             <div class="col-sm-6">
                                 <!--thumbnail-->
                                 <div id="myCarousel" class="carousel slide cursor-zoom" data-ride="carousel" onclick="ZoomProductImage(${product.id})">
-                                            <!-- Indicators -->
-                                            <ol class="carousel-indicators">
-                                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                                <li data-target="#myCarousel" data-slide-to="1"></li>
-                                                <li data-target="#myCarousel" data-slide-to="2"></li>
-                                            </ol>
+                                    <!-- Indicators -->
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                                    </ol>
 
-                                            <!-- Wrapper for slides -->
-                                        <div class="carousel-inner">
-                                            <div class="item active">
-                                                <img src="${requestScope.productInfomation.thumbnail}" alt="thumbnail" style="height: 350px; width: 120%; object-fit: cover;">
-                                            </div>
-                                            <div class="item">
-                                                 <img src="<%= attchedImg.get(1).getImage()%>" alt="thumbnail" style="height: 350px; width: 120%; object-fit: cover;">
-                                            </div>
-                                            <div class="item">
-                                                <img src="<%= attchedImg.get(0).getImage()%>" alt="thumbnail" style="height: 350px; width: 124530%; object-fit: cover;">
-                                            </div>
+                                    <!-- Wrapper for slides -->
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <img src="${requestScope.productInfomation.thumbnail}" alt="thumbnail" style="height: 350px; width: 120%; object-fit: cover;">
                                         </div>
-
-                                        <!-- Left and right controls -->
-                                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                                            <span class="sr-only"></span>
-                                        </a>
-                                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                                            <span class="sr-only"></span>
-                                        </a>
+                                        <div class="item">
+                                            <img src="<%= attchedImg.get(1).getImage()%>" alt="thumbnail" style="height: 350px; width: 120%; object-fit: cover;">
+                                        </div>
+                                        <div class="item">
+                                            <img src="<%= attchedImg.get(0).getImage()%>" alt="thumbnail" style="height: 350px; width: 124530%; object-fit: cover;">
+                                        </div>
                                     </div>
+
+                                    <!-- Left and right controls -->
+                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                        <span class="sr-only"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                        <span class="sr-only"></span>
+                                    </a>
+                                </div>
 
                             </div>
                             <!--Information here-->
                             <div class="col-sm-6">
                                 <div class="product-information"><!--/product-information-->
-                                   
-                                    <h2><b>${product.name}</b></h2>
-                                                            
 
-                                    <p>
+                                    <div class=" product-details__category">
+                                        <a href="productlist?category=${product.subCategory.category.id}">${product.subCategory.category.name}</a>
+                                        <span> ></span>
+                                        <a href="productlist?subCategory=${product.subCategory.id}"> ${product.subCategory.name}</a>
+                                       
+                                    </div>
+                                    <h2 class="mb-20"><b>${product.name}</b></h2>
+
+
+<!--                                    <p>
                                         <label>Seller: </label>
                                         <span> ${product.user.fullname}</span> 
-                                    </p>
-                                    <p> 
-                                        <label>Description: </label>
-                                        <span> ${product.description}</span> 
-                                    </p>
-                                    <p>
-                                        <label>Price: </label>
-                                        <span class="text-line-through">
-                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.price}"/>
-                                        </span>
-                                        <span class="text-danger">
-                                            <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
-                                        </span>
-                                    </p>
-                                        <p> <label>Total Quantity: ${product.quantity}</label> </p>
-                                    
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <p> 
-                                                <label>Choice Your Quantity: </label>
-                                                <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;"  class="chose-quantity"
-                                                       min="1" max="${product.quantity}" value = "1" required>
-                                            </p>
-                                            
-                                                <div id="alter_quantityOrder">
-                                                    
+                                    </p>-->
+                                    <div class="display-flex feedback-detail-product">
+                                        <div class="border-solid-r-1 display-flex">
+                                            <span class="mt-5 mr-3">
+                                                <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${requestScope.total_start_percent}" />
+                                            </span>
+                                            <div class="star-ratings" >
+                                                <div class="fill-ratings" style="width: ${requestScope.total_start_percent * 20}%;">
+                                                    <span>★★★★★</span>
                                                 </div>
-                                            
-                                            <button  style="width: 10em; " class="form-control add-to-cart" onclick="addToCartFunction();" >
-                                                <i class="fa fa-shopping-cart"></i>
-                                                Add to cart
-                                            </button>
-                                            </form>    
+                                                <div class="empty-ratings">
+                                                    <span>★★★★★</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div><!-- comment -->
+                                        <div class="border-solid-r-1 display-flex m-l-5">
+                                            <span class="mt-5 mr-3">${requestScope.total_feedback}</span>
+                                            <span class="mt-5 mr-3">Ratings</span>
+                                        </div>
+                                        <div class="border-solid-r-1 display-flex m-l-5">
+                                            <span class="mt-5 mr-3">${requestScope.total_product_quantity_solded}</span>
+                                            <span class="mt-5 mr-3">Sold</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-column product-details-price">
+                                        <div class="flex items-center">
+                                            <div class="flex items-center X1ceUd">
+                                                <c:if test="${product.discount > 0}">
+                                                    <div class="product-details-price__original_price">₫<fmt:formatNumber  maxFractionDigits = "3" value = "${product.price}"/></div>
+                                                </c:if>
+                                                <div class="flex items-center">
+                                                    <div class="product-details-price__sale_price">₫<fmt:formatNumber  maxFractionDigits = "3" value = "${product.priceDiscount}"/></div>
+                                                    <c:if test="${product.discount > 0}">
+                                                        <div class="product-details-price__product_discount">${product.discount}% OFF</div>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                
+                                    <c:if  test="${product.quantity > 0}">
+                                        <div class="product-details-chose_quantity"> 
+                                            <label>Quantity: </label>
+                                            <input type="number" id="quantityOrder" name="quantityOrder" style="width: 4em;"  class="text-center"
+                                                   min="1" max="${product.quantity}" value = "1" required>
+                                            <span>${product.quantity} pieces available</span>
+                                        </div>
+                                        
+                                        <div id="alter_quantityOrder" style="margin-bottom: 20px;"> </div>
+                                    
+                                        <div>
+                                            <button  style="width: 10em; " class="form-control add-to-cart" onclick="addToCartFunction();" >
+                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                            </button>
+                                        </div>
+                                    </c:if>
+                                    
+                                    <c:if  test="${product.quantity <= 0}">
+                                        <div class="alert alert-danger w-90-percent" style="width: 90%" >Product is sold out!</div>
+                                    </c:if>
+                                    
                                 </div><!--/product-information-->
                             </div>
                         </div>
+                        <!-- Description -->
+                        <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px; padding-top: 10px;">Description</h2>
+                        <div class="category-tab shop-details-tab" style="padding-top: 10px">
+                            <c:forEach items="${requestScope.product_description}" var="s">
+                                <p style="margin: 5px 5px;">${s}</p>
+                            </c:forEach>
+                        </div>
+                        <!-- Description -->
 
                         <c:if test="${not empty requestScope.listFeedbacks }">
                             <!-- FEEDBACK -->
@@ -191,59 +232,59 @@
                                             </div>
                                         </div>
                                     </c:forEach>
-                                    </div>
                                 </div>
                             </div>
-                        </div>                
-                            <div class="pagging" style="clear: both">
-                                <ul class="pagination pull-right">
-                                    <c:if test="${requestScope.totalpage > 1}">
-                                        <li><a href="productdetails?page=1&productID=${product.id}">Frist</a></li>
-                                        </c:if>
-                                        <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
-                                        <li class="${pageindex == page ? "active =" : ""}" ><a href="productdetails?page=${page}&productID=${product.id}">${page}</a></li>    
-                                        </c:forEach>
-                                        <c:if test="${requestScope.totalpage > 1}">
-                                        <li><a href="productdetails?page=${requestScope.totalpage}&productID=${product.id}">Last</a></li>
-                                        </c:if>
-                                </ul>
-                            </div>
-                            <!--/END FEEDBACK-->
-                        </c:if>
-                        <c:if test="${empty requestScope.listFeedbacks}">
-                            <!-- FEEDBACK -->
-                            <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Feedback</h2>
-                            <div style="text-align: center;">
-                                <b>This Product Have No Feedback</b>
-                            </div>
-                            <!--/END FEEDBACK-->
-                        </c:if>
+                        </div>
+                    </div>                
+                    <div class="pagging" style="clear: both">
+                        <ul class="pagination pull-right">
+                            <c:if test="${requestScope.totalpage > 1}">
+                                <li><a href="productdetails?page=1&productID=${product.id}">Frist</a></li>
+                                </c:if>
+                                <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
+                                <li class="${pageindex == page ? "active =" : ""}" ><a href="productdetails?page=${page}&productID=${product.id}">${page}</a></li>    
+                                </c:forEach>
+                                <c:if test="${requestScope.totalpage > 1}">
+                                <li><a href="productdetails?page=${requestScope.totalpage}&productID=${product.id}">Last</a></li>
+                                </c:if>
+                        </ul>
                     </div>
-                    <!--END PRODCUT DETAILS-->
-                    
-                    <!--add to cart-->
-                    <div id="add-to-cart-alter"></div>
-                    <input type="hidden" id="customerId" value="${sessionScope.user.id}">
-                    <input type="hidden" id="productId" value="${product.id}">
-                    <input type="hidden" id="productQuantity" value="${product.quantity}">
-                    <!--/add to cart-->
-                    
-                    <!--zoom product image-->
-                    <div class="carouse-zoom" id="carouse-zoom" onclick=""></div>
-                    <!--/zoom product image-->
+                    <!--/END FEEDBACK-->
+                </c:if>
+                <c:if test="${empty requestScope.listFeedbacks}">
+                    <!-- FEEDBACK -->
+                    <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Feedback</h2>
+                    <div style="text-align: center;">
+                        <b>This Product Have No Feedback</b>
+                    </div>
+                    <!--/END FEEDBACK-->
+                </c:if>
+            </div>
+            <!--END PRODCUT DETAILS-->
+
+            <!--add to cart-->
+            <div id="add-to-cart-alter"></div>
+            <input type="hidden" id="customerId" value="${sessionScope.user.id}">
+            <input type="hidden" id="productId" value="${product.id}">
+            <input type="hidden" id="productQuantity" value="${product.quantity}">
+            <!--/add to cart-->
+
+            <!--zoom product image-->
+            <div class="carouse-zoom" id="carouse-zoom" onclick=""></div>
+            <!--/zoom product image-->
         </section>
-                                
-                                            
-        
-                                               
-                                                
+
+
+
+
+
         <script language="JavaScript" type="text/javascript">
-            
-          
+
+
         </script>
         <jsp:include page="../home-template/footer.jsp"/>
-        
-        
+
+
         <script src="../../assets/js/home/productDetail.js"></script>
         <script src="../../assets/public/js/jquery.js"></script>
         <script src="../../assets/public/js/bootstrap.min.js"></script>

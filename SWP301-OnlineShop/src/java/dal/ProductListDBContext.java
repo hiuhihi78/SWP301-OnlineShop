@@ -107,14 +107,14 @@ public class ProductListDBContext extends DBContext {
 
         if (subCategory > 0) {
             sql1 = " with x as (select ROW_NUMBER() OVER (ORDER BY date desc, id desc) as r\n"
-                    + "                    		, * from [Product] where status = 1 and  quantity >0 and subCategoryId = ? \n"
+                    + "                    		, * from [Product] where status = 1 and subCategoryId = ? \n"
                     + "					AND (name like ? \n"
                     + "					 OR description like ? ))\n"
                     + "                    		SElECT* FROM x where r between (?  - 1)* ? +1 and ? * ? ";
         }
         if (subCategory == 0) {
             sql1 = " with x as (select ROW_NUMBER() OVER (ORDER BY date desc, id desc) as r\n"
-                    + "                    		, * from [Product] where status = 1 and  quantity >0 \n"
+                    + "                    		, * from [Product] where status = 1 \n"
                     + "					AND (name like ? \n"
                     + "					 OR description like ? ))\n"
                     + "                    		SElECT* FROM x where r between (?  - 1)* ? +1 and ? * ? ";
@@ -335,7 +335,7 @@ public class ProductListDBContext extends DBContext {
                 feedback.setComment(rs.getString("comment"));
                 feedback.setStart(rs.getInt("start"));
                 if (rs.getDate("date") != null) {
-                    feedback.setDate(rs.getDate("date"));
+                    feedback.setDate(rs.getTimestamp("date"));
                 }
 
                 ArrayList<Image> images = new ArrayList<>();
@@ -468,20 +468,21 @@ public class ProductListDBContext extends DBContext {
         System.out.println(bContext.getListFeedbackByProductID(9, 1, 5));
     }
 
-    public ArrayList<Product> getListProductById(int[] listIdProduct, int idUser) {
+    public ArrayList<Product> getListProductById(Product[] listIdProduct, int idUser) {
         ArrayList<Product> listProduct = new ArrayList<>();
         try {
             String sql = "Select cart.*, Cart_Product.ProductId, Cart_Product.Quantity, product.thumbnail, Product.[name], product.sellerId, [User].fullname,\n"
-                    + "((Product.price - (product.price*product.discount/100))) as totalPrice\n"
+//                    + "((Product.price - (product.price*product.discount/100))) as totalPrice\n"
+                    + "Product.price, product.discount \n"
                     + "from cart join Cart_Product\n"
                     + "on cart.id = Cart_Product.CartId\n"
                     + "join Product on Product.id = Cart_Product.ProductId\n"
                     + "join [User] on [User].id = product.sellerId\n"
                     + "where cart.customerId = ? and Cart_Product.ProductId = ?";
-            for (int i : listIdProduct) {
+            for (Product i : listIdProduct) {
                 PreparedStatement stm = connection.prepareCall(sql);
                 stm.setInt(1, idUser);
-                stm.setInt(2, i);
+                stm.setInt(2, i.getId());
                 ResultSet rs = stm.executeQuery();
                 while (rs.next()) {
                     Product product = new Product();
@@ -494,6 +495,7 @@ public class ProductListDBContext extends DBContext {
                     user.setFullname(rs.getString(10));
                     product.setUser(user);
                     product.setPrice(rs.getLong(11));
+                    product.setDiscount(rs.getInt(12));
                     listProduct.add(product);
                 }
             }
@@ -502,5 +504,73 @@ public class ProductListDBContext extends DBContext {
             Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listProduct;
+    }
+
+    public double getStartPercent(int productID) {
+        int PERCENT_PER_STAR = 20;
+        double total = 0;
+        double count = 0;
+        double average = 0;
+        try {
+            String sql = "SELECT \n"
+                    + "      [start]\n"
+                    + "  FROM [Feedback] join Product on Feedback.productId = Product.id\n"
+                    + "  Where [Feedback].[status] = 1 \n"
+                    + "  and Product.id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, productID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                total += rs.getInt(1);
+                count++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (total == 0 || count == 0) {
+            average = 0;
+        } else {
+            average = total / count;
+        }
+
+        return average;
+    }
+
+    public int getTotalFeedback(int productID) {
+        try {
+            String sql = "SELECT \n"
+                    + "      Count(*)\n"
+                    + "  FROM [Feedback] join Product on Feedback.productId = Product.id\n"
+                    + "  Where [Feedback].[status] = 1 \n"
+                    + "  and Product.id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, productID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getTotalQuantityProductSolded(int productID) {
+        try {
+            String sql = "select Sum([OrderDetail].quantity)\n"
+                    + "from \n"
+                    + "OrderDetail join [Order] on  [Order].id = OrderDetail.orderId\n"
+                    + "where [Order].[status] = 4 and OrderDetail.productId = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, productID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductListDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }

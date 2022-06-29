@@ -102,12 +102,7 @@
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <a href="/marketing/sliderList" class="btn btn-success btn-lg"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>&nbspBack to List</a>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <div class="btn-group pull-right">
-                                        <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
-                                        <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller</button>
-                                    </div>
-                                </div>
+                              
                             </div>
                         </div>
                     </div>

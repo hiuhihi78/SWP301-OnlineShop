@@ -3,6 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
+$(document).ready(function() {
+  // Gets the span width of the filled-ratings span
+  // this will be the same for each rating
+  var star_rating_width = $('.fill-ratings span').width();
+  // Sets the container of the ratings to span width
+  // thus the percentages in mobile will never be wrong
+  $('.star-ratings').width(star_rating_width);
+});
+
 
 function  openFeedbackImg(id) {
     var divImage = document.getElementById('feedback-img-zoom-' + id);
@@ -49,7 +58,7 @@ function addToCartFunction() {
         window.location.assign("http://localhost:8080/login");
         return ;
     }
-    if(quantityOrder < 0){
+    if(quantityOrder <= 0){
         divAlterQuantityOrder.innerHTML = "<div class='alert alert-danger' style='padding: 10px;width: 75%;'>Quantity must be greater than 1! </div>";
         return ;
     }

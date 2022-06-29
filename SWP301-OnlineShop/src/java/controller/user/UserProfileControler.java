@@ -19,22 +19,23 @@ import model.User;
  * @author Hoang Quang
  */
 public class UserProfileControler extends HttpServlet {
-
+public static String ALERT = "";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //get infomation by id of user
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession();
-        //get id of user after login here...
-        User user = (User) session.getAttribute("user");
-        //get infomation of user
-        UserDBContext userDBContext = new UserDBContext();
-        User userProfile = userDBContext.getUserByIDLogin(user.getId());
-        request.setAttribute("user", userProfile);
+//        //get infomation by id of user
+//        response.setContentType("text/html;charset=UTF-8");
+//        request.setCharacterEncoding("UTF-8");
+//        HttpSession session = request.getSession();
+//        //get id of user after login here...
+//        User user = (User) session.getAttribute("user");
+//        //get infomation of user
+//        UserDBContext userDBContext = new UserDBContext();
+//        User userProfile = userDBContext.getUserByIDLogin(user.getId());
+//        request.setAttribute("user", userProfile);
+//
+//        request.getRequestDispatcher("/view/home-template/header.jsp").forward(request, response);
 
-        request.getRequestDispatcher("/view/public/userProfile.jsp").forward(request, response);
     }
 
     @Override
@@ -42,6 +43,7 @@ public class UserProfileControler extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+            
         //get paramester
         String raw_id = request.getParameter("id");
         String fullname = request.getParameter("fullname");
@@ -65,7 +67,9 @@ public class UserProfileControler extends HttpServlet {
         //home
         //LINK HOME HERE
 //        response.sendRedirect(".....");
-        response.sendRedirect("../user/profile");
+//        request.getRequestDispatcher("../home").forward(request, response);
+//        response.sendRedirect("../home?alter=Update sucess,Please Login To See New Update!");
+        response.sendRedirect("../home?alter=Update sucess!");
     }
 
     @Override

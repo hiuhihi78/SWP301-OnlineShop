@@ -27,6 +27,7 @@
         <!--active button nav in sidebar-->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
     </head>
     <body class="skin-black">
         <c:set var="name" value="${requestScope.name}"/>
@@ -52,45 +53,46 @@
                         <!--alter-->
                     <jsp:include page="../marketing-template/alter.jsp"></jsp:include>
                         <!--/alter-->
-                    <div class="mb-10" >
-                        <form action="#" method="POST" enctype="multipart/form-data">
-                            <!--Thumbnail-->
-                            <div class="form-group w-70-percent mx-auto">
-                                <label for="thumbnail">Thumbnail</label>
-                                <div  class="w-35percent image-input-layout display-flex" style="position: relative; width: fit-content;">
-                                    <div id="closeBtn-thumbnailBoxImg" class="close-btn" onclick="closeImg('thumbnailBoxImg','closeBtn-thumbnailBoxImg','thumbnail');"> <i class="fa-solid fa-xmark close-btn"></i></div>
-                                    <img id="thumbnailBoxImg" src="#" alt="your image" style="height:100%; width:100%;" class="boder-radius display-none image-thumbnail"/>
-                                </div>
-                                <input type="file" name="thumbnail" id="thumbnail" onchange="showThumbnail()" required=""/>
-                            </div>
-                            <!--/Thumbnail-->
-                            
-                            <!--Attached image-->
-                            <div class="form-group w-70-percent mx-auto">
-                                <label >Attached image</label>
-                                <div class="display-flex">
-                                    <div>
-                                        <div  class="w-100percent image-input-layout display-flex" style="position: relative; width: fit-content;">
-                                            <div id="closeBtn-attachedBoxImg-1" class="close-btn" onclick="closeImg('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1');"> <i class="fa-solid fa-xmark close-btn"></i></div>
-                                            <img id="attachedBoxImg-1" src="#" alt="your image" style="height:100%; width:100%;" class="boder-radius display-none image-thumbnail"/>
-                                        </div>
-                                        <input type="file" name="attachedImg1" id="attachedImg1" onchange="showAttachedImg('attachedBoxImg-1','closeBtn-attachedBoxImg-1','attachedImg1')" required=""/>
+                        <div class="mb-10" >
+                            <form action="#" method="POST" enctype="multipart/form-data">
+                                
+                                <!--Thumbnail-->
+                                <div class="form-group w-70-percent mx-auto">
+                                    <label for="thumbnail">Thumbnail</label>
+                                    <div  class="w-35percent image-input-layout display-flex" style="position: relative; width: fit-content;">
+                                        <div id="closeBtn-thumbnailBoxImg" class="close-btn" onclick="closeImg('thumbnailBoxImg', 'closeBtn-thumbnailBoxImg', 'thumbnail');"> <i class="fa-solid fa-xmark close-btn"></i></div>
+                                        <img id="thumbnailBoxImg" src="#" alt="your image" style="height:100%; width:100%;" class="boder-radius display-none image-thumbnail"/>
                                     </div>
-                                    <div>
-                                        <div  class="w-100percent image-input-layout ml-2percent" style="position: relative; width: fit-content;">
-                                            <div id="closeBtn-attachedBoxImg-2" class="close-btn" onclick="closeImg('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2');"> <i class="fa-solid fa-xmark close-btn"></i></div>
-                                            <img id="attachedBoxImg-2" src="#" alt="your image" style="height:100%; width:100%;" class="boder-radius display-none image-thumbnail"/>
-                                        </div>
-                                        <input type="file" name="attachedImg2" id="attachedImg2" onchange="showAttachedImg('attachedBoxImg-2','closeBtn-attachedBoxImg-2','attachedImg2')" required=""/>
-                                    </div>
+                                    <input type="file" name="thumbnail" id="thumbnail" onchange="showThumbnail()" required=""/>
                                 </div>
-                            </div>
-                            <!--/Attacked image-->
+                                <!--/Thumbnail-->
 
-                            <!--Name-->
-                            <div class="form-group w-70-percent mx-auto">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" value="${name}" name="name" id="name" placeholder="Enter name of product"  required="">
+                                <!--Attached image-->
+                                <div class="form-group w-70-percent mx-auto">
+                                    <label >Attached image</label>
+                                    <div class="display-flex">
+                                        <div>
+                                            <div  class="w-100percent image-input-layout display-flex" style="position: relative; width: fit-content;">
+                                                <div id="closeBtn-attachedBoxImg-1" class="close-btn" onclick="closeImg('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1');"> <i class="fa-solid fa-xmark close-btn"></i></div>
+                                                <img id="attachedBoxImg-1" src="#" alt="your image" style="height:100%; width:100%;" class="boder-radius display-none image-thumbnail"/>
+                                            </div>
+                                            <input type="file" name="attachedImg1" id="attachedImg1" onchange="showAttachedImg('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1')" required=""/>
+                                        </div>
+                                        <div>
+                                            <div  class="w-100percent image-input-layout ml-2percent" style="position: relative; width: fit-content;">
+                                                <div id="closeBtn-attachedBoxImg-2" class="close-btn" onclick="closeImg('attachedBoxImg-2', 'closeBtn-attachedBoxImg-2', 'attachedImg2');"> <i class="fa-solid fa-xmark close-btn"></i></div>
+                                                <img id="attachedBoxImg-2" src="#" alt="your image" style="height:100%; width:100%;" class="boder-radius display-none image-thumbnail"/>
+                                            </div>
+                                            <input type="file" name="attachedImg2" id="attachedImg2" onchange="showAttachedImg('attachedBoxImg-2', 'closeBtn-attachedBoxImg-2', 'attachedImg2')" required=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/Attacked image-->
+
+                                <!--Name-->
+                                <div class="form-group w-70-percent mx-auto">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" value="${name}" name="name" id="name" placeholder="Enter name of product"  required="">
                             </div>
                             <div class="form-group w-70-percent mx-auto">
                                 <label for="description">Description</label>
@@ -108,7 +110,7 @@
                                 <div id="rowShowSeller"></div>
                             </div>
                             <!--/Seller-->
-                            
+
                             <!--Category-->
                             <div class="form-group w-70-percent mx-auto">
                                 <label for="category">Category</label>
@@ -125,7 +127,7 @@
                                 </div>
                             </div>
                             <!--/Category-->
-                            
+
                             <!--SubCategory-->
                             <div class="form-group w-70-percent mx-auto" >
                                 <label for="subCategory">SubCategory</label>
@@ -156,14 +158,14 @@
                                 <input type="number" class="form-control" name="discount" id="discount" min="0" max="100" placeholder="Enter discount of product" required="">
                             </div>
                             <!--/Discount-->
-                            
+
                             <!--Quantity-->
                             <div class="form-group w-70-percent mx-auto">
                                 <label for="quantity">Quantity</label>
                                 <input type="number" class="form-control" name="quantity" id="discount" min="0"  placeholder="Enter quantity of product" required="">
                             </div>
                             <!--/Quantity-->
-                            
+
                             <!--feature-->
                             <div class="form-group w-70-percent mx-auto">
                                 <label class="form-check-label" for="featureActivate">Feattured</label>
@@ -212,10 +214,10 @@
                         <!--<h4 class="modal-title">Modal Header</h4>-->
                     </div>
                     <div class="modal-body">
-                            <div class="form-group">
-                                <label for="newCategory">New category</label>
-                                <input type="text" class="form-control" name="newCategory" id="newCategory" placeholder="Enter new category name" required=""> 
-                            </div>
+                        <div class="form-group">
+                            <label for="newCategory">New category</label>
+                            <input type="text" class="form-control" name="newCategory" id="newCategory" placeholder="Enter new category name" required=""> 
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSaveCategory()">Save</button>
@@ -223,11 +225,11 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-                
+
             </div>
         </div>
-        
-        
+
+
         <!-- Modal for add new Subcategory-->
         <div class="modal fade" id="addSubcategoryModal" role="dialog">
             <div class="modal-dialog">
@@ -238,10 +240,10 @@
                         <!--<h4 class="modal-title">Modal Header</h4>-->
                     </div>
                     <div class="modal-body">
-                            <div class="form-group">
-                                <label for="newSubcategory">New subcategory</label>
-                                <input type="text" class="form-control" name="newSubcategory" id="newSubcategory" placeholder="Enter new Subcategory name" required=""> 
-                            </div>
+                        <div class="form-group">
+                            <label for="newSubcategory">New subcategory</label>
+                            <input type="text" class="form-control" name="newSubcategory" id="newSubcategory" placeholder="Enter new Subcategory name" required=""> 
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSaveSubcategory()">Save</button>
@@ -249,13 +251,13 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-                
+
             </div>
         </div>
         <div></div>
 
         <script>
-            
+
         </script>
 
         <!--javascrip-->

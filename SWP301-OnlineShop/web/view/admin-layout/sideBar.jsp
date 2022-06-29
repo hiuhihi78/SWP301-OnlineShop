@@ -61,13 +61,7 @@
                         </a>
                     </li>
                 </c:if>
-                <c:if test="${s.key.url == '/customer/add' && s.value == true}">
-                    <li id="nav-add-feature-group">
-                        <a href="${s.key.url}">
-                            <i class=""></i> <span>${s.key.name}</span>
-                        </a>
-                    </li>
-                </c:if>
+
                 <c:if test="${s.key.url == '/customer/list' && s.value == true}">
                     <li id="nav-add-feature-group">
                         <a href="${s.key.url}">

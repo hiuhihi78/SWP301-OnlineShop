@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -208,7 +209,7 @@ public class FeedbackDBContext extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, feedbackId);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Image image = new Image();
                 image.setImage(rs.getString(1));
                 images.add(image);
@@ -218,10 +219,42 @@ public class FeedbackDBContext extends DBContext {
         }
         return images;
     }
-    
+
     public static void main(String[] args) {
         FeedbackDBContext db = new FeedbackDBContext();
         System.err.println(db.getFeedbackImage(5).size());
+    }
+
+    public void addFeedback(int userID, int productID, int star, String commnent, String fileUrl, boolean status, Date dateNow) {
+        try {
+            String sql = " INSERT INTO [dbo].[Feedback]\n"
+                    + "           ([userId]\n"
+                    + "           ,[productId]\n"
+                    + "           ,[start]\n"
+                    + "           ,[comment]\n"
+                    + "           ,[image]\n"
+                    + "           ,[status]\n"
+                    + "           ,[date])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?) ";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userID);
+            stm.setInt(2, productID);
+            stm.setInt(3, star);
+            stm.setString(4, commnent);
+            stm.setString(5, fileUrl);
+            stm.setBoolean(6, status);
+            stm.setDate(7, dateNow);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedbackDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
