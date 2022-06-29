@@ -19,7 +19,11 @@ public class Order {
     private double totalcost;
     private int status;
     private int numproducts;
-    private String buyer;
+    private User buyer;
+    private User sale;
+    private String customernote;
+    private String salenote;
+    private String cancelreason;
 
     public Order() {
     }
@@ -72,12 +76,45 @@ public class Order {
         this.numproducts = numproducts;
     }
 
-    public String getBuyer() {
+    public User getBuyer() {
         return buyer;
     }
 
-    public void setBuyer(String buyer) {
+    public void setBuyer(User buyer) {
         this.buyer = buyer;
     }
+    
 
+    public User getSale() {
+        return sale;
+    }
+
+    public void setSale(User sale) {
+        this.sale = sale;
+    }
+
+    public String getCustomernote() {
+        return customernote;
+    }
+
+    public void setCustomernote(String customernote) {
+        this.customernote = customernote;
+    }
+
+    public String getSalenote() {
+        return salenote;
+    }
+
+    public void setSalenote(String salenote) {
+        this.salenote = salenote;
+    }
+
+    public String getCancelreason() {
+        return cancelreason;
+    }
+
+    public void setCancelreason(String cancelreason) {
+        this.cancelreason = cancelreason;
+    }
+    
 }

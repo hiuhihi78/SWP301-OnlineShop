@@ -153,7 +153,7 @@
                                                 </form>
                                             </td>
                                             <td>
-                                                <a href="#?id=${p.id}" class="text-decoration-none text-white">
+                                                <a href="/marketing/feedbackdetails?id=${p.id}" class="text-decoration-none text-white">
                                                     <button type="button" class="btn btn-primary">
                                                         <i class="fa-solid fa-eye" style="margin-right: 2px"></i>View
                                                     </button>

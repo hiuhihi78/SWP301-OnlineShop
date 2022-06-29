@@ -206,12 +206,11 @@ public class OrderDBContext extends DBContext {
         try {
             String sql = "WITH \n"
                     + "t as\n"
-                    + "(SELECT [Order].id as OrderID,[User].fullname as CustomerName, [Order].[date], [Order].totalPrice, [Product].[name] as ProductName, [Order].[status] as OrderStatus\n"
+                    + "(SELECT [Order].id as OrderID,[User].fullname as CustomerName,[User].id as CustomerID, [Order].[date], [Order].totalPrice, [Product].[name] as ProductName, [Order].[status] as OrderStatus, [Order].sellerId\n"
                     + "FROM \n"
                     + "[User] inner join [Order] on [User].id = [Order].userId\n"
                     + "inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
-                    + "inner join Product ON OrderDetail.productId = Product.id\n"
-                    + "),\n"
+                    + "inner join Product ON OrderDetail.productId = Product.id),\n"
                     + "b as\n"
                     + "(SELECT [Order].id as OrderID, COUNT(Product.id) as NumberOfProducts\n"
                     + "FROM [Order] inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
@@ -231,7 +230,9 @@ public class OrderDBContext extends DBContext {
                     + "        WHERE   mi.OrderID = mo.OrderID\n"
                     + "        ) a\n"
                     + "		)\n"
-                    + "Select c.OrderID,c.CustomerName, c.[date], c.totalPrice, c.ProductName, c.OrderStatus, b.NumberOfProducts from c inner join b on c.OrderID = b.OrderID\n"
+                    + "Select c.OrderID, c.[date], c.totalPrice, c.CustomerID, c.CustomerName, c.ProductName, c.OrderStatus, b.NumberOfProducts, c.sellerId, [User].fullname as SellerName\n"
+                    + "from c inner join b on c.OrderID = b.OrderID\n"
+                    + "left outer join [User] on c.sellerId = [User].id\n"
                     + "\n"
                     + "WHERE c.[date] between ? and ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -247,7 +248,92 @@ public class OrderDBContext extends DBContext {
                 o.setTotalcost(rs.getDouble("totalPrice"));
                 o.setStatus(rs.getInt("OrderStatus"));
                 o.setNumproducts(rs.getInt("NumberOfProducts"));
-                o.setBuyer(rs.getString("CustomerName"));
+
+                User buyer = new User();
+                buyer.setId(rs.getInt("CustomerID"));
+                buyer.setFullname(rs.getString("CustomerName"));
+
+                User seller = new User();
+                seller.setId(rs.getInt("sellerId"));
+                seller.setFullname(rs.getString("SellerName"));
+
+                o.setBuyer(buyer);
+                o.setSale(seller);
+
+                ArrayList<Product> products = new ArrayList<>();
+                Product p = new Product();
+                p.setName(rs.getString("ProductName"));
+                products.add(p);
+
+                o.setProducts(products);
+                orders.add(o);
+            }
+            return orders;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Order> getOrders(String startDate, String endDate, int saleid, int status) {
+        try {
+            String sql = "WITH \n"
+                    + "t as\n"
+                    + "(SELECT [Order].id as OrderID,[User].fullname as CustomerName,[User].id as CustomerID, [Order].[date], [Order].totalPrice, [Product].[name] as ProductName, [Order].[status] as OrderStatus, [Order].sellerId\n"
+                    + "FROM \n"
+                    + "[User] inner join [Order] on [User].id = [Order].userId\n"
+                    + "inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
+                    + "inner join Product ON OrderDetail.productId = Product.id),\n"
+                    + "b as\n"
+                    + "(SELECT [Order].id as OrderID, COUNT(Product.id) as NumberOfProducts\n"
+                    + "FROM [Order] inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
+                    + "inner join Product ON OrderDetail.productId = Product.id\n"
+                    + "group by [Order].id),\n"
+                    + "c as\n"
+                    + "(\n"
+                    + "SELECT  a.*\n"
+                    + "FROM    (\n"
+                    + "        SELECT  DISTINCT t.OrderID\n"
+                    + "        FROM t\n"
+                    + "        ) mo\n"
+                    + "CROSS APPLY\n"
+                    + "        (\n"
+                    + "        SELECT  TOP 1 *\n"
+                    + "        FROM    t mi\n"
+                    + "        WHERE   mi.OrderID = mo.OrderID\n"
+                    + "        ) a\n"
+                    + "		)\n"
+                    + "Select c.OrderID, c.[date], c.totalPrice, c.CustomerID, c.CustomerName, c.ProductName, c.OrderStatus, b.NumberOfProducts, c.sellerId, [User].fullname as SellerName\n"
+                    + "from c inner join b on c.OrderID = b.OrderID\n"
+                    + "left outer join [User] on c.sellerId = [User].id\n"
+                    + "\n"
+                    + "WHERE c.[date] between ? and ? and c.sellerId = ? and c.OrderStatus = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, startDate);
+            stm.setString(2, endDate);
+            stm.setInt(3, saleid);
+            stm.setInt(4, status);
+            ResultSet rs = stm.executeQuery();
+            ArrayList<Order> orders = new ArrayList<>();
+            while (rs.next()) {
+                Order o = new Order();
+                o.setId(rs.getInt("OrderID"));
+                o.setDate(rs.getDate("date"));
+                o.setTotalcost(rs.getDouble("totalPrice"));
+                o.setStatus(rs.getInt("OrderStatus"));
+                o.setNumproducts(rs.getInt("NumberOfProducts"));
+
+                User buyer = new User();
+                buyer.setId(rs.getInt("CustomerID"));
+                buyer.setFullname(rs.getString("CustomerName"));
+
+                User seller = new User();
+                seller.setId(rs.getInt("sellerId"));
+                seller.setFullname(rs.getString("SellerName"));
+
+                o.setBuyer(buyer);
+                o.setSale(seller);
+
                 ArrayList<Product> products = new ArrayList<>();
                 Product p = new Product();
                 p.setName(rs.getString("ProductName"));
@@ -265,9 +351,11 @@ public class OrderDBContext extends DBContext {
 
     public Order getInformationOfOrderByID(int orderID) {
         try {
-            String sql = " select DISTINCT  od.id, od.date, od.status, od.totalPrice\n"
+            String sql = " select DISTINCT  od.id, od.date, od.status, od.totalPrice, od.sellerid, [User].fullname as sellerName, od.note as CustomerNote, od.sellernote as SaleNote\n"
+                    + ", od.cancelledReason\n"
                     + "from\n"
-                    + "[Order] od WHERE od.id = ? ";
+                    + "[Order] od inner join [User] on od.sellerid = [User].id\n"
+                    + " WHERE od.id = ? ";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, orderID);
             ResultSet rs = ps.executeQuery();
@@ -277,10 +365,90 @@ public class OrderDBContext extends DBContext {
                 order.setDate(rs.getDate("date"));
                 order.setStatus(rs.getInt("status"));
                 order.setTotalcost(rs.getDouble("totalPrice"));
+                order.setCustomernote(rs.getString("CustomerNote"));
+                order.setSalenote(rs.getString("SaleNote"));
+                order.setCancelreason(rs.getString("cancelledReason"));
+                User sale = new User();
+                sale.setId(rs.getInt("sellerid"));
+                sale.setFullname(rs.getString("sellerName"));
+                order.setSale(sale);
                 return order;
             }
         } catch (SQLException ex) {
             Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Order> getOrders(String startDate, String endDate, int saleid) {
+        try {
+            String sql = "WITH \n"
+                    + "t as\n"
+                    + "(SELECT [Order].id as OrderID,[User].fullname as CustomerName,[User].id as CustomerID, [Order].[date], [Order].totalPrice, [Product].[name] as ProductName, [Order].[status] as OrderStatus, [Order].sellerId\n"
+                    + "FROM \n"
+                    + "[User] inner join [Order] on [User].id = [Order].userId\n"
+                    + "inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
+                    + "inner join Product ON OrderDetail.productId = Product.id),\n"
+                    + "b as\n"
+                    + "(SELECT [Order].id as OrderID, COUNT(Product.id) as NumberOfProducts\n"
+                    + "FROM [Order] inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
+                    + "inner join Product ON OrderDetail.productId = Product.id\n"
+                    + "group by [Order].id),\n"
+                    + "c as\n"
+                    + "(\n"
+                    + "SELECT  a.*\n"
+                    + "FROM    (\n"
+                    + "        SELECT  DISTINCT t.OrderID\n"
+                    + "        FROM t\n"
+                    + "        ) mo\n"
+                    + "CROSS APPLY\n"
+                    + "        (\n"
+                    + "        SELECT  TOP 1 *\n"
+                    + "        FROM    t mi\n"
+                    + "        WHERE   mi.OrderID = mo.OrderID\n"
+                    + "        ) a\n"
+                    + "		)\n"
+                    + "Select c.OrderID, c.[date], c.totalPrice, c.CustomerID, c.CustomerName, c.ProductName, c.OrderStatus, b.NumberOfProducts, c.sellerId, [User].fullname as SellerName\n"
+                    + "from c inner join b on c.OrderID = b.OrderID\n"
+                    + "left outer join [User] on c.sellerId = [User].id\n"
+                    + "\n"
+                    + "WHERE c.[date] between ? and ? and c.sellerId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, startDate);
+            stm.setString(2, endDate);
+            stm.setInt(3, saleid);;
+            ResultSet rs = stm.executeQuery();
+            ArrayList<Order> orders = new ArrayList<>();
+            while (rs.next()) {
+                Order o = new Order();
+                o.setId(rs.getInt("OrderID"));
+                o.setDate(rs.getDate("date"));
+                o.setTotalcost(rs.getDouble("totalPrice"));
+                o.setStatus(rs.getInt("OrderStatus"));
+                o.setNumproducts(rs.getInt("NumberOfProducts"));
+
+                User buyer = new User();
+                buyer.setId(rs.getInt("CustomerID"));
+                buyer.setFullname(rs.getString("CustomerName"));
+
+                User seller = new User();
+                seller.setId(rs.getInt("sellerId"));
+                seller.setFullname(rs.getString("SellerName"));
+
+                o.setBuyer(buyer);
+                o.setSale(seller);
+
+                ArrayList<Product> products = new ArrayList<>();
+                Product p = new Product();
+                p.setName(rs.getString("ProductName"));
+                products.add(p);
+
+                o.setProducts(products);
+                orders.add(o);
+            }
+            return orders;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -308,6 +476,109 @@ public class OrderDBContext extends DBContext {
             Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public ArrayList<Order> getOrdersByStatus(String startDate, String endDate, int status) {
+        try {
+            String sql = "WITH \n"
+                    + "t as\n"
+                    + "(SELECT [Order].id as OrderID,[User].fullname as CustomerName,[User].id as CustomerID, [Order].[date], [Order].totalPrice, [Product].[name] as ProductName, [Order].[status] as OrderStatus, [Order].sellerId\n"
+                    + "FROM \n"
+                    + "[User] inner join [Order] on [User].id = [Order].userId\n"
+                    + "inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
+                    + "inner join Product ON OrderDetail.productId = Product.id),\n"
+                    + "b as\n"
+                    + "(SELECT [Order].id as OrderID, COUNT(Product.id) as NumberOfProducts\n"
+                    + "FROM [Order] inner join OrderDetail ON [Order].id = OrderDetail.orderId\n"
+                    + "inner join Product ON OrderDetail.productId = Product.id\n"
+                    + "group by [Order].id),\n"
+                    + "c as\n"
+                    + "(\n"
+                    + "SELECT  a.*\n"
+                    + "FROM    (\n"
+                    + "        SELECT  DISTINCT t.OrderID\n"
+                    + "        FROM t\n"
+                    + "        ) mo\n"
+                    + "CROSS APPLY\n"
+                    + "        (\n"
+                    + "        SELECT  TOP 1 *\n"
+                    + "        FROM    t mi\n"
+                    + "        WHERE   mi.OrderID = mo.OrderID\n"
+                    + "        ) a\n"
+                    + "		)\n"
+                    + "Select c.OrderID, c.[date], c.totalPrice, c.CustomerID, c.CustomerName, c.ProductName, c.OrderStatus, b.NumberOfProducts, c.sellerId, [User].fullname as SellerName\n"
+                    + "from c inner join b on c.OrderID = b.OrderID\n"
+                    + "left outer join [User] on c.sellerId = [User].id\n"
+                    + "\n"
+                    + "WHERE c.[date] between ? and ? and c.OrderStatus = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, startDate);
+            stm.setString(2, endDate);
+            stm.setInt(3, status);;
+            ResultSet rs = stm.executeQuery();
+            ArrayList<Order> orders = new ArrayList<>();
+            while (rs.next()) {
+                Order o = new Order();
+                o.setId(rs.getInt("OrderID"));
+                o.setDate(rs.getDate("date"));
+                o.setTotalcost(rs.getDouble("totalPrice"));
+                o.setStatus(rs.getInt("OrderStatus"));
+                o.setNumproducts(rs.getInt("NumberOfProducts"));
+
+                User buyer = new User();
+                buyer.setId(rs.getInt("CustomerID"));
+                buyer.setFullname(rs.getString("CustomerName"));
+
+                User seller = new User();
+                seller.setId(rs.getInt("sellerId"));
+                seller.setFullname(rs.getString("SellerName"));
+
+                o.setBuyer(buyer);
+                o.setSale(seller);
+
+                ArrayList<Product> products = new ArrayList<>();
+                Product p = new Product();
+                p.setName(rs.getString("ProductName"));
+                products.add(p);
+
+                o.setProducts(products);
+                orders.add(o);
+            }
+            return orders;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void updateOrderStatus(int orderid, int status) {
+        try {
+            String sql = "UPDATE [dbo].[Order]\n"
+                    + "   SET [status] = ?\n"
+                    + " WHERE [Order].id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, status);
+            stm.setInt(2, orderid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateOrderStatus(int orderid, int status, String cancelledReason) {
+        try {
+            String sql = "UPDATE [dbo].[Order]\n"
+                    + "   SET [status] = ?\n"
+                    + "   ,[cancelledReason] = ?\n"
+                    + " WHERE [Order].id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, status);
+            stm.setInt(3, orderid);
+            stm.setString(2, cancelledReason);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public ArrayList<Product> getListOrderProductOfUser(int orderID) {
@@ -377,6 +648,34 @@ public class OrderDBContext extends DBContext {
 //                }
 //            }
 //        }
+    }
+
+    public void updateSaleNote(int orderid, String note) {
+        try {
+            String sql = "UPDATE [dbo].[Order]\n"
+                    + "   SET [sellernote] = ?\n"
+                    + " WHERE [Order].id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, note);
+            stm.setInt(2, orderid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateSale(int orderid, int saleid) {
+        try {
+            String sql = "UPDATE [dbo].[Order]\n"
+                    + "   SET [sellerid] = ?\n"
+                    + " WHERE [Order].id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, saleid);
+            stm.setInt(2, orderid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public ArrayList<Order> getListProductOrderByID(int orderID) {

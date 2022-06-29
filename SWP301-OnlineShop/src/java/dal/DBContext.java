@@ -47,6 +47,7 @@ public class DBContext {
 //        }
 //    }
 
+
     public DBContext() {
         try {
             String user = "vailon";
@@ -60,6 +61,7 @@ public class DBContext {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 //    public DBContext() {
 //        try {
 //            String user = "se1610";
@@ -73,6 +75,7 @@ public class DBContext {
 //            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
+
     public static void main(String[] args) {
         DBContext bContext = new DBContext();
         if (bContext.connection != null) {

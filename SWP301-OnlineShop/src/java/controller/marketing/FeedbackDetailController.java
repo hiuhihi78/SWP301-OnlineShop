@@ -2,28 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin;
+package controller.marketing;
 
-import dal.RoleDBContext;
+import dal.FeedbackDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Feature;
-import model.User;
+import model.Feedback;
 
 /**
  *
- * @author hoan
+ * @author Admin
  */
-public class AddRoleController extends BaseAuthController {
+@WebServlet(name = "FeedbackDetailController", urlPatterns = {"/marketing/feedbackdetails"})
+public class FeedbackDetailController extends BaseAuthController {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,16 +37,16 @@ public class AddRoleController extends BaseAuthController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        RoleDBContext roleDB = new RoleDBContext();
-        ArrayList<Feature> adminFeatures = roleDB.getFeatureByGroup("Admin");
-        ArrayList<Feature> marketingFeatures = roleDB.getFeatureByGroup("Marketing");
-        ArrayList<Feature> SalesFeatures = roleDB.getFeatureByGroup("Sales");
-
-        request.setAttribute("adminFeatures", adminFeatures);
-        request.setAttribute("marketingFeatures", marketingFeatures);
-        request.setAttribute("SalesFeatures", SalesFeatures);
-        request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
+        int fid = Integer.parseInt(request.getParameter("id"));
+        FeedbackDBContext fdb = new FeedbackDBContext();
+        Feedback f;
+        try {
+            f = fdb.getFeedbackById(fid);
+            request.setAttribute("feedback", f);
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedbackDetailController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.getRequestDispatcher("../view/marketing/feedbackdetails.jsp").forward(request, response);
     }
 
     /**
@@ -60,21 +60,7 @@ public class AddRoleController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String[] roles = request.getParameterValues("roleID");
-        String roleName = request.getParameter("roleName");
-        try {
-            RoleDBContext roleDB = new RoleDBContext();
-            roleDB.insertNewRole(roles, roleName);
-            request.setAttribute("ater", "Add new role successfully");
-            //response.sendRedirect("/admin/addRole");
-            request.setAttribute("message", "Add user's role success!");
-            request.setAttribute("error", false);
-            request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            request.setAttribute("message", "Add user's role failed!");
-            request.setAttribute("error", true);
-            request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
-        }
+        
     }
 
     /**

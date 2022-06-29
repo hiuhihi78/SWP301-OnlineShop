@@ -118,10 +118,10 @@ public class RoleDBContext extends DBContext {
             connection.setAutoCommit(false);
             String sql = "INSERT INTO [dbo].[Role]\n"
                     + "           ([status]\n"
-                    + "           ,[name]\n"
-                    + "           ,[isSuperAdmin])\n"
+                    + "           ,[name])\n"
+//                    + "           ,[isSuperAdmin])\n"
                     + "     VALUES\n"
-                    + "           (1, ?, 0)";
+                    + "           (1, ?)";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, roleName);
             ps.executeUpdate();

@@ -1230,6 +1230,25 @@ public class UserDBContext extends DBContext {
         return listUserMarketing;
     }
 
+    public ArrayList<User> getSaleUser() {
+        ArrayList<User> sales = new ArrayList<>();
+        try {
+            String sql = "Select [User].id, [User].fullname from [User] \n"
+                    + "Where roleId = 3";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt(1));
+                user.setFullname(rs.getString(2));
+                sales.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sales;
+    }
+
     public static void main(String[] args) {
         UserDBContext db = new UserDBContext();
 //        System.out.println(db.getListUserFiltered(3, "male", "active", "Le", "id", "asc", 1, 5).size());
