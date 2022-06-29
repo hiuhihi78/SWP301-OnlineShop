@@ -106,7 +106,9 @@
                                     </p>-->
                                     <div class="display-flex feedback-detail-product">
                                         <div class="border-solid-r-1 display-flex">
-                                            <span class="mt-5 mr-3">${requestScope.total_start_percent}</span>
+                                            <span class="mt-5 mr-3">
+                                                <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${requestScope.total_start_percent}" />
+                                            </span>
                                             <div class="star-ratings" >
                                                 <div class="fill-ratings" style="width: ${requestScope.total_start_percent * 20}%;">
                                                     <span>★★★★★</span>
