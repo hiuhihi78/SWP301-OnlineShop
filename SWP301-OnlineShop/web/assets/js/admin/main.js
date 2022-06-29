@@ -21,23 +21,25 @@ setTimeout(function () {
 
 $(document).ready(function () {
     $(function () {
+        $('#txtAreaReason').hide();
+
         var start = moment();
         var end = moment();
-        function cb(start, end) {
-            const params = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-            });
-            var startTime = params.startTime;
-            var endTime = params.endTime;
-            if (startTime == null || endTime == null)
-            {
-                $('#reportrange span').html(start.format('YYYY-MM-DD') + ' -> ' + end.format('YYYY-MM-DD'));
-            } else
-            {
-                console.log()
-                $('#reportrange span').html(startTime + ' -> ' + endTime);
-            }
-
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+        var startTime = params.startTime;
+        var endTime = params.endTime;
+        if (startTime === null || endTime === null)
+        {
+            $('#startTime').prop('value', start.format('YYYY-MM-DD'));
+            $('#endTime').prop('value', end.format('YYYY-MM-DD'));
+            $('#reportrange span').html(start.format('YYYY-MM-DD') + ' -> ' + end.format('YYYY-MM-DD'));
+        } else
+        {
+            $('#startTime').prop('value', startTime);
+            $('#endTime').prop('value', endTime);
+            $('#reportrange span').html(startTime + ' -> ' + endTime);
         }
         $('#reportrange').daterangepicker({
             startDate: start,
@@ -50,11 +52,123 @@ $(document).ready(function () {
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
                 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             }
-        }, cb);
-        cb(start, end);
+        });
     });
 
     $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-        window.location.href = window.location.pathname + "?" + $.param({'startTime': picker.startDate.format('YYYY-MM-DD'), 'endTime': picker.endDate.format('YYYY-MM-DD')})
+        const startTime = picker.startDate.format('YYYY-MM-DD');
+        const endTime = picker.endDate.format('YYYY-MM-DD');
+        $('#startTime').prop('value', startTime);
+        $('#endTime').prop('value', endTime);
+        $('#reportrange span').html(startTime + ' -> ' + endTime);
     });
+
+    $('.confirm-process').on('click', function () {
+        var orderid = $(this).data("orderid");
+        $("#myModal").data('orderid', orderid).modal('show');
+    });
+
+    $('#btnConfirmProcessOrder').on('click', function () {
+        var orderid = $('#myModal').data("orderid");
+        var url = '/sale/order/updatestatus';
+        //set status = 2 mean processing
+        $.post(url, {orderid: orderid, status: 2}, function () {
+            $('#row-orderid' + orderid + ' td#tblStatus').html("<span class='label label-info'>Processing</span>");
+            $('#row-orderid' + orderid + ' .confirm-process').hide();
+        })
+                .fail(function () {
+
+                });
+    });
+
+    $('#statusorder').on("change", function () {
+        var selected = $(this).val();
+        if (selected == 0)
+        {
+            $('#txtAreaReason').show();
+        } else
+        {
+            $('#txtAreaReason').hide();
+        }
+    });
+
+    $('#btnUpdateOrder').on('click', function () {
+        var orderid = $(this).data("orderid");
+        $("#myModal").data('orderid', orderid).modal('show');
+    });
+
+    $('#btnConfirmUpdateStatus').on('click', function () {
+        var orderid = $('#myModal').data('orderid');
+        var status = $('#statusorder :selected').val();
+        var cancelledReason = null;
+        var url = '/sale/order/updatestatus';
+        if (status == 0)
+        {
+            cancelledReason = $('#txtcancelReason').val();
+        }
+        $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason}, function () {
+            location.reload();
+        })
+                .fail(function () {
+
+                });
+    });
+
+    $('#btnEditSaleNote').on('click', function () {
+        $('#txtSaleNote').prop("disabled", false);
+        $(this).addClass("display-none"); //hide Edit button
+        $('#btnCancelSaleNoteSave').removeClass('display-none'); //show cancel button
+        $('#btnSaveSaleNote').removeClass('display-none'); // show save button
+    });
+
+    $('#btnCancelSaleNoteSave').on('click', function () {
+        $('#txtSaleNote').prop("disabled", true); //disable sale note textarea
+        $(this).addClass("display-none"); //hide cancel button
+        $('#btnSaveSaleNote').addClass('display-none'); //hide save button
+        $('#btnEditSaleNote').removeClass("display-none"); //show edit button
+    });
+
+    $('#btnSaveSaleNote').on('click', function () {
+        var orderid = $(this).data('orderid');
+        var note = $('#txtSaleNote').val();
+        var url = '/sale/order/updatenote';
+        $.post(url, {orderid: orderid, note: note}, function () {
+            location.reload();
+        })
+                .fail(function () {
+
+                });
+    });
+
+    $('#btnShowThumbnail').on('click', function () {
+        var thumbnail = $(this).data("thumbnail");
+        $('.imagepreview').attr('src', thumbnail);
+        $("#myModal").modal('show');
+    });
+
+    $('#btnConfirmUpdateStatus').on('click', function () {
+        var fid = $('#btnUpdateFBStatus').data('passing').fid;
+        var status = $('#btnUpdateFBStatus').data('passing').status;
+        var url = '/marketing/feedback/updatestatus';
+        $.post(url, {fid: fid, status: status}, function (response) {
+            location.reload();
+        })
+                .fail(function (e) {
+                    var obj = JSON.parse(e.responseText);
+                    toastr.error(obj.msg, 'Update status error');
+                });
+    });
+
+    $('#btnConfirmUpdateSale').on('click', function () {
+        var sid = $('#salename').val();
+        var oid = $('#btnChangeSale').data('orderid');
+        var url = '/sale/order/updateseller';
+        $.post(url, {sid: sid, oid: oid}, function () {
+            location.reload();
+        })
+                .fail(function (e) {
+                    var obj = JSON.parse(e.responseText);
+                    toastr.error(obj.msg, 'Update status error');
+                });
+    }); 
 });

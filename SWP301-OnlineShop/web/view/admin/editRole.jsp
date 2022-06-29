@@ -69,6 +69,13 @@
                                         <label for="fid">${a.name}</label><br>
                                     </c:forEach>
                                 </p>
+                                <p>
+                                    <label for="salesFeatures">Sale</label><br>
+                                    <c:forEach items="${requestScope.SalesFeatues}" var="a">
+                                        <input type="checkbox" id="roleID" name="roleID" value="${a.id}">
+                                        <label for="role">${a.name}</label><br>
+                                    </c:forEach>
+                                </p>
                                 <input class="submit" type="submit" value="Edit" class="">
                             </c:if>
 

@@ -21,6 +21,9 @@ public class Order {
     private int numproducts;
     private User buyer;
     private User sale;
+    private String customernote;
+    private String salenote;
+    private String cancelreason;
 
     public Order() {
     }
@@ -88,5 +91,30 @@ public class Order {
 
     public void setSale(User sale) {
         this.sale = sale;
-    }    
+    }
+
+    public String getCustomernote() {
+        return customernote;
+    }
+
+    public void setCustomernote(String customernote) {
+        this.customernote = customernote;
+    }
+
+    public String getSalenote() {
+        return salenote;
+    }
+
+    public void setSalenote(String salenote) {
+        this.salenote = salenote;
+    }
+
+    public String getCancelreason() {
+        return cancelreason;
+    }
+
+    public void setCancelreason(String cancelreason) {
+        this.cancelreason = cancelreason;
+    }
+    
 }

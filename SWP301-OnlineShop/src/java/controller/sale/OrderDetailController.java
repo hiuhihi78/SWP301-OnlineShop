@@ -28,8 +28,8 @@ import model.User;
  *
  * @author Admin
  */
-@WebServlet(name = "OrderListController", urlPatterns = {"/sale/orderslist"})
-public class OrderListController extends BaseAuthController {
+@WebServlet(name = "OrderDetailController", urlPatterns = {"/sale/orderdetails"})
+public class OrderDetailController extends BaseAuthController {
 
     private static int rawSaleId = 0;
     private static int rawStatus = 5;
@@ -50,44 +50,26 @@ public class OrderListController extends BaseAuthController {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            OrderDBContext orderDB = new OrderDBContext();
+            OrderDBContext orderDBContext = new OrderDBContext();
             UserDBContext userDB = new UserDBContext();
-            ArrayList<Order> orders = null;
-            rawStartTime = request.getParameter("startTime");
-            rawEndTime = request.getParameter("endTime");
-            rawSaleId = Integer.parseInt(request.getParameter("sale-filter"));
-            rawStatus = Integer.parseInt(request.getParameter("status-filter"));
-            //If user choose filter sale & status = all
-            if (rawSaleId == 0 && rawStatus == 5) {
-                orders = orderDB.getOrders(rawStartTime, rawEndTime);
-            }
-            //Filter Saleid & status = all
-            if (rawSaleId != 0 && rawStatus == 5) {
-                orders = orderDB.getOrders(rawStartTime, rawEndTime, rawSaleId);
-            }
-            //Not filter all
-            if (rawSaleId != 0 && rawStatus != 5) {
-                orders = orderDB.getOrders(rawStartTime, rawEndTime, rawSaleId, rawStatus);
-            }
-            if (rawSaleId == 0 && rawStatus != 5) {
-                orders = orderDB.getOrdersByStatus(rawStartTime, rawEndTime, rawStatus);
-            }
+            //validate value
+            int orderID = Integer.parseInt(request.getParameter("id"));
+
+            //GET ORDER ID, ORDER DATE, Total, status
+            Order informationOrder = orderDBContext.getInformationOfOrderByID(orderID);
+            //GET RECIVER INFOR OF USER
+            User userOrderInfioramtion = orderDBContext.getUserOrderInformation(orderID);
+            //GET LIST ORDERED BY ORDER ID
+            ArrayList<Product> listOrderProductOfUser = orderDBContext.getListOrderProductOfUser(orderID);
             ArrayList<User> sales = userDB.getSaleUser();
-            request.setAttribute("orders", orders);
+            request.setAttribute("listOrderProductOfUser", listOrderProductOfUser);
+            request.setAttribute("informationOrder", informationOrder);
             request.setAttribute("sales", sales);
+            request.setAttribute("userOrderInfioramtion", userOrderInfioramtion);
         } catch (Exception e) {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = new Date();
-            String currentDate = formatter.format(date);
-            OrderDBContext orderDB = new OrderDBContext();
-            UserDBContext userDB = new UserDBContext();
-            ArrayList<User> sales = userDB.getSaleUser();
-            request.setAttribute("sales", sales);
-            ArrayList<Order> orders = orderDB.getOrders(currentDate, currentDate);
-            request.setAttribute("orders", orders);
-            request.setAttribute("sales", sales);
+
         }
-        request.getRequestDispatcher("../view/sale/orderslist.jsp").forward(request, response);
+        request.getRequestDispatcher("../view/sale/orderdetails.jsp").forward(request, response);
 
     }
 
