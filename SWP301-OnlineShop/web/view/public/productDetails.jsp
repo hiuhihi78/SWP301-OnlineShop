@@ -97,6 +97,12 @@
                             <div class="col-sm-6">
                                 <div class="product-information"><!--/product-information-->
 
+                                    <div class=" product-details__category">
+                                        <a href="productlist?category=${product.subCategory.category.id}">${product.subCategory.category.name}</a>
+                                        <span> ></span>
+                                        <a href="productlist?subCategory=${product.subCategory.id}"> ${product.subCategory.name}</a>
+                                       
+                                    </div>
                                     <h2 class="mb-20"><b>${product.name}</b></h2>
 
 
