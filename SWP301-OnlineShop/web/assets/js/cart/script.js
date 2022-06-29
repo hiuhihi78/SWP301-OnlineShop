@@ -106,7 +106,7 @@ $('.btn-ok').on('click', function () {
                 location.reload();
             } else {
                 $('#div-product-' + pid).remove();
-                location.reload();
+               
             }
 
         },
