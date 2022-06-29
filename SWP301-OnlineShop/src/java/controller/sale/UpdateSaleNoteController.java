@@ -75,14 +75,14 @@ public class UpdateSaleNoteController extends BaseAuthController {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject json = new JsonObject();
             json.addProperty("code", 200);
-            json.addProperty("msg", "Order status updated successfully!");
+            json.addProperty("msg", "Order note updated successfully!");
             response.setStatus(200);
             response.getWriter().println(gson.toJson(json).toString());
         } catch (Exception e) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject json = new JsonObject();
             json.addProperty("code", 500);
-            json.addProperty("msg", "An error occurred when update order status!");
+            json.addProperty("msg", "An error occurred when update order note!");
             response.setStatus(500);
             response.getWriter().println(gson.toJson(json).toString());
         }

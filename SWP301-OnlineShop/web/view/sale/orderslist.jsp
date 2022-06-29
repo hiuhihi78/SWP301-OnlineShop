@@ -30,6 +30,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body class="skin-black">
@@ -100,7 +101,7 @@
                                 <th data-sortable="true">Customer name</th>
                                 <th data-sortable="false">Product (First product name)</th>
                                 <th data-sortable="false">Number of products</th>
-                                <th data-sortable="true">Total cost</th>
+                                <th data-sortable="true" data-sorter="priceSorter">Total cost</th>
                                 <th data-sortable="true" data-align="center">Status</th>
                                 <th data-sortable="false" data-align="center">Assigned to</th>
                                 <th data-sortable="false">Action</th>
@@ -184,6 +185,13 @@
                     </div>
                 </section> <!--/ Main content -->
             </aside><!-- /.right-side -->
+            <script>
+                function priceSorter(a, b) {
+                    var aa = a.replace(/[đ.]/g, '');
+                    var bb = b.replace(/[đ.]/g, '');
+                    return aa-bb;
+                }
+            </script>
         </div>
         <!--javascrip-->
         <script src="../../assets/js/marketing/productList.js"></script>
@@ -199,5 +207,6 @@
         <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     </body>
 </html>
