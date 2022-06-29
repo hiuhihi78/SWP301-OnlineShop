@@ -101,7 +101,7 @@
                                 <th data-sortable="true">Customer name</th>
                                 <th data-sortable="false">Product (First product name)</th>
                                 <th data-sortable="false">Number of products</th>
-                                <th data-sortable="true">Total cost</th>
+                                <th data-sortable="true" data-sorter="priceSorter">Total cost</th>
                                 <th data-sortable="true" data-align="center">Status</th>
                                 <th data-sortable="false" data-align="center">Assigned to</th>
                                 <th data-sortable="false">Action</th>
@@ -185,6 +185,13 @@
                     </div>
                 </section> <!--/ Main content -->
             </aside><!-- /.right-side -->
+            <script>
+                function priceSorter(a, b) {
+                    var aa = a.replace(/[đ.]/g, '');
+                    var bb = b.replace(/[đ.]/g, '');
+                    return aa-bb;
+                }
+            </script>
         </div>
         <!--javascrip-->
         <script src="../../assets/js/marketing/productList.js"></script>
