@@ -168,9 +168,9 @@
                         </div>
                         <!-- Description -->
                         <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px; padding-top: 10px;">Description</h2>
-                        <div class="category-tab shop-details-tab">
+                        <div class="category-tab shop-details-tab" style="padding-top: 10px">
                             <c:forEach items="${requestScope.product_description}" var="s">
-                                <p>${s}</p>
+                                <p style="margin: 5px 5px;">${s}</p>
                             </c:forEach>
                         </div>
                         <!-- Description -->

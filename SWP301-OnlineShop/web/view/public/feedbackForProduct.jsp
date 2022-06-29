@@ -132,7 +132,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-offset-1 pull-right " >
-                                                <button onclick="return confirm('Are you sure to feedback this product?')" class="btn btn-info">Feedback</button>
+                                                <button onclick="return confirm('Are you sure to feedback this product?')" class="btn btn-info" disabled="">Feedback</button>
                                             </div>
                                         </div>
                                     </form>
