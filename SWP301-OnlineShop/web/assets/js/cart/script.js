@@ -78,7 +78,11 @@ $('.cart_quantity_delete, .delete-all-product').on('click', function (e) {
         $('#cfm').text('The product (' + name + ') will be removed from the cart.');
     }
     jQuery.noConflict();
-    $('#confirm-delete').modal('show');
+    $('#confirm-delete').modal({
+        backdrop: "static",
+        keybroad : true,
+        show : true
+    });
 });
 
 $('.btn-ok').on('click', function () {
@@ -227,7 +231,11 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
 
 $('#change-id').click(function () {
     jQuery.noConflict();
-    $('#confirm-change').modal('show');
+    $('#confirm-change').modal({
+        backdrop: 'static',
+        keyboard : true,
+        show : true
+    });
 
 });
 
@@ -299,7 +307,11 @@ $('.cart_quantity_input').on('change', function () {
         error: function (xhr) {
         }
     });
-        $('#confirm-enter-quantity').modal("show", true);
+        $('#confirm-enter-quantity').modal({
+                        backdrop: 'static',
+                        keyboard: true, 
+                        show: true
+                });
     }else {
         $.ajax({
         url: "/cartDetails",
