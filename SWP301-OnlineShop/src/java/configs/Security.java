@@ -18,6 +18,7 @@ public class Security {
     public static final int MAKETING_ROLL_ID = 2;
     public static final int SALE_ROLL_ID = 3;
     public static final int CUSTOMER_ROLL_ID = 4;
+    public static final int _ROLL_ID = 21;
     public static final int MAXIMUM_AGE = 60 * 60 * 24 * 10;
     public static final int MAXIMUM_AGE_TOKEN = 60 * 5;
     public static final boolean DEFAULT_STATUS = true;

@@ -150,7 +150,7 @@ public class CartDetailsController extends BaseAuthController {
         }
 
         cartDb.setQuantityCartProduct(pid, cid, currentQuantity);
-        out.println("<input class=\"cart_quantity_input\" type=\"text\" value=\"" + currentQuantity + "\" autocomplete=\"off\" size=\"2\">");
+        out.println("<input class=\"cart_quantity_input\" type=\"number\" value=\"" + currentQuantity + "\" autocomplete=\"off\" size=\"2\">");
         
       
 

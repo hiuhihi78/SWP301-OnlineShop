@@ -52,7 +52,7 @@
                                             <table class="table table-condensed">
                                                 <thead>
                                                     <tr class="cart_menu">
-                                                        <td></td>
+                                                        <td><input type="checkbox" name="all" id="checkall"></td>
                                                         <td class="image">Item</td>
                                                         <td class="description"></td>
                                                         <td class="price">Price</td>
@@ -95,7 +95,9 @@
 
                                                                     <input type="button" class="cart_quantity_down" ${i.quantity==1?"disabled":""} is-up="0"  id="id-down-${(i.product).id}" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="-" data-min="1"/>
 
-                                                                    <div id="show-quantity-${(i.product).id}"><input id="quantity-id-${(i.product).id}" data-product-id="${(i.product).id}" class="cart_quantity_input" type="text" value="${i.quantity}" autocomplete="off" size="2" data-max="${(i.product).quantity}"></div>
+                                                                    <div id="show-quantity-${(i.product).id}"><input id="quantity-id-${(i.product).id}" data-product-id="${(i.product).id}" class="cart_quantity_input" type="number" value="${i.quantity}" autocomplete="off" size="2" data-max="${(i.product).quantity}"
+                                                                                                                     onkeydown="return event.keyCode !== 69" min="1" oninput="this.value = 
+                                                                                                                       !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null"></div>
                                                                     <input id="input-${(i.product).id}" class="cart_quantity_input" type="hidden" value="${i.quantity}" autocomplete="off" size="2" data-price-1="${(i.product).getPriceDiscount()}">
 
                                                                     <input type="button" id="id-up-${(i.product).id}" ${i.quantity==(i.product).quantity?"disabled":""} class="cart_quantity_up" is-up="1" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="+" data-max="${(i.product).quantity}"/>
@@ -123,7 +125,8 @@
                                                     <div class="col-sm-9">
                                                         <div class="total_area">
                                                             <ul>
-                                                                <li><input type="checkbox" name="all" id="checkall"> Select all <span><a class="delete-all-product" data-isAll="1" data-programid="-1" data-name="">Delete all</a></span></li>
+                                                                <li><a class="delete-all-product" data-isAll="1" data-programid="-1" data-name="">Delete all</a></li>
+<!--                                                                <input type="checkbox" name="all" id="checkall"> Select all-->
 
                                                                 <li style="display: flex"><div>Total</div> <div style="margin-left: auto"><b><span id="total">0</span></b></div>&nbsp;đ</li>
                                                                 <input type="hidden" id="total-hidden" value="0"/>
@@ -189,7 +192,6 @@
                     <!--    This is end delete modal dialog-->
 
                     <!--    This is start Choose cart product modal dialog-->
-
                     <div class="modal fade" id="confirm-choose-checkbox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -211,6 +213,31 @@
                         </div>
                     </div>
                     <!--    This is end Choose cart product modal dialog-->
+                    
+                    <!--    This is start enter quantity modal dialog-->
+                    
+                    <div class="modal fade" id="confirm-enter-quantity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <p id="content-quantity"></p>
+                                    <p class="debug-url"></p>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <a class="btn btn-danger btn-ok-quantity">OK</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--    This is end enter quantity modal dialog-->
 
 
                 </div>

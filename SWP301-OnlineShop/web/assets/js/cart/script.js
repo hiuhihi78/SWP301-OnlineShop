@@ -278,17 +278,13 @@ $('.cart_quantity_input').on('change', function () {
     var pid = $(this).data('product-id');
     var productQuantity = $(this).data('max');
     var cid = $('#id-down-' + pid).attr('cart-id');
+//    var price = $('#input-' + pid).data('price-1');
 
-
-    if (quantityInput < 1) {
-        quantityInput = 1;
-    } else if (quantityInput > productQuantity) {
+    jQuery.noConflict();
+    if (quantityInput > productQuantity) {
+        $('#content-quantity').html('There are only ' + productQuantity + ' quantity remaining for this item');
         quantityInput = productQuantity;
-    } else if (isNaN(quantityInput)) {
-        quantityInput = 1;
-    }
-
-    $.ajax({
+        $.ajax({
         url: "/cartDetails",
         type: "post", //send it through get method
         data: {
@@ -298,18 +294,50 @@ $('.cart_quantity_input').on('change', function () {
             quantity: quantityInput
         },
         success: function (response) {
-            //Do Something
-            location.reload();
-            $('#show-quantity-' + pid).html(response);
+    
         },
         error: function (xhr) {
         }
     });
+        $('#confirm-enter-quantity').modal("show", true);
+    }else {
+        $.ajax({
+        url: "/cartDetails",
+        type: "post", //send it through get method
+        data: {
+            pid: pid,
+            isUp: -1,
+            cartId: cid,
+            quantity: quantityInput
+        },
+        success: function (response) {
+//            $('#show-quantity-' + pid).html(response);
+//            var priceTotal = parseFloat(price) * parseInt(quantityInput);
+//            //Set value total price
+//            var output = parseInt(priceTotal).toLocaleString();
+//            $('.cart_total_price_' + pid).text(output);
+//            $('.h_cart_total_price_' + pid).val(priceTotal);
+            location.reload();
+    
+        },
+        error: function (xhr) {
+        }
+    });
+    }
+   
+
+
+
 
 });
 
 $('#back-cart-detail').click(function () {
     window.history.back();
+});
+
+$('.btn-ok-quantity').click(function () {
+    $('#confirm-enter-quantity').modal('toggle');
+    location.reload();
 });
 
 //$().ready(function () {
