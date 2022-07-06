@@ -352,20 +352,21 @@ $('.btn-ok-quantity').click(function () {
     location.reload();
 });
 
-//$().ready(function () {
-//    $("#form-change-inf").validate({
-//        onfocusout: false,
-//        onkeyup: false,
-//        onclick: false,
-//        rules: {
-//
-//            "txtNameInf": {
-//                required: true,
-//               
-//            }
-//        }
-//    });
-//});
+$('#btn-submit').click(function () {
+    $.ajax({
+        url: "/errorContact",
+        type: "get", //send it through get method
+        success: function (response) {
+            $('#form-contact').submit();
+        },
+        error: function (xhr) {
+            $('#form-contact').attr('action', 'errorContact');
+            $('#form-contact').attr('method', 'post');
+            $('#form-contact').submit();
+        }
+    });
+    
+});
 
 
 

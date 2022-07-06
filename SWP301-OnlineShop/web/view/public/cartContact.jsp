@@ -43,7 +43,7 @@
                         <div class="features_items">
                             <!--features_items-->
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Cart Contact</h2>
-                            <form action="cartCompletion" method="post">
+                            <form action="cartCompletion" method="post" id="form-contact">
                                 <div class="table-responsive cart_info">
 
 
@@ -52,7 +52,7 @@
                                             <b><h4><p><i class="fa fa-location-arrow" aria-hidden="true"></i> Address</p></h4></b>
                                             <div id="info-user-id">
                                                 <p id="address-id"><b>${user.fullname}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}</p>
-                                                <a id="change-id" href="#" >Change</a>
+                                                <a id="change-id" href="#" >Edit</a>
                                             </div>
 
                                                 <input type="hidden" id="name-id-h" name="txtFullname" value="${user.fullname}"/>
@@ -146,8 +146,9 @@
                                         <tr>
                                             
                                             <td>      
-                                                <a class="btn btn-default update" id="back-cart-detail">Back</a>
-                                                <button class="btn btn-default check_out" id="btn-checkout" type="submit">Submit</button>
+                                                <a class="btn btn-default update" id="back-cart-detail">Change</a>
+                                                <a class="btn btn-default update" id="btn-submit">Submit</a>
+                               
                                             </td>
                                         </tr>
                                         </tbody>
