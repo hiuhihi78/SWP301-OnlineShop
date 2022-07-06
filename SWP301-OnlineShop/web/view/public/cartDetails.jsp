@@ -64,13 +64,17 @@
                                                 <tbody>
 
                                                     <c:forEach var="i" items="${carts}">    
+                                                    
                                                         <tr id="div-product-${(i.product).id}" class="delete-all ${(i.product).quantity < 1? "disabledbutton":""}">
-
-                                                            <td class="cart_description"><div id="calculator"><c:if test="${(i.product).quantity > 0}"><input name="cboproduct"  id="cbo-${(i.product).id}" type="checkbox" value="${(i.product).id}" data-price="${i.quantity * (i.product).getPriceDiscount()}" class="cb-element"></c:if></div>
+                                                          
+                                                            <td class="cart_description ${(i.product).quantity < 1? "down-size":""}">
+                                                                <c:if test="${(i.product).quantity > 0}"><div id="calculator"><input name="cboproduct"  id="cbo-${(i.product).id}" type="checkbox" value="${(i.product).id}" data-price="${i.quantity * (i.product).getPriceDiscount()}" class="cb-element"></div></c:if>
+                                                                <c:if test="${(i.product).quantity < 1}"><h6 class="out-stock">OUT OF STOCK</h6></c:if>
+                                                            </td>
                                                                 <input type="hidden" name="hCartId" value="${cartId}"/>
 
-
-
+                                                                
+                                                                
                                                             <td class="cart_product" style="width: 180px">
                                                                 <a href=""><img src="${(i.product).thumbnail}" alt="" width="100px" height="auto"></a>
                                                             </td>
@@ -108,11 +112,13 @@
                                                                 <input type="hidden" class="h_cart_total_price_${(i.product).id}" value="${i.quantity * (i.product).getPriceDiscount()}"/>
 
                                                             </td>
+                                                            
                                                             <td class="cart_delete">
                                                                 <a class="cart_quantity_delete" data-programid="${(i.product).id}" data-name="${(i.product).name}" data-isAll="0">
                                                                     <i class="fa fa-times"></i></a>
                                                             </td>
                                                         </tr>
+                                                    
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
