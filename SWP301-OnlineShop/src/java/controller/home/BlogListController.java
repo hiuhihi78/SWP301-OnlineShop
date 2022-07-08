@@ -54,7 +54,7 @@ public class BlogListController extends HttpServlet {
         int subCategory = Integer.parseInt(subCategory_raw);
         int pageIndex = Integer.parseInt(pageIndex_raw);
         int totalPosts = postDB.numberRowListPost(searchContent, subCategory);
-        int pageSize = 3;
+        int pageSize = 9;
         int totalPage = ((totalPosts % pageSize) == 0) ? (totalPosts / pageSize) : ((totalPosts / pageSize) + 1);
         
         ArrayList<CategoryPost> listAllCateogry = postDB.getAllCategory();

@@ -73,10 +73,6 @@
         <servlet-class>controller.user.UserProfileControler</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>EditUserProfileControler</servlet-name>
-        <servlet-class>controller.user.EditUserProfileControler</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AddCustomerControler</servlet-name>
         <servlet-class>controller.marketing.AddCustomerControler</servlet-class>
     </servlet>
@@ -195,10 +191,6 @@
     <servlet-mapping>
         <servlet-name>UserProfileControler</servlet-name>
         <url-pattern>/user/profile</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EditUserProfileControler</servlet-name>
-        <url-pattern>/user/editProfile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddCustomerControler</servlet-name>

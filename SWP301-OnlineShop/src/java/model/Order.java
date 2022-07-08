@@ -20,6 +20,25 @@ public class Order {
     private int status;
     private int numproducts;
     private String buyer;
+    private String cancelledReason;
+    private boolean isFeedback;
+
+    public boolean isIsFeedback() {
+        return isFeedback;
+    }
+
+    public void setIsFeedback(boolean isFeedback) {
+        this.isFeedback = isFeedback;
+    }
+    
+
+    public String getCancelledReason() {
+        return cancelledReason;
+    }
+
+    public void setCancelledReason(String cancelledReason) {
+        this.cancelledReason = cancelledReason;
+    }
 
     public Order() {
     }

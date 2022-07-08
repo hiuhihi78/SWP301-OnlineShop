@@ -7,6 +7,7 @@ package controller.user;
 import dal.OrderDBContext;
 import dal.ProductCategoryDBContext;
 import dal.ProductListDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -25,7 +26,7 @@ import model.User;
  * @author Hoang Quang
  */
 @WebServlet(name = "OrderInformationControler", urlPatterns = {"/orderInfor"})
-public class OrderInformationControler extends HttpServlet {
+public class OrderInformationControler extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,8 +47,7 @@ public class OrderInformationControler extends HttpServlet {
         
         User user = (User) session.getAttribute("user");
         int userBuyId = user.getId();
-//        int userBuyId = 38;
-        System.out.println(userBuyId);
+
         //get value from request
         String raw_orderID = request.getParameter("orderID");
         //validate value
@@ -64,10 +64,14 @@ public class OrderInformationControler extends HttpServlet {
         //GET RECIVER INFOR OF USER
         User userOrderInfioramtion = orderDBContext.getUserOrderInformation(orderID);
         //GET LIST ORDERED BY ORDER ID
-        ArrayList<Product> listOrderProductOfUser = orderDBContext.getListOrderProductOfUser(orderID);
+        ArrayList<Order> listOrderProductOfUser = orderDBContext.getListOrderProductOfUser2(orderID);
 
+        String reasionCancel = orderDBContext.getReasionCancel(orderID);
+//        System.out.println("Cancel Reasion" + listOrderProductOfUser.size());
+        
         String alter = request.getParameter("alter");
         request.setAttribute("alter", alter);
+        request.setAttribute("reasionCancel", reasionCancel);
         request.setAttribute("listOrderProductOfUser", listOrderProductOfUser);
         request.setAttribute("informationOrder", informationOrder);
         request.setAttribute("userOrderInfioramtion", userOrderInfioramtion);
@@ -77,7 +81,7 @@ public class OrderInformationControler extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -91,7 +95,7 @@ public class OrderInformationControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
