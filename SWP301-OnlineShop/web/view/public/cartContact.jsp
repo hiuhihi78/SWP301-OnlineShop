@@ -43,7 +43,7 @@
                         <div class="features_items">
                             <!--features_items-->
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Cart Contact</h2>
-                            <form action="cartCompletion" method="post">
+                            <form action="cartCompletion" method="post" id="form-contact">
                                 <div class="table-responsive cart_info">
 
 
@@ -52,7 +52,7 @@
                                             <b><h4><p><i class="fa fa-location-arrow" aria-hidden="true"></i> Address</p></h4></b>
                                             <div id="info-user-id">
                                                 <p id="address-id"><b>${user.fullname}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}</p>
-                                                <a id="change-id" href="#" >Change</a>
+                                                <a id="change-id" href="#" >Edit</a>
                                             </div>
 
                                                 <input type="hidden" id="name-id-h" name="txtFullname" value="${user.fullname}"/>
@@ -144,8 +144,11 @@
 
                                         </tr>
                                         <tr>
-                                            <td>                                              
-                                                <button class="btn btn-default check_out" id="btn-checkout" type="submit">Submit</button>
+                                            
+                                            <td>      
+                                                <a class="btn btn-default update" id="back-cart-detail">Change</a>
+                                                <a class="btn btn-default update" id="btn-submit">Submit</a>
+                               
                                             </td>
                                         </tr>
                                         </tbody>
@@ -171,7 +174,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form" action="" method="post" id="">
+                        <form class="form-horizontal" role="form" action="" method="post" id="form-change-inf">
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">Email</label>
                                 <div class="col-sm-12">
@@ -183,20 +186,20 @@
                                 <label class="col-sm-2 control-label">Full Name</label>
 
                                 <div class="col-sm-12">
-                                    <input type="text" id="iFullName" name="" placeholder="Enter full name" class="form-control" value="${user.fullname}" autofocus required=""/>
+                                    <input type="text" id="iFullName" name="txtNameInf" placeholder="Enter full name" class="form-control" value="${user.fullname}"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">Mobile </label>
                                 <div class="col-sm-12">
-                                    <input type="text" id="iMobile" name="" placeholder="Enter your mobile" class="form-control" value="${user.mobile}" >
+                                    <input type="text" id="iMobile" placeholder="Enter your mobile" class="form-control" value="${user.mobile}" required="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">Address </label>
                                 <div class="col-sm-12">
-                                    <textarea id="iAddress" class="form-control" rows="2" placeholder="Enter your address" >${user.address}</textarea>
+                                    <textarea id="iAddress" class="form-control" rows="2" placeholder="Enter your address" required="">${user.address}</textarea>
                                 </div>
                             </div>
 

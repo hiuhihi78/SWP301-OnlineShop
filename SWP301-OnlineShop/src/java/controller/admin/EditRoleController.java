@@ -42,10 +42,12 @@ public class EditRoleController extends BaseAuthController {
         request.setAttribute("roles", roles);
         try {
             rawid = Integer.parseInt(request.getParameter("id"));
-            ArrayList<Feature> AdminFeatures = roleDB.getEnabledFeature(rawid, "admin");
-            ArrayList<Feature> MarketingFeatures = roleDB.getEnabledFeature(rawid, "marketing");
+            ArrayList<Feature> AdminFeatures = roleDB.getEnabledFeature(rawid, "Admin");
+            ArrayList<Feature> MarketingFeatures = roleDB.getEnabledFeature(rawid, "Marketing");
+            ArrayList<Feature> SalesFeatures = roleDB.getEnabledFeature(rawid, "Sales");
             request.setAttribute("AdminFeatures", AdminFeatures);
             request.setAttribute("MarketingFeatures", MarketingFeatures);
+            request.setAttribute("SalesFeatues", SalesFeatures);
             request.setAttribute("rawid", rawid);
             request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
         } catch (Exception e) {

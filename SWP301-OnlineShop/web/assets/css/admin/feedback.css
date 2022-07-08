@@ -7,6 +7,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Admin
 */
 
+.product-details__category{
+    margin-bottom: 10px;
+    color:#428bcab5;
+    font-size: 10px;
+    
+}
+
 .product-details-chose_quantity{
     margin-top: 20px;
     

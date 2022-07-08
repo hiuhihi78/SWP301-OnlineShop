@@ -19,9 +19,10 @@ public class Order {
     private double totalcost;
     private int status;
     private int numproducts;
-    private String buyer;
-    private String cancelledReason;
-    private boolean isFeedback;
+    private User buyer;
+    private User sale;
+    private String customernote;
+    private String salenote;
 
     public boolean isIsFeedback() {
         return isFeedback;
@@ -30,15 +31,8 @@ public class Order {
     public void setIsFeedback(boolean isFeedback) {
         this.isFeedback = isFeedback;
     }
-    
-
-    public String getCancelledReason() {
-        return cancelledReason;
-    }
-
-    public void setCancelledReason(String cancelledReason) {
-        this.cancelledReason = cancelledReason;
-    }
+    private String cancelreason;
+    private boolean isFeedback;
 
     public Order() {
     }
@@ -91,12 +85,45 @@ public class Order {
         this.numproducts = numproducts;
     }
 
-    public String getBuyer() {
+    public User getBuyer() {
         return buyer;
     }
 
-    public void setBuyer(String buyer) {
+    public void setBuyer(User buyer) {
         this.buyer = buyer;
     }
+    
 
+    public User getSale() {
+        return sale;
+    }
+
+    public void setSale(User sale) {
+        this.sale = sale;
+    }
+
+    public String getCustomernote() {
+        return customernote;
+    }
+
+    public void setCustomernote(String customernote) {
+        this.customernote = customernote;
+    }
+
+    public String getSalenote() {
+        return salenote;
+    }
+
+    public void setSalenote(String salenote) {
+        this.salenote = salenote;
+    }
+
+    public String getCancelreason() {
+        return cancelreason;
+    }
+
+    public void setCancelreason(String cancelreason) {
+        this.cancelreason = cancelreason;
+    }
+    
 }

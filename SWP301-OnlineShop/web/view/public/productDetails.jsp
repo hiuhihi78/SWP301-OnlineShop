@@ -97,6 +97,12 @@
                             <div class="col-sm-6">
                                 <div class="product-information"><!--/product-information-->
 
+                                    <div class=" product-details__category">
+                                        <a href="productlist?category=${product.subCategory.category.id}">${product.subCategory.category.name}</a>
+                                        <span> ></span>
+                                        <a href="productlist?subCategory=${product.subCategory.id}"> ${product.subCategory.name}</a>
+                                       
+                                    </div>
                                     <h2 class="mb-20"><b>${product.name}</b></h2>
 
 
@@ -106,7 +112,9 @@
                                     </p>-->
                                     <div class="display-flex feedback-detail-product">
                                         <div class="border-solid-r-1 display-flex">
-                                            <span class="mt-5 mr-3">${requestScope.total_start_percent}</span>
+                                            <span class="mt-5 mr-3">
+                                                <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${requestScope.total_start_percent}" />
+                                            </span>
                                             <div class="star-ratings" >
                                                 <div class="fill-ratings" style="width: ${requestScope.total_start_percent * 20}%;">
                                                     <span>★★★★★</span>
@@ -168,9 +176,9 @@
                         </div>
                         <!-- Description -->
                         <h2 class="title text-center " style="border-bottom: solid 2px; margin-top: 10px; padding-top: 10px;">Description</h2>
-                        <div class="category-tab shop-details-tab">
+                        <div class="category-tab shop-details-tab" style="padding-top: 10px">
                             <c:forEach items="${requestScope.product_description}" var="s">
-                                <p>${s}</p>
+                                <p style="margin: 5px 5px;">${s}</p>
                             </c:forEach>
                         </div>
                         <!-- Description -->

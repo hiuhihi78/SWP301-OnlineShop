@@ -86,6 +86,9 @@ public class CartContactController extends BaseAuthController {
 
         //Get user login from session
         user = (User) session.getAttribute("user");
+        
+        //Set cart contact in session
+        session.setAttribute("cartContact", cartProduct);
         int userID = user.getId();
 
         request.setAttribute("user", user);

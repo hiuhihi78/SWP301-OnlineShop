@@ -58,4 +58,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     pointer-events: none;
     background-color: lightgray;
     opacity: 0.4;
+    
+}
+.out-stock {
+    color: red;
+    font-weight: bold;
+    height: auto;
+}
+
+.cart_quantity_input {
+    width: 50px;
+/*    Hide up down input type number*/
+    -moz-appearance: textfield;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.down-size {
+    width: 1%;
 }

@@ -330,12 +330,17 @@ public class CartDBContext extends DBContext {
             cartProduct = new Cart_Product();
 
             while (rs.next()) {
-
+                
                 cartProduct.setCartId(rs.getInt("CartId"));
                 cartProduct.setProductId(rs.getInt("ProductId"));
                 int productId = rs.getInt("ProductId");
                 cartProduct.setProduct(productDb.getProductById(productId));
-                cartProduct.setQuantity(rs.getInt("Quantity"));
+                int quantityCartProduct = rs.getInt("Quantity");
+                if (quantityCartProduct > productDb.getProductById(productId).getQuantity()) {
+                    quantityCartProduct = (int)productDb.getProductById(productId).getQuantity();
+                    setQuantityCartProduct(pid, cid, quantityCartProduct);
+                }
+                cartProduct.setQuantity(quantityCartProduct);
                 cartProduct.setDateUpdated(rs.getTimestamp("DateUpdated"));
 
             }
