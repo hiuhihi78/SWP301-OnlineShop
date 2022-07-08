@@ -9,6 +9,9 @@ import filter.BaseAuthController;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,12 +45,15 @@ public class EditRoleController extends BaseAuthController {
         request.setAttribute("roles", roles);
         try {
             rawid = Integer.parseInt(request.getParameter("id"));
-            ArrayList<Feature> AdminFeatures = roleDB.getEnabledFeature(rawid, "Admin");
-            ArrayList<Feature> MarketingFeatures = roleDB.getEnabledFeature(rawid, "Marketing");
-            ArrayList<Feature> SalesFeatures = roleDB.getEnabledFeature(rawid, "Sales");
+            ArrayList<Feature> AdminFeatures = roleDB.getFeatureByGroup("Admin");
+            ArrayList<Feature> MarketingFeatures = roleDB.getFeatureByGroup("Marketing");
+            ArrayList<Feature> SalesFeatures = roleDB.getFeatureByGroup("Sales");
+            LinkedHashMap<Feature, Boolean> allowedFeatures = roleDB.getAllowFeatures(rawid);
+
             request.setAttribute("AdminFeatures", AdminFeatures);
             request.setAttribute("MarketingFeatures", MarketingFeatures);
             request.setAttribute("SalesFeatues", SalesFeatures);
+            request.setAttribute("allowedFeatures", allowedFeatures);
             request.setAttribute("rawid", rawid);
             request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
         } catch (Exception e) {
@@ -74,12 +80,22 @@ public class EditRoleController extends BaseAuthController {
             roledb.updateRole(roleid, selectedFeature);
             request.setAttribute("message", "Edit user's role success!");
             request.setAttribute("error", false);
-            request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
         } catch (SQLException ex) {
             request.setAttribute("message", "Edit user's role failed!");
             request.setAttribute("error", true);
-            request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
+            Logger.getLogger(EditRoleController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
+//        try {
+//            roledb.updateRole(roleid, selectedFeature);
+//            request.setAttribute("message", "Edit user's role success!");
+//            request.setAttribute("error", false);
+//            request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
+//        } catch (SQLException ex) {
+//            request.setAttribute("message", "Edit user's role failed!");
+//            request.setAttribute("error", true);
+//            request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
+//        }
 
     }
 

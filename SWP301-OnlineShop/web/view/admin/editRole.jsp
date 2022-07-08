@@ -58,21 +58,36 @@
                                 <p>
                                     <label for="adminFeatutes">Admin</label><br>
                                     <c:forEach items="${requestScope.AdminFeatures}" var="a">
-                                        <input type="checkbox" id="fid" name="fid" value="${a.id}" ${a.enabled == true ? "checked='checked'":""}>
+                                        <input type="checkbox" id="fid" name="fid" value="${a.id}"
+                                               <c:forEach items="${requestScope.allowedFeatures}" var='b'>
+                                                   <c:if test='${a.id == b.key.id && b.value == true}'>
+                                                       checked
+                                                   </c:if>
+                                               </c:forEach>>
                                         <label for="fid">${a.name}</label><br>
                                     </c:forEach>
                                 </p>
                                 <p>
                                     <label for="marketingFeatutes">Marketing</label><br>
                                     <c:forEach items="${requestScope.MarketingFeatures}" var="a">
-                                        <input type="checkbox" id="fid" name="fid" value="${a.id}" ${a.enabled == true ? "checked='checked'":""}>
+                                        <input type="checkbox" id="fid" name="fid" value="${a.id}"                                      
+                                               <c:forEach items="${requestScope.allowedFeatures}" var='b'>
+                                                   <c:if test='${a.id == b.key.id && b.value == true}'>
+                                                       checked
+                                                   </c:if>
+                                               </c:forEach>>
                                         <label for="fid">${a.name}</label><br>
                                     </c:forEach>
                                 </p>
                                 <p>
                                     <label for="salesFeatures">Sale</label><br>
                                     <c:forEach items="${requestScope.SalesFeatues}" var="a">
-                                        <input type="checkbox" id="roleID" name="roleID" value="${a.id}">
+                                        <input type="checkbox" id="roleID" name="fid" value="${a.id}"                                                
+                                               <c:forEach items="${requestScope.allowedFeatures}" var='b'>
+                                                   <c:if test='${a.id == b.key.id && b.value == true}'>
+                                                       checked
+                                                   </c:if>
+                                               </c:forEach>>
                                         <label for="role">${a.name}</label><br>
                                     </c:forEach>
                                 </p>
@@ -90,7 +105,6 @@
         <script src="../../assets/js/admin/main.js" type="text/javascript"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="../../js/jquery.min.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
         <!-- jQuery UI 1.10.3 -->
         <script src="../../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
