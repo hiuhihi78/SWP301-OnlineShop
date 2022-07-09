@@ -26,8 +26,8 @@ import model.User;
  * @author Hoang Quang
  */
 @WebServlet(name = "OrderInformationControler", urlPatterns = {"/orderInfor"})
-public class OrderInformationControler extends BaseAuthController {
-
+public class OrderInformationControler extends BaseAuthController { 
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

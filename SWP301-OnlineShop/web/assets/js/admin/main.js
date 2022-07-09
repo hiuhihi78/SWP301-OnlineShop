@@ -104,12 +104,20 @@ $(document).ready(function () {
         var orderid = $('#myModal').data('orderid');
         var status = $('#statusorder :selected').val();
         var cancelledReason = null;
+        var emailUserBuy = $('#emailUserBuy').val();
         var url = '/sale/order/updatestatus';
+        var url2 = '/send/completedOrder';
         if (status == 0)
         {
             cancelledReason = $('#txtcancelReason').val();
         }
-        $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason}, function () {
+        $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function () {
+            location.reload();
+        })
+                .fail(function () {
+
+                });
+        $.post(url2, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function () {
             location.reload();
         })
                 .fail(function () {
@@ -161,6 +169,7 @@ $(document).ready(function () {
         var fid = $('#btnUpdateFBStatus').data('passing').fid;
         var status = $('#btnUpdateFBStatus').data('passing').status;
         var url = '/marketing/feedback/updatestatus';
+
         $.post(url, {fid: fid, status: status}, function (response) {
             location.reload();
         })

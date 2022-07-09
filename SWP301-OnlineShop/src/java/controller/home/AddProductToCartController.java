@@ -44,7 +44,7 @@ public class AddProductToCartController extends HttpServlet {
         int customerId = Integer.parseInt(request.getParameter("customerId"));
         int quantityOrder = Integer.parseInt(request.getParameter("quantityOrder"));
         int productId = Integer.parseInt(request.getParameter("productId"));
-
+      
         Timestamp currentDateForCart_Product = new Timestamp(System.currentTimeMillis());
 
         CartDBContext cartDB = new CartDBContext();
