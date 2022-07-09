@@ -19,19 +19,19 @@ public class DBContext {
 
     Connection connection;
 
-    public DBContext() {
-        try {
-            String username = "sa";
-            String password = "sa";
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=OnlineShop2";
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+     public DBContext() {
+         try {
+             String username = "sa";
+             String password = "sa";
+             String url = "jdbc:sqlserver://localhost:1433;databaseName=OnlineShop2";
+             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+             connection = DriverManager.getConnection(url, username, password);
+         } catch (ClassNotFoundException ex) {
+             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (SQLException ex) {
+             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+         }
+     }
 
 //    public DBContext() {
 //        try {
@@ -60,8 +60,6 @@ public class DBContext {
 //            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
-
 //    public DBContext() {
 //        try {
 //            String user = "se1610";
@@ -75,7 +73,6 @@ public class DBContext {
 //            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
     public static void main(String[] args) {
         DBContext bContext = new DBContext();
         if (bContext.connection != null) {

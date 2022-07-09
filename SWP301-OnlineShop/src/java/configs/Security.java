@@ -27,7 +27,7 @@ public class Security {
     public static final int MAXIMUM_AGE_TOKEN_REGISTER = 60 * 5;
 
     /*Start  Config of slider page*/
-    public static final int SIZE_PAGE_SLIDER_LIST = 2; //Number of sliders per page
+    public static final int SIZE_PAGE_SLIDER_LIST = 10; //Number of sliders per page
     /*End  Config of slider page*/
     
     /*Start  Config of cart page*/

@@ -48,6 +48,19 @@ public class AddSliderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        try {
+            SliderDBContext sliderDb = new SliderDBContext();
+            int id = 0;
+            if (request.getParameter("id") != null) {
+                id = Integer.parseInt(request.getParameter("id"));
+                Slider slider = sliderDb.getSliderById(id);
+                request.setAttribute("s", slider);
+                request.setAttribute("image", slider.getImage());
+            }
+
+            request.setAttribute("id", id);
+        } catch (Exception e) {
+        }
         request.getRequestDispatcher("/view/marketing/addSlider.jsp").forward(request, response);
     }
 
@@ -63,19 +76,7 @@ public class AddSliderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            SliderDBContext sliderDb = new SliderDBContext();
-            int id = 0;
-            if (request.getParameter("id") != null) {
-                id = Integer.parseInt(request.getParameter("id"));
-                Slider slider = sliderDb.getSliderById(id);
-                request.setAttribute("s", slider);
-                request.setAttribute("image", slider.getImage());
-            }
-
-            request.setAttribute("id", id);
-        } catch (Exception e) {
-        }
+        
 
         processRequest(request, response);
     }
@@ -101,12 +102,13 @@ public class AddSliderController extends HttpServlet {
         strId = request.getParameter("hId");
         String title = request.getParameter("txtTitle").trim();
         String backlink = request.getParameter("txtBacklink").trim();
-        String strStatus = request.getParameter("checkbox");
+        String strStatus = request.getParameter("txtStatus");
         String notes = request.getParameter("txtNotes").trim();
         slider = new Slider();
         slider.setTitle(title);
         slider.setBacklink(backlink);
-        slider.setStatus(Boolean.parseBoolean(strStatus != null ? "1" : "0"));
+        slider.setStatus(Boolean.parseBoolean(strStatus));
+        boolean sta = slider.isStatus();
         slider.setNote(notes);
         slider.setUser((User) (session.getAttribute("user")));
         //Edit slider
@@ -155,7 +157,6 @@ public class AddSliderController extends HttpServlet {
 //                }
                 slider.setImage(fileUrl);
                 String filePath = fullSavePath + File.separator + fileNameSlider;
-                // Ghi vào file.
                 partSlider.write(filePath);
 //                new ProductDBContext().updateThumbnailProduct(productId, fileUrl);
             }
@@ -164,10 +165,14 @@ public class AddSliderController extends HttpServlet {
             if (isAdd == false) {
                 rs = sliderDb.updateSlider(slider);
                 if (rs) {
-                    request.setAttribute("messTrue", "Update slider successful!");
+                    request.setAttribute("messTrue", "Update Slider Successful!");
                 } else {
                     request.setAttribute("messFalse", "Slider update failed. Please try again!");
                 }
+            
+                request.setAttribute("s", slider);
+                request.setAttribute("image", slider.getImage());
+                request.setAttribute("id", slider.getId());
                 //Add Slider
             } else {
                 rs = sliderDb.addSlider(slider);

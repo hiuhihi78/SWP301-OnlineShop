@@ -583,7 +583,7 @@ public class OrderDBContext extends DBContext {
 
     public ArrayList<Product> getListOrderProductOfUser(int orderID) {
         ArrayList<Product> listProduct = new ArrayList<>();
-        String sql = " select p.id as productID, p.thumbnail, p.name as pname, c.name as categoryName, o.quantity, o.discount, o.price, od.userId\n"
+        String sql = " select p.id as productID, p.thumbnail, p.name as pname, c.name as categoryName, o.quantity, o.discount, o.price, od.userId, od.cancelledReason\n"
                 + "               from\n"
                 + "               [Order] od\n"
                 + "                INNER JOIN OrderDetail o ON o.orderId = od.id\n"
@@ -618,6 +618,54 @@ public class OrderDBContext extends DBContext {
             Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listProduct;
+    }
+
+    public ArrayList<Order> getListOrderProductOfUser2(int orderID) {
+        ArrayList<Order> listOrder = new ArrayList<>();
+
+        String sql = " select p.id as productID, p.thumbnail, p.name as pname, c.name as categoryName, o.quantity, o.discount, o.price, od.userId, o.isFeedback \n"
+                + "               from\n"
+                + "               [Order] od\n"
+                + "                INNER JOIN OrderDetail o ON o.orderId = od.id\n"
+                + "                INNER JOIN Product p ON o.productId = p.id\n"
+                + "                INNER JOIN SubCategory sub ON p.subCategoryId = sub.id\n"
+                + "                INNER JOIN Category c ON sub.categoryId = c.id\n"
+                + "                WHERE o.orderId = ?  ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ArrayList<Product> listProduct = new ArrayList<>();
+
+                Product product = new Product();
+                product.setId(rs.getInt("productID"));
+                product.setThumbnail(rs.getString("thumbnail"));
+                product.setName(rs.getString("pname"));
+                product.setQuantity(rs.getLong("quantity"));
+                product.setDiscount(rs.getInt("discount"));
+                product.setPrice(rs.getLong("price"));
+
+                Category category = new Category();
+                category.setName(rs.getString("categoryName"));
+
+                SubCategory subCategory = new SubCategory();
+                subCategory.setCategory(category);
+
+                product.setSubCategory(subCategory);
+
+                listProduct.add(product);
+
+                Order order = new Order();
+                order.setIsFeedback(rs.getBoolean("isFeedback"));
+                order.setProducts(listProduct);
+
+                listOrder.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listOrder;
     }
 
     public void editStatusOrder(int orderID) {
@@ -761,6 +809,36 @@ public class OrderDBContext extends DBContext {
                     Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }
+    }
+
+    public String getReasionCancel(int orderID) {
+        try {
+            String sql = "SELECT cancelledReason FROM [Order] Where id = ?  ";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("cancelledReason");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void editStatusFeedback(int productID, int orderID) {
+        String spl1 = " UPDATE [dbo].[OrderDetail]\n"
+                + "   SET [isFeedback] = 1 \n"
+                + " WHERE orderId = ? and productId = ? ";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(spl1);
+            stm.setInt(1, orderID);
+            stm.setInt(2, productID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

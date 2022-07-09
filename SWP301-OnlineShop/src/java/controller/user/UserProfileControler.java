@@ -4,37 +4,36 @@
  */
 package controller.user;
 
+import static configs.UploadImage.extractFileName;
 import dal.UserDBContext;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import model.User;
 
 /**
  *
  * @author Hoang Quang
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 30, // 30MB
+        maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class UserProfileControler extends HttpServlet {
-public static String ALERT = "";
+
+    private static final long serialVersionUID = 1L;
+
+    public static final String SAVE_DIRECTORY = "img";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        //get infomation by id of user
-//        response.setContentType("text/html;charset=UTF-8");
-//        request.setCharacterEncoding("UTF-8");
-//        HttpSession session = request.getSession();
-//        //get id of user after login here...
-//        User user = (User) session.getAttribute("user");
-//        //get infomation of user
-//        UserDBContext userDBContext = new UserDBContext();
-//        User userProfile = userDBContext.getUserByIDLogin(user.getId());
-//        request.setAttribute("user", userProfile);
-//
-//        request.getRequestDispatcher("/view/home-template/header.jsp").forward(request, response);
 
     }
 
@@ -43,7 +42,7 @@ public static String ALERT = "";
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-            
+
         //get paramester
         String raw_id = request.getParameter("id");
         String fullname = request.getParameter("fullname");
@@ -61,15 +60,41 @@ public static String ALERT = "";
         user.setFullname(fullname);
         user.setGender(gender);
         user.setMobile(mobile);
+        
         //edit in db
         UserDBContext userDBContext = new UserDBContext();
-        userDBContext.editUserProfile(user);
-        //home
-        //LINK HOME HERE
-//        response.sendRedirect(".....");
-//        request.getRequestDispatcher("../home").forward(request, response);
-//        response.sendRedirect("../home?alter=Update sucess,Please Login To See New Update!");
-        response.sendRedirect("../home?alter=Update sucess!");
+        // Đường dẫn tuyệt đối tới thư mục gốc của web app.
+        String appPath = request.getServletContext().getRealPath("");
+        appPath = appPath.replace('\\', '/');
+        int indexFolderRoot = appPath.indexOf("/build");
+        appPath = appPath.substring(0, indexFolderRoot) + "/web/assets/";
+        // Thư mục để save file tải lên.
+        String fullSavePath = null;
+        if (appPath.endsWith("/")) {
+            fullSavePath = appPath + SAVE_DIRECTORY;
+        } else {
+            fullSavePath = appPath + "/" + SAVE_DIRECTORY;
+        }
+
+        // Tạo thư mục nếu nó không tồn tại.
+        File fileSaveDir = new File(fullSavePath);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdir();
+        }
+
+        Part partAttachedImg1 = request.getPart("attachedImg1");
+        String fileAttachedImg1 = extractFileName(partAttachedImg1, fullSavePath);
+        if (fileAttachedImg1 != null && fileAttachedImg1.length() > 0) {
+            String filePath = fullSavePath + File.separator + fileAttachedImg1;
+            System.out.println("Write attachment to file: " + filePath);
+            // Ghi vào file.
+            partAttachedImg1.write(filePath);
+            String fileUrl = "/assets/img/" + fileAttachedImg1;
+            System.out.println("File: " + fileUrl);
+            user.setAvatar(fileUrl);
+            userDBContext.editUserProfile(user);
+        }
+        response.sendRedirect("../home?alterProfile=Update sucessfully, You Need to Re-Login to see your new information!");
     }
 
     @Override

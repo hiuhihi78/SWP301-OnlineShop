@@ -45,6 +45,7 @@ public class Slider {
         this.image = image;
     }
 
+    
     public String getBacklink() {
         return backlink;
     }
