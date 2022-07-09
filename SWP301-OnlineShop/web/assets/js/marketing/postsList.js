@@ -22,6 +22,12 @@ function openModals(id) {
             },
             success: function (data, textStatus, jqXHR) {
                 btn_status.innerHTML = "" + data;
+                document.querySelector('#section-content').innerHTML += `<div class="fixed float-end t-55px" id="showAlter">
+                            <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                Change Status Post Sucessfull!
+                            </div>
+                        </div>`;
             },
             error: function (jqXHR, textStatus, errorThrown) {
 
@@ -51,12 +57,18 @@ function openAnnouceAccept(id) {
             },
             success: function (data, textStatus, jqXHR) {
                 btn_featured.innerHTML = "" + data;
+                document.querySelector('#section-content').innerHTML += `<div class="fixed float-end t-55px" id="showAlter">
+                            <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                Change Featured Post Sucessfull!
+                            </div>
+                        </div>`;
             },
             error: function (jqXHR, textStatus, errorThrown) {
 
             }
         });
-        document.getElementById('showAlter').innerHTML = "Change Successfuly";
+//        document.getElementById('showAlter').innerHTML = "Change Successfuly";
     };
 }
 //Submit form search and fiter onchange 

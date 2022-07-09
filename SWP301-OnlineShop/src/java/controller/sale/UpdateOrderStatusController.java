@@ -7,6 +7,7 @@ package controller.sale;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import configs.SendMail;
 import dal.OrderDBContext;
 import dal.ProductCategoryDBContext;
 import dal.ProductListDBContext;
@@ -76,7 +77,8 @@ public class UpdateOrderStatusController extends BaseAuthController {
                 orderDB.updateOrderStatus(orderid, status, "NULL");
             } else {
                 orderDB.updateOrderStatus(orderid, status, cancelledReason);
-            }         
+            }
+
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject json = new JsonObject();
             json.addProperty("code", 200);
