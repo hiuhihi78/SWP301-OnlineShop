@@ -45,7 +45,7 @@
                 <c:set var="orderInfor" value="${requestScope.informationOrder}"/>
                 <c:set var="userBuyInfor" value="${requestScope.userOrderInfioramtion}"/>
                 <!-- Main content -->
-                <section class="content ">
+                <section class="content">
                     <div class ="row d-flex justify-content-center">
                         <h2 class="title text-center">Order Information</h2>
                     </div>

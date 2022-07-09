@@ -26,6 +26,7 @@
         <link href="../../assets/css/admin/main.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css"/>
     </head>
+    <c:set var="user" value="${sessionScope.user}"/>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="../admin-layout/header.jsp"></jsp:include>
@@ -35,84 +36,89 @@
                 <!-- Right side. contains main content -->
                 <aside class="right-side">
                     <!-- Main content -->
-                    <h2 class="text-center" style="font-weight: 700; text-align: center">Edit a role</h2>
-                    <form action="editRole" method="post" class="form-horizontal" id="form-updaterole">
-                        <p>
-                            <label for="roleName">Select role name<span class="text-danger">*</span></label>
-                            <select name="roleId" class="form-select">
-                                <option value="-1"></option>
-                            <c:forEach items="${requestScope.roles}" var="r">
-                                <option value="${r.id}" ${r.id == requestScope.rawid ? "selected='selected'":""}>${r.name}</option>
-                            </c:forEach>
-                        </select>
-                    </p>
+                    <selection class='content'>
+                        <h2 class="text-center" style="font-weight: 700; text-align: center">Edit a role</h2>
+                        <form action="editRole" method="post" class="form-horizontal" id="form-updaterole">
+                            <p>
+                                <label for="roleName">Select role name<span class="text-danger">*</span></label>
+                                <select name="roleId" class="form-select">
+                                    <option value="-1"></option>
+                                <c:forEach items="${requestScope.roles}" var="r">
+                                    <option value="${r.id}" ${r.id == requestScope.rawid ? "selected='selected'":""}>${r.name}</option>
+                                </c:forEach>
+                            </select>
+                        </p>
 
-                    <div class="form-group">
-                        <p style="font-size: 20px; font-weight: 700; text-align: center">List of features</p>
-                        <p>
-                            <label for="adminFeatutes">Admin</label><br>
-                            <c:forEach items="${requestScope.AdminFeatures}" var="a">
-                                <input type="checkbox" id="fid" name="fid" value="${a.id}"
-                                       <c:forEach items="${requestScope.allowedFeatures}" var='b'>
-                                           <c:if test='${a.id == b.key.id && b.value == true}'>
-                                               checked
-                                           </c:if>
-                                       </c:forEach>>
-                                <label for="fid">${a.name}</label><br>
-                            </c:forEach>
-                        </p>
-                    </div>
-                    <div class="form-group">
-                        <p>
-                            <label for="marketingFeatutes">Marketing</label><br>
-                            <c:forEach items="${requestScope.MarketingFeatures}" var="a">
-                                <input type="checkbox" id="fid" name="fid" value="${a.id}"                                      
-                                       <c:forEach items="${requestScope.allowedFeatures}" var='b'>
-                                           <c:if test='${a.id == b.key.id && b.value == true}'>
-                                               checked
-                                           </c:if>
-                                       </c:forEach>>
-                                <label for="fid">${a.name}</label><br>
-                            </c:forEach>
-                        </p>
-                    </div>
-                    <div class="form-group">
-                        <p>
-                            <label for="salesFeatures">Sale</label><br>
-                            <c:forEach items="${requestScope.SalesFeatues}" var="a">
-                                <input type="checkbox" id="roleID" name="fid" value="${a.id}"                                                
-                                       <c:forEach items="${requestScope.allowedFeatures}" var='b'>
-                                           <c:if test='${a.id == b.key.id && b.value == true}'>
-                                               checked
-                                           </c:if>
-                                       </c:forEach>>
-                                <label for="role">${a.name}</label><br>
-                            </c:forEach>
-                        </p>
-                    </div>
-                    <input id="submitUpdateRole" type="submit" value="submit">
-                </form>
-
-                <!-- Modal -->
-                <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Confirm update role</h4>
-                            </div>
-                            <div class="modal-body">
-                                Do you want to update?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                <button id ="btnConfirmUpdateRole" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
-                            </div>
+                        <div class="form-group">
+                            <p style="font-size: 20px; font-weight: 700; text-align: center">List of features</p>
+                            <p>
+                                <label for="adminFeatutes">Admin</label>
+                                <button type="button" id ="btnSelectAllAdmin" class="btn btn-default btn-sm">Select all</button><br>
+                                <c:forEach items="${requestScope.AdminFeatures}" var="a">
+                                    <input type="checkbox" id="adminFeatures" name="fid" value="${a.id}"
+                                           <c:forEach items="${requestScope.allowedFeatures}" var='b'>
+                                               <c:if test='${a.id == b.key.id && b.value == true}'>
+                                                   checked
+                                               </c:if>
+                                           </c:forEach>>
+                                    <label for="fid">${a.name}</label><br>
+                                </c:forEach>
+                            </p>
                         </div>
+                        <div class="form-group">
+                            <p>
+                                <label for="marketingFeatutes">Marketing</label>
+                                <button type="button" id="btnSelectAllMarketing" class="btn btn-default btn-sm">Select all</button><br>
+                                <c:forEach items="${requestScope.MarketingFeatures}" var="a">
+                                    <input type="checkbox" id="markettingFeatures" name="fid" value="${a.id}"                                      
+                                           <c:forEach items="${requestScope.allowedFeatures}" var='b'>
+                                               <c:if test='${a.id == b.key.id && b.value == true}'>
+                                                   checked
+                                               </c:if>
+                                           </c:forEach>>
+                                    <label for="fid">${a.name}</label><br>
+                                </c:forEach>
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <p>
+                                <label for="salesFeatures">Sale</label>
+                                <button type="button" id="btnSelectAllSale" class="btn btn-default btn-sm">Select all</button><br>
+                                <c:forEach items="${requestScope.SalesFeatues}" var="a">
+                                    <input type="checkbox" id="saleFeatures" name="fid" value="${a.id}"                                                
+                                           <c:forEach items="${requestScope.allowedFeatures}" var='b'>
+                                               <c:if test='${a.id == b.key.id && b.value == true}'>
+                                                   checked
+                                               </c:if>
+                                           </c:forEach>>
+                                    <label for="role">${a.name}</label><br>
+                                </c:forEach>
+                            </p>
+                        </div>
+                        <input id="submitUpdateRole" type="submit" value="UPDATE">
+                    </form>
 
+                    <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Confirm update role</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Do you want to update?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button id ="btnConfirmUpdateRole" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                </selection>
             </aside>
         </div>
 
