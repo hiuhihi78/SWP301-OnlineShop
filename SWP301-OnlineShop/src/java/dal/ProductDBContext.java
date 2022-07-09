@@ -5,6 +5,7 @@
 package dal;
 
 import configs.KeyValuePair;
+import configs.KeyValuePair1;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,44 +61,30 @@ public class ProductDBContext extends DBContext {
         return listProduct;
     }
 
-    public ArrayList<KeyValuePair> getProductsTrend(Date from, Date to) {
-        ArrayList<KeyValuePair> list = new ArrayList<>();
+    public ArrayList<KeyValuePair1> getProductsTrend(Date from, Date to) {
+        ArrayList<KeyValuePair1> list = new ArrayList<>();
         try {
-            String sql = "select p.*, p1.number from product as p,"
-                    + " (select top (10) od.productId, sum(od.quantity) as number from OrderDetail as [od] , [Order] as [o] where od.orderId = o.id"
-                    + " and o.userid in (select id from [User] where MONTH(dateCreated) = MONTH(GETDATE()) and YEAR(dateCreated) = YEAR(GETDATE()))";
+            String sql = "select top 10 productId, sum(quantity) as number from "
+                    + "OrderDetail as o where o.orderId in (select id from [Order] where 1=1";
+                
             if (from != null) {
-                sql += " and o.[date] >= '" + from + "'";
+                sql += " and [date] >= '" + from + "'";
             }
             if (to != null) {
-                sql += " and o.[date] <= '" + to + "'";
+                sql += " and [date] <= '" + to + "'";
             }
             if (from == null && to == null) {
-                sql += " and o.[date] >= DATEADD(day,-7, GETDATE())";
+                sql += " and [date] >= DATEADD(day,-7, GETDATE()))";
             }
-            sql += " group by  od.productId";
-            sql += " order by number desc) as p1 where p.id = p1.productId";
+            sql += " group by productId";
+            sql += " order by number desc";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Product product = new Product();
-                product.setId(rs.getInt(1));
-                product.setName(rs.getString(2));
-                product.setDescription(rs.getString(3));
-                product.setPrice(rs.getLong(4));
-                product.setDiscount(rs.getInt(5));
-                User user = new User();
-                user.setId(rs.getInt(6));
-                product.setUser(user);
-                product.setFeatured(rs.getBoolean(7));
-                product.setThumbnail(rs.getString(8));
-                product.setDate(rs.getDate(9));
-                SubCategory subCategory = new SubCategory();
-                subCategory.setId(rs.getInt(10));
-                product.setSubCategory(subCategory);
-                product.setQuantity(rs.getInt(11));
-                product.setStatus(rs.getBoolean(12));
-                list.add(new KeyValuePair(product, rs.getInt("number")));
+                Product product = null;
+                int pid = rs.getInt("productId");
+                product = getProductById(pid);
+                list.add(new KeyValuePair1(product, rs.getInt("number")));
             }
         } catch (SQLException e) {
         }
@@ -152,15 +139,13 @@ public class ProductDBContext extends DBContext {
 
     public static void main(String[] args) {
         ProductDBContext db = new ProductDBContext();
-        ArrayList<Product> list = db.getProductsBySliderId(1);
-        for (Product p : list) {
-            System.out.println(p.getName());
+        ArrayList<KeyValuePair1> list = db.getProductsTrend(null, null);
+        for (KeyValuePair1 keyValuePair1 : list) {
+            System.out.println(((Product)keyValuePair1.getKey()).getName());
+            System.out.println((keyValuePair1.getValue()));
         }
     }
 
-    public ArrayList<KeyValuePair> getProductsTrend(java.util.Date from, java.util.Date to) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     public Product addProduct(String name, String description, int sellerId, int subCategoryId, long price, int discount, long quantity, boolean featured, boolean status) {
 

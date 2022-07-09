@@ -10,32 +10,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>Slider | List</title>
-        <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <meta name="description" content="Developed By M Abdur Rokib Promy">
+        <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+        <title>Slider | List</title> 
+        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/marketing/style.css" rel="stylesheet" type="text/css" />
         <!-- bootstrap 3.0.2 -->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!--font Awesome--> 
-        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
-        <!--Theme style--> 
-        <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
-        <!--css-->
-        <link href="../../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/css/admin/main.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/css/marketing/style.css" rel="stylesheet" type="text/css" />
-
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
-
-        <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css">
-
+<!--        <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css">-->
         <!--active button nav in sidebar-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <style>
             .left-side {
-                min-height: 1550px !important;
+                min-height: 1300px !important;
             }
         </style>
     </head>
@@ -56,13 +47,10 @@
                         <!--Alter-->
                         <div class="app-title">
                             <div>
-                                <h1><i class="fa fa-list-ul" aria-hidden="true"></i> Slider List</h1>
+                                <h3><i class="fa fa-list-ul" aria-hidden="true"></i> Slider List</h3>
                                 <p></p>
                             </div>
-                            <ul class="app-breadcrumb breadcrumb">
-                                <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                                <li class="breadcrumb-item"><a href="/marketing/dashboard">Sliders</a></li>
-                            </ul>
+                            
                         </div>
                         <div style="padding-bottom: 20px"> 
                             <form action="/marketing/sliderList" method="get" id="fSearch">
@@ -111,7 +99,7 @@
                                             <div class="wp-block-content">
                                                 <small>10 days only</small>
                                                 <h4 class="content-title">${s.title}</h4>
-                                                <p class="description">${s.note}</p>
+                                                <p class="crop">${s.note}</p>
                                             </div>
                                         </div>
                                         <div class="wp-block-footer">

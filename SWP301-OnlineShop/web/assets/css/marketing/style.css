@@ -201,14 +201,7 @@ body{
     margin-bottom: 30px;
 }
 
-p.description {
-    display: -webkit-box;
-    max-width: 500px;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-
-}
+.crop { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; width:500px; }
 
 .height {
     height: 25px;

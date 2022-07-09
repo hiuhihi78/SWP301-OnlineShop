@@ -4,6 +4,7 @@
  */
 package dal;
 
+import configs.KeyValuePair1;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Category;
@@ -839,6 +841,42 @@ public class OrderDBContext extends DBContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public List<KeyValuePair1> getTop3BestCustomer() {
+        List<KeyValuePair1> lst = null;
+        try {
+            String sql = "select u.*, t.totalPrice from [User] u, \n"
+                    + "(select top 3 userId, sum(totalPrice) totalPrice from [Order]\n"
+                    + "group by userId\n"
+                    + "order by totalPrice desc) t where u.id = t.userId";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            lst = new ArrayList<>();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setFullname(rs.getString("fullname"));
+                user.setEmail(rs.getString("email"));
+                user.setMobile(rs.getString("mobile"));
+                KeyValuePair1 kv = new KeyValuePair1(user, rs.getLong("totalPrice"));
+                lst.add(kv);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lst;
+    }
+    
+    
+    public static void main(String[] args) {
+        OrderDBContext db = new OrderDBContext();
+        List<KeyValuePair1> lst = db.getTop3BestCustomer();
+        for (KeyValuePair1 keyValuePair1 : lst) {
+            System.out.println(((User)keyValuePair1.getKey()).getFullname());
+            System.out.println(keyValuePair1.getValue());
+        
         }
     }
 

@@ -50,6 +50,19 @@ $('.btn-change').click(function () {
 
 });
 
+$('#btn-update').click(function (){
+    $('#confirm-update-slider').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+    });
+});
+
+$('.btn-update-slider').click(function (){
+    $('#confirm-update-slider').modal('toggle');
+    $('#form-add-update').submit();
+});
+
 
 
 

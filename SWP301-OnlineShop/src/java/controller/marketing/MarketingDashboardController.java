@@ -5,9 +5,12 @@
 package controller.marketing;
 
 import configs.KeyValuePair;
+import configs.KeyValuePair1;
 import static configs.Security.CUSTOMER_ROLL_ID;
+import dal.CartDBContext;
 import dal.CustomerDBContext;
 import dal.FeedbackDBContext;
+import dal.OrderDBContext;
 import dal.PostDBContext;
 import dal.ProductDBContext;
 import java.io.IOException;
@@ -16,6 +19,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,16 +47,25 @@ public class MarketingDashboardController extends HttpServlet {
         ProductDBContext proDb = new ProductDBContext();
         PostDBContext posDb = new PostDBContext();
         FeedbackDBContext feedDb = new FeedbackDBContext();
+        OrderDBContext orderDb = new OrderDBContext();
+        
+        //Get number
         int customerNumber = cusDb.count(CUSTOMER_ROLL_ID);
         int productNumber = proDb.getProductNumber();
         int postNumber = posDb.getPostNumber();
         int feedbackNumber = feedDb.getFeedbackNumber();
-        ArrayList<KeyValuePair> list = proDb.getProductsTrend(from, to);
+        
+        //Get list
+        ArrayList<KeyValuePair1> list = proDb.getProductsTrend(from, to);
+        List<KeyValuePair1> lstUserTop3 = orderDb.getTop3BestCustomer();
+        
+        //Set attribute
         request.setAttribute("customerNumber", customerNumber);
         request.setAttribute("productNumber", productNumber);
         request.setAttribute("postNumber", postNumber);
         request.setAttribute("feedbackNumber", feedbackNumber);
         request.setAttribute("list", list);
+        request.setAttribute("lstUserTop3", lstUserTop3);
 
         request.getRequestDispatcher("/view/marketing/dashboard.jsp").forward(request, response);
     }
@@ -87,16 +100,10 @@ public class MarketingDashboardController extends HttpServlet {
      
             String strStart = request.getParameter("txtStart");
             String strEnd = request.getParameter("txtEnd");
-//        String startDateString = "06/27/2007";
             DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
             java.sql.Date s = java.sql.Date.valueOf(strStart);
             java.sql.Date e = java.sql.Date.valueOf(strEnd);
-//            startDate = df.parse(strStart);
-//            endDate = df.parse(strEnd);
-//            String newDateString = df.format(startDate);
-//            System.out.println(newDateString);
-//  
-//
+
         processRequest(request, response, s, e);
     }
 

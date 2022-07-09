@@ -15,7 +15,7 @@
 
 
 
-.toggle.lg input[type="checkbox"] + .button-indecator:before {
+/*.toggle.lg input[type="checkbox"] + .button-indecator:before {
     font-size: 30px;
 }
 
@@ -61,11 +61,11 @@
 
 .toggle input[type="checkbox"]:disabled + .button-indecator:before {
     color: #ccc;
-}
+}*/
 
 
 /*dashboard*/
-.app-title {
+/*.app-title {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -84,15 +84,15 @@
     padding: 20px 30px;
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
+}*/
 
-@media print {
+/*@media print {
     .app-title {
         display: none;
     }
-}
+}*/
 
-@media (max-width: 480px) {
+/*@media (max-width: 480px) {
     .app-title {
         margin: -15px -15px 15px;
         padding: 20px;
@@ -104,7 +104,7 @@
         -ms-flex-align: start;
         align-items: flex-start;
     }
-}
+}*/
 
 .app-title h1 {
     margin: 0;
@@ -122,6 +122,8 @@
         display: none;
     }
 }
+
+
 
 /*bodyIcon*/
 .widget-small {
@@ -911,7 +913,7 @@ tfoot tr:nth-child(2) th {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 20px;
+
 }
 
 .tile .tile-title-w-btn p {
