@@ -35,7 +35,7 @@
 
         <style>
             .left-side {
-                min-height: 1096px !important;
+                min-height: 1550px !important;
             }
         </style>
     </head>
@@ -122,8 +122,8 @@
                                                 <li><a href="/marketing/sliderDetail?id=${s.id}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Details</a></li>
                                                 <li>
 
-                                                    <button id="btn-status-${s.id}" data-id="${s.id}" data-status="${(s.status)}" type="button" class="btn ${(s.status)?"btn-danger":"btn-success"} btn-id">
-                                                        ${(s.status)?"Hide":"Show"}
+                                                    <button id="btn-status-${s.id}" data-id="${s.id}" data-status="${(s.status)}" type="button" class="btn ${(s.status)?"btn-success":"btn-danger"} btn-id">
+                                                        ${(s.status)?"Show":"Hide"}
                                                     </button>
 
 
@@ -135,7 +135,7 @@
                             </div>
                         </c:forEach>
                     </c:if>
-
+                  
                     <ul class="pagination justify-content-center" style="margin:20px 0">
                         <c:if test="${index != 1}">
                             <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${1}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
@@ -150,6 +150,7 @@
                             <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${lastPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
                                 </c:if>
                     </ul>
+           
                 </section>
             </aside>
         </div>
