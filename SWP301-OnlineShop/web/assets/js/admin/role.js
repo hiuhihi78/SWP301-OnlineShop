@@ -12,8 +12,17 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
+    $('#btnSubmitAddRole').on('click', function (e) {
+        $('#myModal').modal('show');
+        e.preventDefault();
+    });
+
     $('#btnConfirmUpdateRole').on('click', function () {
         $('#form-updaterole').submit();
+    });
+
+    $('#btnConfirmAddRole').on('click', function () {
+        $('#frmAddRole').submit();
     });
 
     $('#btnSelectAllAdmin').on('click', function () {

@@ -125,7 +125,7 @@
         </div>
 
         <!--javascrip-->
-        <script src="../../assets/js/admin/editRole.js"></script>
+        <script src="../../assets/js/admin/role.js"></script>
         <script src="../../assets/js/admin/main.js" type="text/javascript"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!--css-->
         <link href="../../assets/css/admin/editUserRole.css" rel="stylesheet" type="text/css"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css"/>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -36,13 +37,7 @@
                     <section class="content">
                         <div id="content">
                             <h2 class="text-center" style="font-weight: 700; text-align: center">Add new role</h2>
-                        <c:if test="${requestScope.message != null && requestScope.error == false}">
-                            <h4 class="text-center" style="font-weight: 700; text-align: left; color: #0000ff">${requestScope.message}</h4>
-                        </c:if>
-                        <c:if test="${requestScope.message != null && requestScope.error == true}">
-                            <h4 class="text-center" style="font-weight: 700; text-align: left; color: #ff0000">${requestScope.message}</h4>
-                        </c:if>
-                        <form id="basic-form" action="addRole" method="post" class="d-flex justify-content-center" >
+                        <form id="frmAddRole" action="addRole" method="post" class="d-flex justify-content-center" >
                             <p>
                                 <label for="roleName">Enter role name<span class="text-danger">*</span></label>
                                 <input type="text" id="roleName" name="roleName" required>
@@ -75,15 +70,35 @@
                                     <label for="role">${a.name}</label><br>
                                 </c:forEach>
                             </p>
-                            <input class="submit" type="submit" value="ADD" class="">
+                            <input class="submit" type="submit" value="ADD" id="btnSubmitAddRole">
                         </form>
                     </div>
                 </section>
             </aside>
         </div>
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Confirm add role</h4>
+                    </div>
+                    <div class="modal-body">
+                        Do you want to add?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button id ="btnConfirmAddRole" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
         <!--javascrip-->
-        <script src="../../assets/js/admin/editRole.js"></script>
+        <script src="../../assets/js/admin/role.js"></script>
         <script src="../../assets/js/admin/main.js" type="text/javascript"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
@@ -94,5 +109,26 @@
         <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Director App -->
         <script src="../../assets/js/Director/app.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
+        <script type = "text/javascript">
+            function showSuccessMsg(title, message)
+            {
+                toastr.success(message, title);
+            }
+            function showErrMsg(title, message)
+            {
+                toastr.error(message, title);
+            }
+        </script>
+        <c:if test="${requestScope.message != null && requestScope.error == false}">
+            <script>
+                showSuccessMsg('Noftification', "${requestScope.message}");
+            </script>
+        </c:if>
+        <c:if test="${requestScope.message != null && requestScope.error == true}">
+            <script>
+                showErrMsg('Noftification', "${requestScope.message}");
+            </script>
+        </c:if>
     </body>
 </html>

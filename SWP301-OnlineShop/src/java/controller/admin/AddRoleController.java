@@ -62,19 +62,25 @@ public class AddRoleController extends BaseAuthController {
             throws ServletException, IOException {
         String[] roles = request.getParameterValues("roleID");
         String roleName = request.getParameter("roleName");
+        RoleDBContext roleDB = new RoleDBContext();
+        ArrayList<Feature> adminFeatures = roleDB.getFeatureByGroup("Admin");
+        ArrayList<Feature> marketingFeatures = roleDB.getFeatureByGroup("Marketing");
+        ArrayList<Feature> SalesFeatures = roleDB.getFeatureByGroup("Sales");
+
+        request.setAttribute("adminFeatures", adminFeatures);
+        request.setAttribute("marketingFeatures", marketingFeatures);
+        request.setAttribute("SalesFeatures", SalesFeatures);
         try {
-            RoleDBContext roleDB = new RoleDBContext();
             roleDB.insertNewRole(roles, roleName);
             request.setAttribute("ater", "Add new role successfully");
             //response.sendRedirect("/admin/addRole");
             request.setAttribute("message", "Add user's role success!");
             request.setAttribute("error", false);
-            request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
         } catch (SQLException ex) {
             request.setAttribute("message", "Add user's role failed!");
             request.setAttribute("error", true);
-            request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("../view/admin/addRole.jsp").forward(request, response);
     }
 
     /**
