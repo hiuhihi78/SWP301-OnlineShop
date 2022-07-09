@@ -43,22 +43,21 @@ public class EditRoleController extends BaseAuthController {
         RoleDBContext roleDB = new RoleDBContext();
         ArrayList<Role> roles = roleDB.getAllRole();
         request.setAttribute("roles", roles);
+
+        ArrayList<Feature> AdminFeatures = roleDB.getFeatureByGroup("Admin");
+        ArrayList<Feature> MarketingFeatures = roleDB.getFeatureByGroup("Marketing");
+        ArrayList<Feature> SalesFeatures = roleDB.getFeatureByGroup("Sales");
         try {
             rawid = Integer.parseInt(request.getParameter("id"));
-            ArrayList<Feature> AdminFeatures = roleDB.getFeatureByGroup("Admin");
-            ArrayList<Feature> MarketingFeatures = roleDB.getFeatureByGroup("Marketing");
-            ArrayList<Feature> SalesFeatures = roleDB.getFeatureByGroup("Sales");
             LinkedHashMap<Feature, Boolean> allowedFeatures = roleDB.getAllowFeatures(rawid);
-
-            request.setAttribute("AdminFeatures", AdminFeatures);
-            request.setAttribute("MarketingFeatures", MarketingFeatures);
-            request.setAttribute("SalesFeatues", SalesFeatures);
             request.setAttribute("allowedFeatures", allowedFeatures);
             request.setAttribute("rawid", rawid);
-            request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
-        } catch (Exception e) {
-            request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
+        } catch (Exception ex) {
         }
+        request.setAttribute("AdminFeatures", AdminFeatures);
+        request.setAttribute("MarketingFeatures", MarketingFeatures);
+        request.setAttribute("SalesFeatues", SalesFeatures);
+        request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
     }
 
     /**
@@ -76,6 +75,10 @@ public class EditRoleController extends BaseAuthController {
         String[] selectedFeature = request.getParameterValues("fid");
 
         RoleDBContext roledb = new RoleDBContext();
+        ArrayList<Role> roles = roledb.getAllRole();
+        ArrayList<Feature> AdminFeatures = roledb.getFeatureByGroup("Admin");
+        ArrayList<Feature> MarketingFeatures = roledb.getFeatureByGroup("Marketing");
+        ArrayList<Feature> SalesFeatures = roledb.getFeatureByGroup("Sales");
         try {
             roledb.updateRole(roleid, selectedFeature);
             request.setAttribute("message", "Edit user's role success!");
@@ -85,6 +88,10 @@ public class EditRoleController extends BaseAuthController {
             request.setAttribute("error", true);
             Logger.getLogger(EditRoleController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        request.setAttribute("AdminFeatures", AdminFeatures);
+        request.setAttribute("MarketingFeatures", MarketingFeatures);
+        request.setAttribute("SalesFeatues", SalesFeatures);
+        request.setAttribute("roles", roles);
         request.getRequestDispatcher("../view/admin/editRole.jsp").forward(request, response);
 //        try {
 //            roledb.updateRole(roleid, selectedFeature);

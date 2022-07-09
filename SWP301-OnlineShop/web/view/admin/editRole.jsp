@@ -24,6 +24,7 @@
         <!--css-->
         <link href="../../assets/css/admin/editUserRole.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/css/admin/main.css" rel="stylesheet" type="text/css"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css"/>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -35,17 +36,11 @@
                 <aside class="right-side">
                     <!-- Main content -->
                     <h2 class="text-center" style="font-weight: 700; text-align: center">Edit a role</h2>
-                <c:if test="${requestScope.message != null && requestScope.error == false}">
-                    <h4 class="text-center" style="font-weight: 700; text-align: left; color: #0000ff">${requestScope.message}</h4>
-                </c:if>
-                <c:if test="${requestScope.message != null && requestScope.error == true}">
-                    <h4 class="text-center" style="font-weight: 700; text-align: left; color: #ff0000">${requestScope.message}</h4>
-                </c:if>
-                <form action="editRole" method="post" class="form-horizontal">
-                    <p>
-                        <label for="roleName">Select role name<span class="text-danger">*</span></label>
-                        <select name="roleId" class="form-select">
-                            <option value="-1"></option>
+                    <form action="editRole" method="post" class="form-horizontal" id="form-updaterole">
+                        <p>
+                            <label for="roleName">Select role name<span class="text-danger">*</span></label>
+                            <select name="roleId" class="form-select">
+                                <option value="-1"></option>
                             <c:forEach items="${requestScope.roles}" var="r">
                                 <option value="${r.id}" ${r.id == requestScope.rawid ? "selected='selected'":""}>${r.name}</option>
                             </c:forEach>
@@ -95,8 +90,29 @@
                             </c:forEach>
                         </p>
                     </div>
-                    <input class="submit" type="submit" value="Edit" class="">
+                    <input id="submitUpdateRole" type="submit" value="submit">
                 </form>
+
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Confirm update role</h4>
+                            </div>
+                            <div class="modal-body">
+                                Do you want to update?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button id ="btnConfirmUpdateRole" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </aside>
         </div>
 
@@ -112,6 +128,26 @@
         <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Director App -->
         <script src="../../assets/js/Director/app.js" type="text/javascript"></script>
-        <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
+        <script type = "text/javascript">
+            function showSuccessMsg(title, message)
+            {
+                toastr.success(message, title);
+            }
+            function showErrMsg(title, message)
+            {
+                toastr.error(message, title);
+            }
+        </script>
+        <c:if test="${requestScope.message != null && requestScope.error == false}">
+            <script>
+                showSuccessMsg('Noftification', "${requestScope.message}");
+            </script>
+        </c:if>
+        <c:if test="${requestScope.message != null && requestScope.error == true}">
+            <script>
+                showErrMsg('Noftification', "${requestScope.message}");
+            </script>
+        </c:if>
     </body>
 </html>
