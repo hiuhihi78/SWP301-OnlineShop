@@ -142,7 +142,7 @@
                                                                     <td>${listProductOrder.subCategory.category.name}</td>
                                                                     <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${listProductOrder.getUnitPrice()}"/></td>
                                                                     <td>${listProductOrder.quantity}</td>
-                                                                    <td><div class="col-md-offset-0" >
+                                                                    <td><div class="col-md-offset-0 pull-right" >
                                                                             <c:if test="${orderInfor.status == 4}">
                                                                                 <c:if test="${!listOrder.isFeedback}">
                                                                                     <button class="btn btn-success " onclick="feedbackProdcut(${orderInfor.id},${listProductOrder.id},${sessionScope.user.id});">
@@ -154,8 +154,8 @@
                                                                                         Feedbacked
                                                                                     </button>    
                                                                                 </c:if>
-                                                                                <button class="btn btn-info " onclick="addToCartFunction2(${listOrder.id},${listProductOrder.quantity},${sessionScope.user.id});">
-                                                                                    ReBuy 
+                                                                                <button class="btn btn-info " onclick="addToCartFunction2(${listProductOrder.id},${listProductOrder.quantity},${sessionScope.user.id});">
+                                                                                    ReBuy  
                                                                                 </button>
                                                                             </c:if>
                                                                         </div>
