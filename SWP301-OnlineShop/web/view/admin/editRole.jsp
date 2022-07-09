@@ -36,7 +36,7 @@
                 <!-- Right side. contains main content -->
                 <aside class="right-side">
                     <!-- Main content -->
-                    <selection class='content'>
+                    <section class='content'>
                         <h2 class="text-center" style="font-weight: 700; text-align: center">Edit a role</h2>
                         <form action="editRole" method="post" class="form-horizontal" id="form-updaterole">
                             <p>
@@ -52,8 +52,9 @@
                         <div class="form-group">
                             <p style="font-size: 20px; font-weight: 700; text-align: center">List of features</p>
                             <p>
-                                <label for="adminFeatutes">Admin</label>
-                                <button type="button" id ="btnSelectAllAdmin" class="btn btn-default btn-sm">Select all</button><br>
+                                <label for="adminFeatutes">Admin</label><br>
+                                <input type="checkbox" id="btnSelectAllAdmin"/>
+                                <label for="checkall">Select all</label><br>
                                 <c:forEach items="${requestScope.AdminFeatures}" var="a">
                                     <input type="checkbox" id="adminFeatures" name="fid" value="${a.id}"
                                            <c:forEach items="${requestScope.allowedFeatures}" var='b'>
@@ -67,10 +68,11 @@
                         </div>
                         <div class="form-group">
                             <p>
-                                <label for="marketingFeatutes">Marketing</label>
-                                <button type="button" id="btnSelectAllMarketing" class="btn btn-default btn-sm">Select all</button><br>
+                                <label for="marketingFeatutes">Marketing</label><br>
+                                <input type="checkbox" id="btnSelectAllMarketing"/>
+                                <label for="checkall">Select all</label><br>
                                 <c:forEach items="${requestScope.MarketingFeatures}" var="a">
-                                    <input type="checkbox" id="markettingFeatures" name="fid" value="${a.id}"                                      
+                                    <input type="checkbox" id="marketingFeatures" name="fid" value="${a.id}"                                      
                                            <c:forEach items="${requestScope.allowedFeatures}" var='b'>
                                                <c:if test='${a.id == b.key.id && b.value == true}'>
                                                    checked
@@ -82,8 +84,9 @@
                         </div>
                         <div class="form-group">
                             <p>
-                                <label for="salesFeatures">Sale</label>
-                                <button type="button" id="btnSelectAllSale" class="btn btn-default btn-sm">Select all</button><br>
+                                <label for="salesFeatures">Sale</label><br>
+                                <input type="checkbox" id="btnSelectAllSale"/>
+                                <label for="checkall">Select all</label><br>
                                 <c:forEach items="${requestScope.SalesFeatues}" var="a">
                                     <input type="checkbox" id="saleFeatures" name="fid" value="${a.id}"                                                
                                            <c:forEach items="${requestScope.allowedFeatures}" var='b'>
@@ -97,28 +100,27 @@
                         </div>
                         <input id="submitUpdateRole" type="submit" value="UPDATE">
                     </form>
-
-                    <!-- Modal -->
-                    <div id="myModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Confirm update role</h4>
-                                </div>
-                                <div class="modal-body">
-                                    Do you want to update?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button id ="btnConfirmUpdateRole" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
-                                </div>
+                </section>
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Confirm update role</h4>
                             </div>
-
+                            <div class="modal-body">
+                                Do you want to update?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button id ="btnConfirmUpdateRole" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                            </div>
                         </div>
+
                     </div>
-                </selection>
+                </div>
             </aside>
         </div>
 

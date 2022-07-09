@@ -8,7 +8,6 @@ $(document).ready(function () {
     });
 
     $('#submitUpdateRole').on('click', function (e) {
-        console.log("clicked");
         $('#myModal').modal('show');
         e.preventDefault();
     });
@@ -18,20 +17,23 @@ $(document).ready(function () {
     });
 
     $('#btnSelectAllAdmin').on('click', function () {
+        var checked = $(this).prop('checked');
         $("input[id*='adminFeatures']:checkbox").each(function () {
-            this.checked = true;
+            this.checked = checked;
         });
     });
 
     $('#btnSelectAllMarketing').on('click', function () {
+        var checked = $(this).prop('checked');
         $("input[id*='marketingFeatures']:checkbox").each(function () {
-            this.checked = true;
+            this.checked = checked;
         });
     });
 
     $('#btnSelectAllSale').on('click', function () {
+        var checked = $(this).prop('checked');
         $("input[id*='saleFeatures']:checkbox").each(function () {
-            this.checked = true;
+            this.checked = checked;
         });
     });
 });

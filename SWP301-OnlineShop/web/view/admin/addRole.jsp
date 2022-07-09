@@ -22,7 +22,7 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!--css-->
-        <link href="../../assets/css/admin/addNewUser.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/css/admin/editUserRole.css" rel="stylesheet" type="text/css"/>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -50,22 +50,28 @@
                             <p style="font-size: 20px; font-weight: 700; text-align: center">List of features</p>
                             <p>
                                 <label for="adminFeatutes">Admin</label><br>
+                                <input type="checkbox" id="btnSelectAllAdmin"/>
+                                <label for="checkall">Select all</label><br>
                                 <c:forEach items="${requestScope.adminFeatures}" var="a">
-                                    <input type="checkbox" id="roleID" name="roleID" value="${a.id}">
+                                    <input type="checkbox" id="adminFeatures" name="roleID" value="${a.id}">
                                     <label for="role">${a.name}</label><br>
                                 </c:forEach>
                             </p>
                             <p>
                                 <label for="marketingFeatutes">Marketing</label><br>
+                                <input type="checkbox" id="btnSelectAllMarketing"/>
+                                <label for="checkall">Select all</label><br>
                                 <c:forEach items="${requestScope.marketingFeatures}" var="a">
-                                    <input type="checkbox" id="roleID" name="roleID" value="${a.id}">
+                                    <input type="checkbox" id="marketingFeatures" name="roleID" value="${a.id}">
                                     <label for="role">${a.name}</label><br>
                                 </c:forEach>
                             </p>
                             <p>
                                 <label for="salesFeatures">Sale</label><br>
+                                <input type="checkbox" id="btnSelectAllSale"/>
+                                <label for="checkall">Select all</label><br>
                                 <c:forEach items="${requestScope.SalesFeatures}" var="a">
-                                    <input type="checkbox" id="roleID" name="roleID" value="${a.id}">
+                                    <input type="checkbox" id="saleFeatures" name="roleID" value="${a.id}">
                                     <label for="role">${a.name}</label><br>
                                 </c:forEach>
                             </p>
@@ -77,12 +83,10 @@
         </div>
 
         <!--javascrip-->
-        <script src="../../assets/js/admin/addNewUser.js"></script>
-        <script src="../../assets/js/admin/addNewUser.js"></script>
+        <script src="../../assets/js/admin/editRole.js"></script>
         <script src="../../assets/js/admin/main.js" type="text/javascript"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="../../js/jquery.min.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
         <!-- jQuery UI 1.10.3 -->
         <script src="../../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
