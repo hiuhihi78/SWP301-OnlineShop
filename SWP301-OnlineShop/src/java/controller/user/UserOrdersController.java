@@ -52,11 +52,13 @@ public class UserOrdersController extends BaseAuthController {
         ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
         String startDate = request.getParameter("startTime");
         String endDate = request.getParameter("endTime");
-        if(startDate == "" || endDate == "") {
+        if(startDate != null && endDate != null) {
             OrderDBContext orderDB = new OrderDBContext();
             ArrayList<Order> orders = orderDB.getUserOrders(u.getId(), startDate, endDate);
+            System.out.println("Case 1 running" + startDate + " " + endDate);
             request.setAttribute("orders", orders);
         } else {
+            System.out.println("Case 2 running");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
             String currentDate = formatter.format(date);
