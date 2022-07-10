@@ -19,8 +19,15 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="cartDetails"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                <c:if test="${sessionScope.user == null}">
+                            <li>
+                                <a href="cartDetails">
+                                    <i class="fa fa-shopping-cart cart-icon"></i> Cart 
+                                    <!--                                    <i class="fas fa-circle cart-icon__circle"></i>
+                                                                        <span class="cart-icon__content">10</span>-->
+                                </a>
+                            </li>
+
+                            <c:if test="${sessionScope.user == null}">
                                 <li><a href="login" id="button"><i class="fa fa-lock"></i> Login</a></li>
                                 </c:if>
 
@@ -33,12 +40,13 @@
                                     </a>
                                     <ul role="menu" class="sub-menu">
                                         <li>
-                                               <a href="#" class="text-none-underline" data-toggle="modal" data-target="#myModalProfilfe">Profile</a>
+                                            <!--<a href="user/profile" class="text-none-underline">Profile</a>-->
+                                            <a href="#" class="text-none-underline" data-toggle="modal" data-target="#myModalProfilfe">Profile</a>
                                         </li>
 
                                         <c:if test="${sessionScope.user.role.id == 1}">
                                             <li>
-                                                <a href="admin/userList" class="text-none-underline">Manage</a>
+                                                <a href="admin/userList" class="text-none-underline">Admin manage</a>
                                             </li>
                                         </c:if>
 
@@ -48,9 +56,9 @@
                                             </li>
                                         </c:if>
 
-                                        <c:if test="${sessionScope.user.role.id == 1 || sessionScope.user.role.id == 2 || sessionScope.user.role.id == 3}">
+                                            <c:if test="${sessionScope.user.role.id == 3 || sessionScope.user.role.id  == 21}">
                                             <li>
-                                                <a href="sale/productlist" class="text-none-underline">My store</a>
+                                                <a href="sale/productlist" class="text-none-underline">Sale manage</a>
                                             </li>
                                         </c:if>  
 

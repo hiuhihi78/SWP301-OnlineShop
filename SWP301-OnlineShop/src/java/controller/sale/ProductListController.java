@@ -28,7 +28,6 @@ import model.User;
 @WebServlet(name = "SaleProductListController", urlPatterns = {"/sale/productlist"})
 public class ProductListController extends BaseAuthController {
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -41,10 +40,9 @@ public class ProductListController extends BaseAuthController {
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("user");
-//        int sellerId = 1;
+        User user = (User) session.getAttribute("user");
         int sellerId = user.getId();
-        
+
         String tempCategoryId = request.getParameter("categoryId");
         String tempSubCategoryId = request.getParameter("subCategoryId");
         String tempStatus = request.getParameter("status");
@@ -95,7 +93,7 @@ public class ProductListController extends BaseAuthController {
         } else {
             sort = request.getParameter("sort");
         }
-        
+
         String alter = request.getParameter("alter");
         request.setAttribute("alter", alter);
 
@@ -109,7 +107,13 @@ public class ProductListController extends BaseAuthController {
         }
         ProductDBContext productDB = new ProductDBContext();
 
-        ArrayList<Product> listAllProductFilter = productDB.getListProductFilterBySaleId(categoryId, subCategoryId, status, featured, search, orderBy, sort,sellerId);
+        ArrayList<Product> listAllProductFilter = new ArrayList<>();
+        if (user.getRole().getName().equals("SaleManager")) {
+            listAllProductFilter = productDB.getListProductFilterBySaleManage(categoryId, subCategoryId, status, featured, search, orderBy, sort);
+        } else {
+            listAllProductFilter = productDB.getListProductFilterBySaleId(categoryId, subCategoryId, status, featured, search, orderBy, sort, sellerId);
+
+        }
 //        int totalRecord = productDB.getTotalRecord();
         int totalRecord = listAllProductFilter.size();
         int page, numberRecordPerPage = 5;
@@ -152,7 +156,7 @@ public class ProductListController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
@@ -164,8 +168,5 @@ public class ProductListController extends BaseAuthController {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    
-
 
 }

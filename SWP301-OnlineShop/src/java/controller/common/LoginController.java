@@ -121,6 +121,8 @@ public class LoginController extends HttpServlet {
                 page = "home";
             } else if (user.getRole().getId() == Security.CUSTOMER_ROLL_ID) {
                 page = "home";
+            }else if (user.getRole().getId() == Security.SALEMANAGE_ROLL_ID){
+                page = "home";
             }
             if (page != "") {
                 response.sendRedirect(page);

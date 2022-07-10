@@ -907,7 +907,7 @@ public class OrderDBContext extends DBContext {
 
     public static void main(String[] args) {
         OrderDBContext db = new OrderDBContext();
-        List<KeyValuePair1> lst = db.getTop5BestSeller(Date.valueOf("2022-06-25"), Date.valueOf("2022-07-07"));
+        List<KeyValuePair1> lst = db.getTop5BestSeller(null, null);
         for (KeyValuePair1 keyValuePair1 : lst) {
             System.out.println(((User) keyValuePair1.getKey()).getFullname());
             System.out.println(keyValuePair1.getValue());

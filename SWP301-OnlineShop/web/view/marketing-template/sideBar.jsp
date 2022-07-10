@@ -49,7 +49,7 @@
                     </li>
                 </c:if>
 
-                <c:if test="${s.key.url == '/marketing/productlist' && s.value == true}">
+                    <c:if test="${s.key.url == '/marketing/productlist' && s.value == false}">
                     <li id="nav-user-list">
                         <a href="productlist">
                             <i class="fa-solid fa-box-open"></i> <span>Product List</span>

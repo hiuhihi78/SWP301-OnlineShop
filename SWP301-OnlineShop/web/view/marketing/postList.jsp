@@ -50,6 +50,7 @@
                 <aside class="right-side">
                     <!-- Main content -->
                     <section class="content" id="section-content">
+                        
                         <!--Alert-->
                     <c:if test="${requestScope.success != null}">
                         <div class="fixed float-end t-55px" id="showAlter">
@@ -59,7 +60,12 @@
                             </div>
                         </div>
                     </c:if>
-
+                        <div class="app-title">
+                        <div>
+                            <h3><i class="fa fa-list-ul" aria-hidden="true"></i> Post List</h3>
+                            <p></p>
+                        </div>
+                    </div>
 
                     <c:if test="${requestScope.failed != null}">
                         <div class="fixed float-end t-55px" id="showAlter">
