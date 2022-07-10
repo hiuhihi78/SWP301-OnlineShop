@@ -40,7 +40,7 @@ public class MarketingDashboardController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Date from, Date to)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Date from, Date to, Date startSeller, Date endSeller)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         CustomerDBContext cusDb = new CustomerDBContext();
@@ -57,7 +57,8 @@ public class MarketingDashboardController extends HttpServlet {
         
         //Get list
         ArrayList<KeyValuePair1> list = proDb.getProductsTrend(from, to);
-        List<KeyValuePair1> lstUserTop3 = orderDb.getTop3BestCustomer();
+        List<KeyValuePair1> lstUserTop3 = orderDb.getTop5BestCustomer();
+        List<KeyValuePair1> lstSeller = orderDb.getTop5BestSeller(startSeller, endSeller);
         
         //Set attribute
         request.setAttribute("customerNumber", customerNumber);
@@ -66,6 +67,7 @@ public class MarketingDashboardController extends HttpServlet {
         request.setAttribute("feedbackNumber", feedbackNumber);
         request.setAttribute("list", list);
         request.setAttribute("lstUserTop3", lstUserTop3);
+        request.setAttribute("lstSeller", lstSeller);
 
         request.getRequestDispatcher("/view/marketing/dashboard.jsp").forward(request, response);
     }
@@ -83,7 +85,7 @@ public class MarketingDashboardController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        processRequest(request, response, null, null);
+        processRequest(request, response, null, null, null, null);
     }
 
     /**
@@ -98,13 +100,48 @@ public class MarketingDashboardController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
      
-            String strStart = request.getParameter("txtStart");
-            String strEnd = request.getParameter("txtEnd");
-            DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-            java.sql.Date s = java.sql.Date.valueOf(strStart);
-            java.sql.Date e = java.sql.Date.valueOf(strEnd);
-
-        processRequest(request, response, s, e);
+            String strStart = null, strEnd = null;
+            String strStartS = null, strEndS = null;
+            //Search Product
+            if (request.getParameter("txtStart") != "") {
+                strStart = request.getParameter("txtStart");
+            }
+            if (request.getParameter("txtEnd") != "") {
+                strEnd = request.getParameter("txtEnd");
+            }
+            
+            //Search Seller
+            if (request.getParameter("txtStartSel") != "") {
+                strStartS = request.getParameter("txtStartSel");
+            }
+            if (request.getParameter("txtEndSel") != "") {
+                strEndS = request.getParameter("txtEndSel");
+            }
+            
+            Date startProduct = null, endProduct = null;
+            Date startSeller = null, endSeller = null;
+            //Search Product
+            if (strStart != null) {
+                 startProduct = Date.valueOf(strStart);
+            }
+            if (strEnd != null) {
+                 endProduct = Date.valueOf(strEnd);
+            }
+            
+            //Search Seller
+            if (strStartS != null) {
+                 startSeller = Date.valueOf(strStartS);
+            }
+            if (strEndS != null) {
+                 endSeller = Date.valueOf(strEndS);
+            }
+            
+            request.setAttribute("startD", startProduct);
+            request.setAttribute("endD", endProduct);
+            request.setAttribute("startSeller", startSeller);
+            request.setAttribute("endSeller", endSeller);
+            
+        processRequest(request, response, startProduct, endProduct, startSeller, endSeller);
     }
 
     /**

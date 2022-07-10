@@ -844,11 +844,11 @@ public class OrderDBContext extends DBContext {
         }
     }
 
-    public List<KeyValuePair1> getTop3BestCustomer() {
+    public List<KeyValuePair1> getTop5BestCustomer() {
         List<KeyValuePair1> lst = null;
         try {
             String sql = "select u.*, t.totalPrice from [User] u, \n"
-                    + "(select top 3 userId, sum(totalPrice) totalPrice from [Order]\n"
+                    + "(select top 5 userId, sum(totalPrice) totalPrice from [Order]\n"
                     + "group by userId\n"
                     + "order by totalPrice desc) t where u.id = t.userId";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -868,15 +868,51 @@ public class OrderDBContext extends DBContext {
         }
         return lst;
     }
-    
-    
+
+    public List<KeyValuePair1> getTop5BestSeller(Date from, Date to) {
+        List<KeyValuePair1> lst = null;
+        UserDBContext userDb = new UserDBContext();
+        try {
+            String sql = "select u.id,t.numberOrder, t.totalPrice from [User] u, (\n"
+                    + "select top 5 sellerid, COUNT(*) numberOrder, sum(totalPrice) totalPrice from [Order] where 1=1";
+
+            if (from != null) {
+                sql += " and [date] >= '" + from + "'";
+            }
+            if (to != null) {
+                sql += " and [date] <= '" + to + "'";
+            }
+            if (from == null && to == null) {
+                sql += " And [date] >= DATEADD(day,-7, GETDATE())";
+            }
+            sql += "group by sellerid\n"
+                    + "order by totalPrice desc) t \n"
+                    + "where u.id = t.sellerid";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            lst = new ArrayList<>();
+            User user = null;
+            while (rs.next()) {
+                user = new User();
+                int uid = rs.getInt("id");
+                user = userDb.getUserById(uid);
+                KeyValuePair1 kv = new KeyValuePair1(user, rs.getInt("numberOrder"),rs.getLong("totalPrice"));
+                lst.add(kv);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lst;
+    }
+
     public static void main(String[] args) {
         OrderDBContext db = new OrderDBContext();
-        List<KeyValuePair1> lst = db.getTop3BestCustomer();
+        List<KeyValuePair1> lst = db.getTop5BestSeller(Date.valueOf("2022-06-25"), Date.valueOf("2022-07-07"));
         for (KeyValuePair1 keyValuePair1 : lst) {
-            System.out.println(((User)keyValuePair1.getKey()).getFullname());
+            System.out.println(((User) keyValuePair1.getKey()).getFullname());
             System.out.println(keyValuePair1.getValue());
-        
+            System.out.println(keyValuePair1.getValue1());
+
         }
     }
 

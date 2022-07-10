@@ -64,9 +64,9 @@ public class ProductDBContext extends DBContext {
     public ArrayList<KeyValuePair1> getProductsTrend(Date from, Date to) {
         ArrayList<KeyValuePair1> list = new ArrayList<>();
         try {
-            String sql = "select top 10 productId, sum(quantity) as number from "
-                    + "OrderDetail as o where o.orderId in (select id from [Order] where 1=1";
-                
+            String sql = "select top 5 productId, sum(quantity) as number from OrderDetail as o\n"
+                    + "where o.orderId in (select id from [Order] where 1=1";
+
             if (from != null) {
                 sql += " and [date] >= '" + from + "'";
             }
@@ -74,9 +74,9 @@ public class ProductDBContext extends DBContext {
                 sql += " and [date] <= '" + to + "'";
             }
             if (from == null && to == null) {
-                sql += " and [date] >= DATEADD(day,-7, GETDATE()))";
+                sql += " and [date] >= DATEADD(day,-7, GETDATE())";
             }
-            sql += " group by productId";
+            sql += " )group by productId";
             sql += " order by number desc";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
@@ -139,13 +139,14 @@ public class ProductDBContext extends DBContext {
 
     public static void main(String[] args) {
         ProductDBContext db = new ProductDBContext();
-        ArrayList<KeyValuePair1> list = db.getProductsTrend(null, null);
+        Date sqlDate = Date.valueOf("2022-06-25");
+        Date sqlDate1 = Date.valueOf("2022-07-07");
+        ArrayList<KeyValuePair1> list = db.getProductsTrend(sqlDate, sqlDate1);
         for (KeyValuePair1 keyValuePair1 : list) {
-            System.out.println(((Product)keyValuePair1.getKey()).getName());
+            System.out.println(((Product) keyValuePair1.getKey()).getName());
             System.out.println((keyValuePair1.getValue()));
         }
     }
-
 
     public Product addProduct(String name, String description, int sellerId, int subCategoryId, long price, int discount, long quantity, boolean featured, boolean status) {
 

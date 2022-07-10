@@ -14,10 +14,24 @@ public class KeyValuePair1 {
 
     private Object key;
     private Object value;
+    private Object value1;
+
+    public Object getValue1() {
+        return value1;
+    }
+
+    public void setValue1(Object value1) {
+        this.value1 = value1;
+    }
 
     public KeyValuePair1(Object key, Object value) {
         this.key = key;
         this.value = value;
+    }
+    public KeyValuePair1(Object key, Object value, Object value1) {
+        this.key = key;
+        this.value = value;
+        this.value1 = value1;
     }
 
     public Object getKey() {

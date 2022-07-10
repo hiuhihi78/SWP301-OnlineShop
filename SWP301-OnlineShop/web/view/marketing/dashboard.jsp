@@ -12,36 +12,26 @@
 <!DOCTYPE html>
 <html>
     <head>  
-        <meta charset="UTF-8">
-        <title>Marketing | Dashboard</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+        <title>Dashboard</title> 
+        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css"/>
         <!-- bootstrap 3.0.2 -->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- font Awesome -->
-        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
-        <!-- Theme style -->
-        <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
-        <!--css-->
+        <!--        <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css">-->
         <!--active button nav in sidebar-->
-
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-        <!--        body-->
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
-        <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css"/>
-        <!--        end body-->
 
 
 
     </head>
-    <%
-        ArrayList<KeyValuePair> list = (ArrayList<KeyValuePair>) request.getAttribute("list");
-    %>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="../marketing-template/header.jsp"></jsp:include>
@@ -93,47 +83,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tile">
-                        <h3>TOP 3 BEST CUSTOMER</h3>           
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                    <th>Total Cost</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="u" items="${lstUserTop3}">
-                                    <tr class="table-info">
-                                        <td>${(u.key).fullname}</td>
-                                        <td>${(u.key).email}</td>
-                                        <td>${(u.key).mobile}</td>
-                                        <td><b><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${u.value}"/></b></td>
-                                    </tr>
-                                </c:forEach>
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-12 text-align">
-                        <div class="tile display">
-                            <div class="row" id="row1">
-                                <form action="/marketing/dashboard" method="post" id="dateForm">
-                                    <input placeholder="Start Date" class="textbox-n height" type="text" onfocus="(this.type = 'date')" id="dt" style="height: 25px;" name="txtStart" onchange="checkDate2()" required="">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input placeholder="End Date" class="textbox-n height" type="text" onfocus="(this.type = 'date')" id="dt1" style="height: 25px;" name="txtEnd" onchange="checkDate2()" required="">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button class="btn btn-primary" type="submit" >Search</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row" >
                         <div class="col-md-12">
                             <div class="tile">
-                                <h3>Trend Of New Customers</h3>
+                                <div class="row row-class" id="row1">
+                                    <div class="title-dash">
+                                        <h3>TOP 5 BEST SELLING PRODUCTS</h3>
+                                        <p>(Default is the last 7 days from the current date)</p>
+                                    </div>
+                                    <div class="form-date">
+                                        <form action="/marketing/dashboard" method="post" id="form-search-product">
+                                            <input placeholder="Start Date" class="textbox-n height" type="text" onfocus="(this.type = 'date')" id="dt" style="height: 25px;" name="txtStart" value="${startD}">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input placeholder="End Date" class="textbox-n height" type="text" onfocus="(this.type = 'date')" id="dt1" style="height: 25px;" name="txtEnd" value="${endD}">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button class="btn btn-primary" type="button" id="search-product" >Search</button>
+                                        </form>
+                                        <p id="notefi"></p>
+                                    </div>
+                                </div>
+
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -162,71 +131,100 @@
                             </div>
                         </div>
                     </div>
+                                        <div class="tile">
+
+
+                        <div class="row row-class" id="row1">
+                            <div class="title-dash">
+                                <h3>TOP 5 BEST SELLER</h3>
+                                <p>(Default is the last 7 days from the current date)</p>
+                            </div>
+                            <div class="form-date-1">
+                                <form action="/marketing/dashboard" method="post" id="form-search-seller">
+                                    <input placeholder="Start Date" class="textbox-n height" type="text" onfocus="(this.type = 'date')" id="dtS" style="height: 25px;" name="txtStartSel" value="${startSeller}" onchange="checkDate2()">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input placeholder="End Date" class="textbox-n height" type="text" onfocus="(this.type = 'date')" id="dt1S" style="height: 25px;" name="txtEndSel" value="${endSeller}" onchange="checkDate2()">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button class="btn btn-primary" type="button" id="search-seller">Search</button>
+                                </form>
+                                <p id="notefi1"></p>
+                            </div>
+                        </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Nunber Order</th>
+                                    <th>Total Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    int i1 = 1;
+                                %>
+                                <c:forEach var="u" items="${lstSeller}">
+                                    <tr class="table-primary">
+                                        <td><%=i1%></td>
+                                        <td>${(u.key).fullname}</td>
+                                        <td>${(u.key).email}</td>
+                                        <td>${u.value}</td>
+                                        <td><b><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${u.value1}"/></b></td>
+                                        <%
+                                            i1 += 1;
+                                        %>
+                                    </tr>
+                                </c:forEach>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tile">
+                        <h3>TOP 5 BEST CUSTOMER</h3>           
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Total Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    int i2 = 1;
+                                %>
+                                <c:forEach var="u" items="${lstUserTop3}">
+                                    <tr class="table-info">
+                                        <td><%=i2%></td>
+                                        <td>${(u.key).fullname}</td>
+                                        <td>${(u.key).email}</td>
+                                        <td>${(u.key).mobile}</td>
+                                        <td><b><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${u.value}"/></b></td>
+                                        <%
+                                            i2 += 1;
+                                        %>
+                                    </tr>
+                                </c:forEach>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    
+
                 </section> <!--/ Main content -->
             </aside><!-- /.right-side -->
         </div>
 
-        <script type="text/javascript">
-            document.getElementById('dt').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-            document.getElementById('dt1').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-            function checkDate2() {
-                var stringDate = document.getElementById('dt').value;
-                var stringDate1 = document.getElementById('dt1').value;
-                var myDate = new Date(stringDate);
-                var myDate1 = new Date(stringDate1);
-                if (myDate > myDate1) {
-                    $('#row1').after('<p style="color:red;">The start date must be less than the end date!</p>');
-
-                    document.getElementById("dateForm").reset();
-                    return false;
-                } else {
-                    return true;
-                }
-
-            }
-
-
-
-// $().ready(function () {
-//    $("#dateForm").validate({
-//        onfocusout: false,
-//        onkeyup: false,
-//        onclick: false,
-//        rules: {
-//
-//            "txtStart": {
-//               
-//                checkDate: true
-//            },
-//            "txtEnd": {
-//                checkDate: true
-//            }
-//        }
-//    });
-//});
-
-//$("dateForm").validate({
-//    rules: {
-//        EndDate: { greaterThan: "#StartDate" }
-//    }
-//});
-//
-//$.validator.addMethod("checkDate", function(value, element, params) {
-//
-//    if (!/Invalid|NaN/.test(new Date(value))) {
-//        return new Date(value) > new Date($(params).val());
-//    }
-//
-//    return isNaN(value) && isNaN($(params).val()) 
-//        || (Number(value) > Number($(params).val())); 
-//},'Must be greater than {0}.');
-        </script>
 
         <!--javascrip-->
+        <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+
         <script src="../../assets/js/marketing/dashboard.js"></script>
-        <script src="../../assets/js/marketing/productList.js"></script>
-        <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <!--     <script src="../../assets/js/marketing/productList.js"></script>-->
         <script src="../../js/jquery.min.js" type="text/javascript"></script>
         <!-- jQuery UI 1.10.3 -->
         <script src="../../assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>

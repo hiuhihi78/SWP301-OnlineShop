@@ -296,3 +296,20 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.row-class {
+    display: flex;
+}
+
+.form-date{
+    padding-top: 20px;
+    margin-left: 230px;
+}
+.form-date-1{
+    padding-top: 20px;
+    margin-left: 320px;
+}
+
+.title-dash {
+    margin-left: 20px;
+}
