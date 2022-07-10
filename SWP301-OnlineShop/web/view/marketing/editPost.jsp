@@ -46,10 +46,10 @@
                         <h2 class="title text-center">Edit A Post</h2>
 
                         <div class="mb-10" >
-                            <form action="./editPost" method="POST" class="dflex-column" enctype="multipart/form-data">
+                            <form id="myForm" action="./editPost" method="POST" class="dflex-column" enctype="multipart/form-data">
 
                                 <input type="hidden" name="id" value="${requestScope.post.id}"/>
-                                <input type="hidden" name="thumbnailOld" value="${requestScope.post.thumbnail}"/>
+                            <input type="hidden" name="thumbnailOld" value="${requestScope.post.thumbnail}"/>
 
                             <div class="form-group w-70-percent">
                                 <div id="preview-box" class="preview-img-edit" style="height: 300px; width: fit-content">
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                             <!-- / Status-->
-                            <input class="btn btn-primary active"type="submit" value="Save"/>
+                            <input id="btn-submit-post" class="btn btn-primary active" data-toggle="modal" data-target="#confirmEdit" type="button" value="Save"/>
                         </form>
                     </div>
                 </section> <!--/ Main content -->
@@ -149,7 +149,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSaveCategory()">Save</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -181,7 +181,21 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSaveSubcategory()">Save</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal for confirm save post-->
+        <div  class="modal" id="confirmEdit">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id="message-modal" class="modal-body">
+                        Are you sure to change content post!
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-change" type="button" class="btn btn-primary" data-dismiss="modal" onclick="submitEditPost()" >Yes</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
