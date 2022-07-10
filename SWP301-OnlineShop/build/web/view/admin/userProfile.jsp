@@ -134,11 +134,11 @@
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-body">
-                            <p>Are you sure to change status!</p>
+                            <p>Are you sure to change user's profile?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" onclick="document.getElementById('changeStatus').submit();">Yes</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
 

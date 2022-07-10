@@ -763,6 +763,143 @@ public class ProductDBContext extends DBContext {
         }
         return products;
     }
+    
+    public ArrayList<Product> getListProductFilterBySaleManage(int categoryId, int subCategoryId, String status, String featured, String search, String orderBy, String sort) {
+
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            String sql = "DECLARE @Col_Name VARCHAR(128) = " + "'" + orderBy + "'" + "\n";
+            sql += "SELECT [Product].[id]\n"
+                    + "      ,[Product].[name]\n"
+                    + "      ,[description]\n"
+                    + "      ,[price]\n"
+                    + "      ,[discount]\n"
+                    + "      ,[sellerId]\n"
+                    + "      ,[featured]\n"
+                    + "      ,[thumbnail]\n"
+                    + "      ,[date]\n"
+                    + "      ,[subCategoryId]\n"
+                    + "      ,[SubCategory].[name] as [subCatogryName]\n"
+                    + "      ,[Category].id as categoryId\n"
+                    + "      ,[Category].[name] as [catogryName]\n"
+                    + "      ,[quantity]\n"
+                    + "      ,[status]\n"
+                    + "	  ,[price] * [discount] as [salePrice]\n"
+                    + "  FROM [dbo].[Product] join SubCategory on subCategoryId = SubCategory.id\n"
+                    + "			join Category on SubCategory.categoryId = Category.id\n"
+                    + "WHERE (1=1) \n";
+            int paramIndex = 0;
+            HashMap<Integer, Object[]> params = new HashMap<>();
+            if (categoryId != 0) {
+                sql += " and categoryId = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Integer.class.getName();
+                param[1] = categoryId;
+                params.put(paramIndex, param);
+            }
+
+            if (subCategoryId != 0) {
+                sql += " and subCategoryId = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Integer.class.getName();
+                param[1] = subCategoryId;
+                params.put(paramIndex, param);
+            }
+
+            if (!status.equals("all")) {
+                sql += " and [status] = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Boolean.class.getName();
+                param[1] = status.equals("active");
+                params.put(paramIndex, param);
+            }
+
+            if (!featured.equals("all")) {
+                sql += " and [featured] = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Boolean.class.getName();
+                param[1] = featured.equals("active");
+                params.put(paramIndex, param);
+            }
+
+            if (!search.equals("")) {
+                sql += "and ([Product].[name] like ? or [Product].[id] = ?)\n";
+                paramIndex++;
+                Object[] paramProductName = new Object[2];
+                paramProductName[0] = String.class.getName();
+                paramProductName[1] = "%" + search + "%";
+                params.put(paramIndex, paramProductName);
+
+                int id;
+                try {
+                    id = Integer.parseInt(search);
+                } catch (Exception e) {
+                    id = -1;
+                }
+
+                paramIndex++;
+                Object[] paramProductId = new Object[2];
+                paramProductId[0] = Integer.class.getName();
+                paramProductId[1] = id;
+                params.put(paramIndex, paramProductId);
+
+            }
+            // sort
+            sql += "ORDER BY CASE \n"
+                    + "	WHEN @Col_Name = 'id' THEN CAST([Product].[id] AS SQL_VARIANT)\n"
+                    + "	WHEN @Col_Name = 'category' THEN CAST([Category].[name]  AS SQL_VARIANT)\n"
+                    + "	WHEN @Col_Name = 'subCategory' THEN CAST([SubCategory].[name]  AS SQL_VARIANT)\n"
+                    + "	WHEN @Col_Name = 'originalPrice' THEN CAST([price]  AS SQL_VARIANT)\n"
+                    + "	WHEN @Col_Name = 'featured' THEN CAST([featured]  AS SQL_VARIANT)\n"
+                    + "	WHEN @Col_Name = 'status' THEN CAST([status]  AS SQL_VARIANT)\n"
+                    + "END " + sort;
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            for (Map.Entry<Integer, Object[]> entry : params.entrySet()) {
+                Integer index = entry.getKey();
+                Object[] value = entry.getValue();
+                String type = value[0].toString();
+                if (type.equals(Integer.class.getName())) {
+                    ps.setInt(index, (Integer) value[1]);
+                }
+                if (type.equals(Boolean.class.getName())) {
+                    ps.setBoolean(index, (Boolean) value[1]);
+                }
+                if (type.equals(String.class.getName())) {
+                    ps.setString(index, (String) value[1]);
+                }
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setId(rs.getInt(1));
+                p.setThumbnail(rs.getString(8));
+                p.setName(rs.getString(2));
+                Category category = new Category();
+                category.setId(rs.getInt(12));
+                category.setName(rs.getString(13));
+                SubCategory subCategory = new SubCategory();
+                subCategory.setCategory(category);
+                subCategory.setId(rs.getInt(10));
+                subCategory.setName(rs.getString(11));
+                p.setSubCategory(subCategory);
+                p.setPrice(rs.getLong(4));
+                p.setDiscount(rs.getInt(5));
+                p.setFeatured(rs.getBoolean(7));
+                p.setStatus(rs.getBoolean(15));
+                products.add(p);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
 
     public void updateQuantityProductAvailable(Product[] productsOrder) {
         try {

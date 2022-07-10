@@ -54,6 +54,12 @@
                     <!--Alter-->
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
                     <!--Alter-->
+                    <div class="app-title">
+                        <div>
+                            <h3><i class="fa fa-list-ul" aria-hidden="true"></i> Product List</h3>
+                            <p></p>
+                        </div>
+                    </div>
                         <!--Search, add and filter product-->
                         <div class="row d-flex" id="searchfilter">
                             <form action="productlist" method="get"  class="form-inline" id="formFilter">
