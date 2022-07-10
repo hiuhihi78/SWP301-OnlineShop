@@ -72,7 +72,6 @@ public class EditRoleController extends BaseAuthController {
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int roleid = Integer.parseInt(request.getParameter("roleId"));
-        String[] selectedFeature = request.getParameterValues("fid");
 
         RoleDBContext roledb = new RoleDBContext();
         ArrayList<Role> roles = roledb.getAllRole();
@@ -80,11 +79,12 @@ public class EditRoleController extends BaseAuthController {
         ArrayList<Feature> MarketingFeatures = roledb.getFeatureByGroup("Marketing");
         ArrayList<Feature> SalesFeatures = roledb.getFeatureByGroup("Sales");
         try {
+            String[] selectedFeature = request.getParameterValues("fid");
             roledb.updateRole(roleid, selectedFeature);
             request.setAttribute("message", "Edit user's role success!");
             request.setAttribute("error", false);
-        } catch (SQLException ex) {
-            request.setAttribute("message", "Edit user's role failed!");
+        } catch (Exception ex) {
+            request.setAttribute("message", "An error occured when update role!");
             request.setAttribute("error", true);
             Logger.getLogger(EditRoleController.class.getName()).log(Level.SEVERE, null, ex);
         }

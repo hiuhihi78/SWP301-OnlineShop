@@ -71,11 +71,14 @@ public class AddRoleController extends BaseAuthController {
         request.setAttribute("marketingFeatures", marketingFeatures);
         request.setAttribute("SalesFeatures", SalesFeatures);
         try {
-            roleDB.insertNewRole(roles, roleName);
-            request.setAttribute("ater", "Add new role successfully");
-            //response.sendRedirect("/admin/addRole");
-            request.setAttribute("message", "Add user's role success!");
-            request.setAttribute("error", false);
+            if (!roleDB.checkRoleExist(roleName)) {
+                roleDB.insertNewRole(roles, roleName);
+                request.setAttribute("message", "Add user's role success!");
+                request.setAttribute("error", false);
+            } else {
+                request.setAttribute("message", "Insert role failed because role exist on the system! Please check role name again.");
+                request.setAttribute("error", true);
+            }
         } catch (SQLException ex) {
             request.setAttribute("message", "Add user's role failed!");
             request.setAttribute("error", true);

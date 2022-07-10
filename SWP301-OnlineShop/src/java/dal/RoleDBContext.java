@@ -170,6 +170,24 @@ public class RoleDBContext extends DBContext {
         }
     }
 
+    public boolean checkRoleExist(String roleName) throws SQLException {
+        try {
+            String sql = "select [Role].[name] from [Role] where [Role].[name] = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, roleName);
+            ResultSet r = ps.executeQuery();
+            if(r.next())
+            {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            connection.close();
+        }
+        return false;
+    }
+
     public void updateRole(int roleID, String[] permissionID) throws SQLException {
         try {
             connection.setAutoCommit(false);

@@ -9,6 +9,8 @@ import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,8 +49,12 @@ public abstract class BaseAuthController extends HttpServlet {
             throws ServletException, IOException {
         if(isAuth(request))
         {
-            //business
-            processGet(request, response);
+            try {
+                //business
+                processGet(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(BaseAuthController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else
         {
@@ -57,9 +63,9 @@ public abstract class BaseAuthController extends HttpServlet {
     }
     
     protected abstract void processGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException;
+            throws ServletException, IOException, SQLException;
     protected abstract void processPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException;
+            throws ServletException, IOException, SQLException;
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -74,8 +80,12 @@ public abstract class BaseAuthController extends HttpServlet {
             throws ServletException, IOException {
         if(isAuth(request))
         {
-            //business
-            processPost(request, response);
+            try {
+                //business
+                processPost(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(BaseAuthController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else
         {
