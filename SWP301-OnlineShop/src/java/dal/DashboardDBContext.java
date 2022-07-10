@@ -36,7 +36,7 @@ public class DashboardDBContext extends DBContext {
     }
 
     public int getProcessingOrders() {
-        String sql = "select count(*) as ProcessingOrders from [Order] where [status] = 1";
+        String sql = "select count(*) as ProcessingOrders from [Order] where [status] = 2";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -51,7 +51,7 @@ public class DashboardDBContext extends DBContext {
     }
 
     public int getSuccessOrders() {
-        String sql = "select count(*) as SuccessOrders from [Order] where [status] = 2";
+        String sql = "select count(*) as SuccessOrders from [Order] where [status] = 4";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -67,16 +67,17 @@ public class DashboardDBContext extends DBContext {
 
     public ArrayList<Revenue> getRevenueByProductCategory() {
         String sql = "with t as\n"
-                + "(\n"
-                + "select Category.id as CategoryID, SUM([Product].price) as totalPrice \n"
-                + "from [Order] inner join [OrderDetail] on [Order].id = [OrderDetail].orderId\n"
-                + "inner join Product on [OrderDetail].productId = [Product].id\n"
-                + "inner join SubCategory on Product.subCategoryId = SubCategory.id\n"
-                + "inner join Category on SubCategory.categoryId = Category.id\n"
-                + "where [Order].[status] = 2\n"
-                + "group by Category.id\n"
-                + ")\n"
-                + "select Category.id, isnull(t.totalPrice, 0) as totalPrice, Category.[name] from t right outer join [Category] on Category.id = t.CategoryID";
+                + "                (\n"
+                + "                select Category.id as CategoryID, \n"
+                + "				SUM(([OrderDetail].price * [OrderDetail].quantity - ([OrderDetail].price * [OrderDetail].quantity * ([OrderDetail].discount / 100)))) as totalPrice \n"
+                + "                from [Order] inner join [OrderDetail] on [Order].id = [OrderDetail].orderId\n"
+                + "                inner join Product on [OrderDetail].productId = [Product].id\n"
+                + "                inner join SubCategory on Product.subCategoryId = SubCategory.id\n"
+                + "                inner join Category on SubCategory.categoryId = Category.id\n"
+                + "                where [Order].[status] = 4\n"
+                + "                group by Category.id\n"
+                + "                )\n"
+                + "                select Category.id, isnull(t.totalPrice, 0) as totalPrice, Category.[name] from t right outer join [Category] on Category.id = t.CategoryID";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -97,16 +98,15 @@ public class DashboardDBContext extends DBContext {
     }
 
     public int getTotalRevenue() {
-        String sql = "with t as\n"
-                + "(\n"
-                + "select [Order].totalPrice\n"
-                + "from [Order] inner join [OrderDetail] on [Order].id = [OrderDetail].orderId\n"
-                + "inner join Product on [OrderDetail].productId = [Product].id\n"
-                + "inner join SubCategory on Product.subCategoryId = SubCategory.id\n"
-                + "inner join Category on SubCategory.categoryId = Category.id\n"
-                + "where [Order].[status] = 2\n"
-                + "group by [Order].totalPrice)\n"
-                + "select SUM(t.totalPrice) as totalRevenue from t";
+        String sql = "				with t as\n"
+                + "                (\n"
+                + "                select distinct [Order].*\n"
+                + "                from [Order] inner join [OrderDetail] on [Order].id = [OrderDetail].orderId\n"
+                + "                inner join Product on [OrderDetail].productId = [Product].id\n"
+                + "                inner join SubCategory on Product.subCategoryId = SubCategory.id\n"
+                + "                inner join Category on SubCategory.categoryId = Category.id\n"
+                + "                where [Order].[status] = 4)\n"
+                + "                select SUM(t.totalPrice) as totalRevenue from t";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
