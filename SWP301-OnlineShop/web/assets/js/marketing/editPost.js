@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
+
+function submitEditPost() {
+    document.querySelector('#myForm').submit();
+}
+
 function handleSaveCategory() {
     var valueCategory = document.querySelector('#newCategory1').value;
     var valuesubCategory = document.querySelector('#newSubCategory1').value;
