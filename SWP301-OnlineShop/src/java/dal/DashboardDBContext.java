@@ -65,21 +65,24 @@ public class DashboardDBContext extends DBContext {
         return -1;
     }
 
-    public ArrayList<Revenue> getRevenueByProductCategory() {
+    public ArrayList<Revenue> getRevenueByProductCategory(String startDate, String endDate) {
         String sql = "with t as\n"
-                + "                (\n"
-                + "                select Category.id as CategoryID, \n"
-                + "				SUM(([OrderDetail].price * [OrderDetail].quantity - ([OrderDetail].price * [OrderDetail].quantity * ([OrderDetail].discount / 100)))) as totalPrice \n"
-                + "                from [Order] inner join [OrderDetail] on [Order].id = [OrderDetail].orderId\n"
-                + "                inner join Product on [OrderDetail].productId = [Product].id\n"
-                + "                inner join SubCategory on Product.subCategoryId = SubCategory.id\n"
-                + "                inner join Category on SubCategory.categoryId = Category.id\n"
-                + "                where [Order].[status] = 4\n"
-                + "                group by Category.id\n"
-                + "                )\n"
-                + "                select Category.id, isnull(t.totalPrice, 0) as totalPrice, Category.[name] from t right outer join [Category] on Category.id = t.CategoryID";
+                + "(\n"
+                + "select Category.id as CategoryID, \n"
+                + "SUM(([OrderDetail].price * [OrderDetail].quantity - ([OrderDetail].price * [OrderDetail].quantity * ([OrderDetail].discount / 100)))) as totalPrice\n"
+                + "from [Order] inner join [OrderDetail] on [Order].id = [OrderDetail].orderId\n"
+                + "inner join Product on [OrderDetail].productId = [Product].id\n"
+                + "inner join SubCategory on Product.subCategoryId = SubCategory.id\n"
+                + "inner join Category on SubCategory.categoryId = Category.id\n"
+                + "where [Order].[status] = 4 and [Order].[date] between ? and ?\n"
+                + "group by Category.id\n"
+                + ")\n"
+                + "select Category.id, isnull(t.totalPrice, 0) as totalPrice, Category.[name] \n"
+                + "from t right outer join [Category] on Category.id = t.CategoryID";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, startDate);
+            ps.setString(2, endDate);
             ResultSet rs = ps.executeQuery();
             ArrayList<Revenue> re = new ArrayList<>();
             while (rs.next()) {
@@ -97,18 +100,20 @@ public class DashboardDBContext extends DBContext {
         return null;
     }
 
-    public int getTotalRevenue() {
-        String sql = "				with t as\n"
-                + "                (\n"
-                + "                select distinct [Order].*\n"
-                + "                from [Order] inner join [OrderDetail] on [Order].id = [OrderDetail].orderId\n"
-                + "                inner join Product on [OrderDetail].productId = [Product].id\n"
-                + "                inner join SubCategory on Product.subCategoryId = SubCategory.id\n"
-                + "                inner join Category on SubCategory.categoryId = Category.id\n"
-                + "                where [Order].[status] = 4)\n"
-                + "                select SUM(t.totalPrice) as totalRevenue from t";
+    public int getTotalRevenue(String startDate, String endDate) {
+        String sql = "with t as\n"
+                + "(\n"
+                + "select distinct [Order].totalPrice, [Order].[date]\n"
+                + "from [Order] inner join [OrderDetail] on [Order].id = [OrderDetail].orderId\n"
+                + "inner join Product on [OrderDetail].productId = [Product].id\n"
+                + "inner join SubCategory on Product.subCategoryId = SubCategory.id\n"
+                + "inner join Category on SubCategory.categoryId = Category.id\n"
+                + "where [Order].[status] = 4)\n"
+                + "select SUM(t.totalPrice) as totalRevenue from t where [date] between ? and ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, startDate);
+            ps.setString(2, endDate);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int totalRevenue = rs.getInt("totalRevenue");
