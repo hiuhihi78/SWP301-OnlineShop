@@ -13,7 +13,7 @@ public class Security {
 
     public static String USERNAME = "hieunvhe153769@fpt.edu.vn";
     public static String PASSWORD = "Skynet.com";
-    public static String EMAGE_DEFAULT = "https://images.app.goo.gl/7tcM47RQdhCrHFoT9";
+    public static String EMAGE_DEFAULT = "/assets/img/defaultUserAvatar.png";
     public static final int ADMIN_ROLL_ID = 1;
     public static final int MAKETING_ROLL_ID = 2;
     public static final int SALE_ROLL_ID = 3;

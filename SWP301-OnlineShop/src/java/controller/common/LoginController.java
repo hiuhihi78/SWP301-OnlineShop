@@ -84,7 +84,6 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = "", password = "", check = null;
-        boolean validRole = false;
         User user = null;
         UserDBContext userDb = new UserDBContext();
         HttpSession session = request.getSession();
@@ -104,20 +103,22 @@ public class LoginController extends HttpServlet {
             //Account is locked
             if (user.isStatus() == false) {
                 request.setAttribute("messFalse", "This account is currently locked. Please contact us for answers.");
-                request.setAttribute("email", user.getEmail());
-                request.setAttribute("password", user.getPassword());
+                request.setAttribute("email", email);
+                request.setAttribute("password", password);
                 processRequest(request, response);
             } else {
                 session.setAttribute("user", user);
                 Cookie emailCookie = new Cookie("emailCookie", email);
+                Cookie passCookie = new Cookie("passCookie", password);
                 if (check != null) {
-                    Cookie passCookie = new Cookie("passCookie", password);
                     emailCookie.setMaxAge(Security.MAXIMUM_AGE);
-                    response.addCookie(passCookie);
+                    passCookie.setMaxAge(Security.MAXIMUM_AGE);
                 } else {
                     emailCookie.setMaxAge(0);
+                    passCookie.setMaxAge(0);
                 }
                 response.addCookie(emailCookie);
+                response.addCookie(passCookie);
 
                 //Sendirect
                 response.sendRedirect("home");

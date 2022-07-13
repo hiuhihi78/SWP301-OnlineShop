@@ -14,7 +14,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="assets/css/login/main.css">
         <link rel="stylesheet" type="text/css" href="assets/css/login/style.css">
-        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="assets/js/login/jquery-3.2.1.min.js"></script>
         <script src="assets/js/login/popper.min.js"></script>

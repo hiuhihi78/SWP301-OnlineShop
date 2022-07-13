@@ -9,9 +9,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
@@ -309,9 +311,10 @@ public class UserDBContext extends DBContext {
     }
 
     public boolean addUser(User user) {
+        LocalDate date = LocalDate.now();
         try {
-            String sql = "insert into [User]([password], email, fullname, username, gender, mobile, address, [Status], roleId, avatar)"
-                    + "values (?,?,?,?,?,?,?,?,?)";
+            String sql = "insert into [User]([password], email, fullname, username, gender, mobile, address, [Status], roleId, avatar, dateCreated)"
+                    + "values (?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, user.getPassword());
             stm.setString(2, user.getEmail());
@@ -321,8 +324,9 @@ public class UserDBContext extends DBContext {
             stm.setString(6, user.getMobile());
             stm.setString(7, user.getAddress());
             stm.setBoolean(8, Security.DEFAULT_STATUS);
-            stm.setInt(9, 4);
+            stm.setInt(9, Security.CUSTOMER_ROLL_ID);
             stm.setString(10, Security.EMAGE_DEFAULT);
+            stm.setDate(11, Date.valueOf(date));
 
             return stm.executeUpdate() > 0;
         } catch (Exception ex) {
@@ -1269,16 +1273,24 @@ public class UserDBContext extends DBContext {
 //        } catch (Exception e) {
 //
 //        }
-//        User user = db.getUserByEmail("Nguyenhieuskynett@gmail.com");
-//        System.out.println(user.getEmail());
+       User u = new User();
+       u.setPassword("123");
+       u.setFullname("ddd");
+       u.setGender(true);
+       u.setMobile("00558");
+       u.setAddress("adas");
+       u.setEmail("3123123");
+       boolean rs = db.addUser(u);
+       
+        System.out.println(rs);
 //        System.out.println(db.getUserById(1).toString());
-        User user = db.getUserByEmail("hieunvhe153769@fpt.edu.vn");
+//        User user = db.getUserByEmail("hieunvhe153769@fpt.edu.vn");
+////        System.out.println(user.getUsername());
+//        user.setUsername("Hieu Nguyen 123345");
+//        db.updateUserInf(user);
+//        User user1 = db.getUserByEmail("hieunvhe153769@fpt.edu.vn");
+////        user = db.getUserByEmail("hieunvhe153769@fpt.edu.vn");
 //        System.out.println(user.getUsername());
-        user.setUsername("Hieu Nguyen 123345");
-        db.updateUserInf(user);
-        User user1 = db.getUserByEmail("hieunvhe153769@fpt.edu.vn");
-//        user = db.getUserByEmail("hieunvhe153769@fpt.edu.vn");
-        System.out.println(user.getUsername());
         
         
 
