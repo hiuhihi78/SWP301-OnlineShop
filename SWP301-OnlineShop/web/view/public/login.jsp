@@ -32,16 +32,18 @@
             <div class="cover"></div>
         </section>
         <section class="login-content">
-            <c:if test="${messFalse != null}"> 
-                <div id="alert" class="alert alert-danger">
-                    ${messFalse}
-                </div>
-            </c:if>
-            <c:if test="${messTrue != null}"> 
-                <div id="alert" class="alert alert-success">
-                    ${messTrue}&nbsp;<c:if test="${time != null}">(Existing until <b>${time}</b>)</c:if>
-                </div>
-            </c:if>
+            <div>
+                <c:if test="${messFalse != null}"> 
+                    <div id="alert" class="alert alert-danger">
+                        ${messFalse}
+                    </div>
+                </c:if>
+                <c:if test="${messTrue != null}"> 
+                    <div id="alert" class="alert alert-success">
+                        ${messTrue}&nbsp;<c:if test="${time != null}">(Existing until <b>${time}</b>)</c:if>
+                        </div>
+                </c:if>
+            </div>
             <div class="logo">
                 <h1>Online Shop</h1>
             </div>
