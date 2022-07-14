@@ -7,12 +7,17 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Category;
 import model.Revenue;
 import model.SubCategory;
+import model.TrendOrder;
 
 /**
  *
@@ -155,5 +160,104 @@ public class DashboardDBContext extends DBContext {
             Logger.getLogger(DashboardDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+
+    public ArrayList<TrendOrder> getSuccessOrdersByDateRange(String startTime, String endTime) throws ParseException {
+        String sql = "DECLARE @GeneratingDateFrom DATE = ?\n"
+                + "DECLARE @GeneratingDateTo DATE = ?\n"
+                + "\n"
+                + ";WITH GeneratedDates AS\n"
+                + "(\n"
+                + "    SELECT\n"
+                + "        GeneratedDate = @GeneratingDateFrom\n"
+                + "\n"
+                + "    UNION ALL\n"
+                + "\n"
+                + "    SELECT\n"
+                + "        GeneratedDate = DATEADD(DAY, 1, G.GeneratedDate)\n"
+                + "    FROM\n"
+                + "        GeneratedDates AS G\n"
+                + "    WHERE\n"
+                + "        DATEADD(DAY, 1, G.GeneratedDate) < @GeneratingDateTo\n"
+                + "),\n"
+                + "a as \n"
+                + "(select [order].id,[order].[date] from [order] where [order].[status] = 4)\n"
+                + "SELECT\n"
+                + "    G.GeneratedDate,\n"
+                + "    count(a.id) as NumberOfSuccessOrders\n"
+                + "FROM \n"
+                + "    GeneratedDates AS G\n"
+                + "    left outer JOIN a ON G.GeneratedDate = CONVERT(date, a.date)\n"
+                + "GROUP BY\n"
+                + "    G.GeneratedDate";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setDate(1, this.parseDateSQL(startTime));
+            ps.setDate(2, this.parseDateSQL(endTime));
+            ResultSet rs = ps.executeQuery();
+            ArrayList<TrendOrder> successOrders = new ArrayList<>();
+            while (rs.next()) {
+                TrendOrder o = new TrendOrder();
+                o.setDate(rs.getString("GeneratedDate"));
+                o.setCount(rs.getInt("NumberOfSuccessOrders"));
+                successOrders.add(o);
+            }
+            return successOrders;
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<TrendOrder> getTotalOrdersByDateRange(String startTime, String endTime) throws ParseException {
+        String sql = "DECLARE @GeneratingDateFrom DATE = ?\n"
+                + "DECLARE @GeneratingDateTo DATE = ?\n"
+                + "\n"
+                + ";WITH GeneratedDates AS\n"
+                + "(\n"
+                + "    SELECT\n"
+                + "        GeneratedDate = @GeneratingDateFrom\n"
+                + "\n"
+                + "    UNION ALL\n"
+                + "\n"
+                + "    SELECT\n"
+                + "        GeneratedDate = DATEADD(DAY, 1, G.GeneratedDate)\n"
+                + "    FROM\n"
+                + "        GeneratedDates AS G\n"
+                + "    WHERE\n"
+                + "        DATEADD(DAY, 1, G.GeneratedDate) < @GeneratingDateTo\n"
+                + ")\n"
+                + "SELECT\n"
+                + "    G.GeneratedDate,\n"
+                + "    count([Order].id) as NumberOfOrders\n"
+                + "FROM \n"
+                + "    GeneratedDates AS G\n"
+                + "    left outer JOIN [Order] ON G.GeneratedDate = CONVERT(date, [Order].date)\n"
+                + "GROUP BY\n"
+                + "    G.GeneratedDate\n"
+                + "";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setDate(1, this.parseDateSQL(startTime));
+            ps.setDate(2, this.parseDateSQL(endTime));
+            ResultSet rs = ps.executeQuery();
+            ArrayList<TrendOrder> totalOrders = new ArrayList<>();
+            while (rs.next()) {
+                TrendOrder o = new TrendOrder();
+                o.setDate(rs.getString("GeneratedDate"));
+                o.setCount(rs.getInt("NumberOfOrders"));
+                totalOrders.add(o);
+            }
+            return totalOrders;
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Date parseDateSQL(String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date d = new Date(sdf.parse(date).getTime());
+        return d;
     }
 }

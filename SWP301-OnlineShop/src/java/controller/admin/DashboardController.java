@@ -45,14 +45,29 @@ public class DashboardController extends BaseAuthController {
         try {
             String reStartTime = request.getParameter("reStartTime");
             String reEndTime = request.getParameter("reEndTime");
+            String trendStartTime = request.getParameter("trendStartTime");
+            String trendEndTime = request.getParameter("trendEndTime");
+
             if (reStartTime != null && reEndTime != null) {
                 request.setAttribute("totalRevenue", dashboardDB.getTotalRevenue(reStartTime, reEndTime));
                 request.setAttribute("revenueByCategory", dashboardDB.getRevenueByProductCategory(reStartTime, reEndTime));
             } else {
-                reStartTime = this.getDateMinus(-1); //Yesterday
+                reStartTime = this.getDateMinus(-7); //Last 7-day
                 reEndTime = this.getDateMinus(0); //Today
                 request.setAttribute("totalRevenue", dashboardDB.getTotalRevenue(reStartTime, reEndTime));
                 request.setAttribute("revenueByCategory", dashboardDB.getRevenueByProductCategory(reStartTime, reEndTime));
+            }
+
+            if (trendStartTime != null && trendEndTime != null) {
+                System.out.println("Case 1");
+                request.setAttribute("SuccessOrdersRange", dashboardDB.getSuccessOrdersByDateRange(trendStartTime, trendStartTime));
+                request.setAttribute("TotalOrdersRange", dashboardDB.getTotalOrdersByDateRange(trendStartTime, trendEndTime));
+            } else {
+                System.out.println("Case 2");
+                trendStartTime = this.getDateMinus(-7); //Last 7-day
+                trendEndTime = this.getDateMinus(0); //Today
+                request.setAttribute("SuccessOrdersRange", dashboardDB.getSuccessOrdersByDateRange(trendStartTime, trendStartTime));
+                request.setAttribute("TotalOrdersRange", dashboardDB.getTotalOrdersByDateRange(trendStartTime, trendEndTime));
             }
         } catch (Exception e) {
         }

@@ -53,6 +53,8 @@
 
         </style>
     </head>
+    <c:set var="successOrdersByDateRange" value="${requestScope.SuccessOrdersRange}"/>
+    <c:set var="totalOrdersByDateRange" value="${requestScope.TotalOrdersRange}"/>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="../admin-layout/header.jsp"></jsp:include>
@@ -242,66 +244,37 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script type="text/javascript" src="../../assets/public/js/jquery.query-object.js"></script>
 
-        <!--        <script type="text/javascript">
-                    $(function () {
-                        "use strict";
-                        //BAR CHART
-                        var data = {
-                            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-                            datasets: [
-                                {
-                                    label: "My First dataset",
-                                    fillColor: "rgba(220,220,220,0.2)",
-                                    strokeColor: "rgba(220,220,220,1)",
-                                    pointColor: "rgba(220,220,220,1)",
-                                    pointStrokeColor: "#fff",
-                                    pointHighlightFill: "#fff",
-                                    pointHighlightStroke: "rgba(220,220,220,1)",
-                                    data: [65, 59, 80, 81, 56, 55, 40]
-                                },
-                                {
-                                    label: "My Second dataset",
-                                    fillColor: "rgba(151,187,205,0.2)",
-                                    strokeColor: "rgba(151,187,205,1)",
-                                    pointColor: "rgba(151,187,205,1)",
-                                    pointStrokeColor: "#fff",
-                                    pointHighlightFill: "#fff",
-                                    pointHighlightStroke: "rgba(151,187,205,1)",
-                                    data: [28, 48, 40, 19, 86, 27, 90]
-                                }
-                            ]
-                        };
-                        new Chart(document.getElementById("linechart").getContext("2d")).Line(data, {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                        });
-        
-                    });
-                    // Chart.defaults.global.responsive = true;
-                </script>-->
-
         <script>
-            const labels = [
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-            ];
+            var labels = new Array();
+            var successOrderCount = new Array();
+            var totalOrderCount = new Array();
+            <c:forEach items="${totalOrdersByDateRange}" var="a">
+            labels.push('${a.date}');
+            totalOrderCount.push(${a.count});
+            </c:forEach>
+            <c:forEach items="${successOrdersByDateRange}" var="b">
+            successOrderCount.push(${b.count});
+            </c:forEach>
 
             const data = {
                 labels: labels,
                 datasets: [{
-                        label: 'My First dataset',
+                        label: 'Success orders',
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
-                        data: [0, 10, 5, 2, 20, 30, 45],
-                    }]
+                        data: successOrderCount
+                    },
+                    {
+                        label: 'Total orders',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: totalOrderCount
+                    }
+                ]
             };
 
             const config = {
-                type: 'line',
+                type: 'bar',
                 data: data,
                 options: {}
             };
