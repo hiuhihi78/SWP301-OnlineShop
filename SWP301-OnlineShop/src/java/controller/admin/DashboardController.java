@@ -59,14 +59,13 @@ public class DashboardController extends BaseAuthController {
             }
 
             if (trendStartTime != null && trendEndTime != null) {
-                System.out.println("Case 1");
-                request.setAttribute("SuccessOrdersRange", dashboardDB.getSuccessOrdersByDateRange(trendStartTime, trendStartTime));
+                request.setAttribute("SuccessOrdersRange", dashboardDB.getSuccessOrdersByDateRange(trendStartTime, trendEndTime));
                 request.setAttribute("TotalOrdersRange", dashboardDB.getTotalOrdersByDateRange(trendStartTime, trendEndTime));
             } else {
                 System.out.println("Case 2");
                 trendStartTime = this.getDateMinus(-7); //Last 7-day
                 trendEndTime = this.getDateMinus(0); //Today
-                request.setAttribute("SuccessOrdersRange", dashboardDB.getSuccessOrdersByDateRange(trendStartTime, trendStartTime));
+                request.setAttribute("SuccessOrdersRange", dashboardDB.getSuccessOrdersByDateRange(trendStartTime, trendEndTime));
                 request.setAttribute("TotalOrdersRange", dashboardDB.getTotalOrdersByDateRange(trendStartTime, trendEndTime));
             }
         } catch (Exception e) {

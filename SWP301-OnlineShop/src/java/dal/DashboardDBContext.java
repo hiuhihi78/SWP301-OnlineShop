@@ -202,6 +202,7 @@ public class DashboardDBContext extends DBContext {
                 o.setCount(rs.getInt("NumberOfSuccessOrders"));
                 successOrders.add(o);
             }
+            System.out.println("Success: " + successOrders.size());
             return successOrders;
         } catch (SQLException ex) {
             Logger.getLogger(DashboardDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -248,6 +249,7 @@ public class DashboardDBContext extends DBContext {
                 o.setCount(rs.getInt("NumberOfOrders"));
                 totalOrders.add(o);
             }
+            System.out.println("total: " + totalOrders.size());
             return totalOrders;
         } catch (SQLException ex) {
             Logger.getLogger(DashboardDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -259,5 +261,13 @@ public class DashboardDBContext extends DBContext {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d = new Date(sdf.parse(date).getTime());
         return d;
+    }
+}
+
+class test {
+    public static void main(String[] args) throws ParseException {
+       DashboardDBContext d = new DashboardDBContext();
+       d.getSuccessOrdersByDateRange("2022-07-01", "2022-07-14");
+       d.getTotalOrdersByDateRange("2022-07-01", "2022-07-14");
     }
 }

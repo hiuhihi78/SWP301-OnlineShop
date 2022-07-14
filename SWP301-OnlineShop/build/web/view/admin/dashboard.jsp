@@ -248,11 +248,11 @@
             var labels = new Array();
             var successOrderCount = new Array();
             var totalOrderCount = new Array();
-            <c:forEach items="${totalOrdersByDateRange}" var="a">
+            <c:forEach items="${requestScope.TotalOrdersRange}" var="a">
             labels.push('${a.date}');
             totalOrderCount.push(${a.count});
             </c:forEach>
-            <c:forEach items="${successOrdersByDateRange}" var="b">
+            <c:forEach items="${requestScope.SuccessOrdersRange}" var="b">
             successOrderCount.push(${b.count});
             </c:forEach>
 
@@ -260,13 +260,15 @@
                 labels: labels,
                 datasets: [{
                         label: 'Success orders',
+                        type: 'line',
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: successOrderCount
                     },
                     {
                         label: 'Total orders',
-                        backgroundColor: 'rgb(255, 99, 132)',
+                        type: 'bar',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: totalOrderCount
                     }
@@ -274,7 +276,6 @@
             };
 
             const config = {
-                type: 'bar',
                 data: data,
                 options: {}
             };
