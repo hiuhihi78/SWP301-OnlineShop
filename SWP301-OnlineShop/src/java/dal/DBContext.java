@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 public class DBContext {
 
     Connection connection;
-
     public DBContext() {
         try {
             String username = "vailon";

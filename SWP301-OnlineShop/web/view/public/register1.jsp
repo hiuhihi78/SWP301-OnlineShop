@@ -14,16 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="assets/css/login/main.css">
         <link rel="stylesheet" type="text/css" href="assets/css/login/style.css">
-        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="assets/js/login/jquery-3.2.1.min.js"></script>
-        <script src="assets/js/login/popper.min.js"></script>
-        <script src="assets/js/login/bootstrap.min.js"></script>
-        <script src="assets/js/login/main.js"></script>
-        <script src="assets/js/login/pace.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js" type="text/javascript"></script>
-        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
-        <script src="../../assets/js/login/validation.js" type="text/javascript"></script>
         <title>Register</title>
     </head>
     <body>
@@ -110,5 +101,10 @@
             </div>
         </section>><!-- ./container -->
     </body>
+        <script src="assets/js/login/jquery-3.2.1.min.js"></script>
+        <script src="assets/js/login/popper.min.js"></script>
+        <script src="assets/js/login/bootstrap.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
+        <script src="../../assets/js/login/validation.js" type="text/javascript"></script>
     <script src="assets/js/login/scripts.js"></script>
 </html>

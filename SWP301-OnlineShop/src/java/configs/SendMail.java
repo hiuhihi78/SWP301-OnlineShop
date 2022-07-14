@@ -106,7 +106,7 @@ public class SendMail {
                 + "            <td>" + inforCustomer.getFullname() + "</td>\n"
                 + "        </tr>\n"
                 + "            <td>Gender: </td>\n"
-                + "            <td>" + inforCustomer.getNameGender()+ "</td>\n"
+                + "            <td>" + inforCustomer.getNameGender() + "</td>\n"
                 + "        </tr>\n"
                 + "        <tr>\n"
                 + "            <td>Order Date: </td>\n"
@@ -192,9 +192,50 @@ public class SendMail {
         SendMail.send(email, subject, message, Security.USERNAME, Security.PASSWORD);
     }
 
+    public static void sendMailFeedbackCompleted(String emailUserBuy, ArrayList<Product> listOrderProductOfUser) {
+        String subject = "[OnlineShop] Your Order Has Been Delivered Successfully!";
+        long totalCost = 0;
+        for (Product product : listOrderProductOfUser) {
+            totalCost += product.getUnitPrice();
+        }
+//        System.out.println("Total " + totalCost);
+        String message1 = "<!DOCTYPE html>\n"
+                + "<html>\n"
+                + "<head>\n"
+                + "</head>\n"
+                + "<body>\n"
+                + "\n"
+                + "	<div>Hello You!</div>\n"
+                + "    <div>Your Order Has Been Delivered Successfully!</div>\n"
+                + "    <div>Can you take a moment to give Feedback on the product you purchased at our website?</div>\n"
+                + "	<div>List below are the products and quantities of the products you have purchased: </div><br>";
+
+        for (Product product : listOrderProductOfUser) {
+            message1 += " <table >\n"
+                    + "  	<tr>\n"
+                    + "    <td>Product Name </td>\n"
+                    + "    <td>Quantity</td>\n"
+                    + "    <td>Unit Price</td>\n"
+                    + "    </tr>\n"
+                    + "    <tr>\n"
+                    + "    <td>" + product.getName() + "</td>\n"
+                    + "    <td>" + product.getQuantity() + "</td>\n"
+                    + "    <td>" + product.getUnitPrice() + "</td>\n"
+                    + "    </tr>";
+        }
+        message1 += "</table>\n"
+                + "<div>Total Cost: " + totalCost + "</div><br>\n"
+                + "   <div> If you have any problems with the product you received, please reply to this email, we will contact you as soon as possible.</div>\n"
+                + "   <div>Thank you for shopping on our website!</div>\n"
+                + "</body>\n"
+                + "</html>";
+        SendMail.send(emailUserBuy, subject, message1, Security.USERNAME, Security.PASSWORD);
+    }
+
     public static void main(String[] args) {
         String subject = "Test";
         String message = "tesing";
         SendMail.sendPassword("hieuldhe150703@fpt.edu.vn", "hello", Security.USERNAME, Security.PASSWORD);
     }
+
 }

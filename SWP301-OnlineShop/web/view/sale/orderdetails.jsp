@@ -73,7 +73,7 @@
                                     </p>
                                     <p>
                                         <label> Total: </label>
-                                        <span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${orderInfor.totalcost}"/></span> 
+                                        <span><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${orderInfor.totalcost}"/></span>
                                     </p>
                                     <p>
                                         <label>Assigned for sale: </label>
@@ -199,6 +199,8 @@
                                 <div class="modal-body">
                                     <form>
                                         <div class="form-group">
+                                            <input type="text" name="emailUserBuy" id="emailUserBuy" value="${userBuyInfor.email}">
+                                            <!--<input type="text" name="totalcost" value="${orderInfor.totalcost}">-->
                                             <label>Status: </label>
                                             <select name="status" id="statusorder" class="form-control">
                                                 <option value="" selected disabled hidden>Please set a status</option>

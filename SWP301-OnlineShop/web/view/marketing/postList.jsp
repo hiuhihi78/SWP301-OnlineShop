@@ -49,7 +49,8 @@
                 <!-- Right side. contains main content -->
                 <aside class="right-side">
                     <!-- Main content -->
-                    <section class="content ">
+                    <section class="content" id="section-content">
+                        
                         <!--Alert-->
                     <c:if test="${requestScope.success != null}">
                         <div class="fixed float-end t-55px" id="showAlter">
@@ -59,7 +60,12 @@
                             </div>
                         </div>
                     </c:if>
-
+                        <div class="app-title">
+                        <div>
+                            <h3><i class="fa fa-list-ul" aria-hidden="true"></i> Post List</h3>
+                            <p></p>
+                        </div>
+                    </div>
 
                     <c:if test="${requestScope.failed != null}">
                         <div class="fixed float-end t-55px" id="showAlter">
@@ -217,7 +223,7 @@
                     </div>
                     <div class="modal-footer">
                         <button id="btn-change" type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@
 package controller.user;
 
 import dal.OrderDBContext;
+import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Hoang Quang
  */
 @WebServlet(name = "CancelOrderController", urlPatterns = {"/cancelOrder"})
-public class CancelOrderController extends HttpServlet {
+public class CancelOrderController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,7 +57,7 @@ public class CancelOrderController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -70,7 +71,7 @@ public class CancelOrderController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

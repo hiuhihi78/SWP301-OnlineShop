@@ -58,11 +58,21 @@
                 <aside class="right-side">
                     <!-- Main content -->
                     <section class="content ">
-
+                        <div class="app-title">
+                            <div>
+                                <h3><i class="fa fa-list-ul" aria-hidden="true"></i> Product Detail</h3>
+                                <p></p>
+                            </div>
+                        </div>
                         <div class="product-content product-wrap clearfix product-deatil">
                             <div class="row">
-                                <div class="col-md-5 col-sm-12 col-xs-12">
-                                    <div class="product-image">
+                                <div class="col-md-1"></div>
+                            <div class="col-md-8 col-md-offset-1 col-sm-12 col-xs-12">
+                                <h2 class="name" style="text-transform: uppercase; font-weight: 700;">
+                                    ${requestScope.product.name}
+                                </h2>
+                                <div class="">
+                                    <div class="product-image col-md-8 ">
 
                                         <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                             <!-- Indicators -->
@@ -75,13 +85,13 @@
                                             <!-- Wrapper for slides -->
                                         <div class="carousel-inner">
                                             <div class="item active">
-                                                <img src="${requestScope.product.thumbnail}" alt="thumbnail" style="height: 300px; width: 100%;">
+                                                <img src="${requestScope.product.thumbnail}" alt="thumbnail" style="height: 350px; width: 100%;">
                                             </div>
                                             <div class="item">
-                                                 <img src="<%= attchedImg.get(1).getImage()%>" alt="thumbnail" style="height: 300px; width: 100%;">
+                                                 <img src="<%= attchedImg.get(1).getImage()%>" alt="thumbnail" style="height: 350px; width: 100%;">
                                             </div>
                                             <div class="item">
-                                                <img src="<%= attchedImg.get(0).getImage()%>" alt="thumbnail" style="height: 300px; width: 100%;">
+                                                <img src="<%= attchedImg.get(0).getImage()%>" alt="thumbnail" style="height: 350px; width: 100%;">
                                             </div>
                                         </div>
 
@@ -97,10 +107,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
-                                <h2 class="name" style="text-transform: uppercase; font-weight: 700;">
-                                    ${requestScope.product.name}
-                                </h2>
                                 <hr>
                                 <div class="price-container" style="display: flex; justify-content: space-between;">
                                     <div>
@@ -141,11 +147,14 @@
                                     </div>
                                 </div>
                                 <hr />
-                                <div class="tab-pane fade active in" id="more-information">
+                                <div class="tab-pane fade active in col-md-12"  style="margin-top: 20px" id="more-information">
                                     <strong>Description Title:</strong>
-                                    <p style="text-indent: 1.5rem; font-size: 15px;">
-                                        ${requestScope.product.description}
-                                    </p>
+                                    <c:forEach items="${requestScope.description}" var="d">
+                                        <p style="text-indent: 1.5rem; font-size: 15px;">
+                                            ${d}
+                                        </p>
+                                    </c:forEach>
+                                    
                                 </div>  
 
                                 <div class="tab-pane fade active in mb-10" id="more-information">

@@ -5,6 +5,7 @@
 package dal;
 
 import configs.KeyValuePair;
+import configs.KeyValuePair1;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,44 +61,30 @@ public class ProductDBContext extends DBContext {
         return listProduct;
     }
 
-    public ArrayList<KeyValuePair> getProductsTrend(Date from, Date to) {
-        ArrayList<KeyValuePair> list = new ArrayList<>();
+    public ArrayList<KeyValuePair1> getProductsTrend(Date from, Date to) {
+        ArrayList<KeyValuePair1> list = new ArrayList<>();
         try {
-            String sql = "select p.*, p1.number from product as p,"
-                    + " (select top (10) od.productId, sum(od.quantity) as number from OrderDetail as [od] , [Order] as [o] where od.orderId = o.id"
-                    + " and o.userid in (select id from [User] where MONTH(dateCreated) = MONTH(GETDATE()) and YEAR(dateCreated) = YEAR(GETDATE()))";
+            String sql = "select top 5 productId, sum(quantity) as number from OrderDetail as o\n"
+                    + "where o.orderId in (select id from [Order] where 1=1";
+
             if (from != null) {
-                sql += " and o.[date] >= '" + from + "'";
+                sql += " and [date] >= '" + from + "'";
             }
             if (to != null) {
-                sql += " and o.[date] <= '" + to + "'";
+                sql += " and [date] <= '" + to + "'";
             }
             if (from == null && to == null) {
-                sql += " and o.[date] >= DATEADD(day,-7, GETDATE())";
+                sql += " and [date] >= DATEADD(day,-7, GETDATE())";
             }
-            sql += " group by  od.productId";
-            sql += " order by number desc) as p1 where p.id = p1.productId";
+            sql += " )group by productId";
+            sql += " order by number desc";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Product product = new Product();
-                product.setId(rs.getInt(1));
-                product.setName(rs.getString(2));
-                product.setDescription(rs.getString(3));
-                product.setPrice(rs.getLong(4));
-                product.setDiscount(rs.getInt(5));
-                User user = new User();
-                user.setId(rs.getInt(6));
-                product.setUser(user);
-                product.setFeatured(rs.getBoolean(7));
-                product.setThumbnail(rs.getString(8));
-                product.setDate(rs.getDate(9));
-                SubCategory subCategory = new SubCategory();
-                subCategory.setId(rs.getInt(10));
-                product.setSubCategory(subCategory);
-                product.setQuantity(rs.getInt(11));
-                product.setStatus(rs.getBoolean(12));
-                list.add(new KeyValuePair(product, rs.getInt("number")));
+                Product product = null;
+                int pid = rs.getInt("productId");
+                product = getProductById(pid);
+                list.add(new KeyValuePair1(product, rs.getInt("number")));
             }
         } catch (SQLException e) {
         }
@@ -152,14 +139,13 @@ public class ProductDBContext extends DBContext {
 
     public static void main(String[] args) {
         ProductDBContext db = new ProductDBContext();
-        ArrayList<Product> list = db.getProductsBySliderId(1);
-        for (Product p : list) {
-            System.out.println(p.getName());
+        Date sqlDate = Date.valueOf("2022-06-25");
+        Date sqlDate1 = Date.valueOf("2022-07-07");
+        ArrayList<KeyValuePair1> list = db.getProductsTrend(sqlDate, sqlDate1);
+        for (KeyValuePair1 keyValuePair1 : list) {
+            System.out.println(((Product) keyValuePair1.getKey()).getName());
+            System.out.println((keyValuePair1.getValue()));
         }
-    }
-
-    public ArrayList<KeyValuePair> getProductsTrend(java.util.Date from, java.util.Date to) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public Product addProduct(String name, String description, int sellerId, int subCategoryId, long price, int discount, long quantity, boolean featured, boolean status) {
@@ -666,6 +652,143 @@ public class ProductDBContext extends DBContext {
                     + "  FROM [dbo].[Product] join SubCategory on subCategoryId = SubCategory.id\n"
                     + "			join Category on SubCategory.categoryId = Category.id\n"
                     + "WHERE (1=1) and [sellerId] = " + sellerId + "\n";
+            int paramIndex = 0;
+            HashMap<Integer, Object[]> params = new HashMap<>();
+            if (categoryId != 0) {
+                sql += " and categoryId = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Integer.class.getName();
+                param[1] = categoryId;
+                params.put(paramIndex, param);
+            }
+
+            if (subCategoryId != 0) {
+                sql += " and subCategoryId = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Integer.class.getName();
+                param[1] = subCategoryId;
+                params.put(paramIndex, param);
+            }
+
+            if (!status.equals("all")) {
+                sql += " and [status] = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Boolean.class.getName();
+                param[1] = status.equals("active");
+                params.put(paramIndex, param);
+            }
+
+            if (!featured.equals("all")) {
+                sql += " and [featured] = ?\n";
+                paramIndex++;
+                Object[] param = new Object[2];
+                param[0] = Boolean.class.getName();
+                param[1] = featured.equals("active");
+                params.put(paramIndex, param);
+            }
+
+            if (!search.equals("")) {
+                sql += "and ([Product].[name] like ? or [Product].[id] = ?)\n";
+                paramIndex++;
+                Object[] paramProductName = new Object[2];
+                paramProductName[0] = String.class.getName();
+                paramProductName[1] = "%" + search + "%";
+                params.put(paramIndex, paramProductName);
+
+                int id;
+                try {
+                    id = Integer.parseInt(search);
+                } catch (Exception e) {
+                    id = -1;
+                }
+
+                paramIndex++;
+                Object[] paramProductId = new Object[2];
+                paramProductId[0] = Integer.class.getName();
+                paramProductId[1] = id;
+                params.put(paramIndex, paramProductId);
+
+            }
+            // sort
+            sql += "ORDER BY CASE \n"
+                    + "	WHEN @Col_Name = 'id' THEN CAST([Product].[id] AS SQL_VARIANT)\n"
+                    + "	WHEN @Col_Name = 'category' THEN CAST([Category].[name]  AS SQL_VARIANT)\n"
+                    + "	WHEN @Col_Name = 'subCategory' THEN CAST([SubCategory].[name]  AS SQL_VARIANT)\n"
+                    + "	WHEN @Col_Name = 'originalPrice' THEN CAST([price]  AS SQL_VARIANT)\n"
+                    + "	WHEN @Col_Name = 'featured' THEN CAST([featured]  AS SQL_VARIANT)\n"
+                    + "	WHEN @Col_Name = 'status' THEN CAST([status]  AS SQL_VARIANT)\n"
+                    + "END " + sort;
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            for (Map.Entry<Integer, Object[]> entry : params.entrySet()) {
+                Integer index = entry.getKey();
+                Object[] value = entry.getValue();
+                String type = value[0].toString();
+                if (type.equals(Integer.class.getName())) {
+                    ps.setInt(index, (Integer) value[1]);
+                }
+                if (type.equals(Boolean.class.getName())) {
+                    ps.setBoolean(index, (Boolean) value[1]);
+                }
+                if (type.equals(String.class.getName())) {
+                    ps.setString(index, (String) value[1]);
+                }
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setId(rs.getInt(1));
+                p.setThumbnail(rs.getString(8));
+                p.setName(rs.getString(2));
+                Category category = new Category();
+                category.setId(rs.getInt(12));
+                category.setName(rs.getString(13));
+                SubCategory subCategory = new SubCategory();
+                subCategory.setCategory(category);
+                subCategory.setId(rs.getInt(10));
+                subCategory.setName(rs.getString(11));
+                p.setSubCategory(subCategory);
+                p.setPrice(rs.getLong(4));
+                p.setDiscount(rs.getInt(5));
+                p.setFeatured(rs.getBoolean(7));
+                p.setStatus(rs.getBoolean(15));
+                products.add(p);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+    
+    public ArrayList<Product> getListProductFilterBySaleManage(int categoryId, int subCategoryId, String status, String featured, String search, String orderBy, String sort) {
+
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            String sql = "DECLARE @Col_Name VARCHAR(128) = " + "'" + orderBy + "'" + "\n";
+            sql += "SELECT [Product].[id]\n"
+                    + "      ,[Product].[name]\n"
+                    + "      ,[description]\n"
+                    + "      ,[price]\n"
+                    + "      ,[discount]\n"
+                    + "      ,[sellerId]\n"
+                    + "      ,[featured]\n"
+                    + "      ,[thumbnail]\n"
+                    + "      ,[date]\n"
+                    + "      ,[subCategoryId]\n"
+                    + "      ,[SubCategory].[name] as [subCatogryName]\n"
+                    + "      ,[Category].id as categoryId\n"
+                    + "      ,[Category].[name] as [catogryName]\n"
+                    + "      ,[quantity]\n"
+                    + "      ,[status]\n"
+                    + "	  ,[price] * [discount] as [salePrice]\n"
+                    + "  FROM [dbo].[Product] join SubCategory on subCategoryId = SubCategory.id\n"
+                    + "			join Category on SubCategory.categoryId = Category.id\n"
+                    + "WHERE (1=1) \n";
             int paramIndex = 0;
             HashMap<Integer, Object[]> params = new HashMap<>();
             if (categoryId != 0) {

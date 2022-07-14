@@ -23,7 +23,16 @@ public class Order {
     private User sale;
     private String customernote;
     private String salenote;
+
+    public boolean isIsFeedback() {
+        return isFeedback;
+    }
+
+    public void setIsFeedback(boolean isFeedback) {
+        this.isFeedback = isFeedback;
+    }
     private String cancelreason;
+    private boolean isFeedback;
 
     public Order() {
     }

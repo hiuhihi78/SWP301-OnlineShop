@@ -3,12 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/assets/css/admin/editUserRole.css</file>
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin/addRole.jsp</file>
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/admin/AddRoleController.java</file>
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/admin/EditRoleController.java</file>
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin/editRole.jsp</file>
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/assets/js/admin/role.js</file>
+=======
+            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/model/Role.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/web/view/admin/userList.jsp</file>
+            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/UserDBContext.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/model/User.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/model/Product.java</file>
+>>>>>>> origin/dev
         </group>
     </open-files>
 </project-private>

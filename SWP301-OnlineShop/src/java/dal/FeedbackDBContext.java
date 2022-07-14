@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -283,14 +284,13 @@ public class FeedbackDBContext extends DBContext {
         System.err.println(db.getFeedbackImage(5).size());
     }
 
-    public void addFeedback(int userID, int productID, int star, String commnent, String fileUrl, boolean status, Date dateNow) {
+    public void addFeedback(int userID, int productID, int star, String commnent, boolean status, Date dateNow) {
         try {
             String sql = " INSERT INTO [dbo].[Feedback]\n"
                     + "           ([userId]\n"
                     + "           ,[productId]\n"
                     + "           ,[start]\n"
                     + "           ,[comment]\n"
-                    + "           ,[image]\n"
                     + "           ,[status]\n"
                     + "           ,[date])\n"
                     + "     VALUES\n"
@@ -306,12 +306,116 @@ public class FeedbackDBContext extends DBContext {
             stm.setInt(2, productID);
             stm.setInt(3, star);
             stm.setString(4, commnent);
-            stm.setString(5, fileUrl);
-            stm.setBoolean(6, status);
-            stm.setDate(7, dateNow);
+
+            stm.setBoolean(5, status);
+            stm.setDate(6, dateNow);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(FeedbackDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Feedback addNewFeedback(int userID, int productID, int star, String commnent, String img, boolean status, Date dateNow) {
+        Feedback feedback = new Feedback();
+        try {
+            connection.setAutoCommit(false);
+            String sql = " INSERT INTO [dbo].[Feedback]\n"
+                    + "           ([userId]\n"
+                    + "           ,[productId]\n"
+                    + "           ,[start]\n"
+                    + "           ,[comment]\n"
+                    + "           ,[image]\n"
+                    + "           ,[status]\n"
+                    + "           ,[date])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           , ? \n"
+                    + "           ,?\n"
+                    + "           ,?) ";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ps.setInt(2, productID);
+            ps.setInt(3, star);
+            ps.setString(4, commnent);
+            ps.setString(5, img);
+            ps.setBoolean(6, status);
+            ps.setDate(7, dateNow);
+            ps.executeUpdate();
+
+            int id = 0;
+            String sql1 = "Select @@IDENTITY as feedbackId";
+            PreparedStatement ps1 = connection.prepareStatement(sql1);
+            ResultSet rs = ps1.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+            feedback.setId(id);
+
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return feedback;
+    }
+
+    public void addAttachedImageFeedback(int feedbackId, String fileUrl) {
+        try {
+            connection.setAutoCommit(false);
+            String sql = "INSERT INTO [dbo].[Image]\n"
+                    + "           ([image])\n"
+                    + "     VALUES\n"
+                    + "           (?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, fileUrl);
+            ps.executeUpdate();
+
+            int imgId = 0;
+            String sql1 = "Select @@IDENTITY as imageId";
+            PreparedStatement ps1 = connection.prepareStatement(sql1);
+            ResultSet rs = ps1.executeQuery();
+            if (rs.next()) {
+                imgId = rs.getInt(1);
+            }
+
+            String sql2 = "INSERT INTO [dbo].[Feedback_Image]\n"
+                    + "           ([feedbackId]\n"
+                    + "           ,[imageId])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?)";
+            PreparedStatement ps2 = connection.prepareStatement(sql2);
+            ps2.setInt(1, feedbackId);
+            ps2.setInt(2, imgId);
+            ps2.executeUpdate();
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

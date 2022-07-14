@@ -55,7 +55,7 @@
                                 <div class="panel-body">
 
                                     <div class="row">
-
+                                        <!--LEFT-->
                                         <div class="col-md-6 form-group">
                                             <p>
                                                 <label>ID Order: </label>
@@ -89,20 +89,29 @@
                                             </c:if>
                                             </p>
 
-                                        </div>
+                                            <c:if test="${orderInfor.status == 0}">
+                                                <p>
+                                                    <label> Cancel Reasions: </label>
+                                                    <span>${requestScope.reasionCancel}</span> 
+                                                </p>
+                                            </c:if>
 
+                                        </div>
+                                        <!--RIGHT-->
                                         <div class="col-md-6 form-group">
                                             <p>
                                                 <label>Full Name: </label>
                                                 <span> ${userBuyInfor.fullname}</span> 
-                                            </p><p>
+                                            </p>
+                                            <p>
                                                 <label> Gender: </label>
                                                 <span> ${userBuyInfor.gender == true ? "Male" : "Female"}</span> 
                                             </p>
                                             <p>
                                                 <label>Email: </label>
                                                 <span> ${userBuyInfor.email}</span> 
-                                            </p><p>
+                                            </p>
+                                            <p>
                                                 <label> Mobile: </label>
                                                 <span> ${userBuyInfor.mobile} </span> 
                                             </p>
@@ -122,29 +131,37 @@
                                                     </thead>
                                                     <tbody>
                                                         <c:forEach items="${requestScope.listOrderProductOfUser}" var="listOrder">
-                                                            <tr>
-                                                                <td>
-                                                                    <div style="height: 100px; width: fit-content">
-                                                                        <img style="width: 100%; height: 100%; object-fit: contain" src="${listOrder.thumbnail}" alt="alt"/>
-                                                                    </div>
-                                                                </td>
-                                                                <td>${listOrder.name}</td>
-                                                                <td>${listOrder.subCategory.category.name}</td>
-                                                                <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${listOrder.getUnitPrice()}"/></td>
-                                                                <td>${listOrder.quantity}</td>
-                                                                <td><div class="col-md-offset-0" >
-                                                                        <c:if test="${orderInfor.status == 4}">
-                                                                            <button class="btn btn-success " onclick="feedbackProdcut(${orderInfor.id},${listOrder.id},${sessionScope.user.id});">
-                                                                                Feedback
-                                                                            </button>
-                                                                            <button class="btn btn-info " onclick="addToCartFunction2(${listOrder.id},${listOrder.quantity},${sessionScope.user.id});">
-                                                                                ReBuy 
-                                                                            </button>
-
-                                                                        </c:if>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                            <c:forEach items="${listOrder.products}" var="listProductOrder">
+                                                                <tr>
+                                                                    <td>
+                                                                        <div style="height: 100px; width: fit-content">
+                                                                            <img style="width: 100%; height: 100%; object-fit: contain" src="${listProductOrder.thumbnail}" alt="alt"/>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${listProductOrder.name}</td>
+                                                                    <td>${listProductOrder.subCategory.category.name}</td>
+                                                                    <td><fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${listProductOrder.getUnitPrice()}"/></td>
+                                                                    <td>${listProductOrder.quantity}</td>
+                                                                    <td><div class="col-md-offset-0 pull-right" >
+                                                                            <c:if test="${orderInfor.status == 4}">
+                                                                                <c:if test="${!listOrder.isFeedback}">
+                                                                                    <button class="btn btn-success " onclick="feedbackProdcut(${orderInfor.id},${listProductOrder.id},${sessionScope.user.id});">
+                                                                                        Feedback
+                                                                                    </button>    
+                                                                                </c:if>
+                                                                                <c:if test="${listOrder.isFeedback}">
+                                                                                    <button class="btn btn-danger">
+                                                                                        Feedbacked
+                                                                                    </button>    
+                                                                                </c:if>
+                                                                                <button class="btn btn-info " onclick="addToCartFunction2(${listProductOrder.id},${listProductOrder.quantity},${sessionScope.user.id});">
+                                                                                    ReBuy  
+                                                                                </button>
+                                                                            </c:if>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>    
+                                                            </c:forEach>
                                                         </c:forEach>
                                                     </tbody>
                                                 </table>
@@ -194,7 +211,7 @@
                                     <div class="col-md-offset">
                                         <button type="submit" onclick="return confirm('Are you sure Cancel?')"  class="btn btn-info"> Save </button>
                                         <!--<button type="submit" class="btn btn-info">Save</button>-->
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </div>
                             </form>
@@ -214,10 +231,10 @@
                 }
             }
             function updateOrder(id) {
-                var currentUrl = window.location.pathname;
+//                var currentUrl = window.location.pathname;
                 var result = confirm("Are you sure to update this Order?");
                 if (result) {
-                    window.location.href = "updateOrder?orderID=" + id + "&currentUrl=" + currentUrl
+                    window.location.href = "updateOrder?orderID=" + id
                 }
             }
             function feedbackProdcut(orderID, productID, userID) {

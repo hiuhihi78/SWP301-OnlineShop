@@ -129,7 +129,7 @@ public class CartContactController extends BaseAuthController {
         user = userDb.getUserByEmail(email);
         if (user != null) {
             //Set inf for user
-            user.setFullname(fullName);
+            user.setUsername(fullName);
             user.setMobile(mobile);
 
             user.setAddress(address);

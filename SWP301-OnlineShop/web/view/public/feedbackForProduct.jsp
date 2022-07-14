@@ -32,8 +32,7 @@
     </head>
 
     <body>
-        <c:set var="orderInfor" value="${requestScope.informationOrder}"/>
-        <c:set var="userBuyInfor" value="${requestScope.userOrderInfioramtion}"/>
+        <c:set var="userBuyInfor" value="${requestScope.userInformation}"/>
         <jsp:include page="../home-template/headerProductlist.jsp"/>
         <c:if test="${requestScope.alter != null}">
             <div class="fixed float-end t-55px" id="showAlter" style="    width: 21%;
@@ -64,10 +63,10 @@
                                     <form action="/feedbackProduct" method="post" id="submitForm" enctype="multipart/form-data">
                                         <input type="hidden" name="userID" value="${sessionScope.user.id}">
                                         <input type="hidden" name="productID" value="${requestScope.productID}">
+                                        <input type="hidden" name="orderID" value="${requestScope.orderID}">
                                         <div class="row">
 
                                             <div class="col-md-12 form-group">
-                                                <p><h2 class="title " style="margin-top: 10px; margin-left: 0" >User Information</h2></p>
                                                 <p>
                                                     <label>Full Name: </label>
                                                     <span> ${userBuyInfor.fullname}</span> 
@@ -88,19 +87,19 @@
                                                     <input type="hidden" name="mobile" value="${userBuyInfor.mobile}">
                                                 </p>
                                             </div>
-                                                <div class="col-md-6 form-group"  style="display: flex;">
+                                            <div class="col-md-6 form-group"  style="display: flex;">
                                                 <div class="center">
                                                     <label> Star: </label> 
                                                     <div class="stars">
-                                                        <input class="star star-5" id="star-5" type="radio" name="star" value="1"/>
+                                                        <input class="star star-5" id="star-5" type="radio" name="star" value="5"/>
                                                         <label class="star star-5" for="star-5"></label>
-                                                        <input class="star star-4" id="star-4" type="radio" name="star" value="2"/>
+                                                        <input class="star star-4" id="star-4" type="radio" name="star" value="4"/>
                                                         <label class="star star-4" for="star-4"></label>
                                                         <input class="star star-3" id="star-3" type="radio" name="star" value="3"/>
                                                         <label class="star star-3" for="star-3"></label>
-                                                        <input class="star star-2" id="star-2" type="radio" name="star" value="4"/>
+                                                        <input class="star star-2" id="star-2" type="radio" name="star" value="2"/>
                                                         <label class="star star-2" for="star-2"></label>
-                                                        <input class="star star-1" id="star-1" type="radio" name="star" value="5" checked=""/>
+                                                        <input class="star star-1" id="star-1" type="radio" name="star" value="1" checked=""/>
                                                         <label class="star star-1" for="star-1"></label>
                                                     </div>
                                                 </div>
@@ -112,17 +111,28 @@
 
                                                     <textarea id="story" name="commnet"rows="5" cols="33"> </textarea>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-12 form-group" style="margin: inherit;">
+
                                                 <div class="col-md-6 form-group">
                                                     <!--Attached image-->
                                                     <div class="form-group w-70-percent mx-auto">
                                                         <label >Feedback Image</label>
+
                                                         <div class="display-flex">
                                                             <div>
-                                                                <div  class="w-100percent image-input-layout display-flex" style="position: relative; width: fit-content;">
-                                                                    <div id="closeBtn-attachedBoxImg-1" class="close-btn" onclick="closeImg('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1');"> </div>
-                                                                    <img id="attachedBoxImg-1" src="#" alt="your image" style="height:150px;" class="boder-radius display-none image-thumbnail"/>
+                                                                 <div  class="w-100percent image-input-layout display-flex" style="position: relative; width: fit-content;">
+                                                                    <div id="closeBtn-imgBoxfeedback-1" class="close-btn" onclick="closeImg('imgBoxfeedback-1', 'closeBtn-imgBoxfeedback-1', 'imgfeedback1');"> <i class="fa-solid fa-xmark close-btn"></i></div>
+                                                                    <img id="imgBoxfeedback-1" src="#" alt="your image" style="height:150px;" class="boder-radius display-none image-thumbnail"/>
                                                                 </div>
-                                                                <input type="file" name="attachedImg1" id="attachedImg1" onchange="showAttachedImg('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1')" required=""/>
+                                                                <input type="file" name="imgfeedback1" id="imgfeedback1" onchange="showAttachedImgFeedback('imgBoxfeedback-1', 'closeBtn-imgBoxfeedback-1', 'imgfeedback1')" required=""/>
+                                                            </div>
+                                                            <div>
+                                                                 <div  class="w-100percent image-input-layout display-flex" style="position: relative; width: fit-content;">
+                                                                    <div id="closeBtn-imgBoxfeedback-2" class="close-btn" onclick="closeImg('imgBoxfeedback-2', 'closeBtn-imgBoxfeedback-2', 'imgfeedback2');"> <i class="fa-solid fa-xmark close-btn"></i></div>
+                                                                    <img id="imgBoxfeedback-2" src="#" alt="your image" style="height:150px;" class="boder-radius display-none image-thumbnail"/>
+                                                                </div>
+                                                                <input type="file" name="imgfeedback2" id="imgfeedback2" onchange="showAttachedImgFeedback('imgBoxfeedback-2', 'closeBtn-imgBoxfeedback-2', 'imgfeedback2')" required=""/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -132,7 +142,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-offset-1 pull-right " >
-                                                <button onclick="return confirm('Are you sure to feedback this product?')" class="btn btn-info" disabled="">Feedback</button>
+                                                <button onclick="return confirm('Are you sure to feedback this product?')" class="btn btn-info" >Feedback</button>
                                             </div>
                                         </div>
                                     </form>
@@ -149,20 +159,13 @@
 
         <jsp:include page="../home-template/footer.jsp"/>
         <script language="JavaScript" type="text/javascript">
-//            function submitForm() {
-//                var result = confirm("Are you sure to edit infomation of this Customer?");
-//                if (result) {
-//                    document.getElementById("submitForm").submit();
-//                }
-//            }
+
             setTimeout(function () {
                 const element = document.getElementById('showAlter');
                 element.remove();
             }, 3000);
         </script>
-
-        <script src="../../assets/js/marketing/addNewProduct.js"></script>
-        <!--<script src="../../assets/js/marketing/addNewPost.js" type="text/javascript"></script>-->
+        <script src="../../assets/js/feedbackk/feedback.js" type="text/javascript"></script>
         <script src="../../assets/public/js/jquery.js"></script>
         <script src="../../assets/public/js/bootstrap.min.js"></script>
         <script src="../../assets/public/js/jquery.scrollUp.min.js"></script>

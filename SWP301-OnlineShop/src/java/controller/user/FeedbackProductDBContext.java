@@ -4,6 +4,7 @@
  */
 package controller.user;
 
+import configs.HandleGenerate;
 import configs.UploadImage;
 import static configs.UploadImage.extractFileName;
 import static controller.marketing.AddNewPostController.SAVE_DIRECTORY;
@@ -11,7 +12,10 @@ import controller.marketing.PostListController;
 import dal.FeedbackDBContext;
 import dal.OrderDBContext;
 import dal.ProductCategoryDBContext;
+import dal.ProductDBContext;
 import dal.ProductListDBContext;
+import dal.UserDBContext;
+import filter.BaseAuthController;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.Category;
+import model.Feedback;
 import model.Order;
 import model.Product;
 import model.User;
@@ -40,7 +45,7 @@ import model.User;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 30, // 30MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
-public class FeedbackProductDBContext extends HttpServlet {
+public class FeedbackProductDBContext extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,39 +61,36 @@ public class FeedbackProductDBContext extends HttpServlet {
     public static final String SAVE_DIRECTORY = "img";
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
         ProductListDBContext productListDBContext = new ProductListDBContext();
         OrderDBContext orderDBContext = new OrderDBContext();
-        
+        UserDBContext userDB = new UserDBContext();
+
+        int userID = Integer.parseInt(request.getParameter("userID"));
         int productID = Integer.parseInt(request.getParameter("productID"));
-        System.out.println("ProductID " + productID);
-        request.setAttribute("productID", productID);
         
+
         //get value from request
         String raw_orderID = request.getParameter("orderID");
         //validate value
         int orderID = Integer.parseInt(raw_orderID);
-
+        
         //GET SIDER INFOR
         //get list subcategory
         ArrayList<Category> listCategorys = productCategoryDBContext.getAllCategory();
         //get least post
         ArrayList<Product> leastProduct = productListDBContext.getListLeastProduct();
 
-        //GET ORDER ID, ORDER DATE, Total, status
-        Order informationOrder = orderDBContext.getInformationOfOrderByID(orderID);
-        //GET RECIVER INFOR OF USER
-        User userOrderInfioramtion = orderDBContext.getUserOrderInformation(orderID);
-        //GET LIST ORDERED BY ORDER ID
-        ArrayList<Product> listOrderProductOfUser = orderDBContext.getListOrderProductOfUser(orderID);
+        //Get information of user
+        User userInformation = userDB.getUserInformationByID(userID);
 
         String alter = request.getParameter("alter");
         request.setAttribute("alter", alter);
-        request.setAttribute("listOrderProductOfUser", listOrderProductOfUser);
-        request.setAttribute("informationOrder", informationOrder);
-        request.setAttribute("userOrderInfioramtion", userOrderInfioramtion);
+        request.setAttribute("productID", productID);
+        request.setAttribute("orderID", orderID);
+        request.setAttribute("userInformation", userInformation);
         request.setAttribute("listCategorys", listCategorys);
         request.setAttribute("leastProduct", leastProduct);
         request.getRequestDispatcher("/view/public/feedbackForProduct.jsp").forward(request, response);
@@ -103,25 +105,31 @@ public class FeedbackProductDBContext extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-//        String fullname = request.getParameter("fullname");
-//        boolean gender = request.getParameter("gender").equals("Male");
-//        String email = request.getParameter("email");
-//        String mobile = request.getParameter("mobile");
 
         int userID = Integer.parseInt(request.getParameter("userID"));
         int productID = Integer.parseInt(request.getParameter("productID"));
+        int orderID = Integer.parseInt(request.getParameter("orderID"));
+        
         int star = Integer.parseInt(request.getParameter("star"));
         String commnent = request.getParameter("commnet").trim();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
         LocalDate localDate = LocalDate.now();
         Date dateNow = Date.valueOf(dtf.format(localDate).replaceAll("/", "-"));
         boolean status = true;
+        String img = "";
+
 
         FeedbackDBContext feedbackDB = new FeedbackDBContext();
+        Feedback feedback = feedbackDB.addNewFeedback(userID, productID, star, commnent, img, status, dateNow);
+        OrderDBContext orderDB = new OrderDBContext();
+        orderDB.editStatusFeedback(productID, orderID);
+        saveFile(request, feedback.getId());
+        response.sendRedirect("orderInfor?orderID=" + orderID + "&alter=Feedback Successfully!");
+    }
 
+    protected void saveFile(HttpServletRequest request, int feedbackId) throws IOException, ServletException {
         // Đường dẫn tuyệt đối tới thư mục gốc của web app.
         String appPath = request.getServletContext().getRealPath("");
         appPath = appPath.replace('\\', '/');
@@ -141,7 +149,7 @@ public class FeedbackProductDBContext extends HttpServlet {
             fileSaveDir.mkdir();
         }
 
-        Part partAttachedImg1 = request.getPart("attachedImg1");
+        Part partAttachedImg1 = request.getPart("imgfeedback1");
         String fileAttachedImg1 = extractFileName(partAttachedImg1, fullSavePath);
         if (fileAttachedImg1 != null && fileAttachedImg1.length() > 0) {
             String filePath = fullSavePath + File.separator + fileAttachedImg1;
@@ -149,10 +157,50 @@ public class FeedbackProductDBContext extends HttpServlet {
             // Ghi vào file.
             partAttachedImg1.write(filePath);
             String fileUrl = "/assets/img/" + fileAttachedImg1;
-            System.out.println("File: " + fileUrl);
-            feedbackDB.addFeedback(userID, productID, star, commnent, fileUrl ,status, dateNow );
+            new FeedbackDBContext().addAttachedImageFeedback(feedbackId, fileUrl);
         }
 
+        Part partAttachedImg2 = request.getPart("imgfeedback2");
+        String fileAttachedImg2 = extractFileName(partAttachedImg2, fullSavePath);
+        if (fileAttachedImg2 != null && fileAttachedImg2.length() > 0) {
+            String filePath = fullSavePath + File.separator + fileAttachedImg2;
+            System.out.println("Write attachment to file: " + filePath);
+            // Ghi vào file.
+            partAttachedImg2.write(filePath);
+            String fileUrl = "/assets/img/" + fileAttachedImg2;
+            new FeedbackDBContext().addAttachedImageFeedback(feedbackId, fileUrl);
+        }
+    }
+
+    private String extractFileName(Part part, String fullPath) {
+        // form-data; name="file"; filename="C:\file1.zip"
+        // form-data; name="file"; filename="C:\Note\file2.zip"
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                // C:\file1.zip
+                // C:\Note\file2.zip
+                String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
+                clientFileName = clientFileName.replace("\\", "/");
+                int i = clientFileName.lastIndexOf('/');
+                // file1.zip
+                // file2.zip
+                //check flename o day
+                //do something check file name
+                File checkFile = new File(fullPath + "/" + clientFileName.substring(i + 1));
+                String oldFileName = clientFileName.substring(i + 1);
+                System.out.println("oldName " + oldFileName);
+                String newName = "";
+                if (checkFile.exists()) {
+                    newName = oldFileName.substring(0, oldFileName.lastIndexOf(".")) + HandleGenerate.generateSubNameFile() + oldFileName.substring(oldFileName.lastIndexOf("."));
+                } else {
+                    newName = clientFileName.substring(i + 1);
+                }
+                return newName;
+            }
+        }
+        return null;
     }
 
     /**
@@ -165,6 +213,6 @@ public class FeedbackProductDBContext extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    
+
 
 }

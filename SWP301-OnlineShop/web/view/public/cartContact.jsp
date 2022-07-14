@@ -51,11 +51,11 @@
                                         <div class="register-req">
                                             <b><h4><p><i class="fa fa-location-arrow" aria-hidden="true"></i> Address</p></h4></b>
                                             <div id="info-user-id">
-                                                <p id="address-id"><b>${user.fullname}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}</p>
+                                                <p id="address-id"><b>${user.username}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}</p>
                                                 <a id="change-id" href="#" >Edit</a>
                                             </div>
 
-                                                <input type="hidden" id="name-id-h" name="txtFullname" value="${user.fullname}"/>
+                                                <input type="hidden" id="name-id-h" name="txtFullname" value="${user.username}"/>
                                                 <input type="hidden" id="gender-id" name="txtGender" value="${user.gender}"/>
                                                 <input type="hidden" id="phone-id-h" name="txtPhone" value="${user.mobile}"/>
                                                 <input type="hidden" id="address-id-h" name="txtAddress" value="${user.address}"/>
@@ -186,7 +186,7 @@
                                 <label class="col-sm-2 control-label">Full Name</label>
 
                                 <div class="col-sm-12">
-                                    <input type="text" id="iFullName" name="txtNameInf" placeholder="Enter full name" class="form-control" value="${user.fullname}"/>
+                                    <input type="text" id="iFullName" name="txtNameInf" placeholder="Enter full name" class="form-control" value="${user.username}"/>
                                 </div>
                             </div>
 
