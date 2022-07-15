@@ -47,6 +47,7 @@ public class EditStatusProductController extends BaseAuthController {
                         + "                                                    </button>");
 
             }
+         
     }
 
     /**

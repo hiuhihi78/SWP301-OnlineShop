@@ -4,6 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/assets/css/admin/editUserRole.css</file>
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/web/view/admin/addRole.jsp</file>
             <file>file:/D:/OneDrive%20-%20Đại%20học%20FPT-%20FPT%20University/SWP391/Project/SWP301-OnlineShop/src/java/controller/admin/AddRoleController.java</file>
@@ -16,6 +17,21 @@
             <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/UserDBContext.java</file>
             <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/model/User.java</file>
             <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/model/Product.java</file>
+>>>>>>> origin/dev
+=======
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/productList.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/web/view/admin-layout/alter.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/UserDBContext.java</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/js/marketing/feedbacklist.js</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/js/marketing/addNewProduct.js</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing-template/alter.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing-template/sideBar.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/js/marketing/productList.js</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/EditStatusProductController.java</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/marketing/AddNewProductController.java</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/addNewProduct.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/web/view/marketing/feedbackList.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/DEV2/summer2022-se1617-g1/SWP301-OnlineShop/src/java/model/User.java</file>
 >>>>>>> origin/dev
         </group>
     </open-files>

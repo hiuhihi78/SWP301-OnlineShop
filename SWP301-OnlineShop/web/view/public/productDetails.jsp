@@ -159,12 +159,14 @@
                                         </div>
                                         
                                         <div id="alter_quantityOrder" style="margin-bottom: 20px;"> </div>
-                                    
-                                        <div>
-                                            <button  style="width: 10em; " class="form-control add-to-cart" onclick="addToCartFunction();" >
-                                                <i class="fa fa-shopping-cart"></i>Add to cart
-                                            </button>
-                                        </div>
+                                         
+                                        <c:if test="${sessionScope.user.role.id == 4}">
+                                            <div>
+                                                <button  style="width: 10em; " class="form-control add-to-cart" onclick="addToCartFunction();" >
+                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                </button>
+                                            </div>
+                                        </c:if>
                                     </c:if>
                                     
                                     <c:if  test="${product.quantity <= 0}">

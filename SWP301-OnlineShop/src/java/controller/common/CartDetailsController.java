@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package controller.common;
 
 import static configs.Security.SIZE_PAGE_CART_LIST;
@@ -28,7 +25,7 @@ import model.User;
  *
  * @author Admin
  */
-public class CartDetailsController extends BaseAuthController {
+public class CartDetailsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,19 +52,19 @@ public class CartDetailsController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //Declare and initialize the initial value
         ProductCategoryDBContext productCategoryDBContext = new ProductCategoryDBContext();
         ProductListDBContext productListDBContext = new ProductListDBContext();
         CartDBContext cartDBContext = new CartDBContext();
-        String search = "";
+        String search = ""; int userID = 0;
         int index = 1;
         HttpSession session = request.getSession();
 
         //Get user login from session
         User user = (User) session.getAttribute("user");
-        int userID = user.getId();
+        if (user != null) userID = user.getId();
 
         //Get data from input search
         if (request.getParameter("txtSearch") != null) {
@@ -114,10 +111,14 @@ public class CartDetailsController extends BaseAuthController {
         request.setAttribute("listCategorys", listCategorys);
 
         request.setAttribute("leastProduct", leastProduct);
-        
-        
 
-        processRequest(request, response);
+        //Check user login when click to cart
+        if (user != null) {
+            processRequest(request, response);
+        }else {
+            response.sendRedirect("login");
+        }
+        
     }
 
     /**
@@ -129,7 +130,7 @@ public class CartDetailsController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CartDBContext cartDb = new CartDBContext();
         PrintWriter out = response.getWriter();

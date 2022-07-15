@@ -103,12 +103,19 @@
                             <!--Seller-->
                             <div class="form-group w-70-percent mx-auto">
                                 <label for="seller">Seller</label>
-                                <div class="display-flex" >
+<!--                                <div class="display-flex" >
                                     <input type="text" class="form-control" value="${seller}" name="seller" id="seller"  placeholder="Enter seller email " required="">
                                     <button type="button" onclick="handleSearchSeller()" class="btn btn-primary ml-2percent ">Search</button>
                                 </div>
-                                <div id="rowShowSeller"></div>
+                                <div id="rowShowSeller"></div>-->
+                                <select class="form-control" name="sellerId">
+                                    <c:forEach  items="${requestScope.sales}" var="s">
+                                        <option value="${s.id}">${s.fullname}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
+                                    
+                                    
                             <!--/Seller-->
 
                             <!--Category-->
