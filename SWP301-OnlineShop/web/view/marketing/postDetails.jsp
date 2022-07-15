@@ -50,9 +50,9 @@
 
                                             <div class="carousel-inner">
                                                 <!-- Slide 1 -->
-                                                <div class="item active boder-radius-over-h" border="1">
+                                                <div class="item active boder-radius-over-h" border="1" style="margin: 0 auto; width: fit-content;">
 
-                                                    <img src="${requestScope.post.thumbnail}" alt="thumbnail" class="w-h-100">
+                                                    <img style="height: 100%;" src="${requestScope.post.thumbnail}" alt="thumbnail" class="w-h-100">
                                             </div>
                                         </div>
 
