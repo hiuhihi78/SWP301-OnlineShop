@@ -83,7 +83,7 @@ public class SliderDBContext extends DBContext {
         return false;
     }
 
-    public ArrayList<Slider> searchSliders(int status, String search) {
+    public ArrayList<Slider> searchSliders(int status, String search, int searchBy) {
         ArrayList<Slider> lst = new ArrayList<>();
         try {
             String sql = "select s.*, u.[password], u.avatar, u.fullname, u.status "
@@ -92,9 +92,12 @@ public class SliderDBContext extends DBContext {
             if (status != -1) {
                 sql += " AND s.status = " + status;
             }
-
             if (!search.isEmpty()) {
-                sql += " AND s.title like '%" + search + "%' Or s.backlink like '%" + search + "%'";
+                if (searchBy == 0) {
+                    sql += " AND s.backlink = '" + search + "'";
+                } else {
+                    sql += " AND s.title like '%" + search + "%'";
+                }
             }
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
@@ -118,7 +121,7 @@ public class SliderDBContext extends DBContext {
         return lst;
     }
 
-    public ArrayList<Slider> getSliderByIndex(int index, int sizePage, int status, String search) {
+    public ArrayList<Slider> getSliderByIndex(int index, int sizePage, int status, String search, int searchBy) {
         ArrayList<Slider> lst = new ArrayList<>();
         try {
             String sql = "select s.*, u.[password], u.avatar, u.fullname, u.status "
@@ -127,8 +130,13 @@ public class SliderDBContext extends DBContext {
                 sql += " AND s.status = " + status;
             }
             if (!search.isEmpty()) {
-                sql += " AND s.title like '%" + search + "%' Or s.backlink like '%" + search + "%'";
+                if (searchBy == 0) {
+                    sql += " AND s.backlink = '" + search + "'";
+                } else {
+                    sql += " AND s.title like '%" + search + "%'";
+                }
             }
+
             sql += " order by Id";
             sql += " offset ? rows fetch next ? rows only;";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -243,12 +251,11 @@ public class SliderDBContext extends DBContext {
 //        User u = new User();
 //        u.setId(6);
 //        s.setUser(u);
-
 //        Slider s = db.getSliderById(7);
 //        s.setNote("20%");
 //        rs = db.updateSlider(s);
 //        System.out.println(rs);
-          db.changeStatus(1, false);
+        db.changeStatus(1, false);
     }
 
 }

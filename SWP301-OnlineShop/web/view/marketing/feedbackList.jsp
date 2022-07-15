@@ -51,6 +51,7 @@
             <aside class="right-side">
                 <!-- Main content -->
                 <section class="content ">
+                    <div class="fixed float-end" id="alter-div"></div>
                     <!--Alter-->
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
                     <div class="app-title">

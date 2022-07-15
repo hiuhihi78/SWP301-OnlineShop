@@ -67,8 +67,8 @@ function openModals(id) {
     document.getElementById('message-modal').innerHTML = "Are you sure to change featured post?";
     var btn_status = document.querySelector('#btn-status-' + id).parentNode;
     var btn_name_status = document.querySelector('#btn-status-' + id).innerHTML.toLowerCase();
-    console.log(btn_status);
-    console.log(btn_name_status);
+    var alter = document.getElementById('alter-div');
+                console.log(alter);
 
     button.onclick = function () {
         $.ajax({
@@ -80,9 +80,20 @@ function openModals(id) {
             },
             success: function (data, textStatus, jqXHR) {
                 btn_status.innerHTML = data;
+                alter.innerHTML = "<div class=\"fixed float-end\" id=\"showAlter\">\n" +
+"        <div class=\"alert alert-success alert-dismissible fade in\" id=\"alterfade\">\n" +
+"            <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n" +
+"            Change status susccess!\n" +
+"        </div>\n" +
+"    </div>";
             },
             error: function (jqXHR, textStatus, errorThrown) {
-
+                alter.innerHTML = "<div class=\"fixed float-end\" id=\"showAlter\">\n" +
+"        <div class=\"alert alert-danger alert-dismissible fade in\" id=\"alterfade\">\n" +
+"            <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n" +
+"            Change status susccess!\n" +
+"        </div>\n" +
+"    </div>";
             }
         });
 //        document.getElementById('showAlter').innerHTML = "Change Successfuly";
@@ -94,7 +105,7 @@ function openAnnouceAccept(id) {
     document.getElementById('message-modal').innerHTML = "Are you sure to change featured post?";
     var btn_featured = document.querySelector('#btn-featured-' + id).parentNode;
     var btn_name_featured = document.querySelector('#btn-featured-' + id).innerHTML.toLowerCase();
-
+    var alter = document.getElementById('alter-div');
 //    button.innerHTML = '';
 //    button.setAttribute('class', "btn btn-primary");
 //    button.setAttribute('onclick', 'document.getElementById("' + id + '").submit();');
@@ -108,11 +119,22 @@ function openAnnouceAccept(id) {
             },
             success: function (data, textStatus, jqXHR) {
                 btn_featured.innerHTML = "" + data;
+                alter.innerHTML = "<div class=\"fixed float-end\" id=\"showAlter\">\n" +
+"        <div class=\"alert alert-success alert-dismissible fade in\" id=\"alterfade\">\n" +
+"            <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n" +
+"            Change featured susccess!\n" +
+"        </div>\n" +
+"    </div>";
             },
             error: function (jqXHR, textStatus, errorThrown) {
-
+                 alter.innerHTML = "<div class=\"fixed float-end\" id=\"showAlter\">\n" +
+"        <div class=\"alert alert-danger alert-dismissible fade in\" id=\"alterfade\">\n" +
+"            <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n" +
+"            Change featured susccess!\n" +
+"        </div>\n" +
+"    </div>";
             }
         });
-        document.getElementById('showAlter').innerHTML = "Change Successfuly";
+//        document.getElementById('showAlter').innerHTML = "Change Successfuly";
     };
 }

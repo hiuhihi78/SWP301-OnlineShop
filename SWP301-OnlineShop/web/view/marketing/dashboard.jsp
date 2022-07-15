@@ -89,7 +89,7 @@
                                 <div class="row row-class" id="row1">
                                     <div class="title-dash">
                                         <h3>TOP 5 BEST SELLING PRODUCTS</h3>
-                                        <p>(Default is the last 7 days from the current date)</p>
+                                      
                                     </div>
                                     <div class="form-date">
                                         <form action="/marketing/dashboard" method="post" id="form-search-product">
@@ -137,7 +137,7 @@
                         <div class="row row-class" id="row1">
                             <div class="title-dash">
                                 <h3>TOP 5 BEST SELLER</h3>
-                                <p>(Default is the last 7 days from the current date)</p>
+                              
                             </div>
                             <div class="form-date-1">
                                 <form action="/marketing/dashboard" method="post" id="form-search-seller">

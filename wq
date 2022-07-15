@@ -1,0 +1,363 @@
+[33m4545bf6[m[33m ([m[1;36mHEAD -> [m[1;32mit3-hoannk[m[33m, [m[1;31morigin/it3-hoannk[m[33m)[m Merge remote-tracking branch 'origin/dev' into it3-hoannk
+[33m59d7b78[m finish chart on admin dashboard
+[33m794ccf5[m Added chart in admin dashboard
+[33m8f1477d[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m edit add customer
+[33m7023c2b[m fix login page
+[33me37889b[m Edit get revenue on admin dashboard
+[33ma38d331[m Edit revenue on admin dashboard
+[33md499a45[m edit dashboard marketing
+[33m2633006[m edit dashboard marketing
+[33mbdf1628[m add confirm edit
+[33m564968d[m edit dashboard marketing
+[33m640a5ae[m fixed logic in UserOrderController
+[33mc628a2c[m fix edit user page
+[33m8c0a597[m modifile all page
+[33m474276d[m Update error handler
+[33m7f46b38[m Added noftification for add role
+[33m51d0fe5[m Edit add role
+[33m09f7199[m Add select all button on edit role
+[33mef49613[m edit dashboard marketing and add confirm
+[33m2e6ba9d[m Merge branch 'dev' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into dev
+[33m3c9d1c0[m edit dashboard and add confirm
+[33mf344d19[m update throw alert success or failed
+[33ma123118[m update throw alert success or failed
+[33m3c98493[m send email when compeleted order
+[33m6648dbb[m update message show on edit role function
+[33m32e10ea[m abc
+[33mf9ae948[m add send email
+[33m5460fb2[m commit nothing changed
+[33ma0ade2e[m commit nothing changed
+[33m1fa8b4c[m update edit profile and feedback img
+[33m8c2b8df[m add
+[33m5fa47a5[m Edit file editRole.jsp
+[33ma5b0da5[m Edit it1-add&edit role
+[33m1173ef4[m add notifi out of stock for cart
+[33m7c60ed9[m add error contact page
+[33m2c556d8[m disable click backdrop
+[33m07a2440[m fix up down quantity
+[33m27fd96f[m update cart
+[33m4c38020[m add button back and validate input for cart
+[33mc010aa5[m add button back and validate input cart
+[33m98872db[m Merge remote-tracking branch 'origin/it3-hoannk' into dev
+[33mf83dab7[m Fixed sort function on order list
+[33m34d605e[m validate change inf cart contact
+[33mfd1513e[m Update notification & fix typo
+[33m0c15442[m Merge remote-tracking branch 'origin/it5-hoannk' into dev
+[33m4ebf881[m Merge branch 'dev' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into dev
+[33m41b3920[m Merge remote-tracking branch 'origin/dev' into it3-hoannk
+[33m0c922d0[m update
+[33m33803bd[m fix product detail page
+[33m8f498fd[m fix format number product detail page
+[33m2046d18[m disible feedback
+[33m091eea7[m Fix filter & added change sale feature
+[33m689d354[m Update order details
+[33m590df7e[m Finish feedback details
+[33m4f735bd[m add cancel reasion and feedback
+[33mb42b672[m add reasion
+[33m8d9c502[m fix type data
+[33m33b3d1b[m Fixed error on MyOrderController
+[33me9cfff2[m fix compute total Quantity product details
+[33me55a2a9[m Merge branch 'dev' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into dev
+[33me7cd51f[m fix compute total Quantity product details
+[33mb001b09[m update feedback details
+[33m39463d9[m Update CartCompletion.jsp
+[33m6c6b08e[m fix error url cart
+[33ma67ad76[m merg
+[33m2d41151[m fix product detail page
+[33m961c8cc[m Merge remote-tracking branch 'origin/dev' into it3-hoannk
+[33mfccfc55[m Update feedback details
+[33m60c7c13[m fix total price cart product
+[33m0eab9af[m fix checked cart product
+[33mb7ced8b[m format price cart product
+[33m3109971[m fix undefine for delete cart product
+[33m38029b2[m Add quantity input for product
+[33maea8237[m update
+[33m117421e[m Complete update sale note function
+[33m00ade43[m update for order information
+[33maa82263[m a
+[33m0dae13f[m fix error url cart
+[33md4a442f[m fix change info not perform
+[33m274c198[m merg code
+[33m4d190be[m Finish update order status on order details
+[33mc836d2c[m fix change inf user cart contact
+[33medd4456[m update
+[33mbe6c96d[m modifier message send mail for cart
+[33m1200896[m Update orders function
+[33m430cb6c[m fix something not expect
+[33m80bca9c[m fix something not expected
+[33m2c89e16[m add disabled for cart product
+[33mb6a0077[m update
+[33m85142e4[m update canel order
+[33m2ba5d67[m update cancel order
+[33m2074520[m fix js product details add cart
+[33m28c6b20[m Merge branch 'dev' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into dev
+[33m6c71f7c[m upload
+[33m7a2dab2[m fix css slider list
+[33md28c77c[m fix css sider slider list
+[33m780ed33[m Edit status view on orderdetails
+[33m731774e[m Update orderdetails
+[33mf6ea485[m Merge remote-tracking branch 'origin/dev' into it3-hoannk
+[33m1ab9b77[m Update process order
+[33m63aed47[m update button for order information
+[33m0d37900[m fix total price compute error
+[33m4d39d7f[m fix total price compute error
+[33m08b3340[m order inforamtion update
+[33m416c5dc[m Merge remote-tracking branch 'origin/dev' into it3-hoannk
+[33m10d559a[m finish filter & update orders function
+[33m4ebb6df[m order information
+[33mc6594ac[m order infomation
+[33m9f456a3[m fix unit price cart
+[33m8403589[m fix unit price for cart
+[33m5b4b118[m edit button status slider
+[33mfcdc88c[m add confirm for status slider
+[33m7ee9847[m add show to back link
+[33m2ac6627[m check product choose before checking out
+[33mf14dd42[m fix check out cart
+[33m5bfa559[m fix send mail
+[33m49e191b[m fix send mail
+[33m88b9d36[m fix feedback in product detail-public
+[33me3cf2c6[m add send mail for cart completion
+[33mf4a4889[m merg dev
+[33m43c8e4d[m add radio payment
+[33m7769165[m Merge branch 'dev' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into dev
+[33mbf69232[m add payment radio
+[33m02bc58f[m fix login
+[33m9b8b3f9[m fix query get quantity product solded
+[33m7332757[m add radio payment method
+[33me12c6bd[m fix js product detail - public
+[33m9d51d3c[m Merge branch 'dev' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into dev
+[33meafa7f3[m update cart contact
+[33m0706323[m continue update cart completion
+[33mda09eed[m add cart completion
+[33mfbc3180[m update edit address cart contact
+[33m67f1d22[m merg
+[33m5b59ce9[m add note for cart contact
+[33m3bdcc54[m update Cart Contact
+[33me1a4afe[m update cart contact
+[33m4f00345[m validate user profile
+[33m364ac3c[m update user profile
+[33m7497b8a[m update user profile
+[33m793e07e[m Merge remote-tracking branch 'origin/dev' into it3-hoannk
+[33m8d097d7[m update orderslist jsp
+[33m0f21c74[m fix add to cart and css,jsp
+[33m690880c[m Merge remote-tracking branch 'origin/dev' into it2-hoannk
+[33mb22a9ac[m Edit OrderDBContext & edit Order model
+[33maa61cd1[m Added view for orders list
+[33m24b0ff8[m Add jsp for orders list
+[33m6d67da2[m add button choose more product
+[33m7128f53[m merg
+[33me1353bd[m add icon and paging
+[33m3f632a5[m Update delete cart product and quantity
+[33m2f4132b[m update up, down quantity and delete
+[33m96e7f49[m merg
+[33md974188[m update cart completion
+[33mc39da9c[m fix css
+[33m0335d2b[m Merge remote-tracking branch 'origin/dev' into it2-hoannk
+[33m00c7d8d[m update more code cart
+[33me0e48a3[m update code cart
+[33m7bfbb93[m Fix db
+[33m66be8eb[m merg
+[33mdab52a2[m update for sider product
+[33m4283f77[m add sider for product list
+[33m037d595[m style cart completion
+[33mded0df8[m merg
+[33m2b1e552[m fix add to cart
+[33mb828789[m update cart details
+[33m80b562b[m modifile product detail in public feature
+[33me130d86[m add product to cart
+[33m7b0419b[m fix something operation not good
+[33m225356f[m[33m ([m[1;31morigin/it2-hoannk[m[33m)[m add link product feature of homepage
+[33m01867c7[m push code
+[33mdc37b5f[m add link to product feature at homepage
+[33m4ba793b[m update code cart
+[33m86dbf21[m fix resize image add post and edit post
+[33mfd62f2b[m add cart completion
+[33m618fea1[m merg
+[33m8903d29[m add feedback list feature
+[33m96313d9[m fix img and inforamtion modal
+[33m1958265[m update
+[33m50692f4[m edit sidebar
+[33m611b19a[m add modal product list marketing
+[33m7dc65dd[m Fix jsps
+[33me1ce13d[m Merge remote-tracking branch 'origin/dev' into it2-hoannk
+[33m97c590f[m Add chart in admin dashboard
+[33me440920[m update sider pics
+[33m9e4648a[m add sider pics
+[33m4b28982[m UPDATE dashboard v2
+[33mc633f31[m edit image
+[33m18b8ef2[m edit image
+[33md494d83[m add image post
+[33m9a2fdbc[m add more post
+[33med983c5[m update for picture size
+[33m1f4b99d[m update size pics
+[33m469b305[m edit sidebar
+[33m8d034d5[m update cart
+[33m71901f9[m Update dashboard
+[33m61af0f3[m validate input form
+[33m921dcad[m validate input form
+[33m10a81a2[m Edit style color for website more beautiful
+[33m39cfbda[m modifer style css more beautiful
+[33md9ae875[m fix jsp page home header
+[33m2bcf13f[m fix jsp page
+[33m8980ffc[m Add dashboard.jsp
+[33m5fa7535[m Merge remote-tracking branch 'origin/dev' into it2-hoannk
+[33mf8d82b9[m update product details
+[33m07da511[m update product list
+[33mc3df2cc[m update product list
+[33m9ea2296[m Edit UserOrdersController
+[33mdfe0efd[m Update myorders.jsp
+[33m46159a7[m fix css
+[33mb9c5f28[m delete date information of post
+[33m7313d30[m update code edit slider and backlink
+[33mbfb04be[m update code edit slider and backlink
+[33m82e79c5[m update code edit slider and backlink
+[33mbfedb7e[m add brief information for post details
+[33m044dfc4[m fix modals
+[33m990929e[m fix modals
+[33m6a044d0[m fix jsp page in product list marketing
+[33m013a995[m Update orderDB
+[33m6da686b[m update code slider list, add and dashboard
+[33m9c6964b[m update slider list, add and dashboard
+[33mf365020[m fix dropdown
+[33mb09706b[m fix jsp in marketing product list page
+[33m0c67916[m add js file for postlist
+[33m1c14792[m Merge remote-tracking branch 'origin/dev' into it2-hoannk
+[33m2a68b5b[m add product detail in sale and marketing
+[33m215e6d6[m modifile marketing product list
+[33ma572660[m modifle sidebar marketing page
+[33maff7f9c[m fix product list - marketing feature
+[33m0ba2e2e[m update fix some risk web.xml
+[33mb79a097[m fix web.xml
+[33m4f8da1b[m edit public jsp
+[33me7fffb3[m Fix web.xml & add product list on home
+[33mbdcc9bc[m update for product list
+[33m7f6a274[m update for product list
+[33m778aa7c[m update new source code feature marketing postlist and postdetails
+[33mfc14d0b[m Fixed user change pass validation
+[33m8c866ae[m Merge remote-tracking branch 'origin/dev' into it2-hoannk
+[33m229dc5f[m Added change user password form validation
+[33ma5fb234[m add product list, product detail in sale feature
+[33m4239549[m Add user orders controller
+[33ma1df5e2[m Finish change user password
+[33m5963f55[m add product list feature of marketing
+[33m38e5718[m add edit product of marketing feature
+[33mf1676f8[m update for customer
+[33mc70a4ae[m Edit change password jsp
+[33m0db70b6[m[33m ([m[1;31morigin/iteration1-UserAuth[m[33m)[m Added change password form
+[33m6a68182[m add feature add new product
+[33md77d8c8[m add source slider list
+[33mc4a97ed[m add source slider list
+[33md5caec4[m add source slider list
+[33m7f5e6f0[m update more source code
+[33m7fae55e[m add marketing
+[33m2ee6425[m fix css
+[33m471eb6b[m update
+[33m13f3585[m added more fields for product model
+[33m20ff3ab[m fix sider homepage and sider bloglist
+[33m9ca65dc[m delete user after verify
+[33md1739dc[m delete user after verify
+[33m7624511[m Merge branch 'dev' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into dev
+[33mf82f8eb[m update for customer
+[33mff7958a[m update for customer
+[33mf00b336[m Merge branch 'dev' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into dev
+[33m1657e16[m Merge remote-tracking branch 'origin/dev' into iteration1-UserAuth
+[33m7bc51f4[m Update add & edit user's role feature
+[33md623c33[m fix sider homepage and fix category bloglist and add model subcategoryPost
+[33m642d783[m update new RoleDB query
+[33m8174910[m edit alert and view register, change passsword
+[33m3e21000[m edit alert and view register, change passsword
+[33m01c1bb6[m fix roledb
+[33m5e7e326[m Add feature edit role
+[33m3baedc9[m Added add new role feature
+[33m38b2ca9[m Merge branch 'dev' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into iteration1-UserAuth
+[33mcbf45b6[m Updated filter
+[33m4ce9553[m check exist email
+[33mb78e6de[m check lowercase email, check email exist
+[33m9971c94[m update source code
+[33m7280b08[m update source code
+[33m33a337c[m Fix assets for error page
+[33m675d304[m Fix filter for public path
+[33mc2dcbc1[m Merge with branch dev
+[33ma83f3b8[m add js,css file for admin page
+[33md4d4d0f[m update
+[33m7d28e14[m add and modifile all page
+[33mf512047[m update login, reset password and register
+[33m743afef[m Merge with branch dev
+[33me572b0d[m modifle admin page
+[33m6c5b5af[m merge dev
+[33m335c677[m modifile admin page js, css
+[33m54d70ca[m Merge with branch dev
+[33m7f8f17d[m modifile admin page
+[33mf90f2a2[m modifile admin js
+[33m3874246[m merge dev branch
+[33mee86f21[m Change filter url to all sites
+[33m661a2b1[m modifile javascrip in admin page
+[33m089bc50[m fix pagging admin page
+[33me2f0307[m Add more js file
+[33m26976b9[m update source code
+[33m142bc58[m modiflie jsp file
+[33me9b6ad8[m upload new source code
+[33m5d53bb7[m merge dev
+[33ma68ff9e[m modifile layout in admin page
+[33me359858[m Update Authentication Filter
+[33m84a46cc[m delete dist and build file
+[33m01b40bd[m modifile and add feature blog detail
+[33m5e67201[m add code in branch iteration1-admin-userList
+[33mc9cdb61[m upload new source code
+[33m0d0bcfc[m Save commit before merge branch iteration1-user-login
+[33m924993c[m Merge branch 'iteration1-UserAuth' into 'dev'
+[33mbe05032[m Merge remote-tracking branch 'origin/dev' into iteration1-UserAuth Updated new code
+[33m0a243ae[m Update new source code
+[33m7306edb[m Merge branch 'dev' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into iteration1-admin-userLi# Please enter a commit message to explain why this merge is necessary,
+[33m1ce2710[m Merge branch 'iteration1-UserAuth' into 'dev'
+[33m9c88bcb[m modifile header admin page
+[33m5fcc6cb[m fix conflict with branch iteration1-admin-userList
+[33mfabdc53[m save before merge iteration1-admin-userList
+[33meb5365f[m modifile pagging user list and update user profile page
+[33m82ffae4[m Fix conflict with branch iteration1-user-login
+[33mfa3d0d0[m Save project before merge with branch it1-user-login
+[33m148c826[m Fix conflict dbcontext
+[33m62d43da[m fixed untracked files
+[33me33f54a[m Update DBContext.java
+[33m496bf7b[m Merge branch 'iteration1-UserAuth' of https://gitlab.com/tuanvm2-SWP391/summer2022-se1617-g1 into iteration1-UserAuth
+[33me7498c4[m Add dbcontext to .gitignore
+[33m8c7661d[m Add dbcontext to .gitignore
+[33m2a3eaac[m Fix conflict with branch it1-HomePage
+[33m8d010a9[m add more function for homepage and bloglist
+[33m6a0acfc[m merging home and login form
+[33mebdcf9e[m fix business logic in edit user's info
+[33m3046432[m edit login.jsp
+[33mf4f075f[m upload function homepage and bloglist
+[33m4c2a790[m update function homepage and bloglist
+[33m4c9da15[m update user login, reset password and register
+[33m449f577[m Doing filter
+[33mc0219cd[m Add test controllers
+[33m95de983[m add Add new user feature
+[33md1c61c2[m edit test jsp
+[33me8cd602[m Finish basic auth
+[33mb7dc348[m add some test jsp
+[33m77178b3[m Create new model & new query
+[33m02b6241[m update homepage and blog list
+[33m9b5648e[m Add db file
+[33m7085e7b[m Created temp login function
+[33m09b835a[m Edit login.jsp & UserDBContext
+[33m94a1896[m update user list feature and add user detail feature
+[33m201bedb[m Create new DBContext
+[33m1158b54[m edit user list page
+[33m5384de5[m upload homepage
+[33m552bbb2[m upload user list
+[33m2b1f63e[m add css,js lib and layout for admin page
+[33mdd98dc4[m edit admin-template
+[33mc587dd1[m edit name file
+[33m9447247[m first commit
+[33m0b59b67[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Edit project structure
+[33m2381890[m Fixed error javax.servlet not found & changed project config
+[33m8c2f46d[m abc
+[33m74beed4[m commit login, email
+[33m54f8d71[m first commit
+[33mb55e2fe[m add jdbc
+[33m1147f0a[m upload assets
+[33m476d317[m add .gitignore
+[33m28702de[m add .gitkeep to empty folders
+[33m5c7bd9d[m init project
+[33meb856d7[m Initial commit
