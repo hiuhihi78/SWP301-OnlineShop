@@ -17,3 +17,13 @@
         </div>
     </div>
 </c:if>
+
+
+<!--<div >
+        <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Change status susccess!
+        </div>
+</div>-->
+
+

@@ -7,6 +7,7 @@ package controller.marketing;
 import configs.HandleGenerate;
 import dal.CategoryDBContext;
 import dal.ProductDBContext;
+import dal.UserDBContext;
 import filter.BaseAuthController;
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import javax.servlet.http.Part;
 import model.Category;
 import model.Product;
 import model.SubCategory;
+import model.User;
 
 /**
  *
@@ -81,7 +83,10 @@ public class AddNewProductController extends BaseAuthController {
         } else {
             categoryId = Integer.parseInt(tempCategoryId);
         }
+        UserDBContext userDb = new UserDBContext();
+        ArrayList<User> sales = userDb.getSaleUser();
         ArrayList<SubCategory> subCatgorys = categoryDB.getSubCatgory(categoryId);
+        request.setAttribute("sales", sales);
         request.setAttribute("categorys", categorys);
         request.setAttribute("subCategorys", subCatgorys);
         request.getRequestDispatcher("../view/marketing/addNewProduct.jsp").forward(request, response);
