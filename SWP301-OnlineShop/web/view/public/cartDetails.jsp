@@ -52,7 +52,7 @@
                                             <table class="table table-condensed">
                                                 <thead>
                                                     <tr class="cart_menu">
-                                                        <td><input type="checkbox" name="all" id="checkall"></td>
+                                                        <td><input type="checkbox" name="all" id="checkall"> All</td>
                                                         <td class="image">Item</td>
                                                         <td class="description"></td>
                                                         <td class="price">Price</td>
@@ -73,8 +73,7 @@
                                                             </td>
                                                                 <input type="hidden" name="hCartId" value="${cartId}"/>
 
-                                                                
-                                                                
+                                                               
                                                             <td class="cart_product" style="width: 180px">
                                                                 <a href=""><img src="${(i.product).thumbnail}" alt="" width="100px" height="auto"></a>
                                                             </td>
@@ -114,7 +113,7 @@
                                                             </td>
                                                             
                                                             <td class="cart_delete">
-                                                                <a class="cart_quantity_delete" data-programid="${(i.product).id}" data-name="${(i.product).name}" data-isAll="0">
+                                                                <a class="cart_quantity_delete" id="delete_button_id" data-programid="${(i.product).id}" data-name="${(i.product).name}" data-isAll="0">
                                                                     <i class="fa fa-times"></i></a>
                                                             </td>
                                                         </tr>

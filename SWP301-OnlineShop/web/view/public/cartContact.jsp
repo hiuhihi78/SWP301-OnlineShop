@@ -34,12 +34,14 @@
     <body>
         <jsp:include page="../home-template/headerProductlist.jsp"/>
         <section id="cart_items">
+            <div id="features_items-id"></div>
             <div class="container">
                 <div class="row flex-justify">
                    <jsp:include page="../home-template/sidebarForProductList.jsp"/>
-
+                   
                     <!--PRODUCT LIST-->
                     <div class="col-sm-9 padding-right">
+
                         <div class="features_items">
                             <!--features_items-->
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Cart Contact</h2>

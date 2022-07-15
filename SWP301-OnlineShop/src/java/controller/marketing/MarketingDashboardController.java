@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -48,18 +49,18 @@ public class MarketingDashboardController extends HttpServlet {
         PostDBContext posDb = new PostDBContext();
         FeedbackDBContext feedDb = new FeedbackDBContext();
         OrderDBContext orderDb = new OrderDBContext();
-        
+
         //Get number
         int customerNumber = cusDb.count(CUSTOMER_ROLL_ID);
         int productNumber = proDb.getProductNumber();
         int postNumber = posDb.getPostNumber();
         int feedbackNumber = feedDb.getFeedbackNumber();
-        
+
         //Get list
         ArrayList<KeyValuePair1> list = proDb.getProductsTrend(from, to);
         List<KeyValuePair1> lstUserTop3 = orderDb.getTop5BestCustomer();
         List<KeyValuePair1> lstSeller = orderDb.getTop5BestSeller(startSeller, endSeller);
-        
+
         //Set attribute
         request.setAttribute("customerNumber", customerNumber);
         request.setAttribute("productNumber", productNumber);
@@ -68,6 +69,10 @@ public class MarketingDashboardController extends HttpServlet {
         request.setAttribute("list", list);
         request.setAttribute("lstUserTop3", lstUserTop3);
         request.setAttribute("lstSeller", lstSeller);
+        request.setAttribute("startD", from);
+        request.setAttribute("endD", to);
+        request.setAttribute("startSeller", startSeller);
+        request.setAttribute("endSeller", endSeller);
 
         request.getRequestDispatcher("/view/marketing/dashboard.jsp").forward(request, response);
     }
@@ -85,7 +90,11 @@ public class MarketingDashboardController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        processRequest(request, response, null, null, null, null);
+        LocalDate now = LocalDate.now();
+        LocalDate sevenDayAgo = LocalDate.now().minusDays(7);
+        Date dateNow = Date.valueOf(now);
+        Date sevenDayAgoConvert = Date.valueOf(sevenDayAgo);
+        processRequest(request, response, sevenDayAgoConvert, dateNow, sevenDayAgoConvert, dateNow);
     }
 
     /**
@@ -99,48 +108,43 @@ public class MarketingDashboardController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     
-            String strStart = null, strEnd = null;
-            String strStartS = null, strEndS = null;
-            //Search Product
-            if (request.getParameter("txtStart") != "") {
-                strStart = request.getParameter("txtStart");
-            }
-            if (request.getParameter("txtEnd") != "") {
-                strEnd = request.getParameter("txtEnd");
-            }
-            
-            //Search Seller
-            if (request.getParameter("txtStartSel") != "") {
-                strStartS = request.getParameter("txtStartSel");
-            }
-            if (request.getParameter("txtEndSel") != "") {
-                strEndS = request.getParameter("txtEndSel");
-            }
-            
-            Date startProduct = null, endProduct = null;
-            Date startSeller = null, endSeller = null;
-            //Search Product
-            if (strStart != null) {
-                 startProduct = Date.valueOf(strStart);
-            }
-            if (strEnd != null) {
-                 endProduct = Date.valueOf(strEnd);
-            }
-            
-            //Search Seller
-            if (strStartS != null) {
-                 startSeller = Date.valueOf(strStartS);
-            }
-            if (strEndS != null) {
-                 endSeller = Date.valueOf(strEndS);
-            }
-            
-            request.setAttribute("startD", startProduct);
-            request.setAttribute("endD", endProduct);
-            request.setAttribute("startSeller", startSeller);
-            request.setAttribute("endSeller", endSeller);
-            
+
+        String strStart = null, strEnd = null;
+        String strStartS = null, strEndS = null;
+        //Search Product
+        if (request.getParameter("txtStart") != "") {
+            strStart = request.getParameter("txtStart");
+        }
+        if (request.getParameter("txtEnd") != "") {
+            strEnd = request.getParameter("txtEnd");
+        }
+
+        //Search Seller
+        if (request.getParameter("txtStartSel") != "") {
+            strStartS = request.getParameter("txtStartSel");
+        }
+        if (request.getParameter("txtEndSel") != "") {
+            strEndS = request.getParameter("txtEndSel");
+        }
+
+        Date startProduct = null, endProduct = null;
+        Date startSeller = null, endSeller = null;
+        //Search Product
+        if (strStart != null) {
+            startProduct = Date.valueOf(strStart);
+        }
+        if (strEnd != null) {
+            endProduct = Date.valueOf(strEnd);
+        }
+
+        //Search Seller
+        if (strStartS != null) {
+            startSeller = Date.valueOf(strStartS);
+        }
+        if (strEndS != null) {
+            endSeller = Date.valueOf(strEndS);
+        }
+
         processRequest(request, response, startProduct, endProduct, startSeller, endSeller);
     }
 
