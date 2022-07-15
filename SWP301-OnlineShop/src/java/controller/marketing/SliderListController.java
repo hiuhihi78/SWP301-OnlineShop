@@ -37,15 +37,22 @@ public class SliderListController extends BaseAuthController {
         response.setContentType("text/html;charset=UTF-8");
         SliderDBContext sliderDb = new SliderDBContext();
         String search = "";
-        int status = -1, index = 1;
+        int status = -1, index = 1, searchBy = 1;
+        
 
         //Get data from filter input
         if (request.getParameter("txtSearch") != null) {
-            search = request.getParameter("txtSearch").trim();
+            search = request.getParameter("txtSearch").trim().toLowerCase();
         }
         if (request.getParameter("select") != null) {
             status = Integer.parseInt(request.getParameter("select"));
         }
+        
+        if (request.getParameter("select-search") != null) {
+            searchBy = Integer.parseInt(request.getParameter("select-search"));
+        }
+        
+        
 
         //Get current page from view
         if (request.getParameter("index") != null) {
@@ -53,10 +60,10 @@ public class SliderListController extends BaseAuthController {
         }
 
         //Get List Slider
-        ArrayList<Slider> lstSlider = sliderDb.getSliderByIndex(index, SIZE_PAGE_SLIDER_LIST, status, search);
+        ArrayList<Slider> lstSlider = sliderDb.getSliderByIndex(index, SIZE_PAGE_SLIDER_LIST, status, search, searchBy);
         
         //Calculator Last page
-        int sizeOfList = sliderDb.searchSliders(status, search).size();
+        int sizeOfList = sliderDb.searchSliders(status, search, searchBy).size();
         int lastPage = sizeOfList / SIZE_PAGE_SLIDER_LIST;
         if (sizeOfList % SIZE_PAGE_SLIDER_LIST != 0) {
             lastPage++;
@@ -65,6 +72,7 @@ public class SliderListController extends BaseAuthController {
         //Send result filter after search
         request.setAttribute("search", search);
         request.setAttribute("status", status);
+        request.setAttribute("searchBy", searchBy);
         //Send Last page of slider list
         request.setAttribute("lastPage", lastPage);
         //Send slider List

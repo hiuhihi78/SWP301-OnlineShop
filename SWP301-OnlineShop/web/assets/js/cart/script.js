@@ -276,11 +276,18 @@ $('.btn-update').on('click', function () {
             $('#confirm-change').modal('toggle');
             $('#address-id').html(response);
 
+            document.querySelector('#features_items-id').innerHTML += `<div class="fixed float-end t-55px" id="showAlter">
+                            <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                Edit Information Sucessfull!
+                            </div>
+                        </div>`;
         },
         error: function (xhr) {
 
         }
     });
+
 });
 
 $('.cart_quantity_input').on('change', function () {

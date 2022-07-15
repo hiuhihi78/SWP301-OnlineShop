@@ -81,3 +81,50 @@ input::-webkit-inner-spin-button {
 .down-size {
     width: 1%;
 }
+
+#delete_button_id {
+    background-color: orange;
+}
+
+
+/*============================ ALERT ====================================*/
+.alert {
+  padding-left: 30px;
+  margin-left: 15px;
+  position: relative;
+  border-radius: 2px;
+  border:none;
+}
+.alert > .fa,
+.alert > .glyphicon {
+  position: absolute;
+  left: -15px;
+  top: -15px;
+  width: 35px;
+  height: 35px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  line-height: 35px;
+  text-align: center;
+  background: inherit;
+  border: inherit;
+}/*
+
+alert
+*/.alert-danger {
+  background-color: #fad5d5;
+}
+.alert-success {
+  background-color: #cffabd;
+}
+.alert-warning {
+  background-color: #fcf4c9;
+}/*
+badge colors*/
+
+#features_items-id {
+    width: 200px;
+    height: 100px;
+}
+

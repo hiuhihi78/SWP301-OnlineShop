@@ -22,7 +22,7 @@
         <link href="../../assets/public/css/main.css" rel="stylesheet">
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
 
-        <link href="../../assets/public/css/style.css" rel="stylesheet">
+        <link href="../../assets/css/back-link/style.css" rel="stylesheet">
         <title>Backlink | E-Shopper</title>
     </head>
     <body>
