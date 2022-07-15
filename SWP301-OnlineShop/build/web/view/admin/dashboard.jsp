@@ -16,17 +16,17 @@
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
-        <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
-        <link href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
-        <link href="${pageContext.request.contextPath}/assets/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Morris chart -->
-        <link href="${pageContext.request.contextPath}/assets/css/morris/morris.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/morris/morris.css" rel="stylesheet" type="text/css" />
         <!-- jvectormap -->
-        <link href="${pageContext.request.contextPath}/assets/css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
         <!-- Date Picker -->
-        <link href="${pageContext.request.contextPath}/assets/css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
         <!-- fullCalendar -->
         <!-- <link href="css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" /> -->
         <!-- Daterange picker -->
@@ -37,7 +37,7 @@
         <!-- <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" /> -->
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <!-- Theme style -->
-        <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -53,8 +53,6 @@
 
         </style>
     </head>
-    <c:set var="successOrdersByDateRange" value="${requestScope.SuccessOrdersRange}"/>
-    <c:set var="totalOrdersByDateRange" value="${requestScope.TotalOrdersRange}"/>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="../admin-layout/header.jsp"></jsp:include>

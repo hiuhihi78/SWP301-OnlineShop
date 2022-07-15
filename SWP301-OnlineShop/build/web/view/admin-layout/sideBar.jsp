@@ -26,8 +26,6 @@
             </c:if>
             <div class="pull-left info" style="width: 60%">
                 <p>${sessionScope.user.fullname}</p>
-
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
         <ul class="sidebar-menu">
@@ -43,21 +41,21 @@
                 <c:if test="${s.key.url == '/admin/userList' && s.value == true}">
                     <li id="nav-user-list">
                         <a href="userList">
-                            <i class="fa-solid fa-users"></i> <span>${s.key.name}</span>
+                            <i class="fa fa-users"></i><span>${s.key.name}</span>
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${s.key.url == '/admin/addRole' && s.value == true}">
                     <li id="nav-add-feature-group">
                         <a href="addRole">
-                            <i class=""></i> <span>${s.key.name}</span>
+                            <i class="fa fa-plus-circle"></i> <span>${s.key.name}</span>
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${s.key.url == '/admin/editRole' && s.value == true}">
                     <li id="nav-add-feature-group">
                         <a href="${s.key.url}">
-                            <i class=""></i> <span>${s.key.name}</span>
+                            <i class="fa fa-pencil-square-o"></i> <span>${s.key.name}</span>
                         </a>
                     </li>
                 </c:if>
@@ -65,7 +63,7 @@
                 <c:if test="${s.key.url == '/customer/list' && s.value == true}">
                     <li id="nav-add-feature-group">
                         <a href="${s.key.url}">
-                            <i class=""></i> <span>${s.key.name}</span>
+                            <i class="fa fa-user-circle-o"></i> <span>${s.key.name}</span>
                         </a>
                     </li>
                 </c:if>

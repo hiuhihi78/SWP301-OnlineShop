@@ -26,7 +26,7 @@ import model.TrendOrder;
 public class DashboardDBContext extends DBContext {
 
     public int getCancelledOrders() {
-        String sql = "select count(*) as CancelledOrders from [Order] where [status] = 0";
+        String sql = "select count(*) as CancelledOrders from [Order] where [status] = 0 and [Order].[date] >= DATEADD(day, -1, GETDATE())";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -41,7 +41,7 @@ public class DashboardDBContext extends DBContext {
     }
 
     public int getProcessingOrders() {
-        String sql = "select count(*) as ProcessingOrders from [Order] where [status] = 2";
+        String sql = "select count(*) as ProcessingOrders from [Order] where [status] = 2 and [Order].[date] >= DATEADD(day, -1, GETDATE())";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -56,7 +56,7 @@ public class DashboardDBContext extends DBContext {
     }
 
     public int getSuccessOrders() {
-        String sql = "select count(*) as SuccessOrders from [Order] where [status] = 4";
+        String sql = "select count(*) as SuccessOrders from [Order] where [status] = 4 and [Order].[date] >= DATEADD(day, -1, GETDATE())";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
