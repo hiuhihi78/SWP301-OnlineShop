@@ -100,7 +100,7 @@ $(document).ready(function () {
         $("#myModal").data('orderid', orderid).modal('show');
     });
 
-    $('#btnConfirmUpdateStatus').on('click', function () {
+    $('#btnConfirmUpdateStatus').on('click', function (e) {
         var orderid = $('#myModal').data('orderid');
         var status = $('#statusorder :selected').val();
         var cancelledReason = null;
@@ -111,36 +111,49 @@ $(document).ready(function () {
         {
             cancelledReason = $('#txtcancelReason').val();
         }
-        $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function (response) {
-            var obj = JSON.parse(response);
-            switch(status) {
-                case "0":
-                    $('#orderstatus').html('<span class="label label-default">Cancelled</span>');
-                    break;
-                case "1":
-                    $('#orderstatus').html('<span class="label label-warning">Waiting for process</span>');
-                    break;
-                case "2":
-                    $('#orderstatus').html('<span class="label label-info">Processing</span>');
-                    break;
-                case "3":
-                    $('#orderstatus').html('<span class="label label-primary">Shipping</span>');
-                    break;
-                case "4":
-                    $('#orderstatus').html('<span class="label label-success">Completed</span>');
-                    break;      
-            }
-            toastr.success(obj.msg, "Notification");
-        })
-                .fail(function () {
+        if ($('#frmUpdateOrderStatus').valid())
+        {
+            $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function (response) {
+                var obj = JSON.parse(response);
+                switch (status) {
+                    case "0":
+                        $('#orderstatus').html('<span class="label label-default">Cancelled</span>');
+                        $('#orderstatus').next('p').remove();
+                        $("<p><label>Reason: </label>\n\
+                            <span>" + cancelledReason + "</span></p>").insertAfter("#orderstatus");
+                        break;
+                    case "1":
+                        $('#orderstatus').html('<span class="label label-warning">Waiting for process</span>');
+                        $('#orderstatus').next('p').remove();
+                        break;
+                    case "2":
+                        $('#orderstatus').html('<span class="label label-info">Processing</span>');
+                        $('#orderstatus').next('p').remove();
+                        break;
+                    case "3":
+                        $('#orderstatus').html('<span class="label label-primary">Shipping</span>');
+                        $('#orderstatus').next('p').remove();
+                        break;
+                    case "4":
+                        $('#orderstatus').html('<span class="label label-success">Completed</span>');
+                        $('#orderstatus').next('p').remove();
+                        break;
+                }
+                $("#statusorder option[value='']").prop('selected', true);
+                $('#txtAreaReason').hide();
+                $('#myModal').modal('hide');
+                toastr.success(obj.msg, "Notification");
+            })
+                    .fail(function () {
 
-                });
-        $.post(url2, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function () {
+                    });
+            $.post(url2, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function () {
 //            location.reload();
-        })
-                .fail(function () {
+            })
+                    .fail(function () {
 
-                });
+                    });
+        }
     });
 
     $('#btnEditSaleNote').on('click', function () {
@@ -202,14 +215,32 @@ $(document).ready(function () {
         var sid = $('#salename').val();
         var oid = $('#btnChangeSale').data('orderid');
         var url = '/sale/order/updateseller';
-        $.post(url, {sid: sid, oid: oid}, function (response) {
-            var obj = JSON.parse(response);
-            toastr.success("Notification", obj.msg);
-            $('#assignedSale').text($('#salename option:selected').text());
-        })
-                .fail(function (e) {
-                    var obj = JSON.parse(e.responseText);
-                    toastr.error(obj.msg, 'Notification');
-                });
+        if ($('#frmUpdateSale').valid())
+        {
+            $.post(url, {sid: sid, oid: oid}, function (response) {
+                var obj = JSON.parse(response);
+                toastr.success(obj.msg, "Notification");
+                $('#assignedSale').text($('#salename option:selected').text());
+                $("#salename option[value='']").prop('selected', true);
+                $('#myModal2').modal('hide');
+            })
+                    .fail(function (e) {
+                        var obj = JSON.parse(e.responseText);
+                        toastr.error(obj.msg, 'Notification');
+                    });
+        }
+    });
+
+    $('#frmUpdateOrderStatus').validate({
+        rules: {
+            "cancelReason": {
+                required: true
+            }
+        },
+        messages: {
+            "cancelReason": {
+                required: "You must enter the reason"
+            }
+        }
     });
 });

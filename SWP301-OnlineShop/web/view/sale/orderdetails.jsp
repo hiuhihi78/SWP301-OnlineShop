@@ -35,6 +35,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body class="skin-black">
+        <style>
+            .error {
+                color: red
+            }
+        </style>
 
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="../sale-template/header.jsp"></jsp:include>
@@ -84,7 +89,6 @@
                                             <span id="assignedSale">${orderInfor.sale.fullname}</span>
                                         </c:if> 
                                     </p>
-                                    <p>
                                     <div style="display: inline-block">
                                         <label>Status: </label>
                                     </div>
@@ -105,7 +109,6 @@
                                             <span class="label label-success">Completed</span>
                                         </c:if>
                                     </div>
-                                    </p>
                                     <c:if test="${orderInfor.status == 0}">
                                         <p>
                                             <label>Reason: </label>
@@ -191,10 +194,10 @@
                                     <h4 class="modal-title">Edit order status</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form id="frmUpdateOrderStatus">
                                         <div class="form-group">
                                             <label>Status: </label>
-                                            <select name="status" id="statusorder" class="form-control">
+                                            <select name="status" id="statusorder" class="form-control required">
                                                 <option value="" selected disabled hidden>Please set a status</option>
                                                 <option value="0" ${param["status-filter"] == 0 ? "selected" : ""}>Cancelled</option>
                                                 <option value="1" ${param["status-filter"] == 1 ? "selected" : ""}>Waiting for process</option>
@@ -205,13 +208,13 @@
                                         </div> 
                                         <div class="form-group" id="txtAreaReason">
                                             <label>Please enter the reason:</label>
-                                            <textarea class="form-control rounded-0" id="txtcancelReason" rows="5" name="cancelReason"></textarea>
+                                            <textarea class="form-control rounded-0" id="txtcancelReason" rows="5" name="cancelReason" required></textarea>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button id ="btnConfirmUpdateStatus" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+                                    <button id ="btnCancelUpdateStatus" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button id ="btnConfirmUpdateStatus" type="button" class="btn btn-primary">Update</button>
                                 </div>
                             </div>
 
@@ -227,15 +230,13 @@
                                     <h4 class="modal-title">Change sale</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form id="frmUpdateSale">
                                         <div class="form-group">
                                             <label>Sale: </label>
-                                            <select name="sale" id="salename" class="form-control">
+                                            <select name="sale" id="salename" class="form-control required">
                                                 <option value="" selected disabled hidden>Please choose a sale</option>
                                                 <c:forEach items="${requestScope.sales}" var="s">
-                                                    <c:if test="${s.id != orderInfor.sale.id}">
-                                                        <option value="${s.id}">${s.fullname}</option>
-                                                    </c:if>
+                                                    <option value="${s.id}">${s.fullname}</option>
                                                 </c:forEach>
                                             </select>
                                         </div> 
@@ -243,7 +244,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button id ="btnConfirmUpdateSale" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+                                    <button id ="btnConfirmUpdateSale" type="button" class="btn btn-primary">Update</button>
                                 </div>
                             </div>
 
@@ -267,6 +268,7 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
         <script type = "text/javascript">
             function showSuccessMsg(title, message)
             {
