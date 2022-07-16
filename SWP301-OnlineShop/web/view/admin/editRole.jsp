@@ -43,10 +43,12 @@
                         <form action="editRole" method="post" class="form-horizontal" id="form-updaterole">
                             <p>
                                 <label for="roleName">Select role name<span class="text-danger">*</span></label>
-                                <select name="roleId" class="form-select">
-                                    <option value="-1"></option>
+                                <select name="roleId" class="form-select required">
+                                    <option value="" selected disabled hidden>Please choose a role</option>
                                 <c:forEach items="${requestScope.roles}" var="r">
-                                    <option value="${r.id}" ${r.id == requestScope.rawid ? "selected='selected'":""}>${r.name}</option>
+                                    <c:if test="${!r.name.equalsIgnoreCase('customer')}">
+                                        <option value="${r.id}" ${r.id == requestScope.rawid ? "selected='selected'":""}>${r.name}</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </p>

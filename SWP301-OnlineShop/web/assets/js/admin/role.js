@@ -83,7 +83,7 @@ $(document).ready(function () {
 
     $('#form-updaterole').validate({
         rules: {
-            "roleName": {
+            "roleId": {
                 required: true
             },
             "fid": {
@@ -91,8 +91,8 @@ $(document).ready(function () {
             }
         },
         messages: {
-            "roleName": {
-                required: "Role name must not empty!"
+            "roleId": {
+                required: "You must select a role!"
             },
             "fid": {
                 required: "You must choose at least 1 option"
