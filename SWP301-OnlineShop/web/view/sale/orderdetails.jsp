@@ -78,39 +78,33 @@
                                     <p>
                                         <label>Assigned for sale: </label>
                                         <c:if test="${orderInfor.sale.id == sessionScope.user.id}">
-                                            <span>${orderInfor.sale.fullname} (You)</span>
+                                            <span id="assignedSale">${orderInfor.sale.fullname} (You)</span>
                                         </c:if>
                                         <c:if test="${orderInfor.sale.id != sessionScope.user.id}">
-                                            <span>${orderInfor.sale.fullname}</span>
+                                            <span id="assignedSale">${orderInfor.sale.fullname}</span>
                                         </c:if> 
                                     </p>
                                     <p>
-                                        <label> Status: </label>
+                                    <div style="display: inline-block">
+                                        <label>Status: </label>
+                                    </div>
+                                    <div id ="orderstatus" style="display: inline-block">
                                         <c:if test="${orderInfor.status == 0}">
-                                        <td id="tblStatus">
                                             <span class="label label-default">Cancelled</span>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${orderInfor.status == 1}">
-                                        <td id="tblStatus">
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 1}">
                                             <span class="label label-warning">Waiting for process</span>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${orderInfor.status == 2}">
-                                        <td id="tblStatus">
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 2}">
                                             <span class="label label-info">Processing</span>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${orderInfor.status == 3}">
-                                        <td id="tblStatus">
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 3}">
                                             <span class="label label-primary">Shipping</span>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${orderInfor.status == 4}">
-                                        <td id="tblStatus">
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 4}">
                                             <span class="label label-success">Completed</span>
-                                        </td>
-                                    </c:if>
+                                        </c:if>
+                                    </div>
                                     </p>
                                     <c:if test="${orderInfor.status == 0}">
                                         <p>
@@ -199,8 +193,6 @@
                                 <div class="modal-body">
                                     <form>
                                         <div class="form-group">
-                                            <input type="text" name="emailUserBuy" id="emailUserBuy" value="${userBuyInfor.email}">
-                                            <!--<input type="text" name="totalcost" value="${orderInfor.totalcost}">-->
                                             <label>Status: </label>
                                             <select name="status" id="statusorder" class="form-control">
                                                 <option value="" selected disabled hidden>Please set a status</option>
@@ -218,14 +210,14 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                     <button id ="btnConfirmUpdateStatus" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                                            
+
                     <div id="myModal2" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
@@ -250,7 +242,7 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                     <button id ="btnConfirmUpdateSale" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
                                 </div>
                             </div>
@@ -275,5 +267,25 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script type = "text/javascript">
+            function showSuccessMsg(title, message)
+            {
+                toastr.success(message, title);
+            }
+            function showErrMsg(title, message)
+            {
+                toastr.error(message, title);
+            }
+        </script>
+        <c:if test="${requestScope.message != null && requestScope.error == false}">
+            <script>
+                showSuccessMsg('Noftification', "${requestScope.message}");
+            </script>
+        </c:if>
+        <c:if test="${requestScope.message != null && requestScope.error == true}">
+            <script>
+                showErrMsg('Noftification', "${requestScope.message}");
+            </script>
+        </c:if>
     </body>
 </html>

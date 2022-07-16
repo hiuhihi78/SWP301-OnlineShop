@@ -111,14 +111,32 @@ $(document).ready(function () {
         {
             cancelledReason = $('#txtcancelReason').val();
         }
-        $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function () {
-            location.reload();
+        $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function (response) {
+            var obj = JSON.parse(response);
+            switch(status) {
+                case "0":
+                    $('#orderstatus').html('<span class="label label-default">Cancelled</span>');
+                    break;
+                case "1":
+                    $('#orderstatus').html('<span class="label label-warning">Waiting for process</span>');
+                    break;
+                case "2":
+                    $('#orderstatus').html('<span class="label label-info">Processing</span>');
+                    break;
+                case "3":
+                    $('#orderstatus').html('<span class="label label-primary">Shipping</span>');
+                    break;
+                case "4":
+                    $('#orderstatus').html('<span class="label label-success">Completed</span>');
+                    break;      
+            }
+            toastr.success(obj.msg, "Notification");
         })
                 .fail(function () {
 
                 });
         $.post(url2, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function () {
-            location.reload();
+//            location.reload();
         })
                 .fail(function () {
 
@@ -151,11 +169,11 @@ $(document).ready(function () {
             $('#btnCancelSaleNoteSave').addClass("display-none"); //hide cancel button
             $('#btnSaveSaleNote').addClass('display-none'); //hide save button
             $('#btnEditSaleNote').removeClass("display-none"); //show edit button
-            toastr.success(obj.msg, 'Update Note');
+            toastr.success(obj.msg, 'Notification');
         })
                 .fail(function (e) {
                     var obj = JSON.parse(e.responseText);
-                    toastr.error(obj.msg, 'Update Note');
+                    toastr.error(obj.msg, 'Notification');
                 });
     });
 
@@ -171,11 +189,12 @@ $(document).ready(function () {
         var url = '/marketing/feedback/updatestatus';
 
         $.post(url, {fid: fid, status: status}, function (response) {
-            location.reload();
+            var obj = JSON.parse(response);
+            toastr.success(obj.msg, Notification);
         })
                 .fail(function (e) {
                     var obj = JSON.parse(e.responseText);
-                    toastr.error(obj.msg, 'Update status error');
+                    toastr.error(obj.msg, 'Notification');
                 });
     });
 
@@ -183,12 +202,14 @@ $(document).ready(function () {
         var sid = $('#salename').val();
         var oid = $('#btnChangeSale').data('orderid');
         var url = '/sale/order/updateseller';
-        $.post(url, {sid: sid, oid: oid}, function () {
-            location.reload();
+        $.post(url, {sid: sid, oid: oid}, function (response) {
+            var obj = JSON.parse(response);
+            toastr.success("Notification", obj.msg);
+            $('#assignedSale').text($('#salename option:selected').text());
         })
                 .fail(function (e) {
                     var obj = JSON.parse(e.responseText);
-                    toastr.error(obj.msg, 'Update status error');
+                    toastr.error(obj.msg, 'Notification');
                 });
     });
 });
