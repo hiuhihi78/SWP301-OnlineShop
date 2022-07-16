@@ -37,16 +37,18 @@
                     <section class="content">
                         <div id="content">
                             <h2 class="text-center" style="font-weight: 700; text-align: center">Add new role</h2>
-                        <form id="frmAddRole" action="addRole" method="post" class="d-flex justify-content-center" >
-                            <p>
-                                <label for="roleName">Enter role name<span class="text-danger">*</span></label>
-                                <input type="text" id="roleName" name="roleName" required>
-                            </p>
-                            <p style="font-size: 20px; font-weight: 700; text-align: center">List of features</p>
-                            <p>
-                                <label for="adminFeatutes">Admin</label><br>
-                                <input type="checkbox" id="btnSelectAllAdmin"/>
-                                <label for="checkall">Select all</label><br>
+                            <div class="error-msg">
+                            </div>
+                            <form id="frmAddRole" action="addRole" method="post" class="d-flex justify-content-center" >
+                                <p>
+                                    <label for="roleName">Enter role name<span class="text-danger">*</span></label>
+                                    <input type="text" id="roleName" name="roleName">
+                                </p>
+                                <p id="header-list-features" style="font-size: 20px; font-weight: 700; text-align: center">List of features</p>
+                                <p>
+                                    <label for="adminFeatutes">Admin</label><br>
+                                    <input type="checkbox" id="btnSelectAllAdmin"/>
+                                    <label for="checkall">Select all</label><br>
                                 <c:forEach items="${requestScope.adminFeatures}" var="a">
                                     <input type="checkbox" id="adminFeatures" name="roleID" value="${a.id}">
                                     <label for="role">${a.name}</label><br>

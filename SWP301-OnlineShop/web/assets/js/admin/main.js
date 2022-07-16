@@ -100,7 +100,7 @@ $(document).ready(function () {
         $("#myModal").data('orderid', orderid).modal('show');
     });
 
-    $('#btnConfirmUpdateStatus').on('click', function () {
+    $('#btnConfirmUpdateStatus').on('click', function (e) {
         var orderid = $('#myModal').data('orderid');
         var status = $('#statusorder :selected').val();
         var cancelledReason = null;
@@ -111,18 +111,49 @@ $(document).ready(function () {
         {
             cancelledReason = $('#txtcancelReason').val();
         }
-        $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function () {
-            location.reload();
-        })
-                .fail(function () {
+        if ($('#frmUpdateOrderStatus').valid())
+        {
+            $.post(url, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function (response) {
+                var obj = JSON.parse(response);
+                switch (status) {
+                    case "0":
+                        $('#orderstatus').html('<span class="label label-default">Cancelled</span>');
+                        $('#orderstatus').next('p').remove();
+                        $("<p><label>Reason: </label>\n\
+                            <span>" + cancelledReason + "</span></p>").insertAfter("#orderstatus");
+                        break;
+                    case "1":
+                        $('#orderstatus').html('<span class="label label-warning">Waiting for process</span>');
+                        $('#orderstatus').next('p').remove();
+                        break;
+                    case "2":
+                        $('#orderstatus').html('<span class="label label-info">Processing</span>');
+                        $('#orderstatus').next('p').remove();
+                        break;
+                    case "3":
+                        $('#orderstatus').html('<span class="label label-primary">Shipping</span>');
+                        $('#orderstatus').next('p').remove();
+                        break;
+                    case "4":
+                        $('#orderstatus').html('<span class="label label-success">Completed</span>');
+                        $('#orderstatus').next('p').remove();
+                        break;
+                }
+                $("#statusorder option[value='']").prop('selected', true);
+                $('#txtAreaReason').hide();
+                $('#myModal').modal('hide');
+                toastr.success(obj.msg, "Notification");
+            })
+                    .fail(function () {
 
-                });
-        $.post(url2, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function () {
-            location.reload();
-        })
-                .fail(function () {
+                    });
+            $.post(url2, {orderid: orderid, status: status, cancelledReason: cancelledReason, emailUserBuy: emailUserBuy}, function () {
+//            location.reload();
+            })
+                    .fail(function () {
 
-                });
+                    });
+        }
     });
 
     $('#btnEditSaleNote').on('click', function () {
@@ -151,11 +182,11 @@ $(document).ready(function () {
             $('#btnCancelSaleNoteSave').addClass("display-none"); //hide cancel button
             $('#btnSaveSaleNote').addClass('display-none'); //hide save button
             $('#btnEditSaleNote').removeClass("display-none"); //show edit button
-            toastr.success(obj.msg, 'Update Note');
+            toastr.success(obj.msg, 'Notification');
         })
                 .fail(function (e) {
                     var obj = JSON.parse(e.responseText);
-                    toastr.error(obj.msg, 'Update Note');
+                    toastr.error(obj.msg, 'Notification');
                 });
     });
 
@@ -171,11 +202,12 @@ $(document).ready(function () {
         var url = '/marketing/feedback/updatestatus';
 
         $.post(url, {fid: fid, status: status}, function (response) {
-            location.reload();
+            var obj = JSON.parse(response);
+            toastr.success(obj.msg, Notification);
         })
                 .fail(function (e) {
                     var obj = JSON.parse(e.responseText);
-                    toastr.error(obj.msg, 'Update status error');
+                    toastr.error(obj.msg, 'Notification');
                 });
     });
 
@@ -183,12 +215,32 @@ $(document).ready(function () {
         var sid = $('#salename').val();
         var oid = $('#btnChangeSale').data('orderid');
         var url = '/sale/order/updateseller';
-        $.post(url, {sid: sid, oid: oid}, function () {
-            location.reload();
-        })
-                .fail(function (e) {
-                    var obj = JSON.parse(e.responseText);
-                    toastr.error(obj.msg, 'Update status error');
-                });
+        if ($('#frmUpdateSale').valid())
+        {
+            $.post(url, {sid: sid, oid: oid}, function (response) {
+                var obj = JSON.parse(response);
+                toastr.success(obj.msg, "Notification");
+                $('#assignedSale').text($('#salename option:selected').text());
+                $("#salename option[value='']").prop('selected', true);
+                $('#myModal2').modal('hide');
+            })
+                    .fail(function (e) {
+                        var obj = JSON.parse(e.responseText);
+                        toastr.error(obj.msg, 'Notification');
+                    });
+        }
+    });
+
+    $('#frmUpdateOrderStatus').validate({
+        rules: {
+            "cancelReason": {
+                required: true
+            }
+        },
+        messages: {
+            "cancelReason": {
+                required: "You must enter the reason"
+            }
+        }
     });
 });

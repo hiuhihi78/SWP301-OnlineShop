@@ -104,13 +104,14 @@
                                 <th data-sortable="true" data-sorter="priceSorter">Total cost</th>
                                 <th data-sortable="true" data-align="center">Status</th>
                                 <th data-sortable="false" data-align="center">Assigned to</th>
-                                <th data-sortable="false">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach items="${requestScope.orders}" var="o">
                                 <tr id="row-orderid${o.id}">
-                                    <td>${o.id}</td>
+                                    <td>
+                                        <a href="/sale/orderdetails?id=${o.id}"><u>${o.id}</u></a>
+                                    </td>
                                     <td><fmt:formatDate pattern="yyyy-MM-dd" value="${o.date}"/></td>
                                     <td>${o.buyer.fullname}</td>
                                     <td>${o.products[0].name}</td>
@@ -153,12 +154,6 @@
                                             </c:choose>
                                         </td>
                                     </c:if>
-                                    <td>
-                                        <a type="button" class="btn btn-primary" href="/sale/orderdetails?id=${o.id}">View</a>
-                                        <c:if test="${o.status == 1 && o.sale.id == sessionScope.user.id}">
-                                            <button type="button" class="btn btn-warning confirm-process btn-sm" data-orderid="${o.id}" data-toggle="modal" data-target="#myModal">Process order</button>
-                                        </c:if>
-                                    </td>
                                 </tr>
                             </c:forEach> 
                         </tbody>

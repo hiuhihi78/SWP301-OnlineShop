@@ -8,12 +8,18 @@ $(document).ready(function () {
     });
 
     $('#submitUpdateRole').on('click', function (e) {
-        $('#myModal').modal('show');
+        if ($('#form-updaterole').valid())
+        {
+            $('#myModal').modal('show');
+        }
         e.preventDefault();
     });
 
     $('#btnSubmitAddRole').on('click', function (e) {
-        $('#myModal').modal('show');
+        if ($('#frmAddRole').valid())
+        {
+            $('#myModal').modal('show');
+        }
         e.preventDefault();
     });
 
@@ -21,8 +27,9 @@ $(document).ready(function () {
         $('#form-updaterole').submit();
     });
 
-    $('#btnConfirmAddRole').on('click', function () {
+    $('#btnConfirmAddRole').on('click', function (e) {
         $('#frmAddRole').submit();
+
     });
 
     $('#btnSelectAllAdmin').on('click', function () {
@@ -44,6 +51,62 @@ $(document).ready(function () {
         $("input[id*='saleFeatures']:checkbox").each(function () {
             this.checked = checked;
         });
+    });
+
+    $('#frmAddRole').validate({
+        rules: {
+            "roleName": {
+                required: true
+            },
+            "roleID": {
+                required: true
+            }
+        },
+        messages: {
+            "roleName": {
+                required: "Role name must not empty!"
+            },
+            "roleID": {
+                required: "You must choose at least 1 option"
+            }
+        },
+        highlight: function (label) {
+            $(label).closest('.error-msg').addClass('error');
+        },
+        invalidHandler: function (event, validator) {
+            window.scrollTo({top: 0, behavior: 'smooth'}); //scroll to top
+            toastr.error("Validation error! Please check again before submit");
+        },
+        errorElement: 'div',
+        errorLabelContainer: '.error-msg'
+    });
+
+    $('#form-updaterole').validate({
+        rules: {
+            "roleId": {
+                required: true
+            },
+            "fid": {
+                required: true
+            }
+        },
+        messages: {
+            "roleId": {
+                required: "You must select a role!"
+            },
+            "fid": {
+                required: "You must choose at least 1 option"
+            }
+        },
+        highlight: function (label) {
+            $(label).closest('.error-msg').addClass('error');
+        },
+        invalidHandler: function (event, validator) {
+            window.scrollTo({top: 0, behavior: 'smooth'}); //scroll to top
+            toastr.error("Validation error! Please check again before submit");
+        },
+        errorElement: 'div',
+        errorLabelContainer: '.error-msg'
     });
 });
 

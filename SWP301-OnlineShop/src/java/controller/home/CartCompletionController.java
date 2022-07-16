@@ -158,7 +158,7 @@ public class CartCompletionController extends BaseAuthController {
             //update new information user
             userDB.updateUserInf(infoCustomer);
             // delete product ordered in cart
-//            cartDB.deleteProductOrdered(productsOrder, idCart);
+            cartDB.deleteProductOrdered(productsOrder, idCart);
             
             
             System.out.println("success");
