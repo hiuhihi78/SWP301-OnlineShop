@@ -42,7 +42,7 @@
                         <span><a><i class="fa-solid fa-angle-left">  <span class="title">Back</span></i> </a></span>
                     </div>
                     <!-- Main content -->
-                    <section class="content ">
+                    <section class="content" id="section-content">
                         <h2 class="title text-center">Add New Post</h2>
                         <div class="mb-10" >
                             <form action="./addPost" method="POST" class="dflex-column" enctype="multipart/form-data">
