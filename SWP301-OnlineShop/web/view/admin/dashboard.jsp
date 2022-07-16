@@ -65,7 +65,7 @@
                     <!-- Main content -->
                     <section class="content">
                         <section class="panel">
-                            <header class="panel-heading">Orders staticstic</header>
+                            <header class="panel-heading">Orders staticstic in the last 24-hour</header>
                             <div class="row" style="margin-bottom:5px;">
                                 <div class="col-md-4">
                                     <div class="sm-st clearfix">

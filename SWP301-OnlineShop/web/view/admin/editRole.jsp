@@ -38,6 +38,8 @@
                     <!-- Main content -->
                     <section class='content'>
                         <h2 class="text-center" style="font-weight: 700; text-align: center">Edit a role</h2>
+                        <div class="error-msg">
+                        </div>
                         <form action="editRole" method="post" class="form-horizontal" id="form-updaterole">
                             <p>
                                 <label for="roleName">Select role name<span class="text-danger">*</span></label>

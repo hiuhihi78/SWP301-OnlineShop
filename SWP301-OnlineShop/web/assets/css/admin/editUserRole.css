@@ -124,3 +124,7 @@ select{
 .content{
     margin: 0 20px;
 }
+
+.error {
+    color: red;
+}
