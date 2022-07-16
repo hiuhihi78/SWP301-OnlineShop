@@ -29,12 +29,13 @@
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
         <link href="../../assets/public/css/style.css" rel="stylesheet">
         <link href="../../assets/css/cart/style.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css"/>
         <title>Cart | Contact</title>
     </head>
     <body>
         <jsp:include page="../home-template/headerProductlist.jsp"/>
         <section id="cart_items">
-            <div id="features_items-id"></div>
+            
             <div class="container">
                 <div class="row flex-justify">
                    <jsp:include page="../home-template/sidebarForProductList.jsp"/>
@@ -54,7 +55,8 @@
                                             <b><h4><p><i class="fa fa-location-arrow" aria-hidden="true"></i> Address</p></h4></b>
                                             <div id="info-user-id">
                                                 <p id="address-id"><b>${user.username}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}</p>
-                                                <a id="change-id" href="#" >Edit</a>
+                                                <a id="change-id">Edit</a>
+                                                
                                             </div>
 
                                                 <input type="hidden" id="name-id-h" name="txtFullname" value="${user.username}"/>
@@ -230,5 +232,6 @@
         <script src="../../assets/js/home/home.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js" integrity="sha512-FOhq9HThdn7ltbK8abmGn60A/EMtEzIzv1rvuh+DqzJtSGq8BRdEN0U+j0iKEIffiw/yEtVuladk6rsG4X6Uqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
     </body>
 </html>

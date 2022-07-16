@@ -18,11 +18,9 @@
         <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
         <link href="../assets/css/marketing/style.css" rel="stylesheet" type="text/css" />
-        <!-- bootstrap 3.0.2 -->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!--        <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css">-->
-        <!--active button nav in sidebar-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css"/>
 
         <style>
             .left-side {
@@ -142,12 +140,9 @@
 
                                                 <li><a href="/marketing/sliderDetail?id=${s.id}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Details</a></li>
                                                 <li>
-
                                                     <button id="btn-status-${s.id}" data-id="${s.id}" data-status="${(s.status)}" type="button" class="btn ${(s.status)?"btn-success":"btn-danger"} btn-id">
                                                         ${(s.status)?"Show":"Hide"}
                                                     </button>
-
-
                                                 </li>
                                             </ul>
                                         </div>
@@ -207,7 +202,6 @@
         <script src="../assets/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
         <script src="../assets/js/plugins/chart.js" type="text/javascript"></script>
         <script src="../assets/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
     </body>
 </html>

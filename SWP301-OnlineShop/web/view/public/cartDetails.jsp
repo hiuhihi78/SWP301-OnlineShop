@@ -94,8 +94,9 @@
 
 
                                                             <td class="cart_quantity">
-                                                                <div class="cart_quantity_button">
-
+                                               
+                                                                <div class="cart_quantity_button" id="div-contain-${(i.product).id}">
+                                                                    
                                                                     <input type="button" class="cart_quantity_down" ${i.quantity==1?"disabled":""} is-up="0"  id="id-down-${(i.product).id}" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="-" data-min="1"/>
 
                                                                     <div id="show-quantity-${(i.product).id}"><input id="quantity-id-${(i.product).id}" data-product-id="${(i.product).id}" class="cart_quantity_input" type="number" value="${i.quantity}" autocomplete="off" size="2" data-max="${(i.product).quantity}"

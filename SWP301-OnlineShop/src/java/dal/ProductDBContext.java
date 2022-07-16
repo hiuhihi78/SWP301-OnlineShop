@@ -91,10 +91,14 @@ public class ProductDBContext extends DBContext {
         return list;
     }
 
-    public ArrayList<Product> getProductsBySliderId(int sid) {
+    public ArrayList<Product> getProductsBySliderId(int sid, String search) {
         ArrayList<Product> list = new ArrayList<>();
         try {
             String sql = "select * from [product] where sliderId = ?";
+            
+            if (!search.isEmpty()) {
+                sql += " And [name] like '%" + search + "%'";
+            }
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, sid);
             ResultSet rs = stm.executeQuery();
@@ -139,12 +143,16 @@ public class ProductDBContext extends DBContext {
 
     public static void main(String[] args) {
         ProductDBContext db = new ProductDBContext();
-        Date sqlDate = Date.valueOf("2022-06-25");
-        Date sqlDate1 = Date.valueOf("2022-07-07");
-        ArrayList<KeyValuePair1> list = db.getProductsTrend(sqlDate, sqlDate1);
-        for (KeyValuePair1 keyValuePair1 : list) {
-            System.out.println(((Product) keyValuePair1.getKey()).getName());
-            System.out.println((keyValuePair1.getValue()));
+//        Date sqlDate = Date.valueOf("2022-06-25");
+//        Date sqlDate1 = Date.valueOf("2022-07-07");
+//        ArrayList<KeyValuePair1> list = db.getProductsTrend(sqlDate, sqlDate1);
+//        for (KeyValuePair1 keyValuePair1 : list) {
+//            System.out.println(((Product) keyValuePair1.getKey()).getName());
+//            System.out.println((keyValuePair1.getValue()));
+//        }
+        ArrayList<Product> lst = db.getProductsBySliderId(1, "Nike");
+        for (Product product : lst) {
+            System.out.println(product.getName());
         }
     }
 

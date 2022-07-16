@@ -163,6 +163,12 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
     var price = parseFloat($('#input-' + pid).attr('data-price-1'));
     var priceTotal = parseFloat($('.h_cart_total_price_' + pid).val());
     var priceTotal1 = parseFloat($('.h_cart_total_price_' + pid).val());
+    var checked;
+//    if ($('#cbo-' + pid).prop('checked')) {
+//        sessionStorage.setItem('save_order', pid);
+//    }
+//
+//    alert(checked);
 
     if ($(e.target).attr('class') == 'cart_quantity_up') {
         changeQ = parseInt(currentQ) + 1;
@@ -201,12 +207,7 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
         }
 
         var output = parseInt(totalLast).toLocaleString();
-
-
-
     }
-
-
     $.ajax({
         url: "/cartDetails",
         type: "post", //send it through get method
@@ -217,10 +218,10 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
         },
         success: function (response) {
             //Do Something
-            location.reload();
-            $('#show-quantity-' + pid).html(response);
-            $('#total').html(output);
-            $('#total-hidden').val(totalLast);
+            window.location.reload();
+//            $('#show-quantity-' + pid).html(response);
+//            $('#total').html(output);
+//            $('#total-hidden').val(totalLast);
         },
         error: function (xhr) {
             //Do Something to handle error
@@ -275,13 +276,9 @@ $('.btn-update').on('click', function () {
             $('#address-id-h').val(address);
             $('#confirm-change').modal('toggle');
             $('#address-id').html(response);
+            //Alert
+            toastr.success("Edit Information Sucessfull!");
 
-            document.querySelector('#features_items-id').innerHTML += `<div class="fixed float-end t-55px" id="showAlter">
-                            <div class="alert alert-success alert-dismissible fade in" id="alterfade">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                Edit Information Sucessfull!
-                            </div>
-                        </div>`;
         },
         error: function (xhr) {
 
@@ -376,6 +373,7 @@ $('#btn-submit').click(function () {
     });
 
 });
+
 
 
 

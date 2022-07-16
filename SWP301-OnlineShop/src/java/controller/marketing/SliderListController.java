@@ -126,7 +126,6 @@ public class SliderListController extends BaseAuthController {
                 rs = sliderDb.changeStatus(id, Security.HIDE_STATUS);
             }
             
-            System.out.println(rs);
         } catch (Exception e) {
         }
 

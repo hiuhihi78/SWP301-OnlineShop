@@ -1,17 +1,13 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
- */
 
 
 $('.btn-id').click(function (e) {
     var sid = $(e.target).data('id');
     var status = $(e.target).data('status');
     if (status == true) {
-         $('#ct').html('If the status is changed to <b>HIDE</b>, the Slider will not appear on the homepage.');
+        $('#ct').html('If the status is changed to <b>HIDE</b>, the Slider will not appear on the homepage.');
     } else {
-        
-       
+
+
         $('#ct').html('If the status is changed to <b>SHOW</b>, the Slider will be displayed on the homepage.');
     }
     $('#hSid').val(sid);
@@ -21,14 +17,12 @@ $('.btn-id').click(function (e) {
         keyboard: true,
         show: true
     }
-            );
+    );
 });
 
 $('.btn-change').click(function () {
     var sid = $('#hSid').val();
     var status = $('#hStatus').val();
-
-    
     $.ajax({
         url: "/marketing/sliderList",
         type: "post", //send it through get method
@@ -39,14 +33,24 @@ $('.btn-change').click(function () {
         success: function (response) {
             //Do Something
             $('#confirm-show-slider').modal('toggle');
-            location.reload();
+            sessionStorage.setItem('save_order',true);
+            window.location.reload();
+
 
         },
         error: function (xhr) {
-   
+
         }
     });
 });
+
+$(function () {
+    if (sessionStorage.getItem('save_order')) {
+        toastr.success("Status change successful!");
+        sessionStorage.removeItem('save_order');
+    }
+}
+);
 
 //$('.btn-change-edit').click(function () {
 //    var sid = $('#hSid').val();
