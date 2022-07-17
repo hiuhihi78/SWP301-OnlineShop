@@ -218,10 +218,10 @@ $('.cart_quantity_up, .cart_quantity_down').on('click', function (e) {
         },
         success: function (response) {
             //Do Something
-            window.location.reload();
-//            $('#show-quantity-' + pid).html(response);
-//            $('#total').html(output);
-//            $('#total-hidden').val(totalLast);
+//            window.location.reload();
+            $('#quantity-id-' + pid).val(changeQ);
+            $('#total').html(output);
+            $('#total-hidden').val(totalLast);
         },
         error: function (xhr) {
             //Do Something to handle error

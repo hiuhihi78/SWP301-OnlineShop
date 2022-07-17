@@ -269,6 +269,7 @@ public class UserDBContext extends DBContext {
                         rs.getString("mobile"),
                         rs.getString("address"),
                         rs.getBoolean("Status"));
+                user.setUsername(rs.getString("username"));
 
                 user.setRole(new Role(rs.getInt("roleId"), rs.getString("rname")));
                 user.setId(rs.getInt("id"));
