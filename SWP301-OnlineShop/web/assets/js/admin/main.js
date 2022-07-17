@@ -105,6 +105,7 @@ $(document).ready(function () {
         var status = $('#statusorder :selected').val();
         var cancelledReason = null;
         var emailUserBuy = $('#emailUserBuy').val();
+        
         var url = '/sale/order/updatestatus';
         var url2 = '/send/completedOrder';
         if (status == 0)

@@ -197,6 +197,8 @@
                                     <form id="frmUpdateOrderStatus">
                                         <div class="form-group">
                                             <label>Status: </label>
+                                            <input type="hidden" name="emailUserBuy" id="emailUserBuy" value="${userBuyInfor.email}">
+                                            
                                             <select name="status" id="statusorder" class="form-control required">
                                                 <option value="" selected disabled hidden>Please set a status</option>
                                                 <option value="0" ${param["status-filter"] == 0 ? "selected" : ""}>Cancelled</option>
@@ -233,6 +235,7 @@
                                     <form id="frmUpdateSale">
                                         <div class="form-group">
                                             <label>Sale: </label>
+                                            
                                             <select name="sale" id="salename" class="form-control required">
                                                 <option value="" selected disabled hidden>Please choose a sale</option>
                                                 <c:forEach items="${requestScope.sales}" var="s">

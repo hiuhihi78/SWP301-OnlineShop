@@ -4,6 +4,8 @@
  */
 package controller.marketing;
 
+import configs.HandleGenerate;
+import configs.SendMail;
 import dal.CustomerDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class AddCustomerControler extends BaseAuthController {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 //        String avatar = request.getParameter("avatar");
-        String password = "abc";
+//        String password = "abc";
         String fullname = request.getParameter("fullname");
         String email = request.getParameter("email");
         String mobile = request.getParameter("mobile");
@@ -41,7 +43,8 @@ public class AddCustomerControler extends BaseAuthController {
         String raw_id = request.getParameter("roleID");
         String raw_gender = request.getParameter("gender");
         String raw_status = request.getParameter("status");
-
+        String password = HandleGenerate.generatePassword();
+        String url = "http://localhost:8080/login";
         //validate value
         int roleId = Integer.parseInt(raw_id);
         boolean gender = raw_gender.equals("male");
@@ -49,6 +52,7 @@ public class AddCustomerControler extends BaseAuthController {
 
         User cusomter = new User();
         cusomter.setPassword(password);
+        System.out.println("user Password: " +   cusomter.getPassword());
         cusomter.setFullname(fullname);
         cusomter.setEmail(email);
         cusomter.setMobile(mobile);
@@ -70,8 +74,9 @@ public class AddCustomerControler extends BaseAuthController {
                 response.sendRedirect("../customer/add?alert=Add customer failed. User with email " + cusomter.getEmail() + " existed!!");
             }
         }
-        if (checkEmailExist  == false) {
+        if (checkEmailExist == false) {
             customerDBContext.addCustomer(cusomter);
+            SendMail.sendPassword(email, fullname, password, url);
             response.sendRedirect("../customer/list?alert=Add Customer Successfully!");
         }
 

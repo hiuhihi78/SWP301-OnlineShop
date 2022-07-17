@@ -70,7 +70,7 @@ public class AddNewUserController extends BaseAuthController {
         String address = request.getParameter("address");
         boolean status = request.getParameter("status").equals("active");
         if (userDB.checkAccountHaveEmailOrMobileExisted(email, mobile)) {
-            message = "Email or mobile was exited!  ";
+            message = "Email or mobile was exited!";
             request.setAttribute("fullname", fullname);
             request.setAttribute("gender", gender);
             request.setAttribute("email", email);
