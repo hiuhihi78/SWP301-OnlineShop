@@ -68,11 +68,11 @@
 
                                         <c:if test="${sessionScope.user.role.id == 2}">
                                             <li>
-                                                <a href="/marketing/productlist" class="text-none-underline">Maketing manage</a>
+                                                <a href="/marketing/productlist" class="text-none-underline">Marketing manage</a>
                                             </li>
                                         </c:if>
 
-                                            <c:if test="${sessionScope.user.role.id == 3 || sessionScope.user.role.id  == 21}">
+                                        <c:if test="${sessionScope.user.role.id == 3 || sessionScope.user.role.id  == 21}">
                                             <li>
                                                 <a href="sale/productlist" class="text-none-underline">Sale manage</a>
                                             </li>
@@ -86,7 +86,7 @@
                                         <li>
                                             <a href="#" class="text-none-underline" data-toggle="modal" data-target="#myModal">Change password</a>
                                         </li>
-                                        
+
                                         <li>
                                             <a href="logout" class="text-none-underline">Logout</a>
                                         </li>
@@ -125,9 +125,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="search_box pull-right">
-                        <form action="productlist" method="get">
-                        <input type="text" name="searchBy"  placeholder="Search"/>
-                        </form>
+                        <input type="text" name="searchBy"  placeholder="Search" id="search-box"/>
                     </div>
                 </div>
             </div>

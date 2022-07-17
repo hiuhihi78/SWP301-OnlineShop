@@ -297,7 +297,7 @@ public class UserDBContext extends DBContext {
 
     public boolean updateUserInf(User user) {
         try {
-            String sql = "update [User] set username =?, mobile=?, address=? where email = ?";
+            String sql = "update [User] set username = ?, mobile=?, address=? where email = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, user.getUsername());
             stm.setString(2, user.getMobile());

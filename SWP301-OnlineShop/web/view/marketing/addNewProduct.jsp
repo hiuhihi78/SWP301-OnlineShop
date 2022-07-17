@@ -27,7 +27,7 @@
         <!--active button nav in sidebar-->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   
+
     </head>
     <body class="skin-black">
         <c:set var="name" value="${requestScope.name}"/>
@@ -55,7 +55,7 @@
                         <!--/alter-->
                         <div class="mb-10" >
                             <form action="#" method="POST" enctype="multipart/form-data">
-                                
+
                                 <!--Thumbnail-->
                                 <div class="form-group w-70-percent mx-auto">
                                     <label for="thumbnail">Thumbnail</label>
@@ -102,20 +102,21 @@
 
                             <!--Seller-->
                             <div class="form-group w-70-percent mx-auto">
-                                <label for="seller">Seller</label>
-<!--                                <div class="display-flex" >
-                                    <input type="text" class="form-control" value="${seller}" name="seller" id="seller"  placeholder="Enter seller email " required="">
-                                    <button type="button" onclick="handleSearchSeller()" class="btn btn-primary ml-2percent ">Search</button>
-                                </div>
-                                <div id="rowShowSeller"></div>-->
-                                <select class="form-control" name="sellerId">
-                                    <c:forEach  items="${requestScope.sales}" var="s">
+                                <!--<label for="seller">Seller</label>-->
+                                <!--                                <div class="display-flex" >
+                                                                    <input type="text" class="form-control" value="${seller}" name="seller" id="seller"  placeholder="Enter seller email " required="">
+                                                                    <button type="button" onclick="handleSearchSeller()" class="btn btn-primary ml-2percent ">Search</button>
+                                                                </div>
+                                                                <div id="rowShowSeller"></div>-->
+                                <input type="hidden" name="sellerId" value="62"/>
+<!--                                <select class="form-control" name="sellerId">
+                                    <%--<c:forEach  items="${requestScope.sales}" var="s">--%>
                                         <option value="${s.id}">${s.fullname}</option>
-                                    </c:forEach>
-                                </select>
+                                    <%--</c:forEach>--%>
+                                </select>-->
                             </div>
-                                    
-                                    
+
+
                             <!--/Seller-->
 
                             <!--Category-->

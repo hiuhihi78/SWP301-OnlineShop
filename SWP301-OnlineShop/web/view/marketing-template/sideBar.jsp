@@ -49,13 +49,13 @@
                     </li>
                 </c:if>
 
-                    <c:if test="${s.key.url == '/marketing/productlist' && s.value == true}">
-                    <li id="nav-user-list">
-                        <a href="/marketing/productlist">
-                            <i class="fa-solid fa-box-open"></i> <span>Product List</span>
-                        </a>
-                    </li>
-                </c:if>
+                <%--<c:if test="${s.key.url == '/marketing/productlist' && s.value == true}">--%>
+                <!--                    <li id="nav-user-list">
+                                        <a href="productlist">
+                                            <i class="fa-solid fa-box-open"></i> <span>Product List</span>
+                                        </a>
+                                    </li>-->
+                <%--</c:if>--%>
 
                 <c:if test="${s.key.url == '/marketing/postlist' && s.value == true}">
                     <li id="nav-user-list">
@@ -73,7 +73,7 @@
                         </a>
                     </li>
                 </c:if>    
-                    
+
                 <c:if test="${s.key.url == '/customer/list' && s.value == true}">
                     <li id="nav-user-list">
                         <a href="../customer/list">
@@ -82,7 +82,11 @@
                     </li>
                 </c:if>    
             </c:forEach>
-
+            <li id="nav-user-list">
+                <a href="productlist">
+                    <i class="fa-solid fa-box-open"></i> <span>Product List</span>
+                </a>
+            </li>
         </ul>         
 
     </section>

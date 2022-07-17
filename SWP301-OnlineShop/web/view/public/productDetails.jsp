@@ -101,15 +101,15 @@
                                         <a href="productlist?category=${product.subCategory.category.id}">${product.subCategory.category.name}</a>
                                         <span> ></span>
                                         <a href="productlist?subCategory=${product.subCategory.id}"> ${product.subCategory.name}</a>
-                                       
+
                                     </div>
                                     <h2 class="mb-20"><b>${product.name}</b></h2>
 
 
-<!--                                    <p>
-                                        <label>Seller: </label>
-                                        <span> ${product.user.fullname}</span> 
-                                    </p>-->
+                                    <!--                                    <p>
+                                                                            <label>Seller: </label>
+                                                                            <span> ${product.user.fullname}</span> 
+                                                                        </p>-->
                                     <div class="display-flex feedback-detail-product">
                                         <div class="border-solid-r-1 display-flex">
                                             <span class="mt-5 mr-3">
@@ -149,7 +149,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                                
+
                                     <c:if  test="${product.quantity > 0}">
                                         <div class="product-details-chose_quantity"> 
                                             <label>Quantity: </label>
@@ -157,10 +157,10 @@
                                                    min="1" max="${product.quantity}" value = "1" required>
                                             <span>${product.quantity} pieces available</span>
                                         </div>
-                                        
+
                                         <div id="alter_quantityOrder" style="margin-bottom: 20px;"> </div>
-                                         
-                                        <c:if test="${sessionScope.user.role.id == 4}">
+
+                                        <c:if test="${sessionScope.user.role.id != 3 && sessionScope.user.role.id != 2 && sessionScope.user.role.id != 1}">
                                             <div>
                                                 <button  style="width: 10em; " class="form-control add-to-cart" onclick="addToCartFunction();" >
                                                     <i class="fa fa-shopping-cart"></i>Add to cart
@@ -168,11 +168,11 @@
                                             </div>
                                         </c:if>
                                     </c:if>
-                                    
+
                                     <c:if  test="${product.quantity <= 0}">
                                         <div class="alert alert-danger w-90-percent" style="width: 90%" >Product is sold out!</div>
                                     </c:if>
-                                    
+
                                 </div><!--/product-information-->
                             </div>
                         </div>

@@ -43,8 +43,8 @@
                         </div>
                 </c:if>
             </div>
-            <div class="logo">
-                <h1>Online Shop</h1>
+            <div class="logo" style="cursor: pointer;">
+                <h1 id="backHome">Online Shop</h1>
             </div>
             <div class="login-box">
 
@@ -89,5 +89,11 @@
             </div>
         </section>
     </body>
-    <script src="assets/js/login/scripts.js"></script>
+    <script src="assets/js/login/scripts.js">
+    </script>
+    <script>
+        $('#backHome').on('click', function() {
+            window.location.href = "home";
+        });
+    </script>
 </html>
