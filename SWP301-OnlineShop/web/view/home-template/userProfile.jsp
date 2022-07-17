@@ -36,7 +36,7 @@
                                     <div id="closeBtn-attachedBoxImg-1" class="close-btn" onclick="closeImgProfile('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1');"></div>
                                     <img id="attachedBoxImg-1" src="${user.avatar}" style="height:150px;" class="rounded-circle  image-thumbnail"/>
                                 <h6>Upload a different photo...</h6> 
-                                ${user.avatar}
+                               
                                 <input type="file" name="attachedImg1" id="attachedImg1" accept="image/*" onchange="showImgProfile('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1')" 
                                        style="width: 50%; display: inline-block;"/>
                             </div>

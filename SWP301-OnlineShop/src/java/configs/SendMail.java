@@ -198,7 +198,7 @@ public class SendMail {
         for (Product product : listOrderProductOfUser) {
             totalCost += product.getUnitPrice();
         }
-//        System.out.println("Total " + totalCost);
+        System.out.println("Total " + totalCost);
         String message1 = "<!DOCTYPE html>\n"
                 + "<html>\n"
                 + "<head>\n"

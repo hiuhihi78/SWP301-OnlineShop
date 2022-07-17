@@ -27,6 +27,12 @@ function handleSaveCategory() {
         success: function (data, textStatus, jqXHR) {
             listCategory.innerHTML += data;
             listCategory2.innerHTML += data;
+            document.querySelector('#section-content').innerHTML += `<div class="fixed float-end t-55px" id="showAlter">
+                            <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                Create Category Post Successfull!
+                            </div>
+                        </div>`;
         },
         error: function (jqXHR, textStatus, errorThrown) {
 
@@ -53,6 +59,12 @@ function handleSaveSubcategory() {
         },
         success: function (data, textStatus, jqXHR) {
             console.log("status ", textStatus);
+            document.querySelector('#section-content').innerHTML += `<div class="fixed float-end t-55px" id="showAlter">
+                            <div class="alert alert-success alert-dismissible fade in" id="alterfade">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                Create Subcategory Post Successfull!
+                            </div>
+                        </div>`;
         },
         error: function (jqXHR, textStatus, errorThrown) {
 

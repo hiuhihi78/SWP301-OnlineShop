@@ -35,6 +35,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body class="skin-black">
+        <style>
+            .error {
+                color: red
+            }
+        </style>
 
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="../sale-template/header.jsp"></jsp:include>
@@ -45,7 +50,7 @@
                 <c:set var="orderInfor" value="${requestScope.informationOrder}"/>
                 <c:set var="userBuyInfor" value="${requestScope.userOrderInfioramtion}"/>
                 <!-- Main content -->
-                <section class="content ">
+                <section class="content">
                     <div class ="row d-flex justify-content-center">
                         <h2 class="title text-center">Order Information</h2>
                     </div>
@@ -78,40 +83,32 @@
                                     <p>
                                         <label>Assigned for sale: </label>
                                         <c:if test="${orderInfor.sale.id == sessionScope.user.id}">
-                                            <span>${orderInfor.sale.fullname} (You)</span>
+                                            <span id="assignedSale">${orderInfor.sale.fullname} (You)</span>
                                         </c:if>
                                         <c:if test="${orderInfor.sale.id != sessionScope.user.id}">
-                                            <span>${orderInfor.sale.fullname}</span>
+                                            <span id="assignedSale">${orderInfor.sale.fullname}</span>
                                         </c:if> 
                                     </p>
-                                    <p>
-                                        <label> Status: </label>
+                                    <div style="display: inline-block">
+                                        <label>Status: </label>
+                                    </div>
+                                    <div id ="orderstatus" style="display: inline-block">
                                         <c:if test="${orderInfor.status == 0}">
-                                        <td id="tblStatus">
                                             <span class="label label-default">Cancelled</span>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${orderInfor.status == 1}">
-                                        <td id="tblStatus">
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 1}">
                                             <span class="label label-warning">Waiting for process</span>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${orderInfor.status == 2}">
-                                        <td id="tblStatus">
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 2}">
                                             <span class="label label-info">Processing</span>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${orderInfor.status == 3}">
-                                        <td id="tblStatus">
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 3}">
                                             <span class="label label-primary">Shipping</span>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${orderInfor.status == 4}">
-                                        <td id="tblStatus">
+                                        </c:if>
+                                        <c:if test="${orderInfor.status == 4}">
                                             <span class="label label-success">Completed</span>
-                                        </td>
-                                    </c:if>
-                                    </p>
+                                        </c:if>
+                                    </div>
                                     <c:if test="${orderInfor.status == 0}">
                                         <p>
                                             <label>Reason: </label>
@@ -197,10 +194,10 @@
                                     <h4 class="modal-title">Edit order status</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form id="frmUpdateOrderStatus">
                                         <div class="form-group">
                                             <label>Status: </label>
-                                            <select name="status" id="statusorder" class="form-control">
+                                            <select name="status" id="statusorder" class="form-control required">
                                                 <option value="" selected disabled hidden>Please set a status</option>
                                                 <option value="0" ${param["status-filter"] == 0 ? "selected" : ""}>Cancelled</option>
                                                 <option value="1" ${param["status-filter"] == 1 ? "selected" : ""}>Waiting for process</option>
@@ -211,19 +208,19 @@
                                         </div> 
                                         <div class="form-group" id="txtAreaReason">
                                             <label>Please enter the reason:</label>
-                                            <textarea class="form-control rounded-0" id="txtcancelReason" rows="5" name="cancelReason"></textarea>
+                                            <textarea class="form-control rounded-0" id="txtcancelReason" rows="5" name="cancelReason" required></textarea>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button id ="btnConfirmUpdateStatus" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+                                    <button id ="btnCancelUpdateStatus" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button id ="btnConfirmUpdateStatus" type="button" class="btn btn-primary">Update</button>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                                            
+
                     <div id="myModal2" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
@@ -233,23 +230,21 @@
                                     <h4 class="modal-title">Change sale</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form id="frmUpdateSale">
                                         <div class="form-group">
                                             <label>Sale: </label>
-                                            <select name="sale" id="salename" class="form-control">
+                                            <select name="sale" id="salename" class="form-control required">
                                                 <option value="" selected disabled hidden>Please choose a sale</option>
                                                 <c:forEach items="${requestScope.sales}" var="s">
-                                                    <c:if test="${s.id != orderInfor.sale.id}">
-                                                        <option value="${s.id}">${s.fullname}</option>
-                                                    </c:if>
+                                                    <option value="${s.id}">${s.fullname}</option>
                                                 </c:forEach>
                                             </select>
                                         </div> 
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button id ="btnConfirmUpdateSale" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button id ="btnConfirmUpdateSale" type="button" class="btn btn-primary">Update</button>
                                 </div>
                             </div>
 
@@ -273,5 +268,26 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+        <script type = "text/javascript">
+            function showSuccessMsg(title, message)
+            {
+                toastr.success(message, title);
+            }
+            function showErrMsg(title, message)
+            {
+                toastr.error(message, title);
+            }
+        </script>
+        <c:if test="${requestScope.message != null && requestScope.error == false}">
+            <script>
+                showSuccessMsg('Noftification', "${requestScope.message}");
+            </script>
+        </c:if>
+        <c:if test="${requestScope.message != null && requestScope.error == true}">
+            <script>
+                showErrMsg('Noftification', "${requestScope.message}");
+            </script>
+        </c:if>
     </body>
 </html>

@@ -10,32 +10,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>Slider | List</title>
-        <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-        <!-- bootstrap 3.0.2 -->
-        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!--font Awesome--> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <meta name="description" content="Developed By M Abdur Rokib Promy">
+        <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+        <title>Slider | List</title> 
         <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
-        <!--Theme style--> 
         <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
-        <!--css-->
-        <link href="../../assets/css/admin/userList.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/css/admin/main.css" rel="stylesheet" type="text/css"/>
         <link href="../assets/css/marketing/style.css" rel="stylesheet" type="text/css" />
-
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
-
-        <link rel="stylesheet" type="text/css" href="../../assets/css/marketing/main.css">
-
-        <!--active button nav in sidebar-->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css"/>
 
         <style>
             .left-side {
-                min-height: 1550px !important;
+                min-height: 1300px !important;
             }
         </style>
     </head>
@@ -44,7 +33,7 @@
         <jsp:include page="../marketing-template/header.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
-                
+
             <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
 
                 <!-- Right side. contains main content -->
@@ -56,25 +45,55 @@
                         <!--Alter-->
                         <div class="app-title">
                             <div>
-                                <h1><i class="fa fa-list-ul" aria-hidden="true"></i> Slider List</h1>
+                                <h3><i class="fa fa-list-ul" aria-hidden="true"></i> Slider List</h3>
                                 <p></p>
                             </div>
-                            <ul class="app-breadcrumb breadcrumb">
-                                <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                                <li class="breadcrumb-item"><a href="/marketing/dashboard">Sliders</a></li>
-                            </ul>
                         </div>
-                        <div style="padding-bottom: 20px"> 
-                            <form action="/marketing/sliderList" method="get" id="fSearch">
 
-                                <div class="row" style="display: flex;
-                                     justify-content: flex-end; padding-right: 16px">
-                                    <div class="col-xs-6 col-md-1">
-                                        <select class="form-control" name="select">
-                                            <option value="-1" ${status == -1 ?"selected":""}>All</option>
+                        <!--Start Filter SLider-->
+                        <div class="row d-flex mb-10">
+                            <!--form filter-->
+                            <form action="/marketing/sliderList" method="get" class="form-inline mb-1rem" id="form-filter">
+                            <select class="form-control" id="status-select" name="select">
+                                    <option value="-1" ${status == -1 ?"selected":""}>All Status</option>
+                                <option value="1" ${status == 1?"selected":""}>Show</option>
+                                <option value="0" ${status == 0?"selected":""}>Hide</option>
+                            </select>
+                            &nbsp;
+                            <span>Search by</span>
+                            &nbsp;
+                            <select name="select-search" class="form-control">
+                                <option value="1" ${searchBy == 1?"selected":""}>Title</option>
+                                <option value="0" ${searchBy == 0?"selected":""}>Backlink</option>
+                            </select>
+                            &nbsp;
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search" name="txtSearch" value="${search}"/>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <a href="/marketing/sliderAdd" class="btn btn-info" role="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Slider</a>
+                    </div>
+                    <!--Start Filter SLider-->
+
+
+<!--
+
+                    <div style="padding-bottom: 20px"> 
+                        <form action="/marketing/sliderList" method="get" id="fSearch">
+
+                            <div class="row" ">
+                                <div class="col-xs-7 col-md-1">
+                                    <select class="form-control" id="status-select" name="select">
+                                        <option value="-1" ${status == -1 ?"selected":""}>All Status</option>
                                         <option value="1" ${status == 1?"selected":""}>Show</option>
                                         <option value="0" ${status == 0?"selected":""}>Hide</option>
                                     </select>
+
                                 </div>
                                 <div class="col-xs-7 col-md-4">
                                     <div class="input-group">
@@ -89,7 +108,7 @@
                                 <a href="/marketing/sliderAdd" class="btn btn-info" role="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Slider</a>
                             </div>
                         </form>
-                    </div>
+                    </div>-->
 
 
 
@@ -111,7 +130,7 @@
                                             <div class="wp-block-content">
                                                 <small>10 days only</small>
                                                 <h4 class="content-title">${s.title}</h4>
-                                                <p class="description">${s.note}</p>
+                                                <p class="crop">${s.note}</p>
                                             </div>
                                         </div>
                                         <div class="wp-block-footer">
@@ -121,12 +140,9 @@
 
                                                 <li><a href="/marketing/sliderDetail?id=${s.id}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Details</a></li>
                                                 <li>
-
                                                     <button id="btn-status-${s.id}" data-id="${s.id}" data-status="${(s.status)}" type="button" class="btn ${(s.status)?"btn-success":"btn-danger"} btn-id">
                                                         ${(s.status)?"Show":"Hide"}
                                                     </button>
-
-
                                                 </li>
                                             </ul>
                                         </div>
@@ -135,7 +151,7 @@
                             </div>
                         </c:forEach>
                     </c:if>
-                  
+
                     <ul class="pagination justify-content-center" style="margin:20px 0">
                         <c:if test="${index != 1}">
                             <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${1}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
@@ -145,12 +161,12 @@
                             <li class="page-item"><a class="page-link ${(index == i)? "active-page":""}" href="/marketing/sliderList?index=${i}<c:if test="${status != null && search
                                                                         != null}">&txtSearch=${search}&select=${status}</c:if>">${i}</a></li>
                             </c:forEach>
-                            <c:if test="${index != lastPage}">
+                            <c:if test="${index != lastPage && sliders.size() > 0}">
                             <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${index+1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                             <li class="page-item"><a class="page-link" href="/marketing/sliderList?index=${lastPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
                                 </c:if>
                     </ul>
-           
+
                 </section>
             </aside>
         </div>
@@ -186,7 +202,6 @@
         <script src="../assets/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
         <script src="../assets/js/plugins/chart.js" type="text/javascript"></script>
         <script src="../assets/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
     </body>
 </html>

@@ -20,7 +20,7 @@
             </c:if>
             <c:if test="${sessionScope.user.avatar == null}">
                 <div class="pull-left image">
-                    <img src="../assets/img/defaultUserAvatar.png" class="img-circle" alt="User Image" />
+                    <img src="../../assets/img/defaultUserAvatar.png" class="img-circle" alt="User Image" />
                 </div>
             </c:if>
             <div class="pull-left info" style="width: 60%">

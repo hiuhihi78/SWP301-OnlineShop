@@ -56,7 +56,7 @@ function openModals(id) {
     var btn_name_status = document.querySelector('#btn-status-' + id).innerHTML.toLowerCase();
     console.log(btn_status);
     console.log(btn_name_status);
-
+    var alter = document.getElementById('alter-div');
     button.onclick = function () {
         $.ajax({
             type: "GET",
@@ -68,9 +68,20 @@ function openModals(id) {
             },
             success: function (data, textStatus, jqXHR) {
                 btn_status.innerHTML = data;
+                alter.innerHTML = "<div class=\"fixed float-end\" id=\"showAlter\">\n" +
+"        <div class=\"alert alert-success alert-dismissible fade in\" id=\"alterfade\">\n" +
+"            <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n" +
+"            Change status susccess!\n" +
+"        </div>\n" +
+"    </div>";
             },
             error: function (jqXHR, textStatus, errorThrown) {
-
+                alter.innerHTML = "<div class=\"fixed float-end\" id=\"showAlter\">\n" +
+"        <div class=\"alert alert-danger alert-dismissible fade in\" id=\"alterfade\">\n" +
+"            <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n" +
+"            Change featured faild!\n" +
+"        </div>\n" +
+"    </div>";
             }
         });
 //        document.getElementById('showAlter').innerHTML = "Change Successfuly";

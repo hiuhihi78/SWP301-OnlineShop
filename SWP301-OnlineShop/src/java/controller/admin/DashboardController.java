@@ -8,6 +8,9 @@ import dal.DashboardDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,11 +39,38 @@ public class DashboardController extends BaseAuthController {
         request.setAttribute("successCount", dashboardDB.getSuccessOrders());
         request.setAttribute("cancelledCount", dashboardDB.getCancelledOrders());
         request.setAttribute("processingCount", dashboardDB.getProcessingOrders());
-        request.setAttribute("revenueByCategory", dashboardDB.getRevenueByProductCategory());
-        request.setAttribute("totalRevenue", dashboardDB.getTotalRevenue());
         request.setAttribute("newCustomer", dashboardDB.getNewCustomer());
         request.setAttribute("newBought", dashboardDB.getNewCustomerBought());
-        
+
+        try {
+            String reStartTime = request.getParameter("reStartTime");
+            String reEndTime = request.getParameter("reEndTime");
+            String trendStartTime = request.getParameter("trendStartTime");
+            String trendEndTime = request.getParameter("trendEndTime");
+
+            if (reStartTime != null && reEndTime != null) {
+                request.setAttribute("totalRevenue", dashboardDB.getTotalRevenue(reStartTime, reEndTime));
+                request.setAttribute("revenueByCategory", dashboardDB.getRevenueByProductCategory(reStartTime, reEndTime));
+            } else {
+                reStartTime = this.getDateMinus(-7); //Last 7-day
+                reEndTime = this.getDateMinus(0); //Today
+                request.setAttribute("totalRevenue", dashboardDB.getTotalRevenue(reStartTime, reEndTime));
+                request.setAttribute("revenueByCategory", dashboardDB.getRevenueByProductCategory(reStartTime, reEndTime));
+            }
+
+            if (trendStartTime != null && trendEndTime != null) {
+                request.setAttribute("SuccessOrdersRange", dashboardDB.getSuccessOrdersByDateRange(trendStartTime, trendEndTime));
+                request.setAttribute("TotalOrdersRange", dashboardDB.getTotalOrdersByDateRange(trendStartTime, trendEndTime));
+            } else {
+                System.out.println("Case 2");
+                trendStartTime = this.getDateMinus(-7); //Last 7-day
+                trendEndTime = this.getDateMinus(0); //Today
+                request.setAttribute("SuccessOrdersRange", dashboardDB.getSuccessOrdersByDateRange(trendStartTime, trendEndTime));
+                request.setAttribute("TotalOrdersRange", dashboardDB.getTotalOrdersByDateRange(trendStartTime, trendEndTime));
+            }
+        } catch (Exception e) {
+        }
+
         request.getRequestDispatcher("../view/admin/dashboard.jsp").forward(request, response);
     }
 
@@ -83,4 +113,10 @@ public class DashboardController extends BaseAuthController {
         return "Short description";
     }// </editor-fold>
 
+    public String getDateMinus(int minusDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, minusDate);
+        return sdf.format(cal.getTime());
+    }
 }

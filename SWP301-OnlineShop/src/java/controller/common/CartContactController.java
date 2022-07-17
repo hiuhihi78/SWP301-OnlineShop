@@ -66,6 +66,8 @@ public class CartContactController extends BaseAuthController {
         long total = 0;
         HttpSession session = request.getSession();
         CartDBContext cartDb = new CartDBContext();
+        UserDBContext userDb = new UserDBContext();
+        
         String[] productId = request.getParameterValues("cboproduct");
         int cartId = Integer.parseInt(request.getParameter("hCartId"));
         ArrayList<Cart_Product> cartProduct = new ArrayList<Cart_Product>();
@@ -86,12 +88,13 @@ public class CartContactController extends BaseAuthController {
 
         //Get user login from session
         user = (User) session.getAttribute("user");
+        User userNew = userDb.getUserByEmail(user.getEmail());
         
         //Set cart contact in session
         session.setAttribute("cartContact", cartProduct);
         int userID = user.getId();
 
-        request.setAttribute("user", user);
+        request.setAttribute("user", userNew);
 
         request.setAttribute("cartProduct", cartProduct);
 
@@ -129,7 +132,7 @@ public class CartContactController extends BaseAuthController {
         user = userDb.getUserByEmail(email);
         if (user != null) {
             //Set inf for user
-            user.setFullname(fullName);
+            user.setUsername(fullName);
             user.setMobile(mobile);
 
             user.setAddress(address);

@@ -36,7 +36,9 @@ public class ProductDetailController extends BaseAuthController {
         int id = Integer.parseInt(request.getParameter("id"));
         ProductDBContext productDB = new ProductDBContext();
         Product product = productDB.getProductById(id);
+        String[] description = product.getDescription().split("\n");
         request.setAttribute("product", product);
+        request.setAttribute("description", description);
         request.getRequestDispatcher("../view/marketing/productDetail.jsp").forward(request, response);
     }
 

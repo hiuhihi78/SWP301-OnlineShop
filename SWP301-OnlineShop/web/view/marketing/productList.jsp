@@ -50,10 +50,17 @@
             <!-- Right side. contains main content -->
             <aside class="right-side">
                 <!-- Main content -->
-                <section class="content ">
+                <section class="content " >
+                    <div class="fixed float-end" id="alter-div"></div>
                     <!--Alter-->
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
                     <!--Alter-->
+                    <div class="app-title">
+                        <div>
+                            <h3><i class="fa fa-list-ul" aria-hidden="true"></i> Product List</h3>
+                            <p></p>
+                        </div>
+                    </div>
                         <!--Search, add and filter product-->
                         <div class="row d-flex" id="searchfilter">
                             <form action="productlist" method="get"  class="form-inline" id="formFilter">
@@ -234,71 +241,12 @@
                     </div>
                     <div class="modal-footer">
                         <button id="btn-change" type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
         <!--/Modal-->
-        
-        <script>
-            // modal for change status
-            function openModals(id) {
-                var button = document.getElementById('btn-change');
-                document.getElementById('message-modal').innerHTML = "Are you sure to change featured post?";
-                var btn_status = document.querySelector('#btn-status-' + id).parentNode;
-                var btn_name_status = document.querySelector('#btn-status-' + id).innerHTML.toLowerCase();
-                console.log(btn_status);
-                console.log(btn_name_status);
-
-                button.onclick = function () {
-                    $.ajax({
-                        type: "GET",
-                        url: "../marketing/editStatusProduct",
-                        data: {
-                            idPost: id,
-                            idStatus: btn_name_status
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            btn_status.innerHTML = data;
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-
-                        }
-                    });
-            //        document.getElementById('showAlter').innerHTML = "Change Successfuly";
-                };
-            }
-            // modal for chang featured
-            function openAnnouceAccept(id) {
-                var button = document.getElementById('btn-change');
-                document.getElementById('message-modal').innerHTML = "Are you sure to change featured post?";
-                var btn_featured = document.querySelector('#btn-featured-' + id).parentNode;
-                var btn_name_featured = document.querySelector('#btn-featured-' + id).innerHTML.toLowerCase();
-
-            //    button.innerHTML = '';
-            //    button.setAttribute('class', "btn btn-primary");
-            //    button.setAttribute('onclick', 'document.getElementById("' + id + '").submit();');
-                button.onclick = function () {
-                    $.ajax({
-                        type: "GET",
-                        url: "../marketing/editFeaturedProduct",
-                        data: {
-                            idPost: id,
-                            idFeatured: btn_name_featured
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            btn_featured.innerHTML = "" + data;
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-
-                        }
-                    });
-                    document.getElementById('showAlter').innerHTML = "Change Successfuly";
-                };
-            }
-            
-        </script>
         
         </div>
         <!--javascrip-->

@@ -42,7 +42,7 @@ public class RoleDBContext extends DBContext {
         RoleDBContext bContext = new RoleDBContext();
         System.out.println(bContext.getAllRole().size());
     }
-    
+
     public LinkedHashMap<Feature, Boolean> getAllowFeatures(int role) {
         String sql = "SELECT [Feature].id, [Feature].url, [Feature].name, [Role_Feature].enable\n"
                 + "from [Role]\n"
@@ -119,7 +119,7 @@ public class RoleDBContext extends DBContext {
             String sql = "INSERT INTO [dbo].[Role]\n"
                     + "           ([status]\n"
                     + "           ,[name])\n"
-//                    + "           ,[isSuperAdmin])\n"
+                    //                    + "           ,[isSuperAdmin])\n"
                     + "     VALUES\n"
                     + "           (1, ?)";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -147,22 +147,19 @@ public class RoleDBContext extends DBContext {
                     + "     VALUES\n"
                     + "           (?, ?, ?)";
             PreparedStatement ps3 = connection.prepareStatement(sql3);
-                for (String featureID : listFeatureID) {
-                        if(Arrays.asList(permissionsID).contains(featureID))
-                        {
-                            ps3.setInt(1, roleID);
-                            ps3.setBoolean(2, true);
-                            ps3.setInt(3, Integer.parseInt(featureID));
-                            ps3.executeUpdate();
-                        }
-                        else
-                        {
-                            ps3.setInt(1, roleID);
-                            ps3.setBoolean(2, false);
-                            ps3.setInt(3, Integer.parseInt(featureID)); 
-                            ps3.executeUpdate();
-                        }
+            for (String featureID : listFeatureID) {
+                if (Arrays.asList(permissionsID).contains(featureID)) {
+                    ps3.setInt(1, roleID);
+                    ps3.setBoolean(2, true);
+                    ps3.setInt(3, Integer.parseInt(featureID));
+                    ps3.executeUpdate();
+                } else {
+                    ps3.setInt(1, roleID);
+                    ps3.setBoolean(2, false);
+                    ps3.setInt(3, Integer.parseInt(featureID));
+                    ps3.executeUpdate();
                 }
+            }
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -171,6 +168,24 @@ public class RoleDBContext extends DBContext {
             connection.setAutoCommit(true);
             connection.close();
         }
+    }
+
+    public boolean checkRoleExist(String roleName) throws SQLException {
+        try {
+            String sql = "select [Role].[name] from [Role] where [Role].[name] = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, roleName);
+            ResultSet r = ps.executeQuery();
+            if(r.next())
+            {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            connection.close();
+        }
+        return false;
     }
 
     public void updateRole(int roleID, String[] permissionID) throws SQLException {
@@ -183,18 +198,30 @@ public class RoleDBContext extends DBContext {
             stm.setInt(1, roleID);
             stm.executeUpdate();
 
-            String sql2 = "UPDATE dbo.[Role_Feature]\n"
-                    + "   SET [enable] = 1\n"
-                    + " WHERE roleId = ? and featureId=?";
+            String sql2 = "IF (NOT EXISTS(SELECT [Role_Feature].featureId FROM [Role_Feature] WHERE [Role_Feature].roleId = ? AND [Role_Feature].featureId = ?))\n"
+                    + "BEGIN\n"
+                    + "INSERT INTO [dbo].[Role_Feature](roleId, [enable], featureId)\n"
+                    + "VALUES (?, 1, ?)\n"
+                    + "END\n"
+                    + "ELSE\n"
+                    + "BEGIN\n"
+                    + "UPDATE dbo.[Role_Feature]\n"
+                    + "SET [enable] = 1\n"
+                    + "WHERE roleId = ? and featureId=?\n"
+                    + "END";
             PreparedStatement stm2 = connection.prepareStatement(sql2);
             for (String permission : permissionID) {
                 stm2.setInt(1, roleID);
                 stm2.setInt(2, Integer.parseInt(permission));
+                stm2.setInt(3, roleID);
+                stm2.setInt(4, Integer.parseInt(permission));
+                stm2.setInt(5, roleID);
+                stm2.setInt(6, Integer.parseInt(permission));
                 stm2.executeUpdate();
             }
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             connection.rollback();
         } finally {
             connection.setAutoCommit(true);
@@ -210,7 +237,7 @@ public class RoleDBContext extends DBContext {
                 + "Role_Feature.roleId = ? and Feature_Group.name = ?";
         try {
             ArrayList<Feature> features = new ArrayList<>();
-            PreparedStatement ps = connection.prepareStatement(sql);;
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, roleID);
             ps.setString(2, groupName);
             ResultSet rs = ps.executeQuery();

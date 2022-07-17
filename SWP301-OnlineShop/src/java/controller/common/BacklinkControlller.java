@@ -50,15 +50,24 @@ public class BacklinkControlller extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDBContext productDb = new ProductDBContext();
+        String searchBy = "";
+        //get Parameter value
         int sid = Integer.parseInt(request.getParameter("sid"));
-        ArrayList<Product> list = null;
-        list = productDb.getProductsBySliderId(sid);
-        if (list != null && list.size() > 0) {        
-            request.setAttribute("listProduct", list);
-             processRequest(request, response);
-        } else {
-            request.getRequestDispatcher("view/public/error.jsp").forward(request, response);
+        if (request.getParameter("searchBy") != null) {
+            searchBy = request.getParameter("searchBy");
         }
+        
+        ArrayList<Product> list = null;
+        list = productDb.getProductsBySliderId(sid, searchBy.toLowerCase());
+        request.setAttribute("sid", sid);
+        request.setAttribute("listProduct", list);
+        request.setAttribute("search", searchBy);
+        processRequest(request, response);
+//        if (list != null && list.size() > 0) {               
+//             processRequest(request, response);
+//        } else {
+//            request.getRequestDispatcher("view/public/error.jsp").forward(request, response);
+//        }
         
     }
 

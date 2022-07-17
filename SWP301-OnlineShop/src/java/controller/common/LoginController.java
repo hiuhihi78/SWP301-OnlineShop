@@ -83,66 +83,52 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = "", password = "", check = null, page = "";
+        String email = "", password = "", check = null;
         User user = null;
         UserDBContext userDb = new UserDBContext();
         HttpSession session = request.getSession();
-        
-        if(session.getAttribute("user") != null){
+
+        if (session.getAttribute("user") != null) {
             session.setAttribute("user", null);
         }
-        
+
         check = request.getParameter("cboSigned");
         email = request.getParameter("txtEmail").toLowerCase();
         password = request.getParameter("txtPassword");
         //user = userDb.getUserByEmailAndPassword(email, password);
         user = userDb.login(email, password);
 
-        if (user != null && user.isStatus() == true) {
-            session.setAttribute("user", user);
-            Cookie emailCookie = new Cookie("emailCookie", email);
-            Cookie passCookie = new Cookie("passCookie", password);
-            if (check != null) {
-                emailCookie.setMaxAge(Security.MAXIMUM_AGE);
-            } else {
-                emailCookie.setMaxAge(0);
-            }
-            response.addCookie(emailCookie);
-            response.addCookie(passCookie);
-
-            //Sendirect
-            if (user.getRole().getId() == Security.ADMIN_ROLL_ID) {
-                page = "home";
-
-            } else if (user.getRole().getId() == Security.MAKETING_ROLL_ID) {
-                page = "home";
-
-            } else if (user.getRole().getId() == Security.SALE_ROLL_ID) {
-                page = "home";
-            } else if (user.getRole().getId() == Security.CUSTOMER_ROLL_ID) {
-                page = "home";
-            }
-            if (page != "") {
-                response.sendRedirect(page);
-            } else {
-                request.setAttribute("messFalse", "Email or password is incorrect. Please try again!");
+        //Check user exits on system
+        if (user != null) {
+            //Account is locked
+            if (user.isStatus() == false) {
+                request.setAttribute("messFalse", "This account is currently locked. Please contact us for answers.");
+                request.setAttribute("email", email);
+                request.setAttribute("password", password);
                 processRequest(request, response);
+            } else {
+                session.setAttribute("user", user);
+                Cookie emailCookie = new Cookie("emailCookie", email);
+                Cookie passCookie = new Cookie("passCookie", password);
+                if (check != null) {
+                    emailCookie.setMaxAge(Security.MAXIMUM_AGE);
+                    passCookie.setMaxAge(Security.MAXIMUM_AGE);
+                } else {
+                    emailCookie.setMaxAge(0);
+                    passCookie.setMaxAge(0);
+                }
+                response.addCookie(emailCookie);
+                response.addCookie(passCookie);
+
+                //Sendirect
+                response.sendRedirect("home");
             }
         } else {
+            //Wrong account or password
             request.setAttribute("messFalse", "Email or password is incorrect. Please try again!");
-             processRequest(request, response);
+            request.setAttribute("email", email);
+            request.setAttribute("password", password);
+            processRequest(request, response);
         }
-
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

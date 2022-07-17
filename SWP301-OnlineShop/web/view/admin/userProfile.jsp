@@ -50,7 +50,7 @@
                         </div>
                         <div class="row mb-3">
                             <label for="name" class="col-sm-2 col-form-label">Full name</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-8">
                                 <input type="text" class="form-control" id="name" value="${requestScope.user.fullname}" disabled>
                             </div>
                         </div>
@@ -67,21 +67,21 @@
 
                         <div class="row mb-3">
                             <label for="email" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-8">
                                 <input type="text" class="form-control" id="email" value="${requestScope.user.email}" disabled>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-8">
                                 <input type="text" class="form-control" id="mobile" value="${requestScope.user.mobile}" disabled>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="address" class="col-sm-2 col-form-label">Address</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-8">
                                 <input type="text" class="form-control" id="name" value="${requestScope.user.address}" disabled>
                             </div>
                         </div>
@@ -134,11 +134,11 @@
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-body">
-                            <p>Are you sure to change status!</p>
+                            <p>Are you sure to change user's profile?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" onclick="document.getElementById('changeStatus').submit();">Yes</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
 

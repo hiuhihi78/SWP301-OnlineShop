@@ -141,8 +141,8 @@ function showAttachedImg(img, close_btm, input){
 
 function validateForm(){
     var sellerId = document.getElementById('sellerId');
-    if(sellerId === null){
-        alert('You must chose seller!');
-//        window.history.back();
-    }
+//    if(sellerId === null){
+//        alert('You must chose seller!');
+////        window.history.back();
+//    }
 }

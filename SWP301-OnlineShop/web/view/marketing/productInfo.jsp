@@ -55,7 +55,13 @@
                     <jsp:include page="../marketing-template/alter.jsp"></jsp:include>
                         <!--/alter-->
                     <div class="mb-10" >
-                        
+                        <div class="w-70-percent mx-auto">
+                            <div>
+                                <h3><i class="fa fa-list-ul" aria-hidden="true"></i> Edit product's info</h3>
+                                <p></p>
+                                <br>
+                            </div>
+                        </div>
                         <form action="editProductInfo" method="POST" enctype="multipart/form-data" id="editProductInfo" >
                             
                             <input type="hidden" name="id" value="${requestScope.product.id}"/>
@@ -103,7 +109,7 @@
                             <!--Description-->
                             <div class="form-group w-70-percent" style="margin: 0 auto">
                                 <label for="description">Description</label>
-                                <textarea type="text" class="form-control"  name="description" id="description" placeholder="Enter description of product" required="" rows="3">${requestScope.product.description}</textarea>
+                                <textarea type="text" class="form-control"  name="description" id="description" placeholder="Enter description of product" required="" rows="5">${requestScope.product.description}</textarea>
                             </div>
                             <!--/Description-->
 
@@ -230,7 +236,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSaveCategory()">Save</button>
                         <!--<button type="button" class="btn btn-primary" onclick="document.getElementById('saveAddNewCategory').submit();">Save</button>-->
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
                 
@@ -256,7 +262,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSaveSubcategory()">Save</button>
                         <!--<button type="button" class="btn btn-primary" onclick="document.getElementById('saveAddNewCategory').submit();">Save</button>-->
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
                 
@@ -278,7 +284,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="document.getElementById('editProductInfo').submit()">Save</button>
                         <!--<button type="button" class="btn btn-primary" onclick="document.getElementById('saveAddNewCategory').submit();">Save</button>-->
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
                 

@@ -31,7 +31,6 @@ $().ready(function () {
         rules: {
             "txtName": {
                 required: true,
-                validateName: true,
                 maxlength: 30
             },
             "txtEmail": {
@@ -60,9 +59,9 @@ $.validator.addMethod("validatePassword", function (value, element) {
     return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/i.test(value);
 }, "Password from 8 - 16 characters including uppercase, lowercase and at least one number");
 
-$.validator.addMethod("validateName", function (value, element) {
-    return this.optional(element) || /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/.test(value);
-}, "Invalid full name!");
+//$.validator.addMethod("validateName", function (value, element) {
+//    return this.optional(element) || /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/.test(value);
+//}, "Invalid full name!");
 
 $.validator.addMethod("validateMobile", function (value, element) {
     return this.optional(element) || /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(value);

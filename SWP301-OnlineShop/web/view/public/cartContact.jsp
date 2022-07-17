@@ -29,17 +29,20 @@
         <link href="../../assets/public/css/responsive.css" rel="stylesheet">
         <link href="../../assets/public/css/style.css" rel="stylesheet">
         <link href="../../assets/css/cart/style.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css"/>
         <title>Cart | Contact</title>
     </head>
     <body>
         <jsp:include page="../home-template/headerProductlist.jsp"/>
         <section id="cart_items">
+            
             <div class="container">
                 <div class="row flex-justify">
                    <jsp:include page="../home-template/sidebarForProductList.jsp"/>
-
+                   
                     <!--PRODUCT LIST-->
                     <div class="col-sm-9 padding-right">
+
                         <div class="features_items">
                             <!--features_items-->
                             <h2 class="title text-center" style="border-bottom: solid 2px; margin-top: 10px">Cart Contact</h2>
@@ -51,11 +54,12 @@
                                         <div class="register-req">
                                             <b><h4><p><i class="fa fa-location-arrow" aria-hidden="true"></i> Address</p></h4></b>
                                             <div id="info-user-id">
-                                                <p id="address-id"><b>${user.fullname}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}</p>
-                                                <a id="change-id" href="#" >Edit</a>
+                                                <p id="address-id"><b>${user.username}&nbsp;&nbsp;${user.mobile}</b>&nbsp;&nbsp;&nbsp;&nbsp;${user.address}</p>
+                                                <a id="change-id">Edit</a>
+                                                
                                             </div>
 
-                                                <input type="hidden" id="name-id-h" name="txtFullname" value="${user.fullname}"/>
+                                                <input type="hidden" id="name-id-h" name="txtFullname" value="${user.username}"/>
                                                 <input type="hidden" id="gender-id" name="txtGender" value="${user.gender}"/>
                                                 <input type="hidden" id="phone-id-h" name="txtPhone" value="${user.mobile}"/>
                                                 <input type="hidden" id="address-id-h" name="txtAddress" value="${user.address}"/>
@@ -186,7 +190,7 @@
                                 <label class="col-sm-2 control-label">Full Name</label>
 
                                 <div class="col-sm-12">
-                                    <input type="text" id="iFullName" name="txtNameInf" placeholder="Enter full name" class="form-control" value="${user.fullname}"/>
+                                    <input type="text" id="iFullName" name="txtNameInf" placeholder="Enter full name" class="form-control" value="${user.username}"/>
                                 </div>
                             </div>
 
@@ -228,5 +232,6 @@
         <script src="../../assets/js/home/home.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js" integrity="sha512-FOhq9HThdn7ltbK8abmGn60A/EMtEzIzv1rvuh+DqzJtSGq8BRdEN0U+j0iKEIffiw/yEtVuladk6rsG4X6Uqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
     </body>
 </html>

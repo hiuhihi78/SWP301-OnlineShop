@@ -51,8 +51,15 @@
             <aside class="right-side">
                 <!-- Main content -->
                 <section class="content ">
+                    <div class="fixed float-end" id="alter-div"></div>
                     <!--Alter-->
                     <jsp:include page="../admin-layout/alter.jsp"></jsp:include>
+                    <div class="app-title">
+                        <div>
+                            <h3><i class="fa fa-list-ul" aria-hidden="true"></i> Feedback List</h3>
+                            <p></p>
+                        </div>
+                    </div>
                     <!--Alter-->
                         <!--Search, add and filter product-->
                         <div class="row d-flex">

@@ -52,7 +52,7 @@
                                             <table class="table table-condensed">
                                                 <thead>
                                                     <tr class="cart_menu">
-                                                        <td><input type="checkbox" name="all" id="checkall"></td>
+                                                        <td><input type="checkbox" name="all" id="checkall"> All</td>
                                                         <td class="image">Item</td>
                                                         <td class="description"></td>
                                                         <td class="price">Price</td>
@@ -73,8 +73,7 @@
                                                             </td>
                                                                 <input type="hidden" name="hCartId" value="${cartId}"/>
 
-                                                                
-                                                                
+                                                               
                                                             <td class="cart_product" style="width: 180px">
                                                                 <a href=""><img src="${(i.product).thumbnail}" alt="" width="100px" height="auto"></a>
                                                             </td>
@@ -95,8 +94,9 @@
 
 
                                                             <td class="cart_quantity">
-                                                                <div class="cart_quantity_button">
-
+                                               
+                                                                <div class="cart_quantity_button" id="div-contain-${(i.product).id}">
+                                                                    
                                                                     <input type="button" class="cart_quantity_down" ${i.quantity==1?"disabled":""} is-up="0"  id="id-down-${(i.product).id}" id-product-quantity="${(i.product).id}" cart-id="${cartId}" value="-" data-min="1"/>
 
                                                                     <div id="show-quantity-${(i.product).id}"><input id="quantity-id-${(i.product).id}" data-product-id="${(i.product).id}" class="cart_quantity_input" type="number" value="${i.quantity}" autocomplete="off" size="2" data-max="${(i.product).quantity}"
@@ -114,7 +114,7 @@
                                                             </td>
                                                             
                                                             <td class="cart_delete">
-                                                                <a class="cart_quantity_delete" data-programid="${(i.product).id}" data-name="${(i.product).name}" data-isAll="0">
+                                                                <a class="cart_quantity_delete" id="delete_button_id" data-programid="${(i.product).id}" data-name="${(i.product).name}" data-isAll="0">
                                                                     <i class="fa fa-times"></i></a>
                                                             </td>
                                                         </tr>

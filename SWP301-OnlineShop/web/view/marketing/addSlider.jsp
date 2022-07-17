@@ -54,9 +54,8 @@
             <aside class="right-side">
                 <!-- Main content -->
                 <section class="content">
-                    <div class="app-title">
-                        <div>
-                            <h1>`
+                    <div class="app-title" style="margin-bottom: 20px">
+                            <h1>
                             <c:choose>
                                 <c:when test="${s != null}">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Slider
@@ -66,12 +65,6 @@
                                 </c:otherwise>
                             </c:choose>
                         </h1>
-                        <p></p>
-                    </div>
-                    <ul class="app-breadcrumb breadcrumb">
-                        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                        <li class="breadcrumb-item"><a href="/marketing/sliderAdd">Information</a></li>
-                    </ul>
                 </div>
 
                 <c:if test="${messFalse != null}"> 
@@ -85,7 +78,7 @@
                     </div>
                 </c:if>
 
-                <form role="form" class="form-horizontal" action="/marketing/sliderAdd" method="post" enctype="multipart/form-data">
+                    <form role="form" class="form-horizontal" action="/marketing/sliderAdd" method="post" enctype="multipart/form-data" id="form-add-update">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="bs-component">
@@ -136,7 +129,15 @@
                             <div class="col-sm-10">
                                 <a class="btn btn-primary" href="/marketing/sliderList" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>&nbsp;Cancel</a>
 
-                                <button type="submit" class="btn btn-primary">Submit&nbsp;<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                                <c:choose>
+                                <c:when test="${s != null}">
+                                    <button type="button" id="btn-update" class="btn btn-primary">Update&nbsp;<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="submit" class="btn btn-primary">Add&nbsp;<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                                </c:otherwise>
+                            </c:choose>
+                                
                             </div>
                         </div>
 
@@ -170,6 +171,30 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-danger btn-change">Change</a>
+                </div>
+               <input type="hidden" id="h-status-save-modal" value=""/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="confirm-update-slider" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Update Slider</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p id="ct">The information of the slider will be updated.</p>
+                    <p>Do you want to proceed?</p>
+                    <p class="debug-url"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-update-slider">Update</a>
                 </div>
                <input type="hidden" id="h-status-save-modal" value=""/>
             </div>

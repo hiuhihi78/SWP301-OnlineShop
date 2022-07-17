@@ -15,3 +15,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .e {
     margin-right: 11px;
 }
+
+.error {
+      color: red;
+
+   }

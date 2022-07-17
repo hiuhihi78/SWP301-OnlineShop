@@ -148,7 +148,7 @@ body{
     background-color: rgba(33, 40, 50, 0.03);
     border-bottom: 1px solid rgba(33, 40, 50, 0.125);
 }
-.form-control, .dataTable-input {
+/*.form-control, .dataTable-input {
     display: block;
     width: 100%;
     padding: 0.875rem 1.125rem;
@@ -164,7 +164,7 @@ body{
     appearance: none;
     border-radius: 0.35rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+}*/
 
 .nav-borders .nav-link.active {
     color: #0061f2;
@@ -201,14 +201,7 @@ body{
     margin-bottom: 30px;
 }
 
-p.description {
-    display: -webkit-box;
-    max-width: 500px;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-
-}
+.crop { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; width:500px; }
 
 .height {
     height: 25px;
@@ -224,8 +217,14 @@ p.description {
     height: 200px;
 }
 
+.input-group {
+    width: 400px;
+}
 
-
+#form-filter {
+    display: -webkit-inline-box;
+    margin: 30px 10px 30px 350px;
+}
 
 
 
@@ -302,4 +301,21 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.row-class {
+    display: flex;
+}
+
+.form-date{
+    padding-top: 20px;
+    margin-left: 200px;
+}
+.form-date-1{
+    padding-top: 20px;
+    margin-left: 340px;
+}
+
+.title-dash {
+    margin-left: 20px;
 }

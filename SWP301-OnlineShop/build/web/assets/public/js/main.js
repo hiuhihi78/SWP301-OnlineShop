@@ -99,7 +99,6 @@ $(document).ready(function () {
             }
             else
             {
-                console.log()
                 $('#reportrange span').html(startTime + ' -> ' + endTime);
             }
 

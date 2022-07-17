@@ -81,7 +81,7 @@ public class VeryfiController extends HttpServlet {
         }else {
             
             request.setAttribute("messFalse", "Verification failed. Please try again!");
-            request.getRequestDispatcher("view/public/register.jsp").forward(request, response);
+            request.getRequestDispatcher("view/public/register1.jsp").forward(request, response);
         }
         
     }
