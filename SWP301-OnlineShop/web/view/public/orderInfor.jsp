@@ -173,11 +173,10 @@
                         </div>
                         <div class="row">
                             <div class="col-md-offset-1 pull-right " >
-                                <c:if test="${orderInfor.status == 1}">
-                                    <a  href="#" onclick="updateOrder(${orderInfor.id})"  class="btn btn-danger"> Update </a>
-                                    <!--<a  href="#" onclick="cancelOrder(${orderInfor.id})"  class="btn btn-danger"> Cancel </a>-->
+                                <%--<c:if test="${orderInfor.status == 1}">--%>
+                                    <!--<a  href="#" onclick="updateOrder(${orderInfor.id})"  class="btn btn-danger"> Update </a>-->
                                     <a href="#"  class="btn btn-danger" data-toggle="modal" data-target="#myModalCancel">Cancel</a>
-                                </c:if>
+                                <%--</c:if>--%>
                                 <a href="../myorders"  class="btn btn-danger">Back</a>
                             </div>
                         </div>

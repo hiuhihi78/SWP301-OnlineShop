@@ -9,22 +9,36 @@
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
-        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
-        <link href="../../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-        <!-- Ionicons -->
-        <link href="../../assets/css/ionicons.css" rel="stylesheet" type="text/css"/>
-        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
         <!-- Theme style -->
-        <link href="../../assets/css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     </head>
 
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
-        <jsp:include page="../admin-layout/header.jsp"></jsp:include>
-            <div class="wrapper row-offcanvas row-offcanvas-left">
-                <!-- Left side column. contains the logo and sidebar -->
-            <jsp:include page="../admin-layout/sideBar.jsp"></jsp:include>
+        <jsp:include page="../marketing-template/header.jsp"></jsp:include>
+        <c:if test="${param.alert != null}">
+            <div class="fixed float-end t-55px" id="showAlter" style="        width: 29%;
+                 z-index: 1024;
+                 right: 33%;
+                 top: 5%;
+                 position: fixed;
+                 ">
+                <div class="alert alert-danger alert-dismissible fade in" style="text-align: center" id="alterfade">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="transform: rotate(90deg);">&times;</a>
+                    ${param.alert}
+                </div>
+            </div>
+        </c:if>
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+            <!-- Left side column. contains the logo and sidebar -->
+            <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">
                 <!-- Main content -->
@@ -73,45 +87,45 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputRole"
-                                           class="col-lg-3 col-sm-2 control-label">Role: </label>
-                                    <div class="col-md-8">
-                                        <!--<input type="text" class="form-control" name="role" value="">-->
-                                        <select name="roleID" class="form-control">
-                                            <option value="4">
-                                                Customer
-                                            </option>
-                                        </select>
+                                    <!--<label for="inputRole"class="col-lg-3 col-sm-2 control-label">Role: </label>-->
+                                    <!--                                    <div class="col-md-8">
+                                                                            <input type="text" class="form-control" name="role" value="">
+                                                                            <select name="roleID" class="form-control">
+                                                                                <option value="4">
+                                                                                    Customer
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>-->
+                                    <input type="hidden" name="roleID" value="4">
+                                    <div class="form-group">
+                                        <label for="inputGender" class="col-lg-3 col-sm-2 control-label">Gender:</label>
+                                        <div class="col-md-8">                                       
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="gender" value="male" checked=""> Male
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="gender" value="female" > Female
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputGender" class="col-lg-3 col-sm-2 control-label">Gender:</label>
-                                    <div class="col-md-8">                                       
-                                        <label class="checkbox-inline">
-                                            <input type="radio" name="gender" value="male" required> Male
-                                        </label>
-                                        <label class="checkbox-inline">
-                                            <input type="radio" name="gender" value="female" required> Female
-                                        </label>
+                                    <div class="form-group">
+                                        <label for="inputStatus" class="col-lg-3 col-sm-2 control-label">Status:</label>
+                                        <div class="col-md-8">                                       
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="status" value="active" > Active
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="radio" name="status" value="deactive" checked="" > Deactive
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputStatus" class="col-lg-3 col-sm-2 control-label">Status:</label>
-                                    <div class="col-md-8">                                       
-                                        <label class="checkbox-inline">
-                                            <input type="radio" name="status" value="active" required> Active
-                                        </label>
-                                        <label class="checkbox-inline">
-                                            <input type="radio" name="status" value="deactive" required> Deactive
-                                        </label>
+                                    <div class="form-row">
+                                        <div class="col-md-offset-9">
+                                            <button type="submit" class="btn btn-info">Save</button>
+                                            <a href="../customer/list" class="btn btn-danger">Back</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-offset-9">
-                                        <button type="submit" class="btn btn-info">Save</button>
-                                        <a href="../customer/list" class="btn btn-danger">Back</a>
-                                    </div>
-                                </div>
                             </form>
                         </div>
                     </section>
@@ -122,11 +136,13 @@
         <div class="footer-main">
             Copyright &copy Director, 2014
         </div>
-        <!-- jQuery 2.0.2 -->
-<!--        <script src="../../assets/js/admin/addNewUser.js"></script>
-        <script src="../../assets/js/admin/addNewUser.js"></script>
-        <script src="../../assets/js/admin/main.js" type="text/javascript"></script>  -->
-        
+        <script>
+            setTimeout(function () {
+                const element = document.getElementById('showAlter');
+                element.remove();
+            }, 5000);
+        </script>
+
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../../assets/js/jquery.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->

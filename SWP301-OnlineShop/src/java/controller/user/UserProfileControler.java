@@ -5,6 +5,7 @@
 package controller.user;
 
 import static configs.UploadImage.extractFileName;
+import static configs.UploadImage.extractFileNameForProfile;
 import dal.UserDBContext;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import model.Role;
 import model.User;
 
 /**
@@ -53,6 +55,8 @@ public class UserProfileControler extends HttpServlet {
         //validate value
         int id = Integer.parseInt(raw_id);
         boolean gender = raw_gender.equals("male");
+        HttpSession session = request.getSession();
+        User oldUserSession = (User) session.getAttribute("user");
 
         User user = new User();
         user.setId(id);
@@ -60,7 +64,14 @@ public class UserProfileControler extends HttpServlet {
         user.setFullname(fullname);
         user.setGender(gender);
         user.setMobile(mobile);
-        
+
+        user.setEmail(oldUserSession.getEmail());
+        Role role = new Role();
+        role.setId(oldUserSession.getRole().getId());
+        role.setName(oldUserSession.getRole().getName());
+        role.setAllowFeatures(oldUserSession.getRole().getAllowFeatures());
+        user.setRole(role);
+
         //edit in db
         UserDBContext userDBContext = new UserDBContext();
         // Đường dẫn tuyệt đối tới thư mục gốc của web app.
@@ -83,18 +94,29 @@ public class UserProfileControler extends HttpServlet {
         }
 
         Part partAttachedImg1 = request.getPart("attachedImg1");
-        String fileAttachedImg1 = extractFileName(partAttachedImg1, fullSavePath);
-        if (fileAttachedImg1 != null && fileAttachedImg1.length() > 0) {
+        String fileAttachedImg1 = extractFileNameForProfile(partAttachedImg1, fullSavePath);
+        //change img
+        if (fileAttachedImg1 != null && fileAttachedImg1.length() > 0 && fileAttachedImg1 != "abc") {
             String filePath = fullSavePath + File.separator + fileAttachedImg1;
-            System.out.println("Write attachment to file: " + filePath);
             // Ghi vào file.
             partAttachedImg1.write(filePath);
             String fileUrl = "/assets/img/" + fileAttachedImg1;
-            System.out.println("File: " + fileUrl);
+            
             user.setAvatar(fileUrl);
+            
+            session.setAttribute("user", user);
             userDBContext.editUserProfile(user);
+//            userDBContext.getUser(id);
+            response.sendRedirect("../home?alterProfile=Update sucessfully!");
         }
-        response.sendRedirect("../home?alterProfile=Update sucessfully, You Need to Re-Login to see your new information!");
+        //do not change img
+        if (fileAttachedImg1 == "abc") {
+            user.setAvatar(oldUserSession.getAvatar());
+            userDBContext.editUserProfileWithoutImg(user);
+            session.setAttribute("user", user);
+            response.sendRedirect("../home?alterProfile=Update sucessfully!");
+        }
+
     }
 
     @Override

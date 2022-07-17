@@ -159,7 +159,6 @@
 
         <jsp:include page="../home-template/footer.jsp"/>
         <script language="JavaScript" type="text/javascript">
-
             setTimeout(function () {
                 const element = document.getElementById('showAlter');
                 element.remove();

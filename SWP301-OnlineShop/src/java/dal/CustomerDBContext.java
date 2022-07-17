@@ -657,4 +657,20 @@ public class CustomerDBContext extends DBContext {
         CustomerDBContext db = new CustomerDBContext();
         System.out.println(db.count(4));
     }
+
+    public ArrayList<String> getListEmail() {
+        ArrayList<String> listEmail = new ArrayList<>();
+        String sql1 = " SELECT email FROM [User] ";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql1);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                listEmail.add(rs.getString("email"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listEmail;
+    }
 }

@@ -9,24 +9,38 @@
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
-        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
-        <link href="../../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-        <!-- Ionicons -->
-        <link href="../../assets/css/ionicons.css" rel="stylesheet" type="text/css"/>
-        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
         <!-- Theme style -->
-        <link href="../../assets/css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
         <script src="../../assets/js/customer/customerList.js" type="text/javascript"></script>
 
     </head>
 
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
-        <jsp:include page="../admin-layout/header.jsp"></jsp:include>
-            <div class="wrapper row-offcanvas row-offcanvas-left">
-                <!-- Left side column. contains the logo and sidebar -->
-            <jsp:include page="../admin-layout/sideBar.jsp"></jsp:include>
+        <jsp:include page="../marketing-template/header.jsp"></jsp:include>
+        <c:if test="${param.alert != null}">
+            <div class="fixed float-end t-55px" id="showAlter" style="    width: 14%;
+    z-index: 1024;
+    right: 1%;
+    top: 5%;
+    position: fixed;
+                 ">
+                <div class="alert alert-success alert-dismissible fade in" style="text-align: center"id="alterfade">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="transform: rotate(90deg);">&times;</a>
+                    ${param.alert}
+                </div>
+            </div>
+        </c:if>
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+            <!-- Left side column. contains the logo and sidebar -->
+            <jsp:include page="../marketing-template/sideBar.jsp"></jsp:include>
 
                 <!-- Right side column. Contains the navbar and content of the page -->
                 <aside class="right-side">
@@ -101,17 +115,19 @@
                                                                 <input type="hidden" name="id" value="${list.id}">
                                                                 <c:if test="${!list.status}">
                                                                     <input type="hidden" name="status" value="active">
-                                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#active" onclick="openModal('changeStatus-${list.id}')">Deactive</button>
+                                                                    <!--<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#active" onclick="openModal('changeStatus-${list.id}')">Deactive</button>-->
+                                                                    <button type="button" class="btn btn-danger" >Deactive</button>
                                                                 </c:if>
                                                                 <c:if test="${list.status}">
                                                                     <input type="hidden" name="status" value="deactive">
-                                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#active" onclick="openModal('changeStatus-${list.id}')">Active</button>
+                                                                    <!--<button type="button" class="btn btn-success" data-toggle="modal" data-target="#active" onclick="openModal('changeStatus-${list.id}')">Active</button>-->
+                                                                    <button type="button"  class="btn btn-success">Active</button>
                                                                 </c:if>
                                                             </form>
                                                         </td>
                                                         <!--EDIT-->
                                                         <td>
-                                                            <a href="../../customer/details?id=${list.id}" style="text-decoration: none; color:white">
+                                                            <a href="../../customer/editDetails?id=${list.id}" style="text-decoration: none; color:white">
                                                                 <button type="button" class="btn btn-primary">
                                                                     <i class="fa-solid fa-user-pen"></i>Edit
                                                                 </button>
@@ -136,14 +152,14 @@
                             <div class="pagging">
                                 <ul class="pagination pull-right">
                                     <c:if test="${requestScope.totalpage > 1}">
-                                        
-                                    <li><a href="list?page=1&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Frist</a></li>
-                                    </c:if>
+
+                                        <li><a href="list?page=1&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Frist</a></li>
+                                        </c:if>
                                         <c:forEach begin="1" end="${requestScope.totalpage}" var="page">
                                         <li class="${pageindex == page ? "active =" : ""}" ><a href="list?page=${page}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">${page}</a></li>    
                                         </c:forEach>
                                         <c:if test="${requestScope.totalpage > 1}">
-                                    <li><a href="list?page=${requestScope.totalpage}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Last</a></li>
+                                        <li><a href="list?page=${requestScope.totalpage}&searchBy=${searchBy}&statusBy=${statusBy}&sortBy=${sortBy}">Last</a></li>
                                         </c:if>
                                 </ul>
                             </div>
@@ -186,6 +202,10 @@
             function submitForm() {
                 document.getElementById("searchForm").submit();
             }
+            setTimeout(function () {
+                const element = document.getElementById('showAlter');
+                element.remove();
+            }, 5000);
         </script>
 
 

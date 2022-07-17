@@ -12,7 +12,7 @@
 
                         <div class="search_box">
                             <!--<input id="search-box" type="text" placeholder="Search..." name="searchBy" value="${requestScope.searchBy}">-->
-                            <input type="text" name="searchBy" value="${requestScope.searchBy}"  placeholder="Search"/>
+                            <input type="text" name="searchBy" value="${param.searchBy}"  placeholder="Search"/>
                         </div>
                     </div>
                     <div class="panel-heading">

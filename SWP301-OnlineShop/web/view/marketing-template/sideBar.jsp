@@ -45,13 +45,13 @@
                     <li id="nav-user-list">
                         <a href="/marketing/sliderList">
                             <i class="fa fa-th-list" aria-hidden="true"></i>    <span>${s.key.name}</span>        
-                            </a>
+                        </a>
                     </li>
                 </c:if>
 
                 <c:if test="${s.key.url == '/marketing/productlist' && s.value == true}">
                     <li id="nav-user-list">
-                        <a href="productlist">
+                        <a href="/marketing/productlist">
                             <i class="fa-solid fa-box-open"></i> <span>Product List</span>
                         </a>
                     </li>
@@ -59,17 +59,25 @@
 
                 <c:if test="${s.key.url == '/marketing/postlist' && s.value == true}">
                     <li id="nav-user-list">
-                        <a href="postlist">
+                        <a href="/marketing/postlist">
                             <i class="fa-solid fa-rss"></i>   <span>  Post List</span>
 
                         </a>
                     </li>
                 </c:if>    
-                    
+
                 <c:if test="${s.key.url == '/marketing/feedbacklist' && s.value == true}">
                     <li id="nav-user-list">
-                        <a href="feedbacklist">
-                           <i class="fas fa-comment"></i>    <span>Feedback List</span>
+                        <a href="/marketing/feedbacklist">
+                            <i class="fas fa-comment"></i>    <span>Feedback List</span>
+                        </a>
+                    </li>
+                </c:if>    
+                    
+                <c:if test="${s.key.url == '/customer/list' && s.value == true}">
+                    <li id="nav-user-list">
+                        <a href="../customer/list">
+                            <i class="glyphicon glyphicon-user"></i>    <span>Customer List</span>
                         </a>
                     </li>
                 </c:if>    

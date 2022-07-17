@@ -1,13 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:if test="${param.alterProfile != null}">
-    <div class="fixed float-end t-55px" id="showAlter" style="    width: 27%;
+    <div class="fixed float-end t-55px" id="showAlter" style="    width: 26%;
          z-index: 1024;
          right: 36%;
          top: 6.6%;
          position: fixed;
          ">
-        <div class="alert alert-success alert-dismissible fade in" id="alterfade" style="font-size: 15px;">
+        <div class="alert alert-success alert-dismissible fade in" id="alterfade" style="font-size: 15px; text-align: center">
             <a href="#" class="close" data-dismiss="alert" aria-label="close" style="
                transform: rotate(90deg);
                font-size: 34px;
@@ -33,12 +33,12 @@
                             <div class="form-group">
                                 <label for="avata" class="col-lg-2 col-sm-2 control-label"> </label>
                                 <div class="col-md-8 text-center">
-                                    <div id="closeBtn-attachedBoxImg-1" class="close-btn" onclick="closeImg('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1');"></div>
-                                    <img id="attachedBoxImg-1" src="${user.avatar}" alt="your image" style="height:150px;" class="rounded-circle  image-thumbnail"/>
+                                    <div id="closeBtn-attachedBoxImg-1" class="close-btn" onclick="closeImgProfile('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1');"></div>
+                                    <img id="attachedBoxImg-1" src="${user.avatar}" style="height:150px;" class="rounded-circle  image-thumbnail"/>
                                 <h6>Upload a different photo...</h6> 
-
-                                <input type="file" name="attachedImg1" id="attachedImg1" onchange="showAttachedImg('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1')" 
-                                       style="width: 50%; display: inline-block;"required=""/>
+                                ${user.avatar}
+                                <input type="file" name="attachedImg1" id="attachedImg1" accept="image/*" onchange="showImgProfile('attachedBoxImg-1', 'closeBtn-attachedBoxImg-1', 'attachedImg1')" 
+                                       style="width: 50%; display: inline-block;"/>
                             </div>
 
                         </div>
@@ -87,7 +87,7 @@
                             </div>
                         </div>
 
-                        <input type="hidden" name="urlBeforreUpdate" value="${window.location.pathname}"/>
+                        <!--<input type="hidden" name="urlBeforreUpdate" value="${window.location.pathname}"/>-->
                         <div class="modal-footer">
                             <div class="col-md-offset">
                                 <button type="submit" onclick="return confirm('Are you sure edit your profile?')" class="btn btn-info"> Save </button>

@@ -130,7 +130,9 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="search_box pull-right">
-                        <input id="search-box" type="text" placeholder="Search" name="search-product"/>
+                        <form action="productlist" method="get">
+                        <input type="text" name="searchBy"  placeholder="Search"/>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -2,13 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/common/LoginController.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/swp-391/summer2022-se1617-g1/SWP301-OnlineShop/src/java/dal/DBContext.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/New%20folder/summer2022-se1617-g1/SWP301-OnlineShop/web/view/home-template/userProfile.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/New%20folder/summer2022-se1617-g1/SWP301-OnlineShop/web/assets/img/cute01.jpg</file>
+            <file>file:/C:/Users/Administrator/Desktop/New%20folder/summer2022-se1617-g1/SWP301-OnlineShop/src/java/controller/user/UserProfileControler.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/New%20folder/summer2022-se1617-g1/SWP301-OnlineShop/src/java/configs/SendMail.java</file>
         </group>
->>>>>>> 5460fb28ed32407f7ce2d272eec1d95a9bde551a
     </open-files>
 </project-private>

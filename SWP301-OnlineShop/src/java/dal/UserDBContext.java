@@ -1109,7 +1109,8 @@ public class UserDBContext extends DBContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }
+        finally {
             if (stm != null) {
                 try {
                     stm.close();
@@ -1125,6 +1126,86 @@ public class UserDBContext extends DBContext {
                 }
             }
         }
+    }
+
+    public void editUserProfileWithoutImg(User user) {
+        String sql = " UPDATE [dbo].[User]\n"
+                + "   SET   [fullname] = ?\n"
+                + "      ,[gender] = ?\n"
+                + "      ,[mobile] = ?\n"
+                + "      ,[address] = ?\n"
+                + "      \n"
+                + " WHERE id = ? ";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getFullname());
+            stm.setBoolean(2, user.isGender());
+            stm.setString(3, user.getMobile());
+            stm.setString(4, user.getAddress());
+            stm.setInt(5, user.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public User getUser(int id) {
+        String sql = "SELECT [User].id"
+                + "       ,[fullname]\n"
+                + "      ,[gender]\n"
+                + "      ,[email]\n"
+                + "      ,[mobile]\n"
+                + "      ,[address]\n"
+                + "      ,[roleId]\n"
+                + "      ,Role.name\n"
+                + "      ,[user].[status]\n"
+                + "      ,[avatar]\n"
+                + "  FROM [User] join Role on roleId = Role.id"
+                + "       WHERE id = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt(1));
+                user.setFullname(rs.getString(2));
+                user.setGender(rs.getBoolean(3));
+                user.setEmail(rs.getString(4));
+                user.setMobile(rs.getString(5));
+                user.setAddress(rs.getString(6));
+                Role role = new Role();
+                role.setId(rs.getInt(7));
+                role.setName(rs.getString(8));
+                role.setAllowFeatures(new RoleDBContext().getAllowFeatures(role.getId()));
+
+                user.setRole(role);
+                user.setStatus(rs.getBoolean(9));
+                user.setAvatar(rs.getString(10));
+                return user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public User login(String email, String password) {

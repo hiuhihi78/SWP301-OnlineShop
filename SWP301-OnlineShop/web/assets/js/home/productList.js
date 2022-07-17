@@ -1,5 +1,5 @@
 function addToCartFunction2(id, quantity, customer) {
-    var customerId = customer;
+    var customerId = customer >= 1  ? customer : -1;
     var productId = id;
     var quantityOrder = 1;
 //    var quantityProduct = 999;
@@ -13,7 +13,7 @@ function addToCartFunction2(id, quantity, customer) {
     if (customerId === -1) {
         window.location.href = "/login";
         window.location.assign("http://localhost:8080/login");
-        return;
+        return ;
     }
 
 

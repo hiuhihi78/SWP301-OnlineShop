@@ -203,7 +203,7 @@ public class SendMail {
                 + "<html>\n"
                 + "<head>\n"
                 + "</head>\n"
-                + "<body>\n"
+                + "<body  style=\"display: inline-table;\">\n"
                 + "\n"
                 + "	<div>Hello You!</div>\n"
                 + "    <div>Your Order Has Been Delivered Successfully!</div>\n"
@@ -211,11 +211,11 @@ public class SendMail {
                 + "	<div>List below are the products and quantities of the products you have purchased: </div><br>";
 
         for (Product product : listOrderProductOfUser) {
-            message1 += " <table >\n"
+            message1 += " <table>\n"
                     + "  	<tr>\n"
-                    + "    <td>Product Name </td>\n"
-                    + "    <td>Quantity</td>\n"
-                    + "    <td>Unit Price</td>\n"
+                    + "    <th>Product Name </th>\n"
+                    + "    <th>Quantity</th>\n"
+                    + "    <th>Unit Price</th>\n"
                     + "    </tr>\n"
                     + "    <tr>\n"
                     + "    <td>" + product.getName() + "</td>\n"
@@ -226,7 +226,7 @@ public class SendMail {
         message1 += "</table>\n"
                 + "<div>Total Cost: " + totalCost + "</div><br>\n"
                 + "   <div> If you have any problems with the product you received, please reply to this email, we will contact you as soon as possible.</div>\n"
-                + "   <div>Thank you for shopping on our website!</div>\n"
+                + "   <div>Thanks you for shopping on our website!</div>\n"
                 + "</body>\n"
                 + "</html>";
         SendMail.send(emailUserBuy, subject, message1, Security.USERNAME, Security.PASSWORD);

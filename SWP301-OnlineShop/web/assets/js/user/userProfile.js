@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-function closeImg(imgId, close_btnId, input_img) {
+function closeImgProfile(imgId, close_btnId, input_img) {
     var img = document.getElementById(imgId);
     var close_btn = document.getElementById(close_btnId);
     var input_img = document.getElementById(input_img);
@@ -12,22 +12,22 @@ function closeImg(imgId, close_btnId, input_img) {
     input_img.value = '';
 }
 
-//function showAttachedImg(input_img, imgBox, closeBtn) {
-////    const [file] = document.getElementById(input_img).files;
-////    if (file) {
-////        document.getElementById(closeBtn).style.display = "block";
-////        document.getElementById(imgBox).style.display = "block";
-////        document.getElementById(imgBox).src = URL.createObjectURL(file)
-////    }
-//    const [file] = document.getElementById('attachedImg1').files;
+function showImgProfile(input_img, imgBox, closeBtn) {
+//    const [file] = document.getElementById(input_img).files;
 //    if (file) {
-//        document.getElementById('closeBtn-attachedBoxImg1').style.display = "block";
-//        document.getElementById('attachedBoxImg1').style.display = "circle";
-//        document.getElementById('attachedBoxImg1').src = URL.createObjectURL(file)
+//        document.getElementById(closeBtn).style.display = "block";
+//        document.getElementById(imgBox).style.display = "block";
+//        document.getElementById(imgBox).src = URL.createObjectURL(file)
 //    }
-//}
+    const [file] = document.getElementById('attachedImg1').files;
+    if (file) {
+        document.getElementById('closeBtn-attachedBoxImg1').style.display = "block";
+        document.getElementById('attachedBoxImg1').style.display = "circle";
+        document.getElementById('attachedBoxImg1').src = URL.createObjectURL(file)
+    }
+}
 
-function showAttachedImg(img, close_btm, input){
+function showImgProfile(img, close_btm, input){
     const [file] = document.getElementById(input).files;
     if (file) {
         document.getElementById(close_btm).style.display = "block";

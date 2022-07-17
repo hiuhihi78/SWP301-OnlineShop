@@ -8,6 +8,7 @@ import dal.CustomerDBContext;
 import filter.BaseAuthController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,6 @@ public class AddCustomerControler extends BaseAuthController {
         request.getRequestDispatcher("/view/marketing/addCustomer.jsp").forward(request, response);
     }
 
-//xin chào các b?n nha    
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -60,9 +60,21 @@ public class AddCustomerControler extends BaseAuthController {
         cusomter.setStatus(status);
 
         CustomerDBContext customerDBContext = new CustomerDBContext();
-        customerDBContext.addCustomer(cusomter);
 
-        response.sendRedirect("../customer/list");
+        ArrayList<String> listEmail = customerDBContext.getListEmail();
+        boolean checkEmailExist = false;
+        System.out.println("Email input: " + cusomter.getEmail());
+        for (int i = 0; i < listEmail.size(); i++) {
+            if (cusomter.getEmail().equals(listEmail.get(i))) {
+                checkEmailExist = true;
+                response.sendRedirect("../customer/add?alert=Add customer failed. User with email " + cusomter.getEmail() + " existed!!");
+            }
+        }
+        if (checkEmailExist  == false) {
+            customerDBContext.addCustomer(cusomter);
+            response.sendRedirect("../customer/list?alert=Add Customer Successfully!");
+        }
+
     }
 
     /**
