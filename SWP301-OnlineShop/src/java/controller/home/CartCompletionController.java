@@ -84,6 +84,7 @@ public class CartCompletionController extends BaseAuthController {
         infoCustomer.setAddress(shipAddress);
         infoCustomer.setGender(shipGender);
         infoCustomer.setEmail(user.getEmail());
+        infoCustomer.setUsername(shipFullName);
         // get method payment
         String payment = request.getParameter("payment").trim();
 

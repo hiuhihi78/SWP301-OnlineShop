@@ -56,11 +56,11 @@
                                                         <fmt:formatNumber  maxFractionDigits = "3" type = "currency" value = "${product.priceDiscount}"/>
                                                     </span>
                                                 </p>
-                                                <c:if test="${product.quantity > 0 && sessionScope.user.role.id == 4}">
-                                                <button  class="btn btn-default add-to-cart"  onclick="addToCartFunction2(${product.id},${product.quantity},${sessionScope.user.id});" >
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                    Add to cart
-                                                </button>
+                                                <c:if test="${product.quantity > 0 && (sessionScope.user.role.id != 3 && sessionScope.user.role.id != 2&&sessionScope.user.role.id != 1)}">
+                                                    <button  class="btn btn-default add-to-cart"  onclick="addToCartFunction2(${product.id},${product.quantity},${sessionScope.user.id});" >
+                                                        <i class="fa fa-shopping-cart"></i>
+                                                        Add to cart
+                                                    </button>
                                                 </c:if>
                                                 <!--Btn to See List Feedback-->
                                                 <button class="btn btn-default  add-to-cart">
@@ -87,7 +87,7 @@
                             </c:forEach>
                             <c:if test="${requestScope.totalpage > 1}">
                             <li><a href="productlist?page=${requestScope.totalpage}&searchBy=${searchBy}&subCategory=${listSub.id}">Last</a></li>
-                        </c:if>
+                            </c:if>
                     </ul>
                 </div>
 

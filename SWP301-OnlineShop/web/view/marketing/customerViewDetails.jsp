@@ -34,7 +34,7 @@
                     <section class="content col-md-6" style="margin-left: 20%;">
                         <section class="panel">
                             <header class="panel-heading">
-                                Add Customer
+                                View Customer
                             </header>
                             <!--BODY-->
                             <div class="panel-body">
