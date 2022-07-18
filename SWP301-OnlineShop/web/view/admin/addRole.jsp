@@ -47,10 +47,10 @@
                                 <p id="header-list-features" style="font-size: 20px; font-weight: 700; text-align: center">List of features</p>
                                 <p>
                                     <label for="adminFeatutes">Admin</label><br>
-                                    <input type="checkbox" id="btnSelectAllAdmin"/>
+                                    <input type="checkbox" id="btnSelectAllAdmin" ${sessionScope.user.role.name == 'Super Admin'?'':'disabled'}/>
                                     <label for="checkall">Select all</label><br>
                                 <c:forEach items="${requestScope.adminFeatures}" var="a">
-                                    <input type="checkbox" id="adminFeatures" name="roleID" value="${a.id}">
+                                    <input type="checkbox" id="adminFeatures" name="roleID" value="${a.id}" ${sessionScope.user.role.name == 'Super Admin'?'':'disabled'}>
                                     <label for="role">${a.name}</label><br>
                                 </c:forEach>
                             </p>

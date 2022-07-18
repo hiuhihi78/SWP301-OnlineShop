@@ -105,7 +105,7 @@ $(document).ready(function () {
         var status = $('#statusorder :selected').val();
         var cancelledReason = null;
         var emailUserBuy = $('#emailUserBuy').val();
-        
+
         var url = '/sale/order/updatestatus';
         var url2 = '/send/completedOrder';
         if (status == 0)
@@ -197,14 +197,23 @@ $(document).ready(function () {
         $("#myModal").modal('show');
     });
 
-    $('#btnConfirmUpdateStatus').on('click', function () {
+    $('#btnConfirmUpdateFBStatus').on('click', function () {
         var fid = $('#btnUpdateFBStatus').data('passing').fid;
         var status = $('#btnUpdateFBStatus').data('passing').status;
         var url = '/marketing/feedback/updatestatus';
 
         $.post(url, {fid: fid, status: status}, function (response) {
             var obj = JSON.parse(response);
-            toastr.success(obj.msg, Notification);
+            toastr.success(obj.msg, "Notification");
+            if (status == 1)
+            {
+                $('#lblStatus').removeClass("label-danger").addClass("label-success").text("Active");
+                $('#btnUpdateFBStatus').removeClass("btn-success").addClass("btn-danger").text("Change to De-active");
+            } else
+            {
+                $('#lblStatus').removeClass("label-success").addClass("label-danger").text("De-active");
+                $('#btnUpdateFBStatus').removeClass("btn-danger").addClass("btn-success").text("Change to Active");
+            }
         })
                 .fail(function (e) {
                     var obj = JSON.parse(e.responseText);

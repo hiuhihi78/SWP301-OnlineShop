@@ -26,21 +26,17 @@
             <div class="pull-left info" style="width: 60%">
                 <p>${sessionScope.user.fullname}</p>
 
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <a href="#">${sessionScope.user.role.name}</a>
             </div>
         </div>
         <ul class="sidebar-menu">
-
+            <li id="nav-dashboard">
+                <a href="/marketing/dashboard">
+                    <i class="fa fa-tachometer"></i> <span>Dashboard</span>
+                </a>
+            </li>
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <c:forEach items="${sessionScope.user.role.allowFeatures}" var="s">
-
-                <c:if test="${s.key.url == '/marketing/dashboard' && s.value == true}">
-                    <li id="nav-dashboard">
-                        <a href="/marketing/dashboard">
-                            <i class="fa fa-tachometer"></i> <span>${s.key.name}</span>
-                        </a>
-                    </li>
-                </c:if>
                 <c:if test="${s.key.url == '/marketing/sliderList' && s.value == true}">
                     <li id="nav-user-list">
                         <a href="/marketing/sliderList">

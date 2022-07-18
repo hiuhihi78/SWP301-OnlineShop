@@ -24,6 +24,9 @@ $(document).ready(function () {
     });
 
     $('#btnConfirmUpdateRole').on('click', function () {
+        $("input[id*='adminFeatures']:checkbox").each(function () {
+            this.disabled = "";
+        });
         $('#form-updaterole').submit();
     });
 

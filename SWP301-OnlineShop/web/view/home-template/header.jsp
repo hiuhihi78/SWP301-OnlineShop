@@ -60,10 +60,10 @@
                                             <a href="#" class="text-none-underline" data-toggle="modal" data-target="#myModalProfilfe">Profile</a>
                                         </li>
 
-                                        <c:if test="${sessionScope.user.role.id == 1}">
-                                            <li>
-                                                <a href="admin/userList" class="text-none-underline">Admin manage</a>
-                                            </li>
+                                        <!--                                        <c:if test="${sessionScope.user.role.id == 1}">
+                                                                                    <li>
+                                                                                        <a href="admin/userList" class="text-none-underline">Admin manage</a>
+                                                                                    </li>
                                         </c:if>
 
                                         <c:if test="${sessionScope.user.role.id == 2}">
@@ -76,7 +76,24 @@
                                             <li>
                                                 <a href="sale/productlist" class="text-none-underline">Sale manage</a>
                                             </li>
-                                        </c:if>  
+                                        </c:if>  -->
+                                        <c:forEach items="${sessionScope.user.role.allowFeatures}" var="s">
+                                            <c:if test="${s.key.url == '/admin/dashboard' && s.value == true}">
+                                                <li>
+                                                    <a href="${s.key.url}" class="text-none-underline">Admin manage</a>
+                                                </li>
+                                            </c:if>
+                                            <c:if test="${s.key.url == '/sale/orderslist' && s.value == true}">
+                                                <li>
+                                                    <a href="${s.key.url}" class="text-none-underline">Sale manage</a>
+                                                </li>
+                                            </c:if>
+                                            <c:if test="${s.key.url == '/marketing/dashboard' && s.value == true}">
+                                                <li>
+                                                    <a href="${s.key.url}" class="text-none-underline">Marketing manage</a>
+                                                </li>
+                                            </c:if>
+                                        </c:forEach>
 
                                         <c:if test="${sessionScope.user.role.id == 4}">
                                             <li>

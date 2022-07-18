@@ -1183,6 +1183,7 @@ public class UserDBContext extends DBContext {
                 + "      ,Role.name\n"
                 + "      ,[user].[status]\n"
                 + "      ,[avatar]\n"
+                + "      ,[Role].isSuper\n"
                 + "  FROM [User] join Role on roleId = Role.id"
                 + "       WHERE id = ?";
 
@@ -1202,6 +1203,7 @@ public class UserDBContext extends DBContext {
                 role.setId(rs.getInt(7));
                 role.setName(rs.getString(8));
                 role.setAllowFeatures(new RoleDBContext().getAllowFeatures(role.getId()));
+                role.setIssuperadmin(rs.getBoolean("isSuper"));
 
                 user.setRole(role);
                 user.setStatus(rs.getBoolean(9));
