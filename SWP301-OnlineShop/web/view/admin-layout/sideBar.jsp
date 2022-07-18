@@ -26,6 +26,7 @@
             </c:if>
             <div class="pull-left info" style="width: 60%">
                 <p>${sessionScope.user.fullname}</p>
+                <a href="#">${sessionScope.user.role.name}</a>
             </div>
         </div>
         <ul class="sidebar-menu">

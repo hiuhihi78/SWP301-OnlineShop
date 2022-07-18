@@ -99,7 +99,7 @@
                                         </c:if>
                                         <c:if  test="${requestScope.user.role.id != 4}">
                                             <c:forEach items="${requestScope.roles}" var="r">
-                                                <c:if test="${r.id != 4}">
+                                                <c:if test="${r.id != 4 && r.name != 'Super Admin'}">
                                                     <option value="${r.id}" ${user.role.id == r.id ? "selected = 'selected'":""}>${r.name}</option>
                                                 </c:if>
                                             </c:forEach>

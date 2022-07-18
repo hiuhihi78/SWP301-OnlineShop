@@ -46,7 +46,7 @@
                                 <select name="roleId" class="form-select required">
                                     <option value="" selected disabled hidden>Please choose a role</option>
                                 <c:forEach items="${requestScope.roles}" var="r">
-                                    <c:if test="${!r.name.equalsIgnoreCase('customer')}">
+                                    <c:if test="${!r.name.equalsIgnoreCase('customer') && r.name != 'Super Admin'}">
                                         <option value="${r.id}" ${r.id == requestScope.rawid ? "selected='selected'":""}>${r.name}</option>
                                     </c:if>
                                 </c:forEach>
@@ -57,13 +57,19 @@
                             <p style="font-size: 20px; font-weight: 700; text-align: center">List of features</p>
                             <p>
                                 <label for="adminFeatutes">Admin</label><br>
-                                <input type="checkbox" id="btnSelectAllAdmin"/>
+                                <input type="checkbox" id="btnSelectAllAdmin" ${sessionScope.user.role.name == 'Super Admin'?'':'disabled'}/>
                                 <label for="checkall">Select all</label><br>
                                 <c:forEach items="${requestScope.AdminFeatures}" var="a">
                                     <input type="checkbox" id="adminFeatures" name="fid" value="${a.id}"
                                            <c:forEach items="${requestScope.allowedFeatures}" var='b'>
-                                               <c:if test='${a.id == b.key.id && b.value == true}'>
+                                               <c:if test='${a.id == b.key.id && b.value == true && user.role.name == "Super Admin"}'>
                                                    checked
+                                               </c:if>
+                                               <c:if test='${a.id == b.key.id && b.value == true && user.role.name != "Super Admin"}'>
+                                                   checked disabled
+                                               </c:if>
+                                               <c:if test='${user.role.name != "Super Admin"}'>
+                                                   disabled
                                                </c:if>
                                            </c:forEach>>
                                     <label for="fid">${a.name}</label><br>

@@ -88,11 +88,11 @@
                                     <div>
                                         <label>Status: </label>
                                         <c:if test="${requestScope.feedback.status == true}">
-                                            <span class="label label-success">Active</span></br>
+                                            <span id="lblStatus" class="label label-success">Active</span></br>
                                             <button type="button" class="btn btn-danger" data-passing='{"fid":${requestScope.feedback.id},"status":0}' data-toggle="modal" data-target="#myModal1" id="btnUpdateFBStatus">Change to De-active</button>
                                         </c:if>
                                         <c:if test="${requestScope.feedback.status == false}">
-                                            <span class="label label-danger">De-active</span></br>
+                                            <span id="lblStatus" class="label label-danger">De-active</span></br>
                                             <button type="button" class="btn btn-success" data-passing='{"fid":${requestScope.feedback.id},"status":1}' data-toggle="modal" data-target="#myModal1" id="btnUpdateFBStatus">Change to Active</button>
                                         </c:if>
                                     </div>
@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button id ="btnConfirmUpdateStatus" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+                                    <button id ="btnConfirmUpdateFBStatus" type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
                                 </div>
                             </div>
 
@@ -168,5 +168,6 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
     </body>
 </html>

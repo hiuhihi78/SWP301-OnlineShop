@@ -17,6 +17,7 @@ public class Role {
     private String name;
     private boolean active;
     private LinkedHashMap<Feature, Boolean> allowFeatures = null;
+    private boolean issuperadmin;
 
     public Role(int id, String name) {
         this.id = id;
@@ -28,6 +29,14 @@ public class Role {
     }
 
     public Role() {
+    }
+
+    public boolean isIssuperadmin() {
+        return issuperadmin;
+    }
+
+    public void setIssuperadmin(boolean issuperadmin) {
+        this.issuperadmin = issuperadmin;
     }
 
     public int getId() {

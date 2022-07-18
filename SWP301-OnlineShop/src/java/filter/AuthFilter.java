@@ -94,7 +94,7 @@ public class AuthFilter implements Filter {
         User u = (User) wrappedRequest.getSession().getAttribute("user");
         //if user logged in
         if (u != null) {
-            if (checkUserPermission(requestPath, u)) {
+            if (checkUserPermission(requestPath, u) || u.getRole().isIssuperadmin() == true) {
                 request.setCharacterEncoding("UTF-8");
                 response.setCharacterEncoding("UTF-8");
                 chain.doFilter(request, response);

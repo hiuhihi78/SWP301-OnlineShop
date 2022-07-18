@@ -59,7 +59,10 @@
                                 <label for="role">Role<span class="text-danger">*</span></label>
                                 <select name="role" id="role">
                                     <c:forEach items="${requestScope.roles}" var="r">
-                                        <option value="${r.id}"  ${requestScope.roleId == r.id ? "selected='selected'":""}>${r.name}</option>
+                                        <c:if test="${!r.name.equalsIgnoreCase('customer') && r.name != 'Super Admin'}">
+                                            <option value="${r.id}"  ${requestScope.roleId == r.id ? "selected='selected'":""}>${r.name}</option>
+                                        </c:if>
+
                                     </c:forEach>
                                 </select>
                             </p>
